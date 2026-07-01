@@ -265,6 +265,9 @@
           <label for="cf-msg">Mire van szüksége?</label>
           <textarea class="textarea" id="cf-msg" rows="4" placeholder="Egy egyszerű, 5 oldalas weboldalt a stúdiómnak..."></textarea>
         </div>
+        <input type="text" data-honeypot name="website" autocomplete="off" tabindex="-1"
+               style="position:absolute; left:-9999px; width:1px; height:1px; opacity:0;" aria-hidden="true">
+        <p class="wizard-error" data-cf-error hidden></p>
         <button type="submit" class="form-submit">Üzenet küldése</button>
       </div>
       <div class="form-success" hidden>

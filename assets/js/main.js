@@ -46,16 +46,54 @@
   /* ---- Home contact form ---- */
   var contactForm = document.getElementById('contactForm');
   if (contactForm) {
+    var cfError = contactForm.querySelector('[data-cf-error]');
+    var cfHoneypot = contactForm.querySelector('[data-honeypot]');
+    var cfSubmitBtn = contactForm.querySelector('.form-submit');
+
     contactForm.addEventListener('submit', function (e) {
       e.preventDefault();
       var name = contactForm.querySelector('#cf-name');
       var email = contactForm.querySelector('#cf-email');
+      var company = contactForm.querySelector('#cf-company');
+      var message = contactForm.querySelector('#cf-msg');
+
       if (!name.value.trim() || !email.value.trim()) {
         (name.value.trim() ? email : name).focus();
         return;
       }
-      contactForm.querySelector('.form-fields').hidden = true;
-      contactForm.querySelector('.form-success').hidden = false;
+
+      cfError.hidden = true;
+      cfSubmitBtn.disabled = true;
+      var originalLabel = cfSubmitBtn.textContent;
+      cfSubmitBtn.textContent = 'Küldés…';
+
+      fetch('/api/send-contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: name.value.trim(),
+          company: company.value.trim(),
+          email: email.value.trim(),
+          message: message.value.trim(),
+          website: cfHoneypot ? cfHoneypot.value : ''
+        })
+      })
+        .then(function (res) {
+          return res.json().catch(function () { return {}; }).then(function (data) {
+            if (!res.ok) throw new Error(data.error || 'Nem sikerült elküldeni az üzenetet.');
+            return data;
+          });
+        })
+        .then(function () {
+          contactForm.querySelector('.form-fields').hidden = true;
+          contactForm.querySelector('.form-success').hidden = false;
+        })
+        .catch(function (err) {
+          cfError.textContent = err.message || 'Nem sikerült elküldeni az üzenetet. Próbálja újra.';
+          cfError.hidden = false;
+          cfSubmitBtn.disabled = false;
+          cfSubmitBtn.textContent = originalLabel;
+        });
     });
   }
 

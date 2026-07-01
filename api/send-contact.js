@@ -7,11 +7,7 @@ module.exports = async function handler(req, res) {
   }
 
   const body = req.body || {};
-  const {
-    name, company, email, phone, message,
-    businessType, pages, features, hasSite, budget,
-    website, // honeypot — real users never fill this
-  } = body;
+  const { name, company, email, message, website } = body; // website = honeypot
 
   if (website) {
     res.status(200).json({ ok: true });
@@ -23,34 +19,24 @@ module.exports = async function handler(req, res) {
     return;
   }
 
-  const pagesText = Array.isArray(pages) && pages.length ? pages.join(', ') : '—';
-  const featuresText = Array.isArray(features) && features.length ? features.join(', ') : '—';
-
   const html = `
-    <h2>Új ajánlatkérés — polarisweb</h2>
+    <h2>Új üzenet a kapcsolati űrlapról — polarisweb</h2>
     <p><strong>Név:</strong> ${escapeHtml(name)}</p>
-    <p><strong>Vállalkozás:</strong> ${escapeHtml(company || '—')}</p>
+    <p><strong>Vállalkozás és weboldal:</strong> ${escapeHtml(company || '—')}</p>
     <p><strong>E-mail:</strong> ${escapeHtml(email)}</p>
-    <p><strong>Telefon:</strong> ${escapeHtml(phone || '—')}</p>
     <hr>
-    <p><strong>Vállalkozás típusa:</strong> ${escapeHtml(businessType || '—')}</p>
-    <p><strong>Kért oldalak:</strong> ${escapeHtml(pagesText)}</p>
-    <p><strong>Funkciók:</strong> ${escapeHtml(featuresText)}</p>
-    <p><strong>Van már weboldala:</strong> ${escapeHtml(hasSite || '—')}</p>
-    <p><strong>Havi keret:</strong> ${escapeHtml(budget || '—')}</p>
-    <hr>
-    <p><strong>Megjegyzés:</strong><br>${escapeHtml(message || '—').replace(/\n/g, '<br>')}</p>
+    <p><strong>Üzenet:</strong><br>${escapeHtml(message || '—').replace(/\n/g, '<br>')}</p>
   `;
 
   try {
     await sendEmail({
-      subject: `Új ajánlatkérés — ${name}`,
+      subject: `Új üzenet — ${name}`,
       html,
       replyTo: email,
     });
     res.status(200).json({ ok: true });
   } catch (err) {
-    console.error('send-quote handler error:', err);
+    console.error('send-contact handler error:', err);
     if (err.code === 'CONFIG_MISSING') {
       res.status(500).json({ error: 'A szerver nincs megfelelően konfigurálva.' });
     } else if (err.code === 'RESEND_FAILED') {
