@@ -125,6 +125,12 @@
           </div>
         </div>
 
+        <!-- honeypot — hidden from real users, catches simple bots -->
+        <input type="text" data-honeypot name="website" autocomplete="off" tabindex="-1"
+               style="position:absolute; left:-9999px; width:1px; height:1px; opacity:0;" aria-hidden="true">
+
+        <p class="wizard-error" data-error hidden></p>
+
         <!-- NAV BUTTONS -->
         <div class="wizard-nav">
           <button class="btn-back" data-back hidden>← Vissza</button>

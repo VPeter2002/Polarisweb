@@ -62,7 +62,9 @@
     sumFeatures: root.querySelector('[data-sum-features]'),
     sumBudget: root.querySelector('[data-sum-budget]'),
     success: document.getElementById('wizardSuccess'),
-    successName: document.querySelector('[data-success-name]')
+    successName: document.querySelector('[data-success-name]'),
+    honeypot: root.querySelector('[data-honeypot]'),
+    error: root.querySelector('[data-error]')
   };
 
   /* ---- Build option elements ---- */
@@ -172,12 +174,59 @@
     render();
     window.scrollTo({ top: 0, behavior: 'smooth' });
   });
+  function buildPayload() {
+    var bt = businessTypes.filter(function (o) { return o.value === state.businessType; })[0];
+    var pageLabels = pages.filter(function (o) { return state.pages[o.value]; }).map(function (o) { return o.label; });
+    var featureLabels = features.filter(function (o) { return state.features[o.value]; }).map(function (o) { return o.label; });
+    return {
+      name: state.name.trim(),
+      company: state.company.trim(),
+      email: state.email.trim(),
+      phone: state.phone.trim(),
+      message: state.message.trim(),
+      businessType: bt ? bt.label : null,
+      pages: pageLabels,
+      features: featureLabels,
+      hasSite: state.hasSite,
+      budget: budgetLabels[state.budget] || state.budget,
+      website: el.honeypot ? el.honeypot.value : ''
+    };
+  }
+
+  function showError(msg) {
+    el.error.textContent = msg;
+    el.error.hidden = false;
+  }
+
   el.submit.addEventListener('click', function () {
     if (!state.name.trim() || !state.email.trim()) return;
-    el.successName.textContent = state.name.trim();
-    root.hidden = true;
-    el.success.hidden = false;
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    el.error.hidden = true;
+    el.submit.disabled = true;
+    var originalLabel = el.submit.textContent;
+    el.submit.textContent = 'Küldés…';
+
+    fetch('/api/send-quote', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(buildPayload())
+    })
+      .then(function (res) {
+        return res.json().catch(function () { return {}; }).then(function (data) {
+          if (!res.ok) throw new Error(data.error || 'Nem sikerült elküldeni az üzenetet.');
+          return data;
+        });
+      })
+      .then(function () {
+        el.successName.textContent = state.name.trim();
+        root.hidden = true;
+        el.success.hidden = false;
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      })
+      .catch(function (err) {
+        showError(err.message || 'Nem sikerült elküldeni az üzenetet. Próbálja újra.');
+        el.submit.disabled = false;
+        el.submit.textContent = originalLabel;
+      });
   });
 
   render();
