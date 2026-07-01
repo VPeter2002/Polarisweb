@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; }
+    body { margin: 0; }
+  </style>
+</helmet>
+
+<div style="font-family:'Manrope',sans-serif; background:oklch(97% 0.012 90); color:oklch(23% 0.02 50); min-height:100vh;">
+
+  <!-- NAV -->
+  <header style="position:sticky; top:0; z-index:50; background:oklch(97% 0.012 90 / 0.85); backdrop-filter:blur(10px); border-bottom:1px solid oklch(90% 0.012 90);">
+    <div style="max-width:1240px; margin:0 auto; padding:20px 32px; display:flex; align-items:center; justify-content:space-between; gap:24px;">
+      <a href="Home.dc.html" style="display:flex; align-items:center; gap:10px; text-decoration:none;">
+        <div style="width:32px; height:32px; border-radius:9px; background:linear-gradient(135deg, oklch(64% 0.13 260), oklch(72% 0.13 55)); display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="white"><path d="M12 1 C13 8 16 11 23 12 C16 13 13 16 12 23 C11 16 8 13 1 12 C8 11 11 8 12 1 Z"/></svg>
+        </div>
+        <span style="font-family:'Manrope',sans-serif; font-weight:800; font-size:20px; letter-spacing:-0.02em; color:oklch(23% 0.02 50);">polarisweb</span>
+      </a>
+      <nav style="display:flex; align-items:center; gap:36px;">
+        <a href="Home.dc.html" style="font-size:15px; font-weight:600; color:oklch(48% 0.02 50); text-decoration:none;">Kezdőlap</a>
+        <a href="Portfolio.dc.html" style="font-size:15px; font-weight:600; color:oklch(23% 0.02 50); text-decoration:none;">Portfólió</a>
+        <a href="Pricing.dc.html" style="font-size:15px; font-weight:600; color:oklch(48% 0.02 50); text-decoration:none;">Árak</a>
+        <a href="Home.dc.html#faq" style="font-size:15px; font-weight:600; color:oklch(48% 0.02 50); text-decoration:none;">GYIK</a>
+      </nav>
+      <a href="Home.dc.html#contact" style="font-size:15px; font-weight:700; color:white; background:oklch(64% 0.13 260); padding:12px 22px; border-radius:100px; text-decoration:none; white-space:nowrap;">Weboldal indítása</a>
+    </div>
+  </header>
+
+  <!-- HEADER -->
+  <section style="max-width:800px; margin:0 auto; padding:88px 32px 24px; text-align:center;">
+    <div style="font-size:13px; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; color:oklch(48% 0.13 260); margin-bottom:16px;">Portfólió</div>
+    <h1 style="font-family:'Instrument Serif',serif; font-weight:400; font-size:clamp(36px,5vw,56px); line-height:1.08; margin:0 0 20px;">Weboldalak, amiket jelenleg bérbe adunk</h1>
+    <p style="font-size:18px; line-height:1.6; color:oklch(48% 0.02 50); margin:0;">Válogatás azon kisvállalkozásokból, amelyeknek havonta tervezzük, üzemeltetjük és karbantartjuk a weboldalát.</p>
+  </section>
+
+  <!-- FILTER STRIP (visual) -->
+  <div style="display:flex; justify-content:center; gap:12px; flex-wrap:wrap; padding:36px 32px 8px;">
+    <sc-for list="{{ filters }}" as="f" hint-placeholder-count="5">
+      <div style="{{ f.style }}">{{ f.label }}</div>
+    </sc-for>
+  </div>
+
+  <!-- GRID -->
+  <section style="max-width:1240px; margin:0 auto; padding:40px 32px 100px;">
+    <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:28px;">
+      <sc-for list="{{ projects }}" as="proj" hint-placeholder-count="6">
+        <div style="background:oklch(99% 0.006 95); border:1px solid oklch(90% 0.012 90); border-radius:22px; overflow:hidden; display:flex; flex-direction:column;">
+          <div style="height:200px; background:{{ proj.gradient }};"></div>
+          <div style="padding:24px;">
+            <div style="font-family:monospace; font-size:12px; letter-spacing:0.04em; text-transform:uppercase; color:oklch(48% 0.13 260); margin-bottom:10px;">{{ proj.category }}</div>
+            <h3 style="font-size:18px; font-weight:700; margin:0 0 8px;">{{ proj.name }}</h3>
+            <p style="font-size:14.5px; line-height:1.55; color:oklch(48% 0.02 50); margin:0 0 18px;">{{ proj.desc }}</p>
+            <div style="display:flex; gap:8px; flex-wrap:wrap;">
+              <sc-for list="{{ proj.tags }}" as="tag" hint-placeholder-count="2">
+                <span style="font-size:12px; font-weight:700; color:oklch(35% 0.02 50); background:oklch(97% 0.012 90); border:1px solid oklch(90% 0.012 90); padding:5px 12px; border-radius:100px;">{{ tag.text }}</span>
+              </sc-for>
+            </div>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+
+  <!-- STATS STRIP -->
+  <section style="background:oklch(23% 0.02 50); padding:70px 0;">
+    <div style="max-width:1000px; margin:0 auto; padding:0 32px; display:grid; grid-template-columns:repeat(3,1fr); gap:24px; text-align:center;">
+      <div>
+        <div style="font-family:'Instrument Serif',serif; font-size:44px; color:oklch(96% 0.01 90);">40+</div>
+        <div style="font-size:14px; color:oklch(70% 0.02 50); margin-top:6px;">élő weboldal</div>
+      </div>
+      <div>
+        <div style="font-family:'Instrument Serif',serif; font-size:44px; color:oklch(96% 0.01 90);">14 nap</div>
+        <div style="font-size:14px; color:oklch(70% 0.02 50); margin-top:6px;">átlagos indulási idő</div>
+      </div>
+      <div>
+        <div style="font-family:'Instrument Serif',serif; font-size:44px; color:oklch(96% 0.01 90);">99,9%</div>
+        <div style="font-size:14px; color:oklch(70% 0.02 50); margin-top:6px;">üzemidő minden csomagnál</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section style="max-width:1000px; margin:0 auto; padding:100px 32px; text-align:center;">
+    <h2 style="font-family:'Instrument Serif',serif; font-weight:400; font-size:clamp(28px,3.6vw,40px); margin:0 0 18px;">Látja itt magát?</h2>
+    <p style="font-size:16px; color:oklch(48% 0.02 50); margin:0 0 32px;">Tervezzünk egy weboldalt, amit vásárlói tényleg szívesen használnak.</p>
+    <a href="Home.dc.html#contact" style="font-size:16px; font-weight:700; color:white; background:oklch(23% 0.02 50); padding:16px 32px; border-radius:100px; text-decoration:none;">Kezdjük el a beszélgetést</a>
+  </section>
+
+  <!-- FOOTER -->
+  <footer style="background:oklch(20% 0.015 50); color:oklch(94% 0.01 90); padding:72px 0 32px;">
+    <div style="max-width:1240px; margin:0 auto; padding:0 32px;">
+      <div style="display:grid; grid-template-columns:1.4fr 1fr 1fr 1fr; gap:40px; padding-bottom:56px; border-bottom:1px solid oklch(35% 0.015 50);">
+        <div>
+          <div style="display:flex; align-items:center; gap:10px; margin-bottom:14px;">
+            <div style="width:30px; height:30px; border-radius:8px; background:linear-gradient(135deg, oklch(64% 0.13 260), oklch(72% 0.13 55)); display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M12 1 C13 8 16 11 23 12 C16 13 13 16 12 23 C11 16 8 13 1 12 C8 11 11 8 12 1 Z"/></svg>
+            </div>
+            <span style="font-family:'Manrope',sans-serif; font-weight:800; font-size:19px; letter-spacing:-0.02em;">polarisweb</span>
+          </div>
+          <p style="font-size:14.5px; line-height:1.6; color:oklch(70% 0.02 50); max-width:280px;">Weboldal-tervezési és bérleti szolgáltatás kisvállalkozásoknak, akik inkább a vállalkozásukkal, mint a weboldalukkal foglalkoznának.</p>
+        </div>
+        <div>
+          <div style="font-size:13px; font-weight:700; text-transform:uppercase; letter-spacing:0.06em; color:oklch(70% 0.02 50); margin-bottom:16px;">Stúdió</div>
+          <div style="display:flex; flex-direction:column; gap:12px; font-size:14.5px;">
+            <a href="Home.dc.html" style="color:oklch(94% 0.01 90); text-decoration:none;">Kezdőlap</a>
+            <a href="Portfolio.dc.html" style="color:oklch(94% 0.01 90); text-decoration:none;">Portfólió</a>
+            <a href="Pricing.dc.html" style="color:oklch(94% 0.01 90); text-decoration:none;">Árak</a>
+            <a href="Ajanlatkeres.dc.html" style="color:oklch(94% 0.01 90); text-decoration:none;">Ajánlatkérés</a>
+          </div>
+        </div>
+        <div>
+          <div style="font-size:13px; font-weight:700; text-transform:uppercase; letter-spacing:0.06em; color:oklch(70% 0.02 50); margin-bottom:16px;">Kapcsolat</div>
+          <div style="display:flex; flex-direction:column; gap:12px; font-size:14.5px; color:oklch(70% 0.02 50);">
+            <span>hello@polarisweb.hu</span>
+            <span>Veszprémi Péter, alapító</span>
+          </div>
+        </div>
+        <div>
+          <div style="font-size:13px; font-weight:700; text-transform:uppercase; letter-spacing:0.06em; color:oklch(70% 0.02 50); margin-bottom:16px;">Máshol</div>
+          <div style="display:flex; flex-direction:column; gap:12px; font-size:14.5px;">
+            <a href="#" style="color:oklch(94% 0.01 90); text-decoration:none;">Instagram</a>
+            <a href="#" style="color:oklch(94% 0.01 90); text-decoration:none;">LinkedIn</a>
+          </div>
+        </div>
+      </div>
+      <div style="display:flex; justify-content:space-between; padding-top:28px; font-size:13px; color:oklch(60% 0.02 50); flex-wrap:wrap; gap:12px;">
+        <span>© 2026 polarisweb. Minden jog fenntartva.</span>
+        <span>Veszprémben készült</span>
+      </div>
+    </div>
+  </footer>
+
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  filterData = [
+    { label: 'Összes', active: true },
+    { label: 'Éttermek', active: false },
+    { label: 'Rendelők és szalonok', active: false },
+    { label: 'Stúdiók', active: false },
+    { label: 'Vállalkozók', active: false },
+  ];
+
+  projectData = [
+    { category: 'Étterem · Foglalási oldal', name: 'Kovács Family Bakery', desc: 'Meleg hangulatú, egyoldalas weboldal online rendeléssel és napi ajánlatokkal.', tags: [{ text: 'Kezdő' }, { text: 'Foglalás' }], gradient: 'radial-gradient(circle at 30% 20%, oklch(74% 0.13 55), oklch(64% 0.13 260) 80%)' },
+    { category: 'Rendelő · Időpontfoglaló oldal', name: 'Veszprémi Fogászati Stúdió', desc: 'Nyugodt, megbízható, több oldalas weboldal online időpontkéréssel.', tags: [{ text: 'Növekedés' }, { text: 'SEO' }], gradient: 'radial-gradient(circle at 70% 30%, oklch(64% 0.13 260), oklch(30% 0.05 260) 85%)' },
+    { category: 'Stúdió · Portfólió oldal', name: 'Fehér Anna Fotográfia', desc: 'Galéria-központú weboldal nyomtatott csomagok és foglalások értékesítésére.', tags: [{ text: 'Növekedés' }], gradient: 'radial-gradient(circle at 40% 70%, oklch(74% 0.13 55), oklch(45% 0.08 55) 85%)' },
+    { category: 'Vállalkozó · Érdeklődés-generáló oldal', name: 'Fenyves Víz- és Fűtésszerelés', desc: 'Gyors, mobilbarát weboldal, ami a keresésekből telefonhívást csinál.', tags: [{ text: 'Kezdő' }], gradient: 'radial-gradient(circle at 60% 60%, oklch(64% 0.13 260), oklch(74% 0.13 55) 85%)' },
+    { category: 'Szalon · Foglalási oldal', name: 'Studio Blanka Hair & Beauty', desc: 'Elegáns, foglalás-központú weboldal szolgáltatás-menüvel és ajándékkártyákkal.', tags: [{ text: 'Prémium' }, { text: 'Foglalás' }], gradient: 'radial-gradient(circle at 25% 55%, oklch(74% 0.13 55), oklch(64% 0.13 260) 80%)' },
+    { category: 'Stúdió · Webshop', name: 'Northfield Kerámia', desc: 'Prémium webshop egy kisüzemi kerámiakészítő számára.', tags: [{ text: 'Prémium' }], gradient: 'radial-gradient(circle at 50% 40%, oklch(30% 0.05 260), oklch(64% 0.13 260) 85%)' },
+  ];
+
+  renderVals() {
+    return {
+      filters: this.filterData.map(f => ({
+        label: f.label,
+        style: f.active
+          ? 'font-size:14px; font-weight:700; color:white; background:oklch(23% 0.02 50); padding:10px 20px; border-radius:100px;'
+          : 'font-size:14px; font-weight:700; color:oklch(48% 0.02 50); background:oklch(99% 0.006 95); border:1px solid oklch(90% 0.012 90); padding:10px 20px; border-radius:100px;',
+      })),
+      projects: this.projectData,
+    };
+  }
+}
+
+</script>
+</body>
+</html>

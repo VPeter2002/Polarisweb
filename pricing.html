@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Árak — polarisweb</title>
+  <meta name="description" content="Egy havidíj fedezi a dizájnt, a tárhelyet, a frissítéseket és a támogatást. Nincs beüzemelési díj, bármikor lemondható.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+  <!-- NAV -->
+  <header class="site-header">
+    <div class="nav-inner">
+      <a href="index.html" class="brand">
+        <span class="brand-mark">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="white" aria-hidden="true"><path d="M12 1 C13 8 16 11 23 12 C16 13 13 16 12 23 C11 16 8 13 1 12 C8 11 11 8 12 1 Z"/></svg>
+        </span>
+        <span class="brand-name">polarisweb</span>
+      </a>
+      <nav class="nav-links" id="navLinks">
+        <a href="index.html">Kezdőlap</a>
+        <a href="portfolio.html">Portfólió</a>
+        <a href="pricing.html" class="active">Árak</a>
+        <a href="#faq">GYIK</a>
+      </nav>
+      <a href="index.html#contact" class="btn btn-accent">Weboldal indítása</a>
+      <button class="nav-toggle" id="navToggle" aria-label="Menü" aria-expanded="false">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <!-- HEADER -->
+  <section class="page-head">
+    <div class="eyebrow">Árak</div>
+    <h1>Egyszerű, átlátható árazás</h1>
+    <p>Egy havidíj fedezi a dizájnt, a tárhelyet, a frissítéseket és a támogatást. Nincs beüzemelési díj, nincs meglepetés-számla, bármikor lemondható.</p>
+  </section>
+
+  <!-- BILLING TOGGLE -->
+  <div class="billing-toggle">
+    <div class="switch" data-billing>
+      <button class="opt active" data-billing-mode="monthly">Havi</button>
+      <button class="opt" data-billing-mode="annual">Éves — spórolj 15%-ot</button>
+    </div>
+  </div>
+
+  <!-- PRICING TABLE -->
+  <section class="pricing-table">
+    <div class="grid">
+      <!-- Kezdő -->
+      <div class="tier">
+        <h3>Kezdő</h3>
+        <p class="tagline">Letisztult, egyoldalas weboldal, hogy online is jelen legyen.</p>
+        <div class="price-row">
+          <span class="amt" data-monthly="19.900 Ft" data-annual="16.900 Ft">19.900 Ft</span>
+          <span class="per">/hó</span>
+        </div>
+        <a href="index.html#contact" class="cta">Kezdő csomag választása</a>
+        <div class="divider"></div>
+        <div class="features">
+          <div class="feat"><span class="check">✓</span><span>1 oldalas egyedi weboldal</span></div>
+          <div class="feat"><span class="check">✓</span><span>Tárhely és SSL benne foglalva</span></div>
+          <div class="feat"><span class="check">✓</span><span>Kapcsolati űrlap</span></div>
+          <div class="feat"><span class="check">✓</span><span>Havi 2 kör módosítás</span></div>
+          <div class="feat"><span class="check">✓</span><span>E-mailes támogatás</span></div>
+        </div>
+      </div>
+
+      <!-- Növekedés -->
+      <div class="tier featured">
+        <div class="tier-badge">Legnépszerűbb</div>
+        <h3>Növekedés</h3>
+        <p class="tagline">Több oldalas weboldal foglalással, ami vásárlókat hoz.</p>
+        <div class="price-row">
+          <span class="amt" data-monthly="42.900 Ft" data-annual="36.500 Ft">42.900 Ft</span>
+          <span class="per">/hó</span>
+        </div>
+        <a href="index.html#contact" class="cta">Növekedés csomag választása</a>
+        <div class="divider"></div>
+        <div class="features">
+          <div class="feat"><span class="check">✓</span><span>Akár 6 oldal</span></div>
+          <div class="feat"><span class="check">✓</span><span>Tárhely és SSL benne foglalva</span></div>
+          <div class="feat"><span class="check">✓</span><span>Foglalás és fizetési linkek</span></div>
+          <div class="feat"><span class="check">✓</span><span>SEO alapok</span></div>
+          <div class="feat"><span class="check">✓</span><span>Korlátlan apró módosítás</span></div>
+          <div class="feat"><span class="check">✓</span><span>Kiemelt e-mailes támogatás</span></div>
+        </div>
+      </div>
+
+      <!-- Prémium -->
+      <div class="tier">
+        <h3>Prémium</h3>
+        <p class="tagline">Egyedi funkciók és személyes támogatás a növekedéshez.</p>
+        <div class="price-row">
+          <span class="amt" data-monthly="79.900 Ft" data-annual="67.900 Ft">79.900 Ft</span>
+          <span class="per">/hó</span>
+        </div>
+        <a href="index.html#contact" class="cta">Prémium csomag választása</a>
+        <div class="divider"></div>
+        <div class="features">
+          <div class="feat"><span class="check">✓</span><span>Korlátlan oldalszám</span></div>
+          <div class="feat"><span class="check">✓</span><span>Tárhely és SSL benne foglalva</span></div>
+          <div class="feat"><span class="check">✓</span><span>Egyedi integrációk</span></div>
+          <div class="feat"><span class="check">✓</span><span>Negyedéves dizájn-frissítés</span></div>
+          <div class="feat"><span class="check">✓</span><span>Korlátlan módosítás</span></div>
+          <div class="feat"><span class="check">✓</span><span>Telefonos, kiemelt támogatás</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- COMPARISON DETAIL -->
+  <section class="band pricing-note">
+    <div class="pricing-note-inner">
+      <h2>Minden csomag tartalmazza az alapokat</h2>
+      <p>Tárhely, SSL-tanúsítvány, napi mentés, üzemidő-felügyelet és egy valódi ember, akinek írhat — minden csomagban, a Kezdőtől a Prémiumig. A szintek aszerint bővülnek, mennyi dizájnra, tartalomra és folyamatos támogatásra van szüksége vállalkozásának.</p>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section id="faq" class="faq">
+    <div class="container-narrow">
+      <div class="section-head center">
+        <div class="eyebrow">GYIK</div>
+        <h2 class="section-title">Kérdések az árazásról</h2>
+      </div>
+      <div class="faq-list" data-faq>
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="true"><span>Válthatok később csomagot?</span><span class="faq-icon">−</span></button>
+          <p class="faq-a">Igen — bármikor válthat magasabb vagy alacsonyabb szintre, a változás a következő számlázási ciklusban lép életbe.</p>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false"><span>Van beüzemelési díj?</span><span class="faq-icon">+</span></button>
+          <p class="faq-a" hidden>Nincs beüzemelési díj egyik csomagnál sem. A feltüntetett havidíjat fizeti, attól a héttől kezdve, hogy weboldala elindul.</p>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false"><span>Mi számít „módosításnak"?</span><span class="faq-icon">+</span></button>
+          <p class="faq-a" hidden>Szövegváltoztatás, képcsere, új szekciók, apróbb elrendezési igazítások — gyakorlatilag minden, ami nem teljes újratervezés.</p>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false"><span>Van éves számlázás?</span><span class="faq-icon">+</span></button>
+          <p class="faq-a" hidden>Igen, éves fizetéssel 15%-ot spórolhat bármelyik csomagnál — kérdezzen rá regisztrációkor.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="big-cta">
+    <div class="box">
+      <h2>Nem biztos, melyik csomag illik Önhöz?</h2>
+      <p>Meséljen vállalkozásáról, és javasoljuk a megfelelő szintet — nyomás nélkül.</p>
+      <div class="actions">
+        <a href="ajanlatkeres.html" class="btn btn-white">Kérjen személyre szabott ajánlatot</a>
+        <a href="index.html#contact" class="btn btn-ghost-dark">Beszéljen Péterrel</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="footer-grid">
+      <div class="footer-cols">
+        <div class="footer-brand">
+          <div class="brand" style="margin-bottom:14px;">
+            <span class="brand-mark" style="width:30px;height:30px;border-radius:8px;">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="white" aria-hidden="true"><path d="M12 1 C13 8 16 11 23 12 C16 13 13 16 12 23 C11 16 8 13 1 12 C8 11 11 8 12 1 Z"/></svg>
+            </span>
+            <span class="brand-name" style="color:oklch(94% 0.01 90);font-size:19px;">polarisweb</span>
+          </div>
+          <p>Weboldal-tervezési és bérleti szolgáltatás kisvállalkozásoknak, akik inkább a vállalkozásukkal, mint a weboldalukkal foglalkoznának.</p>
+        </div>
+        <div>
+          <div class="footer-heading">Stúdió</div>
+          <div class="footer-list">
+            <a href="index.html">Kezdőlap</a>
+            <a href="portfolio.html">Portfólió</a>
+            <a href="pricing.html">Árak</a>
+            <a href="ajanlatkeres.html">Ajánlatkérés</a>
+          </div>
+        </div>
+        <div>
+          <div class="footer-heading">Kapcsolat</div>
+          <div class="footer-list">
+            <span>hello@polarisweb.hu</span>
+            <span>Veszprémi Péter, alapító</span>
+          </div>
+        </div>
+        <div>
+          <div class="footer-heading">Máshol</div>
+          <div class="footer-list">
+            <a href="#">Instagram</a>
+            <a href="#">LinkedIn</a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© 2026 polarisweb. Minden jog fenntartva.</span>
+        <span>Veszprémben készült</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="assets/js/main.js"></script>
+</body>
+</html>

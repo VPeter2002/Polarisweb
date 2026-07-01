@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; }
+    body { margin: 0; }
+    input[type="radio"], input[type="checkbox"] { accent-color: oklch(48% 0.13 260); width:18px; height:18px; flex-shrink:0; cursor:pointer; }
+  </style>
+</helmet>
+
+<div style="font-family:'Manrope',sans-serif; background:oklch(97% 0.012 90); color:oklch(23% 0.02 50); min-height:100vh;">
+
+  <!-- MINIMAL HEADER -->
+  <header style="border-bottom:1px solid oklch(90% 0.012 90);">
+    <div style="max-width:900px; margin:0 auto; padding:24px 32px; display:flex; align-items:center; justify-content:space-between; gap:24px;">
+      <a href="Home.dc.html" style="display:flex; align-items:center; gap:10px; text-decoration:none;">
+        <div style="width:32px; height:32px; border-radius:9px; background:linear-gradient(135deg, oklch(64% 0.13 260), oklch(72% 0.13 55)); display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="white"><path d="M12 1 C13 8 16 11 23 12 C16 13 13 16 12 23 C11 16 8 13 1 12 C8 11 11 8 12 1 Z"/></svg>
+        </div>
+        <span style="font-family:'Manrope',sans-serif; font-weight:800; font-size:20px; letter-spacing:-0.02em; color:oklch(23% 0.02 50);">polarisweb</span>
+      </a>
+      <a href="Home.dc.html" style="font-size:14px; font-weight:600; color:oklch(48% 0.02 50); text-decoration:none;">← Vissza a főoldalra</a>
+    </div>
+  </header>
+
+  <div style="max-width:760px; margin:0 auto; padding:60px 32px 120px;">
+
+    <!-- INTRO (only shown before submit) -->
+    <sc-if value="{{ notSubmitted }}" hint-placeholder-val="{{ true }}">
+      <div style="text-align:center; margin-bottom:48px;">
+        <div style="font-size:13px; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; color:oklch(48% 0.13 260); margin-bottom:16px;">Ajánlatkérés</div>
+        <h1 style="font-family:'Instrument Serif',serif; font-weight:400; font-size:clamp(32px,4.5vw,48px); line-height:1.1; margin:0 0 16px;">Néhány kérdés, és összeállítjuk ajánlatát</h1>
+        <p style="font-size:17px; line-height:1.6; color:oklch(48% 0.02 50); margin:0;">Öt rövid lépés, kb. 2 perc. A végén elküldheti nekünk, mi pedig 1 munkanapon belül válaszolunk.</p>
+      </div>
+
+      <!-- PROGRESS -->
+      <div style="display:flex; align-items:center; gap:8px; margin-bottom:44px;">
+        <sc-for list="{{ progressDots }}" as="dot" hint-placeholder-count="5">
+          <div style="flex:1; height:6px; border-radius:100px; background:{{ dot.color }};"></div>
+        </sc-for>
+      </div>
+      <div style="font-size:13px; font-weight:700; color:oklch(48% 0.02 50); margin:-32px 0 32px; text-align:right;">{{ stepLabel }}</div>
+
+      <!-- STEP CARD -->
+      <div style="background:oklch(99% 0.006 95); border:1px solid oklch(90% 0.012 90); border-radius:24px; padding:40px;">
+
+        <!-- STEP 1: business type -->
+        <sc-if value="{{ isStep1 }}">
+          <h2 style="font-family:'Instrument Serif',serif; font-weight:400; font-size:26px; margin:0 0 24px;">Milyen jellegű vállalkozása van?</h2>
+          <div style="display:flex; flex-direction:column; gap:12px;">
+            <sc-for list="{{ businessTypes }}" as="opt" hint-placeholder-count="6">
+              <label style="display:flex; align-items:center; gap:14px; padding:16px 18px; border-radius:14px; border:1.5px solid {{ opt.border }}; background:{{ opt.bg }}; cursor:pointer;">
+                <input type="radio" name="businessType" checked="{{ opt.checked }}" onChange="{{ opt.select }}"/>
+                <span style="font-size:15.5px; font-weight:600;">{{ opt.label }}</span>
+              </label>
+            </sc-for>
+          </div>
+        </sc-if>
+
+        <!-- STEP 2: pages -->
+        <sc-if value="{{ isStep2 }}">
+          <h2 style="font-family:'Instrument Serif',serif; font-weight:400; font-size:26px; margin:0 0 8px;">Milyen oldalakra lenne szükség?</h2>
+          <p style="font-size:14.5px; color:oklch(48% 0.02 50); margin:0 0 24px;">Válasszon annyit, amennyi illik — bármikor pontosíthatjuk.</p>
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
+            <sc-for list="{{ pageOptions }}" as="opt" hint-placeholder-count="9">
+              <label style="display:flex; align-items:center; gap:14px; padding:14px 16px; border-radius:14px; border:1.5px solid {{ opt.border }}; background:{{ opt.bg }}; cursor:pointer;">
+                <input type="checkbox" checked="{{ opt.checked }}" onChange="{{ opt.toggle }}"/>
+                <span style="font-size:15px; font-weight:600;">{{ opt.label }}</span>
+              </label>
+            </sc-for>
+          </div>
+        </sc-if>
+
+        <!-- STEP 3: features -->
+        <sc-if value="{{ isStep3 }}">
+          <h2 style="font-family:'Instrument Serif',serif; font-weight:400; font-size:26px; margin:0 0 8px;">Milyen funkciókra lenne szüksége?</h2>
+          <p style="font-size:14.5px; color:oklch(48% 0.02 50); margin:0 0 24px;">Ezek befolyásolják, melyik csomagot javasoljuk.</p>
+          <div style="display:flex; flex-direction:column; gap:12px;">
+            <sc-for list="{{ featureOptions }}" as="opt" hint-placeholder-count="6">
+              <label style="display:flex; align-items:center; gap:14px; padding:16px 18px; border-radius:14px; border:1.5px solid {{ opt.border }}; background:{{ opt.bg }}; cursor:pointer;">
+                <input type="checkbox" checked="{{ opt.checked }}" onChange="{{ opt.toggle }}"/>
+                <span style="font-size:15.5px; font-weight:600;">{{ opt.label }}</span>
+              </label>
+            </sc-for>
+          </div>
+        </sc-if>
+
+        <!-- STEP 4: current site + budget -->
+        <sc-if value="{{ isStep4 }}">
+          <h2 style="font-family:'Instrument Serif',serif; font-weight:400; font-size:26px; margin:0 0 24px;">Néhány gyakorlati kérdés</h2>
+          <div style="display:flex; flex-direction:column; gap:8px; margin-bottom:28px;">
+            <label style="font-size:13px; font-weight:700; color:oklch(35% 0.02 50);">Van már weboldala?</label>
+            <select onChange="{{ setHasSite }}" style="font-family:'Manrope',sans-serif; font-size:15px; padding:14px 16px; border-radius:12px; border:1.5px solid oklch(88% 0.012 90); background:white; outline:none;">
+              <sc-for list="{{ hasSiteOptions }}" as="opt" hint-placeholder-count="3">
+                <option value="{{ opt.value }}" selected="{{ opt.selected }}">{{ opt.label }}</option>
+              </sc-for>
+            </select>
+          </div>
+          <div style="display:flex; flex-direction:column; gap:8px;">
+            <label style="font-size:13px; font-weight:700; color:oklch(35% 0.02 50);">Havi keret weboldalra</label>
+            <select onChange="{{ setBudget }}" style="font-family:'Manrope',sans-serif; font-size:15px; padding:14px 16px; border-radius:12px; border:1.5px solid oklch(88% 0.012 90); background:white; outline:none;">
+              <sc-for list="{{ budgetOptions }}" as="opt" hint-placeholder-count="4">
+                <option value="{{ opt.value }}" selected="{{ opt.selected }}">{{ opt.label }}</option>
+              </sc-for>
+            </select>
+          </div>
+        </sc-if>
+
+        <!-- STEP 5: contact + summary -->
+        <sc-if value="{{ isStep5 }}">
+          <h2 style="font-family:'Instrument Serif',serif; font-weight:400; font-size:26px; margin:0 0 8px;">Elérhetőségei</h2>
+          <p style="font-size:14.5px; color:oklch(48% 0.02 50); margin:0 0 24px;">Utolsó lépés — küldje el, és mi jelentkezünk.</p>
+          <div style="display:flex; flex-direction:column; gap:16px; margin-bottom:28px;">
+            <div style="display:flex; flex-direction:column; gap:6px;">
+              <label style="font-size:13px; font-weight:700; color:oklch(35% 0.02 50);">Név</label>
+              <input type="text" value="{{ name }}" onChange="{{ setName }}" style="font-family:'Manrope',sans-serif; font-size:15px; padding:13px 16px; border-radius:10px; border:1.5px solid oklch(88% 0.012 90); background:white; outline:none;" placeholder="Kiss Anna"/>
+            </div>
+            <div style="display:flex; flex-direction:column; gap:6px;">
+              <label style="font-size:13px; font-weight:700; color:oklch(35% 0.02 50);">Vállalkozás neve</label>
+              <input type="text" value="{{ company }}" onChange="{{ setCompany }}" style="font-family:'Manrope',sans-serif; font-size:15px; padding:13px 16px; border-radius:10px; border:1.5px solid oklch(88% 0.012 90); background:white; outline:none;" placeholder="Kiss és Fiai Vízvezeték-szerelés"/>
+            </div>
+            <div style="display:flex; flex-direction:column; gap:6px;">
+              <label style="font-size:13px; font-weight:700; color:oklch(35% 0.02 50);">E-mail</label>
+              <input type="email" value="{{ email }}" onChange="{{ setEmail }}" style="font-family:'Manrope',sans-serif; font-size:15px; padding:13px 16px; border-radius:10px; border:1.5px solid oklch(88% 0.012 90); background:white; outline:none;" placeholder="anna@kissvizvezetek.hu"/>
+            </div>
+            <div style="display:flex; flex-direction:column; gap:6px;">
+              <label style="font-size:13px; font-weight:700; color:oklch(35% 0.02 50);">Telefonszám (nem kötelező)</label>
+              <input type="tel" value="{{ phone }}" onChange="{{ setPhone }}" style="font-family:'Manrope',sans-serif; font-size:15px; padding:13px 16px; border-radius:10px; border:1.5px solid oklch(88% 0.012 90); background:white; outline:none;" placeholder="+36 30 123 4567"/>
+            </div>
+            <div style="display:flex; flex-direction:column; gap:6px;">
+              <label style="font-size:13px; font-weight:700; color:oklch(35% 0.02 50);">Egyéb megjegyzés (nem kötelező)</label>
+              <textarea rows="3" value="{{ message }}" onChange="{{ setMessage }}" style="font-family:'Manrope',sans-serif; font-size:15px; padding:13px 16px; border-radius:10px; border:1.5px solid oklch(88% 0.012 90); background:white; outline:none; resize:vertical;" placeholder="Bármi, amit fontosnak tart elmondani..."></textarea>
+            </div>
+          </div>
+
+          <div style="background:oklch(97% 0.012 90); border-radius:16px; padding:20px 22px; margin-bottom:8px;">
+            <div style="font-size:13px; font-weight:700; text-transform:uppercase; letter-spacing:0.05em; color:oklch(48% 0.02 50); margin-bottom:10px;">Összegzés</div>
+            <div style="font-size:14.5px; line-height:1.7; color:oklch(35% 0.02 50);">
+              <div><strong>Vállalkozás típusa:</strong> {{ summaryBusinessType }}</div>
+              <div><strong>Kért oldalak:</strong> {{ summaryPages }}</div>
+              <div><strong>Funkciók:</strong> {{ summaryFeatures }}</div>
+              <div><strong>Havi keret:</strong> {{ summaryBudget }}</div>
+            </div>
+          </div>
+        </sc-if>
+
+        <!-- NAV BUTTONS -->
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-top:36px; gap:16px;">
+          <sc-if value="{{ showBack }}">
+            <button onClick="{{ goBack }}" style="all:unset; cursor:pointer; font-size:15px; font-weight:700; color:oklch(23% 0.02 50); padding:14px 22px; border-radius:100px; border:1.5px solid oklch(85% 0.012 90);">← Vissza</button>
+          </sc-if>
+          <sc-if value="{{ showBackPlaceholder }}">
+            <div></div>
+          </sc-if>
+          <sc-if value="{{ showNext }}">
+            <button onClick="{{ goNext }}" disabled="{{ nextDisabled }}" style="{{ nextButtonStyle }}">Tovább →</button>
+          </sc-if>
+          <sc-if value="{{ showSubmit }}">
+            <button onClick="{{ handleSubmit }}" disabled="{{ submitDisabled }}" style="{{ submitButtonStyle }}">Ajánlatkérés elküldése</button>
+          </sc-if>
+        </div>
+      </div>
+    </sc-if>
+
+    <!-- SUCCESS STATE -->
+    <sc-if value="{{ submitted }}">
+      <div style="text-align:center; padding:60px 20px;">
+        <div style="width:64px; height:64px; border-radius:50%; background:oklch(23% 0.02 50); display:flex; align-items:center; justify-content:center; margin:0 auto 28px;">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+        </div>
+        <h1 style="font-family:'Instrument Serif',serif; font-weight:400; font-size:clamp(28px,4vw,40px); margin:0 0 16px;">Köszönjük, {{ name }}!</h1>
+        <p style="font-size:17px; line-height:1.6; color:oklch(48% 0.02 50); max-width:440px; margin:0 auto 32px;">Megkaptuk ajánlatkérését. Péter és csapata 1 munkanapon belül jelentkezik egy személyre szabott javaslattal.</p>
+        <a href="Home.dc.html" style="font-size:16px; font-weight:700; color:white; background:oklch(23% 0.02 50); padding:16px 32px; border-radius:100px; text-decoration:none;">Vissza a főoldalra</a>
+      </div>
+    </sc-if>
+
+  </div>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = {
+    step: 1,
+    businessType: null,
+    pages: {},
+    features: {},
+    hasSite: 'nincs',
+    budget: 'nemtudom',
+    name: '', company: '', email: '', phone: '', message: '',
+    submitted: false,
+  };
+
+  businessTypeList = [
+    { value: 'etterem', label: 'Étterem / kávézó' },
+    { value: 'szepsegszalon', label: 'Szépségszalon / rendelő' },
+    { value: 'vallalkozo', label: 'Vállalkozó / szolgáltató' },
+    { value: 'studio', label: 'Stúdió / kreatív munka' },
+    { value: 'webshop', label: 'Webshop' },
+    { value: 'egyeb', label: 'Egyéb' },
+  ];
+
+  pageList = [
+    { value: 'kezdolap', label: 'Kezdőlap' },
+    { value: 'rolunk', label: 'Rólunk' },
+    { value: 'szolgaltatasok', label: 'Szolgáltatások' },
+    { value: 'arlista', label: 'Árlista' },
+    { value: 'galeria', label: 'Galéria' },
+    { value: 'blog', label: 'Blog' },
+    { value: 'kapcsolat', label: 'Kapcsolat' },
+    { value: 'foglalas', label: 'Online foglalás' },
+    { value: 'webshop', label: 'Webshop' },
+  ];
+
+  featureList = [
+    { value: 'idopont', label: 'Online időpontfoglalás' },
+    { value: 'fizetes', label: 'Fizetés / webshop funkció' },
+    { value: 'tobbnyelvu', label: 'Többnyelvű oldal' },
+    { value: 'hirlevel', label: 'Hírlevél feliratkozás' },
+    { value: 'terkep', label: 'Google térkép beágyazás' },
+    { value: 'kozossegi', label: 'Közösségi média integráció' },
+  ];
+
+  hasSiteList = [
+    { value: 'nincs', label: 'Nincs még weboldalam' },
+    { value: 'van', label: 'Van már weboldalam' },
+    { value: 'kozossegi', label: 'Csak közösségi média oldalam van' },
+  ];
+
+  budgetList = [
+    { value: '20-40', label: '20 000 – 40 000 Ft / hó' },
+    { value: '40-80', label: '40 000 – 80 000 Ft / hó' },
+    { value: '80+', label: '80 000 Ft felett / hó' },
+    { value: 'nemtudom', label: 'Még nem tudom' },
+  ];
+
+  toggleSet(mapKey, value) {
+    this.setState(s => {
+      const next = { ...s[mapKey] };
+      next[value] = !next[value];
+      return { [mapKey]: next };
+    });
+  }
+
+  selectedLabels(list, map) {
+    const labels = list.filter(o => map[o.value]).map(o => o.label);
+    return labels.length ? labels.join(', ') : '—';
+  }
+
+  goNext = () => {
+    if (this.state.step === 1 && !this.state.businessType) return;
+    this.setState(s => ({ step: Math.min(5, s.step + 1) }));
+  };
+
+  goBack = () => {
+    this.setState(s => ({ step: Math.max(1, s.step - 1) }));
+  };
+
+  handleSubmit = () => {
+    if (!this.state.name || !this.state.email) return;
+    this.setState({ submitted: true });
+  };
+
+  renderVals() {
+    const s = this.state;
+
+    const businessTypes = this.businessTypeList.map(o => ({
+      label: o.label,
+      checked: s.businessType === o.value,
+      border: s.businessType === o.value ? 'oklch(48% 0.13 260)' : 'oklch(90% 0.012 90)',
+      bg: s.businessType === o.value ? 'oklch(93% 0.03 260)' : 'oklch(99% 0.006 95)',
+      select: () => this.setState({ businessType: o.value }),
+    }));
+
+    const pageOptions = this.pageList.map(o => ({
+      label: o.label,
+      checked: !!s.pages[o.value],
+      border: s.pages[o.value] ? 'oklch(48% 0.13 260)' : 'oklch(90% 0.012 90)',
+      bg: s.pages[o.value] ? 'oklch(93% 0.03 260)' : 'oklch(99% 0.006 95)',
+      toggle: () => this.toggleSet('pages', o.value),
+    }));
+
+    const featureOptions = this.featureList.map(o => ({
+      label: o.label,
+      checked: !!s.features[o.value],
+      border: s.features[o.value] ? 'oklch(48% 0.13 260)' : 'oklch(90% 0.012 90)',
+      bg: s.features[o.value] ? 'oklch(93% 0.03 260)' : 'oklch(99% 0.006 95)',
+      toggle: () => this.toggleSet('features', o.value),
+    }));
+
+    const hasSiteOptions = this.hasSiteList.map(o => ({ value: o.value, label: o.label, selected: s.hasSite === o.value }));
+    const budgetOptions = this.budgetList.map(o => ({ value: o.value, label: o.label, selected: s.budget === o.value }));
+
+    const progressDots = [1,2,3,4,5].map(n => ({
+      color: n <= s.step ? 'oklch(48% 0.13 260)' : 'oklch(88% 0.012 90)',
+    }));
+
+    const nextDisabled = s.step === 1 && !s.businessType;
+    const submitDisabled = !s.name || !s.email;
+
+    const btnBase = 'font-family:Manrope,sans-serif; font-size:15px; font-weight:700; padding:14px 26px; border-radius:100px; border:none; margin-left:auto;';
+
+    return {
+      notSubmitted: !s.submitted,
+      submitted: s.submitted,
+      step: s.step,
+      isStep1: s.step === 1,
+      isStep2: s.step === 2,
+      isStep3: s.step === 3,
+      isStep4: s.step === 4,
+      isStep5: s.step === 5,
+      stepLabel: s.step + '. lépés / 5',
+      progressDots,
+      businessTypes,
+      pageOptions,
+      featureOptions,
+      hasSiteOptions,
+      budgetOptions,
+      setHasSite: (e) => this.setState({ hasSite: e.target.value }),
+      setBudget: (e) => this.setState({ budget: e.target.value }),
+      name: s.name, company: s.company, email: s.email, phone: s.phone, message: s.message,
+      setName: (e) => this.setState({ name: e.target.value }),
+      setCompany: (e) => this.setState({ company: e.target.value }),
+      setEmail: (e) => this.setState({ email: e.target.value }),
+      setPhone: (e) => this.setState({ phone: e.target.value }),
+      setMessage: (e) => this.setState({ message: e.target.value }),
+      summaryBusinessType: (this.businessTypeList.find(o => o.value === s.businessType) || {}).label || '—',
+      summaryPages: this.selectedLabels(this.pageList, s.pages),
+      summaryFeatures: this.selectedLabels(this.featureList, s.features),
+      summaryBudget: (this.budgetList.find(o => o.value === s.budget) || {}).label || '—',
+      showBack: s.step > 1,
+      showBackPlaceholder: s.step === 1,
+      showNext: s.step < 5,
+      showSubmit: s.step === 5,
+      nextDisabled,
+      submitDisabled,
+      nextButtonStyle: btnBase + (nextDisabled ? 'background:oklch(90% 0.012 90); color:oklch(60% 0.02 50); cursor:not-allowed;' : 'background:oklch(23% 0.02 50); color:white; cursor:pointer;'),
+      submitButtonStyle: btnBase + (submitDisabled ? 'background:oklch(90% 0.012 90); color:oklch(60% 0.02 50); cursor:not-allowed;' : 'background:oklch(48% 0.13 260); color:white; cursor:pointer;'),
+      goNext: this.goNext,
+      goBack: this.goBack,
+      handleSubmit: this.handleSubmit,
+    };
+  }
+}
+
+</script>
+</body>
+</html>

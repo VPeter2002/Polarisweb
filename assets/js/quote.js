@@ -1,0 +1,184 @@
+/* polarisweb — Ajánlatkérés multi-step quote wizard */
+(function () {
+  'use strict';
+
+  var root = document.getElementById('wizardForm');
+  if (!root) return;
+
+  /* ---- Data ---- */
+  var businessTypes = [
+    { value: 'etterem', label: 'Étterem / kávézó' },
+    { value: 'szepsegszalon', label: 'Szépségszalon / rendelő' },
+    { value: 'vallalkozo', label: 'Vállalkozó / szolgáltató' },
+    { value: 'studio', label: 'Stúdió / kreatív munka' },
+    { value: 'webshop', label: 'Webshop' },
+    { value: 'egyeb', label: 'Egyéb' }
+  ];
+  var pages = [
+    { value: 'kezdolap', label: 'Kezdőlap' },
+    { value: 'rolunk', label: 'Rólunk' },
+    { value: 'szolgaltatasok', label: 'Szolgáltatások' },
+    { value: 'arlista', label: 'Árlista' },
+    { value: 'galeria', label: 'Galéria' },
+    { value: 'blog', label: 'Blog' },
+    { value: 'kapcsolat', label: 'Kapcsolat' },
+    { value: 'foglalas', label: 'Online foglalás' },
+    { value: 'webshop', label: 'Webshop' }
+  ];
+  var features = [
+    { value: 'idopont', label: 'Online időpontfoglalás' },
+    { value: 'fizetes', label: 'Fizetés / webshop funkció' },
+    { value: 'tobbnyelvu', label: 'Többnyelvű oldal' },
+    { value: 'hirlevel', label: 'Hírlevél feliratkozás' },
+    { value: 'terkep', label: 'Google térkép beágyazás' },
+    { value: 'kozossegi', label: 'Közösségi média integráció' }
+  ];
+
+  /* ---- State ---- */
+  var state = {
+    step: 1,
+    businessType: null,
+    pages: {},
+    features: {},
+    hasSite: 'nincs',
+    budget: 'nemtudom',
+    name: '', company: '', email: '', phone: '', message: ''
+  };
+
+  /* ---- Elements ---- */
+  var el = {
+    progress: root.querySelector('[data-progress]'),
+    stepLabel: root.querySelector('[data-step-label]'),
+    panels: root.querySelectorAll('.step-panel'),
+    business: root.querySelector('[data-business]'),
+    pages: root.querySelector('[data-pages]'),
+    features: root.querySelector('[data-features]'),
+    back: root.querySelector('[data-back]'),
+    backPlaceholder: root.querySelector('[data-back-placeholder]'),
+    next: root.querySelector('[data-next]'),
+    submit: root.querySelector('[data-submit]'),
+    sumBusiness: root.querySelector('[data-sum-business]'),
+    sumPages: root.querySelector('[data-sum-pages]'),
+    sumFeatures: root.querySelector('[data-sum-features]'),
+    sumBudget: root.querySelector('[data-sum-budget]'),
+    success: document.getElementById('wizardSuccess'),
+    successName: document.querySelector('[data-success-name]')
+  };
+
+  /* ---- Build option elements ---- */
+  function buildRadio(container, list, compact) {
+    list.forEach(function (o) {
+      var label = document.createElement('label');
+      label.className = 'opt' + (compact ? ' compact' : '');
+      label.innerHTML = '<input type="radio" name="businessType" value="' + o.value + '">' +
+        '<span>' + o.label + '</span>';
+      label.querySelector('input').addEventListener('change', function () {
+        state.businessType = o.value;
+        markSelection(container, 'businessType');
+        updateControls();
+      });
+      container.appendChild(label);
+    });
+  }
+
+  function buildChecks(container, list, mapKey, compact) {
+    list.forEach(function (o) {
+      var label = document.createElement('label');
+      label.className = 'opt' + (compact ? ' compact' : '');
+      label.innerHTML = '<input type="checkbox" value="' + o.value + '">' +
+        '<span>' + o.label + '</span>';
+      label.querySelector('input').addEventListener('change', function (e) {
+        state[mapKey][o.value] = e.target.checked;
+        label.classList.toggle('checked', e.target.checked);
+      });
+      container.appendChild(label);
+    });
+  }
+
+  function markSelection(container, key) {
+    container.querySelectorAll('.opt').forEach(function (opt) {
+      var input = opt.querySelector('input');
+      opt.classList.toggle('checked', state[key] === input.value);
+    });
+  }
+
+  buildRadio(el.business, businessTypes, false);
+  buildChecks(el.pages, pages, 'pages', true);
+  buildChecks(el.features, features, 'features', false);
+
+  /* ---- Selects & text inputs ---- */
+  root.querySelector('[data-hassite]').addEventListener('change', function (e) { state.hasSite = e.target.value; });
+  root.querySelector('[data-budget]').addEventListener('change', function (e) { state.budget = e.target.value; });
+  ['name', 'company', 'email', 'phone', 'message'].forEach(function (key) {
+    var input = root.querySelector('[data-' + key + ']');
+    input.addEventListener('input', function (e) {
+      state[key] = e.target.value;
+      if (key === 'name' || key === 'email') updateControls();
+    });
+  });
+
+  /* ---- Summary ---- */
+  function labelsFor(list, map) {
+    var chosen = list.filter(function (o) { return map[o.value]; }).map(function (o) { return o.label; });
+    return chosen.length ? chosen.join(', ') : '—';
+  }
+  var budgetLabels = {
+    '20-40': '20 000 – 40 000 Ft / hó',
+    '40-80': '40 000 – 80 000 Ft / hó',
+    '80+': '80 000 Ft felett / hó',
+    'nemtudom': 'Még nem tudom'
+  };
+  function updateSummary() {
+    var bt = businessTypes.filter(function (o) { return o.value === state.businessType; })[0];
+    el.sumBusiness.textContent = bt ? bt.label : '—';
+    el.sumPages.textContent = labelsFor(pages, state.pages);
+    el.sumFeatures.textContent = labelsFor(features, state.features);
+    el.sumBudget.textContent = budgetLabels[state.budget] || '—';
+  }
+
+  /* ---- Render ---- */
+  function render() {
+    el.panels.forEach(function (p) {
+      p.hidden = parseInt(p.getAttribute('data-step'), 10) !== state.step;
+    });
+    el.progress.querySelectorAll('.dot').forEach(function (dot, i) {
+      dot.classList.toggle('on', (i + 1) <= state.step);
+    });
+    el.stepLabel.textContent = state.step + '. lépés / 5';
+
+    el.back.hidden = state.step <= 1;
+    el.backPlaceholder.hidden = state.step > 1;
+    el.next.hidden = state.step >= 5;
+    el.submit.hidden = state.step < 5;
+
+    if (state.step === 5) updateSummary();
+    updateControls();
+  }
+
+  function updateControls() {
+    el.next.disabled = state.step === 1 && !state.businessType;
+    el.submit.disabled = !state.name.trim() || !state.email.trim();
+  }
+
+  /* ---- Navigation ---- */
+  el.next.addEventListener('click', function () {
+    if (state.step === 1 && !state.businessType) return;
+    state.step = Math.min(5, state.step + 1);
+    render();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+  el.back.addEventListener('click', function () {
+    state.step = Math.max(1, state.step - 1);
+    render();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+  el.submit.addEventListener('click', function () {
+    if (!state.name.trim() || !state.email.trim()) return;
+    el.successName.textContent = state.name.trim();
+    root.hidden = true;
+    el.success.hidden = false;
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+
+  render();
+})();

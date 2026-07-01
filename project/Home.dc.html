@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { margin: 0; }
+    @keyframes floatBlob {
+      0% { transform: translate(0,0) rotate(0deg); }
+      50% { transform: translate(10px,-16px) rotate(6deg); }
+      100% { transform: translate(0,0) rotate(0deg); }
+    }
+  </style>
+</helmet>
+
+<div style="font-family:'Manrope',sans-serif; background:oklch(97% 0.012 90); color:oklch(23% 0.02 50); min-height:100vh; overflow-x:hidden;">
+
+  <!-- NAV -->
+  <header style="position:sticky; top:0; z-index:50; background:oklch(97% 0.012 90 / 0.85); backdrop-filter:blur(10px); border-bottom:1px solid oklch(90% 0.012 90);">
+    <div style="max-width:1240px; margin:0 auto; padding:20px 32px; display:flex; align-items:center; justify-content:space-between; gap:24px;">
+      <a href="Home.dc.html" style="display:flex; align-items:center; gap:10px; text-decoration:none;">
+        <div style="width:32px; height:32px; border-radius:9px; background:linear-gradient(135deg, oklch(64% 0.13 260), oklch(72% 0.13 55)); display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="white"><path d="M12 1 C13 8 16 11 23 12 C16 13 13 16 12 23 C11 16 8 13 1 12 C8 11 11 8 12 1 Z"/></svg>
+        </div>
+        <span style="font-family:'Manrope',sans-serif; font-weight:800; font-size:20px; letter-spacing:-0.02em; color:oklch(23% 0.02 50);">polarisweb</span>
+      </a>
+      <nav style="display:flex; align-items:center; gap:36px;">
+        <a href="Home.dc.html" style="font-size:15px; font-weight:600; color:oklch(23% 0.02 50); text-decoration:none;">Kezdőlap</a>
+        <a href="Portfolio.dc.html" style="font-size:15px; font-weight:600; color:oklch(48% 0.02 50); text-decoration:none;">Portfólió</a>
+        <a href="Pricing.dc.html" style="font-size:15px; font-weight:600; color:oklch(48% 0.02 50); text-decoration:none;">Árak</a>
+        <a href="#faq" style="font-size:15px; font-weight:600; color:oklch(48% 0.02 50); text-decoration:none;">GYIK</a>
+      </nav>
+      <a href="#contact" style="font-size:15px; font-weight:700; color:white; background:oklch(64% 0.13 260); padding:12px 22px; border-radius:100px; text-decoration:none; white-space:nowrap;">Weboldal indítása</a>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section style="max-width:1240px; margin:0 auto; padding:88px 32px 60px; display:grid; grid-template-columns:1.1fr 0.9fr; gap:56px; align-items:center;">
+    <div>
+      <div style="display:inline-flex; align-items:center; gap:8px; background:oklch(99% 0.006 95); border:1px solid oklch(90% 0.012 90); padding:8px 16px; border-radius:100px; font-size:13px; font-weight:700; letter-spacing:0.06em; text-transform:uppercase; color:oklch(48% 0.13 260); margin-bottom:28px;">
+        Weboldal, mint szolgáltatás
+      </div>
+      <h1 style="font-family:'Instrument Serif',serif; font-weight:400; font-size:clamp(40px,5vw,68px); line-height:1.05; margin:0 0 24px; letter-spacing:-0.01em;">
+        Prémium weboldal,<br>bérelve — nem újraépítve.
+      </h1>
+      <p style="font-size:19px; line-height:1.6; color:oklch(48% 0.02 50); max-width:520px; margin:0 0 36px;">
+        Megtervezzük, üzemeltetjük és folyamatosan fejlesztjük weboldaladat egyetlen egyszerű havidíjért. Nincs ügynökségi árajánlat, nincs bővítmény-pánik — csak egy weboldal, ami egyre jobb lesz.
+      </p>
+      <div style="display:flex; align-items:center; gap:20px; flex-wrap:wrap;">
+        <a href="#contact" style="font-size:16px; font-weight:700; color:white; background:oklch(23% 0.02 50); padding:16px 30px; border-radius:100px; text-decoration:none;">Ingyenes makett kérése</a>
+        <a href="Pricing.dc.html" style="font-size:16px; font-weight:700; color:oklch(23% 0.02 50); text-decoration:none; border-bottom:2px solid oklch(23% 0.02 50); padding-bottom:2px;">Árak megtekintése →</a>
+      </div>
+    </div>
+    <div style="position:relative; height:420px; display:flex; align-items:center; justify-content:center;">
+      <div style="position:absolute; width:340px; height:340px; border-radius:42% 58% 65% 35% / 45% 45% 55% 55%; background:radial-gradient(circle at 30% 30%, oklch(74% 0.13 55), oklch(64% 0.13 260) 70%); filter:blur(2px); opacity:0.9; animation:floatBlob 9s ease-in-out infinite;"></div>
+      <div style="position:absolute; width:190px; height:190px; border-radius:60% 40% 55% 45% / 50% 60% 40% 50%; background:oklch(99% 0.006 95); border:1px solid oklch(90% 0.012 90); top:20px; right:20px; box-shadow:0 24px 60px -20px oklch(23% 0.02 50 / 0.25);"></div>
+      <div style="position:relative; width:220px; height:220px; border-radius:50%; background:oklch(23% 0.02 50); display:flex; align-items:center; justify-content:center; box-shadow:0 30px 70px -24px oklch(23% 0.02 50 / 0.5);">
+        <span style="font-family:'Instrument Serif',serif; font-style:italic; font-size:20px; color:oklch(94% 0.01 90); text-align:center; padding:0 24px;">weboldalad élesben 14 nap alatt</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- LOGOS / TRUST STRIP -->
+  <section style="max-width:1240px; margin:0 auto; padding:0 32px 80px;">
+    <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:24px; border-top:1px solid oklch(90% 0.012 90); border-bottom:1px solid oklch(90% 0.012 90); padding:28px 0;">
+      <span style="font-size:13px; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; color:oklch(48% 0.02 50);">Kisvállalkozások bizalma, iparágtól függetlenül</span>
+      <div style="display:flex; gap:32px; flex-wrap:wrap;">
+        <sc-for list="{{ industries }}" as="ind" hint-placeholder-count="5">
+          <span style="font-family:'Instrument Serif',serif; font-size:19px; color:oklch(35% 0.02 50);">{{ ind.name }}</span>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROCESS -->
+  <section style="max-width:1240px; margin:0 auto; padding:20px 32px 100px;">
+    <div style="max-width:600px; margin:0 0 56px;">
+      <div style="font-size:13px; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; color:oklch(48% 0.13 260); margin-bottom:14px;">Hogyan működik</div>
+      <h2 style="font-family:'Instrument Serif',serif; font-weight:400; font-size:clamp(32px,3.6vw,44px); margin:0; line-height:1.1;">Az első hívástól az indulásig, négy nyugodt lépésben</h2>
+    </div>
+    <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:28px;">
+      <sc-for list="{{ steps }}" as="step" hint-placeholder-count="4">
+        <div style="background:oklch(99% 0.006 95); border:1px solid oklch(90% 0.012 90); border-radius:20px; padding:32px 26px; min-height:220px; display:flex; flex-direction:column; gap:16px;">
+          <span style="font-family:'Instrument Serif',serif; font-size:38px; color:oklch(84% 0.05 260);">{{ step.number }}</span>
+          <h3 style="font-size:18px; font-weight:700; margin:0;">{{ step.title }}</h3>
+          <p style="font-size:15px; line-height:1.55; color:oklch(48% 0.02 50); margin:0;">{{ step.desc }}</p>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section style="background:oklch(99% 0.006 95); border-top:1px solid oklch(90% 0.012 90); border-bottom:1px solid oklch(90% 0.012 90); padding:100px 0;">
+    <div style="max-width:1240px; margin:0 auto; padding:0 32px;">
+      <div style="max-width:600px; margin:0 0 56px;">
+        <div style="font-size:13px; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; color:oklch(48% 0.13 260); margin-bottom:14px;">Mit tartalmaz</div>
+        <h2 style="font-family:'Instrument Serif',serif; font-weight:400; font-size:clamp(32px,3.6vw,44px); margin:0; line-height:1.1;">Minden, amire egy jó weboldalnak szüksége van — teher nélkül</h2>
+      </div>
+      <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:24px;">
+        <sc-for list="{{ services }}" as="svc" hint-placeholder-count="6">
+          <div style="background:oklch(97% 0.012 90); border-radius:18px; padding:28px; display:flex; flex-direction:column; gap:14px;">
+            <div style="width:44px; height:44px; border-radius:12px; background:{{ svc.chipBg }};"></div>
+            <h3 style="font-size:17px; font-weight:700; margin:0;">{{ svc.title }}</h3>
+            <p style="font-size:14.5px; line-height:1.55; color:oklch(48% 0.02 50); margin:0;">{{ svc.desc }}</p>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <!-- PORTFOLIO PREVIEW -->
+  <section style="max-width:1240px; margin:0 auto; padding:100px 32px;">
+    <div style="display:flex; align-items:flex-end; justify-content:space-between; gap:24px; flex-wrap:wrap; margin-bottom:44px;">
+      <div style="max-width:600px;">
+        <div style="font-size:13px; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; color:oklch(48% 0.13 260); margin-bottom:14px;">Legutóbbi munkáink</div>
+        <h2 style="font-family:'Instrument Serif',serif; font-weight:400; font-size:clamp(32px,3.6vw,44px); margin:0; line-height:1.1;">Weboldalak, amiket jelenleg bérbe adunk</h2>
+      </div>
+      <a href="Portfolio.dc.html" style="font-size:16px; font-weight:700; color:oklch(23% 0.02 50); text-decoration:none; border-bottom:2px solid oklch(23% 0.02 50); padding-bottom:2px; white-space:nowrap;">Teljes portfólió megtekintése →</a>
+    </div>
+    <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:24px;">
+      <sc-for list="{{ previewProjects }}" as="proj" hint-placeholder-count="3">
+        <a href="Portfolio.dc.html" style="text-decoration:none; color:inherit; display:block;">
+          <div style="border-radius:20px; height:220px; background:{{ proj.gradient }}; margin-bottom:16px;"></div>
+          <div style="font-family:monospace; font-size:12px; letter-spacing:0.04em; text-transform:uppercase; color:oklch(48% 0.02 50); margin-bottom:6px;">{{ proj.tag }}</div>
+          <h3 style="font-size:17px; font-weight:700; margin:0;">{{ proj.name }}</h3>
+        </a>
+      </sc-for>
+    </div>
+  </section>
+
+  <!-- TESTIMONIAL -->
+  <section style="background:oklch(23% 0.02 50); padding:100px 0;">
+    <div style="max-width:840px; margin:0 auto; padding:0 32px; text-align:center;">
+      <p style="font-family:'Instrument Serif',serif; font-style:italic; font-size:clamp(24px,3vw,34px); line-height:1.45; color:oklch(96% 0.01 90); margin:0 0 32px;">
+        „Péter és a csapata mindent elintézett — a dizájnt, a tárhelyet, mindent. Csak szólok, mit szeretnék módosítani, és másnapra élesben van. Végre úgy érzem, a weboldalunk valakinek a munkája, nem az én hobbim."
+      </p>
+      <div style="font-size:15px; font-weight:700; color:oklch(94% 0.01 90);">Kovács Anna</div>
+      <div style="font-size:14px; color:oklch(70% 0.02 50);">Tulajdonos, Kovács Family Bakery</div>
+    </div>
+  </section>
+
+  <!-- PRICING PREVIEW -->
+  <section style="max-width:1240px; margin:0 auto; padding:100px 32px;">
+    <div style="max-width:600px; margin:0 auto 56px; text-align:center;">
+      <div style="font-size:13px; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; color:oklch(48% 0.13 260); margin-bottom:14px;">Egyszerű árazás</div>
+      <h2 style="font-family:'Instrument Serif',serif; font-weight:400; font-size:clamp(32px,3.6vw,44px); margin:0; line-height:1.1;">Egy havidíj. Bármikor lemondható.</h2>
+    </div>
+    <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:24px; max-width:1000px; margin:0 auto;">
+      <sc-for list="{{ pricingPreview }}" as="tier" hint-placeholder-count="3">
+        <div style="background:{{ tier.bg }}; color:{{ tier.color }}; border:1px solid {{ tier.border }}; border-radius:22px; padding:32px 28px; display:flex; flex-direction:column; gap:6px;">
+          <h3 style="font-size:16px; font-weight:700; margin:0 0 6px;">{{ tier.name }}</h3>
+          <div style="font-family:'Instrument Serif',serif; font-size:40px; margin-bottom:4px;">{{ tier.price }}<span style="font-size:15px; font-family:'Manrope',sans-serif; opacity:0.6;">/hó</span></div>
+          <p style="font-size:14px; opacity:0.75; margin:0 0 18px;">{{ tier.blurb }}</p>
+        </div>
+      </sc-for>
+    </div>
+    <div style="text-align:center; margin-top:36px;">
+      <a href="Pricing.dc.html" style="font-size:16px; font-weight:700; color:white; background:oklch(23% 0.02 50); padding:16px 32px; border-radius:100px; text-decoration:none;">Csomagok összehasonlítása</a>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section id="faq" style="background:oklch(99% 0.006 95); border-top:1px solid oklch(90% 0.012 90); border-bottom:1px solid oklch(90% 0.012 90); padding:100px 0;">
+    <div style="max-width:800px; margin:0 auto; padding:0 32px;">
+      <div style="text-align:center; margin-bottom:48px;">
+        <div style="font-size:13px; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; color:oklch(48% 0.13 260); margin-bottom:14px;">GYIK</div>
+        <h2 style="font-family:'Instrument Serif',serif; font-weight:400; font-size:clamp(32px,3.6vw,44px); margin:0; line-height:1.1;">Kérdések, válaszok</h2>
+      </div>
+      <div style="display:flex; flex-direction:column; gap:14px;">
+        <sc-for list="{{ faqs }}" as="item" hint-placeholder-count="5">
+          <div style="background:oklch(97% 0.012 90); border:1px solid oklch(90% 0.012 90); border-radius:16px; padding:24px 26px;">
+            <button onClick="{{ item.toggle }}" style="all:unset; cursor:pointer; display:flex; align-items:center; justify-content:space-between; width:100%; font-size:17px; font-weight:700; color:oklch(23% 0.02 50);">
+              <span>{{ item.q }}</span>
+              <span style="font-size:22px; color:oklch(48% 0.13 260); line-height:1;">{{ item.icon }}</span>
+            </button>
+            <sc-if value="{{ item.isOpen }}">
+              <p style="font-size:15px; line-height:1.6; color:oklch(48% 0.02 50); margin:16px 0 0;">{{ item.a }}</p>
+            </sc-if>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact" style="max-width:1240px; margin:0 auto; padding:100px 32px; display:grid; grid-template-columns:1fr 1fr; gap:64px;">
+    <div>
+      <div style="font-size:13px; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; color:oklch(48% 0.13 260); margin-bottom:14px;">Kezdjük el</div>
+      <h2 style="font-family:'Instrument Serif',serif; font-weight:400; font-size:clamp(32px,3.6vw,44px); margin:0 0 20px; line-height:1.1;">Meséljen a vállalkozásáról</h2>
+      <p style="font-size:17px; line-height:1.6; color:oklch(48% 0.02 50); max-width:440px; margin:0 0 32px;">
+        Egy munkanapon belül válaszolunk egy ingyenes makettel az új weboldaláról — kötelezettség és szakzsargon nélkül.
+      </p>
+      <div style="display:flex; flex-direction:column; gap:16px; font-size:15px;">
+        <div><strong>Stúdióvezető</strong><br><span style="color:oklch(48% 0.02 50);">Veszprémi Péter</span></div>
+        <div><strong>E-mail</strong><br><span style="color:oklch(48% 0.02 50);">hello@polarisweb.hu</span></div>
+        <div><strong>Válaszidő</strong><br><span style="color:oklch(48% 0.02 50);">1 munkanapon belül</span></div>
+      </div>
+    </div>
+    <form onSubmit="{{ handleSubmit }}" style="background:oklch(99% 0.006 95); border:1px solid oklch(90% 0.012 90); border-radius:24px; padding:36px; display:flex; flex-direction:column; gap:18px;">
+      <sc-if value="{{ submitted }}" hint-placeholder-val="{{ false }}">
+        <div style="padding:40px 10px; text-align:center;">
+          <div style="font-family:'Instrument Serif',serif; font-size:26px; margin-bottom:10px;">Köszönjük!</div>
+          <p style="font-size:15px; color:oklch(48% 0.02 50);">Megkaptuk üzenetét, hamarosan jelentkezünk.</p>
+        </div>
+      </sc-if>
+      <sc-if value="{{ notSubmitted }}" hint-placeholder-val="{{ true }}">
+        <div style="display:flex; flex-direction:column; gap:18px;">
+          <div style="display:flex; flex-direction:column; gap:6px;">
+            <label style="font-size:13px; font-weight:700; color:oklch(35% 0.02 50);">Név</label>
+            <input type="text" required="{{ true }}" style="font-family:'Manrope',sans-serif; font-size:15px; padding:13px 16px; border-radius:10px; border:1px solid oklch(88% 0.012 90); background:white; outline:none;" placeholder="Kiss Anna"/>
+          </div>
+          <div style="display:flex; flex-direction:column; gap:6px;">
+            <label style="font-size:13px; font-weight:700; color:oklch(35% 0.02 50);">Vállalkozás és weboldal (ha van)</label>
+            <input type="text" style="font-family:'Manrope',sans-serif; font-size:15px; padding:13px 16px; border-radius:10px; border:1px solid oklch(88% 0.012 90); background:white; outline:none;" placeholder="Kiss és Fiai Vízvezeték-szerelés"/>
+          </div>
+          <div style="display:flex; flex-direction:column; gap:6px;">
+            <label style="font-size:13px; font-weight:700; color:oklch(35% 0.02 50);">E-mail</label>
+            <input type="email" required="{{ true }}" style="font-family:'Manrope',sans-serif; font-size:15px; padding:13px 16px; border-radius:10px; border:1px solid oklch(88% 0.012 90); background:white; outline:none;" placeholder="anna@kissvizvezetek.hu"/>
+          </div>
+          <div style="display:flex; flex-direction:column; gap:6px;">
+            <label style="font-size:13px; font-weight:700; color:oklch(35% 0.02 50);">Mire van szüksége?</label>
+            <textarea rows="4" style="font-family:'Manrope',sans-serif; font-size:15px; padding:13px 16px; border-radius:10px; border:1px solid oklch(88% 0.012 90); background:white; outline:none; resize:vertical;" placeholder="Egy egyszerű, 5 oldalas weboldalt a stúdiómnak..."></textarea>
+          </div>
+          <button type="submit" style="font-family:'Manrope',sans-serif; font-size:16px; font-weight:700; color:white; background:oklch(23% 0.02 50); padding:16px; border-radius:100px; border:none; cursor:pointer; margin-top:8px;">Üzenet küldése</button>
+        </div>
+      </sc-if>
+    </form>
+  </section>
+
+  <!-- FOOTER -->
+  <footer style="background:oklch(20% 0.015 50); color:oklch(94% 0.01 90); padding:72px 0 32px;">
+    <div style="max-width:1240px; margin:0 auto; padding:0 32px;">
+      <div style="display:grid; grid-template-columns:1.4fr 1fr 1fr 1fr; gap:40px; padding-bottom:56px; border-bottom:1px solid oklch(35% 0.015 50);">
+        <div>
+          <div style="display:flex; align-items:center; gap:10px; margin-bottom:14px;">
+            <div style="width:30px; height:30px; border-radius:8px; background:linear-gradient(135deg, oklch(64% 0.13 260), oklch(72% 0.13 55)); display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M12 1 C13 8 16 11 23 12 C16 13 13 16 12 23 C11 16 8 13 1 12 C8 11 11 8 12 1 Z"/></svg>
+            </div>
+            <span style="font-family:'Manrope',sans-serif; font-weight:800; font-size:19px; letter-spacing:-0.02em;">polarisweb</span>
+          </div>
+          <p style="font-size:14.5px; line-height:1.6; color:oklch(70% 0.02 50); max-width:280px;">Weboldal-tervezési és bérleti szolgáltatás kisvállalkozásoknak, akik inkább a vállalkozásukkal, mint a weboldalukkal foglalkoznának.</p>
+        </div>
+        <div>
+          <div style="font-size:13px; font-weight:700; text-transform:uppercase; letter-spacing:0.06em; color:oklch(70% 0.02 50); margin-bottom:16px;">Stúdió</div>
+          <div style="display:flex; flex-direction:column; gap:12px; font-size:14.5px;">
+            <a href="Home.dc.html" style="color:oklch(94% 0.01 90); text-decoration:none;">Kezdőlap</a>
+            <a href="Portfolio.dc.html" style="color:oklch(94% 0.01 90); text-decoration:none;">Portfólió</a>
+            <a href="Pricing.dc.html" style="color:oklch(94% 0.01 90); text-decoration:none;">Árak</a>
+            <a href="Ajanlatkeres.dc.html" style="color:oklch(94% 0.01 90); text-decoration:none;">Ajánlatkérés</a>
+          </div>
+        </div>
+        <div>
+          <div style="font-size:13px; font-weight:700; text-transform:uppercase; letter-spacing:0.06em; color:oklch(70% 0.02 50); margin-bottom:16px;">Kapcsolat</div>
+          <div style="display:flex; flex-direction:column; gap:12px; font-size:14.5px; color:oklch(70% 0.02 50);">
+            <span>hello@polarisweb.hu</span>
+            <span>Veszprémi Péter, alapító</span>
+          </div>
+        </div>
+        <div>
+          <div style="font-size:13px; font-weight:700; text-transform:uppercase; letter-spacing:0.06em; color:oklch(70% 0.02 50); margin-bottom:16px;">Máshol</div>
+          <div style="display:flex; flex-direction:column; gap:12px; font-size:14.5px;">
+            <a href="#" style="color:oklch(94% 0.01 90); text-decoration:none;">Instagram</a>
+            <a href="#" style="color:oklch(94% 0.01 90); text-decoration:none;">LinkedIn</a>
+          </div>
+        </div>
+      </div>
+      <div style="display:flex; justify-content:space-between; padding-top:28px; font-size:13px; color:oklch(60% 0.02 50); flex-wrap:wrap; gap:12px;">
+        <span>© 2026 polarisweb. Minden jog fenntartva.</span>
+        <span>Veszprémben készült</span>
+      </div>
+    </div>
+  </footer>
+
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = { openFaq: 0, submitted: false };
+
+  industries = [
+    { name: 'Éttermek' },
+    { name: 'Fodrászatok' },
+    { name: 'Rendelők' },
+    { name: 'Stúdiók' },
+    { name: 'Vállalkozók' },
+  ];
+
+  steps = [
+    { number: '01', title: 'Ingyenes konzultáció', desc: 'Egy 20 perces hívás, hogy megértsük vállalkozását, és mire van szüksége a weboldalnak.' },
+    { number: '02', title: 'Megtervezzük és megépítjük', desc: 'Csapatunk megtervezi és megépíti weboldalát — két mérföldkőnél Ön is véleményezi.' },
+    { number: '03', title: 'Indulás kb. 14 nap alatt', desc: 'Elintézzük a domaint, a tárhelyet és az élesítést. Önnek csak jóvá kell hagynia a végleges verziót.' },
+    { number: '04', title: 'Folyamatosan fejlesztjük', desc: 'Korlátlan apró módosítás, üzemidő-felügyelet és negyedéves dizájn-frissítés — mind benne van.' },
+  ];
+
+  services = [
+    { title: 'Egyedi dizájn', desc: 'Márkájára szabott weboldal, nem egy sablon.', chipBg: 'oklch(64% 0.13 260)' },
+    { title: 'Tárhely, benne foglalva', desc: 'Gyors, biztonságos tárhely 99,9%-os üzemidővel — nincs külön számla.', chipBg: 'oklch(74% 0.13 55)' },
+    { title: 'Korlátlan szerkesztés', desc: 'Szöveget vagy fotót kell cserélni? Csak szóljon — ez is a csomag része.', chipBg: 'oklch(64% 0.13 260)' },
+    { title: 'SEO alapok', desc: 'Strukturált, gyors oldalak, hogy első naptól megtalálják a Google-ön.', chipBg: 'oklch(74% 0.13 55)' },
+    { title: 'Foglalás és űrlapok', desc: 'Kapcsolati űrlapok, foglalási widgetek, fizetési linkek, beüzemelve.', chipBg: 'oklch(64% 0.13 260)' },
+    { title: 'Negyedéves frissítés', desc: 'Negyedévente átnézzük az adatokat, és javaslunk apró fejlesztéseket.', chipBg: 'oklch(74% 0.13 55)' },
+  ];
+
+  previewProjects = [
+    { tag: 'Étterem · Foglalási oldal', name: 'Kovács Family Bakery', gradient: 'radial-gradient(circle at 30% 20%, oklch(74% 0.13 55), oklch(64% 0.13 260) 80%)' },
+    { tag: 'Rendelő · Időpontfoglaló oldal', name: 'Veszprémi Fogászati Stúdió', gradient: 'radial-gradient(circle at 70% 30%, oklch(64% 0.13 260), oklch(30% 0.05 260) 85%)' },
+    { tag: 'Stúdió · Portfólió oldal', name: 'Fehér Anna Fotográfia', gradient: 'radial-gradient(circle at 40% 70%, oklch(74% 0.13 55), oklch(45% 0.08 55) 85%)' },
+  ];
+
+  pricingPreview = [
+    { name: 'Kezdő', price: '19.900 Ft', blurb: 'Letisztult, egyoldalas weboldal induló vállalkozásoknak.', bg: 'oklch(99% 0.006 95)', color: 'oklch(23% 0.02 50)', border: 'oklch(90% 0.012 90)' },
+    { name: 'Növekedés', price: '42.900 Ft', blurb: 'Több oldalas weboldal foglalással és SEO-val, a legnépszerűbb.', bg: 'oklch(23% 0.02 50)', color: 'oklch(96% 0.01 90)', border: 'oklch(23% 0.02 50)' },
+    { name: 'Prémium', price: '79.900 Ft', blurb: 'Egyedi funkciók, kiemelt támogatás, negyedéves újratervezés.', bg: 'oklch(99% 0.006 95)', color: 'oklch(23% 0.02 50)', border: 'oklch(90% 0.012 90)' },
+  ];
+
+  faqData = [
+    { q: 'Az enyém lesz a weboldal?', a: 'Minden tartalom, szöveg és márkaelem az Öné. Maga a weboldal a mi rendszerünkön fut, amíg előfizet — mintha egy jól karbantartott üzlethelyiséget bérelne, ahelyett hogy egyet felépítene.' },
+    { q: 'Mi történik, ha lemondom?', a: 'Exportáljuk tartalmát, és 30 napot adunk a költözésre. Nincs hosszú távú szerződés — a csomagok havi lemondhatóak.' },
+    { q: 'Milyen gyorsan készülnek a módosítások?', a: 'A legtöbb apró módosítás (szöveg, kép, nyitvatartás) egy munkanapon belül elkészül.' },
+    { q: 'Átköltöztetik a meglévő weboldalamat?', a: 'Igen — a beüzemelés során díjmentesen átépítjük jelenlegi oldalának tartalmát az új csomagba.' },
+    { q: 'Csak Magyarországon dolgoznak?', a: 'Bárhol dolgozunk kisvállalkozásokkal — minden folyamat távolról zajlik, hívás és e-mail útján.' },
+  ];
+
+  toggleFaq(i) {
+    this.setState(s => ({ openFaq: s.openFaq === i ? null : i }));
+  }
+
+  handleSubmit = (e) => {
+    e.preventDefault();
+    this.setState({ submitted: true });
+  };
+
+  renderVals() {
+    return {
+      industries: this.industries,
+      steps: this.steps,
+      services: this.services,
+      previewProjects: this.previewProjects,
+      pricingPreview: this.pricingPreview,
+      faqs: this.faqData.map((f, i) => ({
+        ...f,
+        isOpen: this.state.openFaq === i,
+        icon: this.state.openFaq === i ? '−' : '+',
+        toggle: () => this.toggleFaq(i),
+      })),
+      submitted: this.state.submitted,
+      notSubmitted: !this.state.submitted,
+      handleSubmit: this.handleSubmit,
+    };
+  }
+}
+
+</script>
+</body>
+</html>
