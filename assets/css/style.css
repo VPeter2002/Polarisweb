@@ -209,6 +209,10 @@ a { color: inherit; }
   border-bottom: 1px solid var(--border);
 }
 
+.founder {
+  padding: 100px 32px;
+}
+
 /* ==========================================================================
    HOME
    ========================================================================== */
@@ -823,6 +827,8 @@ a { color: inherit; }
   .services-grid, .cards-3, .pricing-preview-grid,
   .pf-grid .grid, .pricing-table .grid { grid-template-columns: 1fr 1fr; }
   .contact { grid-template-columns: 1fr; gap: 40px; }
+  .founder { padding: 80px 32px; }
+  .founder > div { grid-template-columns: 1fr !important; }
   .footer-cols { grid-template-columns: 1fr 1fr; gap: 32px; }
   .stats-inner { gap: 32px; }
 }
