@@ -1,4 +1,4 @@
-const { escapeHtml, sendEmail } = require('./_lib/mailer');
+const { escapeHtml, isValidEmail, sendEmail } = require('./_lib/mailer');
 
 module.exports = async function handler(req, res) {
   if (req.method !== 'POST') {
@@ -16,6 +16,11 @@ module.exports = async function handler(req, res) {
 
   if (!name || !String(name).trim() || !email || !String(email).trim()) {
     res.status(400).json({ error: 'Név és e-mail cím megadása kötelező.' });
+    return;
+  }
+
+  if (!isValidEmail(email)) {
+    res.status(400).json({ error: 'Kérjük, adjon meg egy érvényes e-mail címet.' });
     return;
   }
 

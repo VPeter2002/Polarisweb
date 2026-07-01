@@ -8,6 +8,10 @@ function escapeHtml(str) {
     .replace(/"/g, '&quot;');
 }
 
+function isValidEmail(value) {
+  return typeof value === 'string' && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value.trim());
+}
+
 async function sendEmail({ subject, html, replyTo }) {
   const apiKey = process.env.RESEND_API_KEY;
   const toEmail = process.env.TO_EMAIL;
@@ -17,19 +21,25 @@ async function sendEmail({ subject, html, replyTo }) {
     throw err;
   }
 
+  const payload = {
+    from: 'polarisweb <onboarding@resend.dev>',
+    to: [toEmail],
+    subject,
+    html,
+  };
+  // Only set reply_to when it's a valid address — an invalid one would
+  // make Resend reject the whole email (422), losing the submission.
+  if (isValidEmail(replyTo)) {
+    payload.reply_to = replyTo.trim();
+  }
+
   const res = await fetch(RESEND_ENDPOINT, {
     method: 'POST',
     headers: {
       Authorization: `Bearer ${apiKey}`,
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify({
-      from: 'polarisweb <onboarding@resend.dev>',
-      to: [toEmail],
-      reply_to: replyTo,
-      subject,
-      html,
-    }),
+    body: JSON.stringify(payload),
   });
 
   if (!res.ok) {
@@ -42,4 +52,4 @@ async function sendEmail({ subject, html, replyTo }) {
   return res.json();
 }
 
-module.exports = { escapeHtml, sendEmail };
+module.exports = { escapeHtml, isValidEmail, sendEmail };
