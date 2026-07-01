@@ -277,6 +277,7 @@ a { color: inherit; }
   border: 1px solid var(--border);
   top: 20px; right: 20px;
   box-shadow: 0 24px 60px -20px oklch(23% 0.02 50 / 0.25);
+  animation: floatBlob 8s ease-in-out infinite
 }
 .hero-disc {
   position: relative;
