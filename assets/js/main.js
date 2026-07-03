@@ -23,19 +23,33 @@
     var items = Array.prototype.slice.call(list.querySelectorAll('.faq-item'));
 
     function closeItem(item) {
+      if (!item.classList.contains('open')) return;
       var answer = item.querySelector('.faq-a');
+      // If it was expanded to 'none', pin the current px height first so it
+      // has something concrete to transition down from.
+      answer.style.maxHeight = answer.scrollHeight + 'px';
+      answer.offsetHeight; // force reflow so the next change animates
       item.classList.remove('open');
       item.querySelector('.faq-q').setAttribute('aria-expanded', 'false');
       item.querySelector('.faq-icon').textContent = '+';
       answer.style.maxHeight = '0px';
     }
+
     function openItem(item) {
       var answer = item.querySelector('.faq-a');
       item.classList.add('open');
       item.querySelector('.faq-q').setAttribute('aria-expanded', 'true');
       item.querySelector('.faq-icon').textContent = '−';
-      // scrollHeight now includes the padding-top added by .open
+      // scrollHeight includes the padding-top added by .open
       answer.style.maxHeight = answer.scrollHeight + 'px';
+      // Once open, drop the fixed cap so the answer can never be clipped
+      // (e.g. after web fonts load and reflow the text taller).
+      var onEnd = function (e) {
+        if (e.propertyName !== 'max-height') return;
+        answer.removeEventListener('transitionend', onEnd);
+        if (item.classList.contains('open')) answer.style.maxHeight = 'none';
+      };
+      answer.addEventListener('transitionend', onEnd);
     }
 
     // Initial state from markup (first item is marked aria-expanded="true").
@@ -43,17 +57,12 @@
       var answer = item.querySelector('.faq-a');
       if (answer) answer.removeAttribute('hidden');
       if (item.querySelector('.faq-q').getAttribute('aria-expanded') === 'true') {
-        openItem(item);
+        item.classList.add('open');
+        answer.style.maxHeight = 'none'; // open on load, no clip, no animation
       } else {
-        closeItem(item);
+        answer.style.maxHeight = '0px';
       }
     });
-
-    // Keep an open answer sized correctly if the viewport reflows it.
-    window.addEventListener('resize', function () {
-      var open = list.querySelector('.faq-item.open .faq-a');
-      if (open) open.style.maxHeight = open.scrollHeight + 'px';
-    }, { passive: true });
 
     items.forEach(function (item) {
       item.querySelector('.faq-q').addEventListener('click', function () {
