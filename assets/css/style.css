@@ -540,14 +540,19 @@ a { color: inherit; }
   color: var(--ink);
   box-sizing: border-box;
 }
-.faq-icon { font-size: 22px; color: var(--accent-strong); line-height: 1; margin-left: 16px; }
+.faq-icon { font-size: 22px; color: var(--accent-strong); line-height: 1; margin-left: 16px; transition: transform .3s cubic-bezier(.2,.7,.2,1); }
 .faq-a {
   font-size: 15px;
   line-height: 1.6;
   color: var(--muted);
-  margin: 16px 0 0;
+  margin: 0;
+  padding-top: 0;
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: max-height .4s cubic-bezier(.2,.7,.2,1), opacity .35s ease, padding-top .35s ease;
 }
-.faq-a[hidden] { display: none; }
+.faq-item.open .faq-a { opacity: 1; padding-top: 16px; }
 
 /* Contact */
 .contact {
@@ -947,8 +952,17 @@ a { color: inherit; }
 .tier-mini { transition: transform .22s ease, box-shadow .22s ease; }
 .tier-mini:hover { transform: translateY(-5px); box-shadow: 0 24px 48px -30px oklch(23% 0.02 50 / 0.42); }
 
+/* Homepage portfolio-preview cards — lift + shadow like the portfolio page.
+   Re-declared here (after .reveal.is-visible) so the hover transform wins. */
+.pf-card .thumb { transition: transform .26s cubic-bezier(.2,.7,.2,1), box-shadow .26s ease; }
+.pf-card:hover .thumb { transform: translateY(-6px); box-shadow: 0 26px 52px -32px oklch(23% 0.02 50 / 0.5); }
 .pf-tag, .pf-card h3 { transition: color .2s ease; }
 .pf-card:hover h3 { color: var(--accent-strong); }
+
+/* Portfolio-page tiles — hover lift must be declared after .reveal.is-visible
+   or the reveal's transform:none would cancel it. */
+.pf-tile { transition: opacity .6s cubic-bezier(.2,.7,.2,1), transform .26s cubic-bezier(.2,.7,.2,1), box-shadow .26s ease, border-color .2s ease; }
+.pf-tile:hover { transform: translateY(-6px); border-color: var(--accent-soft); box-shadow: 0 28px 56px -32px oklch(23% 0.02 50 / 0.5); }
 
 .stat .num { transition: transform .3s cubic-bezier(.2,.7,.2,1); display: inline-block; }
 .stat:hover .num { transform: scale(1.08); }
@@ -956,13 +970,6 @@ a { color: inherit; }
 /* FAQ */
 .faq-item { transition: border-color .2s ease, box-shadow .2s ease; }
 .faq-item:hover { border-color: var(--accent-soft); }
-.faq-icon { transition: transform .25s cubic-bezier(.2,.7,.2,1); }
-.faq-q[aria-expanded="true"] .faq-icon { transform: rotate(180deg); }
-.faq-a:not([hidden]) { animation: faqReveal .32s ease; }
-@keyframes faqReveal {
-  from { opacity: 0; transform: translateY(-6px); }
-  to   { opacity: 1; transform: none; }
-}
 
 /* Form inputs subtle lift on focus already handled; add option hover */
 .opt { transition: border-color .18s ease, background .18s ease, transform .18s ease; }

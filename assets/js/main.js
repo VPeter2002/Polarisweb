@@ -18,27 +18,48 @@
     });
   }
 
-  /* ---- FAQ accordion (single-open) ---- */
+  /* ---- FAQ accordion (single-open, smooth height animation) ---- */
   document.querySelectorAll('[data-faq]').forEach(function (list) {
-    var items = list.querySelectorAll('.faq-item');
-    items.forEach(function (item) {
-      var btn = item.querySelector('.faq-q');
+    var items = Array.prototype.slice.call(list.querySelectorAll('.faq-item'));
+
+    function closeItem(item) {
       var answer = item.querySelector('.faq-a');
-      var icon = item.querySelector('.faq-icon');
-      btn.addEventListener('click', function () {
-        var isOpen = btn.getAttribute('aria-expanded') === 'true';
-        // Close all
-        items.forEach(function (other) {
-          other.querySelector('.faq-q').setAttribute('aria-expanded', 'false');
-          other.querySelector('.faq-a').hidden = true;
-          other.querySelector('.faq-icon').textContent = '+';
-        });
-        // Toggle current
-        if (!isOpen) {
-          btn.setAttribute('aria-expanded', 'true');
-          answer.hidden = false;
-          icon.textContent = '−';
-        }
+      item.classList.remove('open');
+      item.querySelector('.faq-q').setAttribute('aria-expanded', 'false');
+      item.querySelector('.faq-icon').textContent = '+';
+      answer.style.maxHeight = '0px';
+    }
+    function openItem(item) {
+      var answer = item.querySelector('.faq-a');
+      item.classList.add('open');
+      item.querySelector('.faq-q').setAttribute('aria-expanded', 'true');
+      item.querySelector('.faq-icon').textContent = '−';
+      // scrollHeight now includes the padding-top added by .open
+      answer.style.maxHeight = answer.scrollHeight + 'px';
+    }
+
+    // Initial state from markup (first item is marked aria-expanded="true").
+    items.forEach(function (item) {
+      var answer = item.querySelector('.faq-a');
+      if (answer) answer.removeAttribute('hidden');
+      if (item.querySelector('.faq-q').getAttribute('aria-expanded') === 'true') {
+        openItem(item);
+      } else {
+        closeItem(item);
+      }
+    });
+
+    // Keep an open answer sized correctly if the viewport reflows it.
+    window.addEventListener('resize', function () {
+      var open = list.querySelector('.faq-item.open .faq-a');
+      if (open) open.style.maxHeight = open.scrollHeight + 'px';
+    }, { passive: true });
+
+    items.forEach(function (item) {
+      item.querySelector('.faq-q').addEventListener('click', function () {
+        var wasOpen = item.classList.contains('open');
+        items.forEach(closeItem);
+        if (!wasOpen) openItem(item);
       });
     });
   });
