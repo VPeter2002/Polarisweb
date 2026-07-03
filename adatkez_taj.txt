@@ -1,0 +1,49 @@
+ADATKEZELÉSI TÁJÉKOZTATÓ
+(Ügyféli adatok kezelésére vonatkozó szabályzat)
+Hatályos: 2026. 07.01.-tól
+1. Bevezetés és az Adatkezelő adatai
+Jelen tájékoztató célja, hogy rögzítse Veszprémi Péter E.V. (a továbbiakban: Adatkezelő) által alkalmazott adatvédelmi és adatkezelési irányelveket, amelyeket az Adatkezelő magára nézve kötelezőnek ismer el . Az Adatkezelő kötelezettséget vállal arra, hogy tevékenységével kapcsolatos minden adatkezelés megfelel az Európai Parlament és a Tanács (EU) 2016/679 rendeletének (GDPR), valamint a 2011. évi CXII. törvénynek (Infotv.) .
+Az Adatkezelő megnevezése és elérhetőségei ``:
+•	Név: Veszprémi Péter E.V. egyéni vállalkozó
+•	Székhely: 9522, Kemenesmagasi, Petőfi Sándor utca 15.
+•	Adószám: 91513195-1-38
+•	Nyilvántartási szám: 61315729
+•	E-mail cím: peter.veszpremi2002@gmail.com
+•	Telefonszám: +36706713002
+2. A kezelt személyes adatok köre, célja, jogalapja és az adatkezelés időtartama ``
+Az Adatkezelő kizárólag olyan személyes adatokat kezel, amelyek az alábbi célok eléréséhez feltétlenül szükségesek.
+A) Kapcsolatfelvétel és ajánlatkérés (a weboldalon vagy e-mailben)
+•	Kezelt adatok köre: Név (szervezet neve), e-mail cím, telefonszám, valamint az üzenetben önkéntesen megadott egyéb személyes adatok ``.
+•	Az adatkezelés célja: Az érdeklődőkkel való üzleti kapcsolattartás, egyedi ajánlatok kidolgozása és megküldése.
+•	Az adatkezelés jogalapja: Az érintett önkéntes hozzájárulása (GDPR 6. cikk (1) bekezdés a) pont) vagy a szerződéskötést megelőző lépések megtétele (GDPR 6. cikk (1) bekezdés b) pont).
+•	Az adatkezelés időtartama: Az ajánlati kötöttség lejártáig, vagy ha nem jön létre szerződés, az adatok törlésre kerülnek az érintett hozzájárulásának visszavonásakor, de legkésőbb a kapcsolatfelvételt követő 1 éven belül ``.
+B) Szerződéskötés, teljesítés és számlázás
+•	Kezelt adatok köre: Név, számlázási cím, adószám (egyéni vállalkozók esetén), bankszabad-szám, kapcsolattartó neve, e-mail címe és telefonszáma ``.
+•	Az adatkezelés célja: A megkötött Egyedi Szolgáltatási Szerződés teljesítése, a szolgáltatás nyújtása, valamint a jogszabályi (számviteli és adózási) kötelezettségek teljesítése.
+•	Az adatkezelés jogalapja: A szerződés teljesítése (GDPR 6. cikk (1) bekezdés b) pont) és az Adatkezelőre vonatkozó jogi kötelezettségek teljesítése (GDPR 6. cikk (1) bekezdés c) pont – pl. a számvitelről szóló 2000. évi C. törvény alapján).
+•	Az adatkezelés időtartama: A számviteli bizonylatokat a Számviteli törvény 169. § (2) bekezdése alapján 8 évig kell megőrizni. Az egyéb szerződéses adatokat a Polgári Törvénykönyv szerinti elévülési idő (5 év) leteltéig kezeljük.
+3. Adatfeldolgozók köre
+Az Adatkezelő a feladatai ellátásához, valamint a szerződések zökkenőmentes teljesítéséhez az alábbi adatfeldolgozókat veszi igénybe:
+1.	Számlázási rendszer szolgáltatója: Billingo.hu – Feladata: Elektronikus számlák kiállítása és kiküldése.
+2.	Tárhely- és szerverszolgáltató: Resend.com, Vercel.com, Supabase.com, CloudeFlare.com – Feladata: Az Adatkezelő weboldalának és levelezőrendszerének biztonságos tárolása és üzemeltetése.
+4. Az Érintettek jogai és érvényesítésük ``
+A személyes adatok tulajdonosaként (Érintettként) téged az alábbi jogok illetnek meg a GDPR szerint:
+•	Hozzáférés joga (Art. 15): Jogod van tájékoztatást kérni arról, hogy kezeljük-e a személyes adataidat, és ha igen, hozzáférést kaphatsz ezekhez az adatokhoz ``.
+•	Helyesbítés joga (Art. 16): Kérheted a pontatlan vagy elavult személyes adataid javítását, kiegészítését.
+•	Törlés joga ("elfeledtetés") (Art. 17): Kérheted adataid törlését, kivéve, ha az adatkezelést jogi kötelezettség (pl. számlamegőrzés) írja elő számunkra ``.
+•	Korlátozás joga (Art. 18): Kérheted az adatkezelés korlátozását (például ha vitatod az adatok pontosságát, a tisztázás idejéig).
+•	Adathordozhatóság joga (Art. 20): Jogod van a rád vonatkozó adatokat tagolt, géppel olvasható formátumban megkapni és egy másik adatkezelőnek továbbítani.
+•	Tiltakozás joga (Art. 21): Tiltakozhatsz a személyes adataid kezelése ellen, ha az adatkezelés alapja az Adatkezelő jogos érdeke.
+Ezen jogaidat a peter.veszpremi2002@gmail.com e-mail címre küldött írásbeli kérelemmel bármikor ingyenesen gyakorolhatod. Az Adatkezelő a kérelem beérkezésétől számított legfeljebb 30 napon belül köteles válaszolni.
+5. Jogorvoslati lehetőségek
+Amennyiben úgy ítéled meg, hogy személyes adataid kezelése során jogsérelem ért, az alábbi lépéseket teheted meg ``:
+1.	Vedd fel velünk a kapcsolatot: Kérjük, elsőként jelezd felénk a problémát az elérhetőségeinken, hogy azonnal orvosolni tudjuk azt.
+2.	NAIH eljárás kezdeményezése: Panaszt nyújthatsz be a hatósághoz ``:
+o	Név: Nemzeti Adatvédelmi és Információszabadság Hatóság (NAIH) ``
+o	Cím: 1055 Budapest, Falk Miksa utca 9-11. (Levelezési cím: 1363 Budapest, Pf. 9.) ``
+o	E-mail: ugyfelszolgalat@naih.hu
+o	Honlap: www.naih.hu
+3.	Bírósági jogorvoslat: Jogosult vagy bírósághoz fordulni. A per elbírálása a lakóhelyed vagy tartózkodási helyed szerinti törvényszék hatáskörébe tartozik.
+6. Adatbiztonság ``
+Az Adatkezelő kijelenti, hogy az adatbiztonság és az adatok integritásának megőrzése érdekében végrehajtotta a szükséges technikai és szervezési intézkedéseket ``. Az adatokhoz kizárólag az Adatkezelő férhet hozzá, az elektronikus rendszereket erős jelszóval, kétlépcsős azonosítással (2FA) és SSL titkosítással védi.
+
