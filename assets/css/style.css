@@ -39,7 +39,7 @@
 }
 
 * { box-sizing: border-box; }
-html { scroll-behavior: smooth; }
+html { scroll-behavior: smooth; overflow-x: hidden; }
 body {
   margin: 0;
   font-family: var(--sans);
@@ -155,7 +155,7 @@ a { color: inherit; }
   color: var(--ink);
 }
 .nav-links { display: flex; align-items: center; gap: 36px; }
-.nav-links a {
+.nav-links a:not(.nav-cta) {
   position: relative;
   font-size: 15px;
   font-weight: 600;
@@ -163,7 +163,7 @@ a { color: inherit; }
   text-decoration: none;
   transition: color .15s ease;
 }
-.nav-links a::after {
+.nav-links a:not(.nav-cta)::after {
   content: '';
   position: absolute;
   left: 0; bottom: -6px;
@@ -174,15 +174,23 @@ a { color: inherit; }
   transform-origin: left;
   transition: transform .28s cubic-bezier(.2,.7,.2,1);
 }
-.nav-links a:hover::after, .nav-links a.active::after { transform: scaleX(1); }
-.nav-links a:hover { color: var(--ink); }
-.nav-links a.active { color: var(--ink); }
+.nav-links a:not(.nav-cta):hover::after, .nav-links a.active:not(.nav-cta)::after { transform: scaleX(1); }
+.nav-links a:not(.nav-cta):hover { color: var(--ink); }
+.nav-links a.active:not(.nav-cta) { color: var(--ink); }
+/* CTA lives inside .nav-links so it collapses into the same mobile dropdown;
+   margin-left nudges it away from the last plain link on desktop. */
+.nav-links .nav-cta { margin-left: 4px; }
 
 .nav-toggle {
   display: none;
   background: none; border: none; cursor: pointer;
   padding: 8px; color: var(--ink);
+  border-radius: 8px;
+  transition: background .2s ease;
 }
+.nav-toggle:hover { background: oklch(90% 0.012 90 / 0.6); }
+.nav-toggle svg { transition: transform .3s cubic-bezier(.2,.7,.2,1); display: block; }
+.nav-toggle[aria-expanded="true"] svg { transform: rotate(90deg); }
 
 /* ---------- Footer -------------------------------------------------------- */
 .site-footer {
@@ -1023,22 +1031,40 @@ a { color: inherit; }
   .stats-inner { gap: 32px; }
 }
 
-@media (max-width: 680px) {
-  .container, .hero, .trust, .section, .contact,
-  .nav-inner, .footer-grid, .pf-grid, .pricing-table { padding-left: 20px; padding-right: 20px; }
-  .nav-links { display: none; }
-  .nav-links.open {
-    display: flex;
+/* Navbar collapses to a hamburger well before the 5 links + CTA button
+   run out of room (that used to only happen at 680px, leaving a broken,
+   overflowing bar between ~680-920px). The dropdown uses a generous
+   max-height cap (not a measured one) — safe here because the item count
+   is fixed and short, unlike free-form text (see the FAQ's grid-rows
+   technique for why measured heights are avoided elsewhere). */
+@media (max-width: 900px) {
+  .nav-links {
     position: absolute;
     top: 100%; left: 0; right: 0;
     flex-direction: column;
-    align-items: flex-start;
+    align-items: stretch;
     gap: 18px;
     background: var(--bg);
     border-bottom: 1px solid var(--border);
+    padding: 0 20px;
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+    transition: max-height .38s cubic-bezier(.2,.7,.2,1), opacity .3s ease, padding .38s ease;
+  }
+  .nav-links.open {
+    max-height: 480px;
+    opacity: 1;
     padding: 22px 20px 26px;
   }
+  .nav-links a:not(.nav-cta) { padding: 4px 0; }
+  .nav-links .nav-cta { margin: 4px 0 0; text-align: center; }
   .nav-toggle { display: inline-flex; }
+}
+
+@media (max-width: 680px) {
+  .container, .hero, .trust, .section, .contact,
+  .nav-inner, .footer-grid, .pf-grid, .pricing-table { padding-left: 20px; padding-right: 20px; }
   .steps-grid, .services-grid, .cards-3,
   .pricing-preview-grid, .pf-grid .grid,
   .pricing-table .grid, .opt-grid { grid-template-columns: 1fr; }
@@ -1048,4 +1074,15 @@ a { color: inherit; }
   .tier.featured { order: -1; }
   .step-card { padding: 28px 22px; }
   .form-card { padding: 28px 22px; }
+  .wizard-nav { flex-wrap: wrap; }
+  .billing-toggle .switch { flex-wrap: wrap; justify-content: center; }
+  .big-cta .box, .pricing-note-inner, .legal-wrap { padding-left: 20px; padding-right: 20px; }
+}
+
+@media (max-width: 420px) {
+  .blob { width: 260px; height: 260px; }
+  .hero-disc { width: 180px; height: 180px; }
+  .hero-disc span { font-size: 17px; padding: 0 18px; }
+  .blob-small { width: 150px; height: 150px; }
+  .footer-cols { grid-template-columns: 1fr; }
 }
