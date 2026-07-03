@@ -131,4 +131,49 @@
       });
     });
   }
+
+  var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ---- Sticky header shadow on scroll ---- */
+  var header = document.querySelector('.site-header');
+  if (header) {
+    var onScroll = function () {
+      header.classList.toggle('scrolled', window.scrollY > 8);
+    };
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+  }
+
+  /* ---- Scroll-reveal ---- */
+  if (!reduceMotion && 'IntersectionObserver' in window) {
+    var revealSelector = [
+      '.section-head', '.step-card', '.service-card', '.pf-card', '.pf-tile',
+      '.tier', '.tier-mini', '.faq-item', '.founder', '.stat',
+      '.testimonial-inner', '.big-cta .box', '.pricing-note-inner',
+      '.cta-center', '.trust-inner', '.legal h2', '.legal .info-card'
+    ].join(', ');
+
+    var revealEls = Array.prototype.slice.call(document.querySelectorAll(revealSelector));
+    revealEls.forEach(function (el) { el.classList.add('reveal'); });
+    // Stagger cards that sit next to identical siblings (grids).
+    revealEls.forEach(function (el) {
+      var base = el.classList[0];
+      var idx = 0, sib = el;
+      while ((sib = sib.previousElementSibling)) {
+        if (sib.classList && sib.classList.contains(base) && sib.classList.contains('reveal')) idx++;
+      }
+      if (idx > 0) el.style.transitionDelay = Math.min(idx * 70, 350) + 'ms';
+    });
+
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+    revealEls.forEach(function (el) { io.observe(el); });
+  }
 })();
