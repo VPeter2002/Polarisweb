@@ -1,4 +1,5 @@
 const { escapeHtml, isValidEmail, sendEmail } = require('./_lib/mailer');
+const { quoteAutoReply } = require('./_lib/templates');
 
 module.exports = async function handler(req, res) {
   if (req.method !== 'POST') {
@@ -53,6 +54,19 @@ module.exports = async function handler(req, res) {
       html,
       replyTo: email,
     });
+
+    try {
+      const autoReply = quoteAutoReply({ name });
+      await sendEmail({
+        to: [email],
+        subject: autoReply.subject,
+        html: autoReply.html,
+        replyTo: 'peter.veszpremi@polarisweb.hu',
+      });
+    } catch (autoReplyErr) {
+      console.error('send-quote auto-reply error:', autoReplyErr);
+    }
+
     res.status(200).json({ ok: true });
   } catch (err) {
     console.error('send-quote handler error:', err);

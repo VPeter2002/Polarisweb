@@ -12,7 +12,7 @@ function isValidEmail(value) {
   return typeof value === 'string' && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value.trim());
 }
 
-async function sendEmail({ subject, html, replyTo }) {
+async function sendEmail({ subject, html, replyTo, to }) {
   const apiKey = process.env.RESEND_API_KEY;
   const toEmail = process.env.TO_EMAIL;
   if (!apiKey || !toEmail) {
@@ -23,7 +23,7 @@ async function sendEmail({ subject, html, replyTo }) {
 
   const payload = {
     from: 'polarisweb <noreply@polarisweb.hu>',
-    to: [toEmail],
+    to: to || [toEmail],
     subject,
     html,
   };

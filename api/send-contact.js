@@ -1,4 +1,5 @@
 const { escapeHtml, isValidEmail, sendEmail } = require('./_lib/mailer');
+const { contactAutoReply } = require('./_lib/templates');
 
 module.exports = async function handler(req, res) {
   if (req.method !== 'POST') {
@@ -39,6 +40,19 @@ module.exports = async function handler(req, res) {
       html,
       replyTo: email,
     });
+
+    try {
+      const autoReply = contactAutoReply({ name });
+      await sendEmail({
+        to: [email],
+        subject: autoReply.subject,
+        html: autoReply.html,
+        replyTo: 'peter.veszpremi@polarisweb.hu',
+      });
+    } catch (autoReplyErr) {
+      console.error('send-contact auto-reply error:', autoReplyErr);
+    }
+
     res.status(200).json({ ok: true });
   } catch (err) {
     console.error('send-contact handler error:', err);
