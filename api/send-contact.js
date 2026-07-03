@@ -26,7 +26,7 @@ module.exports = async function handler(req, res) {
   }
 
   const html = `
-    <h2>Új üzenet a kapcsolati űrlapról — polarisweb</h2>
+    <h2>Új üzenet a kapcsolati űrlapról — Polarisweb</h2>
     <p><strong>Név:</strong> ${escapeHtml(name)}</p>
     <p><strong>Vállalkozás és weboldal:</strong> ${escapeHtml(company || '—')}</p>
     <p><strong>E-mail:</strong> ${escapeHtml(email)}</p>

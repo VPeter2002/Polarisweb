@@ -1,50 +1,120 @@
 const { escapeHtml } = require('./mailer');
 
-function wrapEmail(bodyHtml) {
-  return `<!DOCTYPE html>
-<html>
+/* Site palette (oklch → hex approximations from assets/css/style.css) */
+const C = {
+  bg: '#f4f1ea',        // --bg warm cream
+  surface: '#fffdf9',   // --surface
+  ink: '#2c2620',       // --ink warm near-black
+  ink2: '#4a423b',      // --ink-2
+  muted: '#7a7168',     // --muted
+  border: '#e7e2d8',    // --border
+  accent: '#5b5ff0',    // --accent blue-violet
+  accentStrong: '#4548c9', // --accent-strong
+  accentTint: '#ececfb',   // --accent-tint
+  warm: '#e79a5c',      // --warm orange
+};
+
+/**
+ * Renders the shared email shell. Table-based + inline styles so it survives
+ * Gmail / Outlook / Apple Mail, which strip most <style> blocks.
+ *
+ * @param {object} opts
+ * @param {string} opts.eyebrow  Small uppercase label above the heading
+ * @param {string} opts.heading  Serif greeting (already escaped)
+ * @param {string} opts.intro    Lead paragraph HTML
+ * @param {string} opts.nextTitle  Title of the "what happens next" card
+ * @param {string} opts.nextBody   Body of that card
+ */
+function wrapEmail({ eyebrow, heading, intro, nextTitle, nextBody }) {
+  return `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="hu">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <style>
-    body { margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Manrope', Roboto, sans-serif; background: #f8f8f8; }
-    .wrapper { max-width: 600px; margin: 0 auto; background: #fff; }
-    .header { padding: 40px 32px 24px; background: linear-gradient(135deg, #fafafa 0%, #fff 100%); border-bottom: 1px solid #efefef; }
-    .brand-logo { display: flex; align-items: center; gap: 12px; }
-    .mark { width: 40px; height: 40px; border-radius: 10px; background: linear-gradient(135deg, #6366f1 0%, #f59e0b 100%); display: flex; align-items: center; justify-content: center; color: white; font-weight: 900; font-size: 20px; flex-shrink: 0; }
-    .brand-text { font-size: 22px; font-weight: 800; color: #1a1a1a; letter-spacing: -0.02em; margin: 0; }
-    .content { padding: 48px 32px 40px; color: #3a3a3a; line-height: 1.8; }
-    .content h2 { font-family: 'Instrument Serif', Georgia, serif; font-size: 32px; font-weight: 400; margin: 0 0 20px 0; color: #1a1a1a; letter-spacing: -0.005em; }
-    .content p { margin: 0 0 16px 0; font-size: 16px; color: #555; }
-    .eyebrow { font-size: 12px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: #6366f1; margin-bottom: 12px; }
-    .footer { padding: 32px; border-top: 1px solid #efefef; background: #fafafa; font-size: 13px; color: #999; line-height: 1.6; }
-    .footer p { margin: 0 0 8px 0; }
-    .footer strong { color: #555; }
-    @media (max-width: 480px) {
-      .wrapper { width: 100%; }
-      .header { padding: 32px 24px 20px; }
-      .content { padding: 32px 24px; }
-      .content h2 { font-size: 24px; }
-      .footer { padding: 24px; }
-    }
-  </style>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="color-scheme" content="light only">
+  <title>Polarisweb</title>
 </head>
-<body>
-  <div class="wrapper">
-    <div class="header">
-      <div class="brand-logo">
-        <div class="mark">★</div>
-        <div class="brand-text">polarisweb</div>
-      </div>
-    </div>
-    <div class="content">
-      ${bodyHtml}
-    </div>
-    <div class="footer">
-      <p>Ezt az e-mailt a <strong>noreply@polarisweb.hu</strong> cím küldte. Ha válaszol, Veszprémi Péter kapja meg üzenetét.</p>
-      <p>© 2026 polarisweb. Minden jog fenntartva.</p>
-    </div>
-  </div>
+<body style="margin:0; padding:0; background:${C.bg}; -webkit-font-smoothing:antialiased;">
+  <!-- preheader (hidden preview text) -->
+  <div style="display:none; max-height:0; overflow:hidden; opacity:0;">${escapeHtml(nextTitle)} — Polarisweb</div>
+
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background:${C.bg};">
+    <tr>
+      <td align="center" style="padding:40px 16px;">
+
+        <!-- Card -->
+        <table role="presentation" width="600" cellpadding="0" cellspacing="0" border="0" style="width:600px; max-width:600px; background:${C.surface}; border:1px solid ${C.border}; border-radius:20px; overflow:hidden;">
+
+          <!-- Header -->
+          <tr>
+            <td style="padding:36px 40px 28px 40px; border-bottom:1px solid ${C.border};">
+              <table role="presentation" cellpadding="0" cellspacing="0" border="0">
+                <tr>
+                  <td style="vertical-align:middle;">
+                    <table role="presentation" cellpadding="0" cellspacing="0" border="0"><tr>
+                      <td style="width:40px; height:40px; border-radius:11px; background:linear-gradient(135deg,${C.accent},${C.warm}); text-align:center; vertical-align:middle; font-size:22px; line-height:40px; color:#ffffff; font-weight:700;">&#10022;</td>
+                      <td style="padding-left:12px; vertical-align:middle; font-family:'Manrope',Segoe UI,Helvetica,Arial,sans-serif; font-size:21px; font-weight:800; letter-spacing:-0.02em; color:${C.ink};">Polarisweb</td>
+                    </tr></table>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <!-- Body -->
+          <tr>
+            <td style="padding:44px 40px 8px 40px;">
+              <div style="font-family:'Manrope',Segoe UI,Helvetica,Arial,sans-serif; font-size:12px; font-weight:700; letter-spacing:0.09em; text-transform:uppercase; color:${C.accentStrong}; margin-bottom:14px;">${escapeHtml(eyebrow)}</div>
+              <h1 style="margin:0 0 22px 0; font-family:Georgia,'Times New Roman',serif; font-size:34px; line-height:1.15; font-weight:400; letter-spacing:-0.01em; color:${C.ink};">${heading}</h1>
+              <p style="margin:0 0 18px 0; font-family:'Manrope',Segoe UI,Helvetica,Arial,sans-serif; font-size:16px; line-height:1.75; color:${C.ink2};">${intro}</p>
+            </td>
+          </tr>
+
+          <!-- "What happens next" card -->
+          <tr>
+            <td style="padding:16px 40px 8px 40px;">
+              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background:${C.accentTint}; border-radius:14px;">
+                <tr>
+                  <td style="padding:22px 24px;">
+                    <div style="font-family:'Manrope',Segoe UI,Helvetica,Arial,sans-serif; font-size:14px; font-weight:800; color:${C.accentStrong}; margin-bottom:6px;">${escapeHtml(nextTitle)}</div>
+                    <div style="font-family:'Manrope',Segoe UI,Helvetica,Arial,sans-serif; font-size:15px; line-height:1.65; color:${C.ink2};">${nextBody}</div>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <!-- Signature -->
+          <tr>
+            <td style="padding:28px 40px 40px 40px;">
+              <table role="presentation" cellpadding="0" cellspacing="0" border="0"><tr>
+                <td style="width:44px; height:44px; border-radius:50%; background:linear-gradient(135deg,${C.accent},${C.warm}); text-align:center; vertical-align:middle; font-family:'Manrope',Segoe UI,Helvetica,Arial,sans-serif; font-size:18px; font-weight:800; color:#ffffff; line-height:44px;">VP</td>
+                <td style="padding-left:14px; vertical-align:middle;">
+                  <div style="font-family:'Manrope',Segoe UI,Helvetica,Arial,sans-serif; font-size:15px; font-weight:700; color:${C.ink};">Veszprémi Péter</div>
+                  <div style="font-family:'Manrope',Segoe UI,Helvetica,Arial,sans-serif; font-size:13px; color:${C.muted};">Alapító · Polarisweb</div>
+                  <a href="mailto:peter.veszpremi@polarisweb.hu" style="font-family:'Manrope',Segoe UI,Helvetica,Arial,sans-serif; font-size:13px; color:${C.accentStrong}; text-decoration:none; font-weight:600;">peter.veszpremi@polarisweb.hu</a>
+                </td>
+              </tr></table>
+            </td>
+          </tr>
+
+        </table>
+
+        <!-- Footer -->
+        <table role="presentation" width="600" cellpadding="0" cellspacing="0" border="0" style="width:600px; max-width:600px;">
+          <tr>
+            <td style="padding:24px 40px; text-align:center; font-family:'Manrope',Segoe UI,Helvetica,Arial,sans-serif; font-size:12px; line-height:1.7; color:${C.muted};">
+              Ezt az e-mailt a <strong style="color:${C.ink2};">noreply@polarisweb.hu</strong> cím küldte automatikusan.<br>
+              Ha válaszol rá, Veszprémi Péter kapja meg üzenetét.<br>
+              <span style="color:#b8b0a6;">© 2026 Polarisweb · Minden jog fenntartva</span>
+            </td>
+          </tr>
+        </table>
+
+      </td>
+    </tr>
+  </table>
 </body>
 </html>`;
 }
@@ -52,36 +122,28 @@ function wrapEmail(bodyHtml) {
 function contactAutoReply({ name }) {
   const safeName = escapeHtml(name);
   return {
-    subject: 'Megkaptuk üzenetét — polarisweb',
-    html: wrapEmail(`
-      <div class="eyebrow">Visszaigazolás</div>
-      <h2>Köszönjük, ${safeName}!</h2>
-      <p>Ez egy automatikus visszaigazolás: <strong>megkaptuk kapcsolatfelvételi üzenetét</strong>, és 1 munkanapon belül válaszolunk rá.</p>
-      <p>Ha időközben bármi eszébe jut, nyugodtan <a href="mailto:peter.veszpremi@polarisweb.hu" style="color: #6366f1; text-decoration: none; font-weight: 600;">keressen minket</a>.</p>
-      <div style="margin-top: 32px; padding-top: 24px; border-top: 1px solid #efefef;">
-        <p style="font-size: 14px; margin-bottom: 4px;">Üdvözlettel,</p>
-        <p style="font-size: 14px; color: #1a1a1a; font-weight: 600; margin: 0;">Veszprémi Péter</p>
-        <p style="font-size: 12px; color: #999; margin: 2px 0 0 0;">polarisweb</p>
-      </div>
-    `),
+    subject: 'Megkaptuk üzenetét — Polarisweb',
+    html: wrapEmail({
+      eyebrow: 'Visszaigazolás',
+      heading: `Köszönjük, ${safeName}!`,
+      intro: 'Megkaptuk kapcsolatfelvételi üzenetét — ez egy automatikus visszaigazolás, hogy tudja, jó helyen landolt.',
+      nextTitle: 'Mi történik most?',
+      nextBody: 'Egy munkanapon belül személyesen jelentkezünk a válaszunkkal. Ha időközben bármi eszébe jut, egyszerűen válaszoljon erre a levélre.',
+    }),
   };
 }
 
 function quoteAutoReply({ name }) {
   const safeName = escapeHtml(name);
   return {
-    subject: 'Megkaptuk ajánlatkérését — polarisweb',
-    html: wrapEmail(`
-      <div class="eyebrow">Visszaigazolás</div>
-      <h2>Köszönjük, ${safeName}!</h2>
-      <p>Ez egy automatikus visszaigazolás: <strong>megkaptuk ajánlatkérését</strong>. Péter és csapata 1 munkanapon belül jelentkezik egy személyre szabott javaslattal.</p>
-      <p>Ha időközben bármi eszébe jut, nyugodtan <a href="mailto:peter.veszpremi@polarisweb.hu" style="color: #6366f1; text-decoration: none; font-weight: 600;">válaszoljon erre a levélre</a>.</p>
-      <div style="margin-top: 32px; padding-top: 24px; border-top: 1px solid #efefef;">
-        <p style="font-size: 14px; margin-bottom: 4px;">Üdvözlettel,</p>
-        <p style="font-size: 14px; color: #1a1a1a; font-weight: 600; margin: 0;">Veszprémi Péter</p>
-        <p style="font-size: 12px; color: #999; margin: 2px 0 0 0;">polarisweb</p>
-      </div>
-    `),
+    subject: 'Megkaptuk ajánlatkérését — Polarisweb',
+    html: wrapEmail({
+      eyebrow: 'Visszaigazolás',
+      heading: `Köszönjük, ${safeName}!`,
+      intro: 'Megkaptuk ajánlatkérését — ez egy automatikus visszaigazolás, hogy tudja, minden rendben megérkezett hozzánk.',
+      nextTitle: 'Mi történik most?',
+      nextBody: 'Péter és csapata egy munkanapon belül jelentkezik egy személyre szabott javaslattal, kötelezettség és szakzsargon nélkül. Ha addig bármi eszébe jut, válaszoljon erre a levélre.',
+    }),
   };
 }
 

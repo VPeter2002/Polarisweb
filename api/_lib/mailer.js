@@ -22,7 +22,7 @@ async function sendEmail({ subject, html, replyTo, to }) {
   }
 
   const payload = {
-    from: 'polarisweb <noreply@polarisweb.hu>',
+    from: 'Polarisweb <noreply@polarisweb.hu>',
     to: to || [toEmail],
     subject,
     html,

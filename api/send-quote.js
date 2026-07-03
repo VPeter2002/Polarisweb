@@ -33,7 +33,7 @@ module.exports = async function handler(req, res) {
   const featuresText = Array.isArray(features) && features.length ? features.join(', ') : '—';
 
   const html = `
-    <h2>Új ajánlatkérés — polarisweb</h2>
+    <h2>Új ajánlatkérés — Polarisweb</h2>
     <p><strong>Név:</strong> ${escapeHtml(name)}</p>
     <p><strong>Vállalkozás:</strong> ${escapeHtml(company || '—')}</p>
     <p><strong>E-mail:</strong> ${escapeHtml(email)}</p>
