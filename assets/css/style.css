@@ -541,18 +541,31 @@ a { color: inherit; }
   box-sizing: border-box;
 }
 .faq-icon { font-size: 22px; color: var(--accent-strong); line-height: 1; margin-left: 16px; transition: transform .3s cubic-bezier(.2,.7,.2,1); }
+.faq-q[aria-expanded="true"] .faq-icon { transform: rotate(180deg); }
+
+/* Content-driven expand/collapse — grid-template-rows animates from 0fr to
+   1fr, so the browser always resolves the real content height itself.
+   No JS px measurement, so it can never clip (font loading, dynamic
+   content, viewport resize — none of it matters). The nested <p> is the
+   grid item; only an explicit item (not the anonymous box a bare text
+   node would create) can be told overflow:hidden so it's allowed to
+   shrink below its content size. */
 .faq-a {
+  display: grid;
+  grid-template-rows: 0fr;
+  opacity: 0;
+  transition: grid-template-rows .4s cubic-bezier(.2,.7,.2,1), opacity .35s ease;
+}
+.faq-a > p {
+  overflow: hidden;
+  min-height: 0;
+  margin: 0;
+  padding-top: 16px;
   font-size: 15px;
   line-height: 1.6;
   color: var(--muted);
-  margin: 0;
-  padding-top: 0;
-  max-height: 0;
-  overflow: hidden;
-  opacity: 0;
-  transition: max-height .4s cubic-bezier(.2,.7,.2,1), opacity .35s ease, padding-top .35s ease;
 }
-.faq-item.open .faq-a { opacity: 1; padding-top: 16px; }
+.faq-item.open .faq-a { grid-template-rows: 1fr; opacity: 1; }
 
 /* Contact */
 .contact {

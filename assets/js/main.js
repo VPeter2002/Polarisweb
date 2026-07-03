@@ -18,57 +18,28 @@
     });
   }
 
-  /* ---- FAQ accordion (single-open, smooth height animation) ---- */
+  /* ---- FAQ accordion (single-open, CSS grid-driven height — never clips) ---- */
   document.querySelectorAll('[data-faq]').forEach(function (list) {
     var items = Array.prototype.slice.call(list.querySelectorAll('.faq-item'));
 
-    function closeItem(item) {
-      if (!item.classList.contains('open')) return;
-      var answer = item.querySelector('.faq-a');
-      // If it was expanded to 'none', pin the current px height first so it
-      // has something concrete to transition down from.
-      answer.style.maxHeight = answer.scrollHeight + 'px';
-      answer.offsetHeight; // force reflow so the next change animates
-      item.classList.remove('open');
-      item.querySelector('.faq-q').setAttribute('aria-expanded', 'false');
-      item.querySelector('.faq-icon').textContent = '+';
-      answer.style.maxHeight = '0px';
+    function setOpen(item, open) {
+      item.classList.toggle('open', open);
+      item.querySelector('.faq-q').setAttribute('aria-expanded', open ? 'true' : 'false');
+      item.querySelector('.faq-icon').textContent = open ? '−' : '+';
     }
 
-    function openItem(item) {
-      var answer = item.querySelector('.faq-a');
-      item.classList.add('open');
-      item.querySelector('.faq-q').setAttribute('aria-expanded', 'true');
-      item.querySelector('.faq-icon').textContent = '−';
-      // scrollHeight includes the padding-top added by .open
-      answer.style.maxHeight = answer.scrollHeight + 'px';
-      // Once open, drop the fixed cap so the answer can never be clipped
-      // (e.g. after web fonts load and reflow the text taller).
-      var onEnd = function (e) {
-        if (e.propertyName !== 'max-height') return;
-        answer.removeEventListener('transitionend', onEnd);
-        if (item.classList.contains('open')) answer.style.maxHeight = 'none';
-      };
-      answer.addEventListener('transitionend', onEnd);
-    }
-
-    // Initial state from markup (first item is marked aria-expanded="true").
+    // Sync initial .open state from the markup's aria-expanded="true".
     items.forEach(function (item) {
-      var answer = item.querySelector('.faq-a');
-      if (answer) answer.removeAttribute('hidden');
       if (item.querySelector('.faq-q').getAttribute('aria-expanded') === 'true') {
         item.classList.add('open');
-        answer.style.maxHeight = 'none'; // open on load, no clip, no animation
-      } else {
-        answer.style.maxHeight = '0px';
       }
     });
 
     items.forEach(function (item) {
       item.querySelector('.faq-q').addEventListener('click', function () {
         var wasOpen = item.classList.contains('open');
-        items.forEach(closeItem);
-        if (!wasOpen) openItem(item);
+        items.forEach(function (other) { setOpen(other, false); });
+        if (!wasOpen) setOpen(item, true);
       });
     });
   });
