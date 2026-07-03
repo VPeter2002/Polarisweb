@@ -53,6 +53,11 @@ body {
 img { max-width: 100%; display: block; }
 a { color: inherit; }
 
+a, button, span, div, input, [onclick] {
+    -webkit-tap-highlight-color: transparent;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0); /* Fallback for older Androids */
+}
+
 /* ---------- Layout helpers ------------------------------------------------ */
 .container { max-width: var(--maxw); margin: 0 auto; padding-left: 32px; padding-right: 32px; }
 .container-narrow { max-width: 800px; margin: 0 auto; padding-left: 32px; padding-right: 32px; }
