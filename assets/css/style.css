@@ -1048,7 +1048,9 @@ a, button, span, div, input, [onclick] {
      away with the page. position:fixed sidesteps that bug on mobile;
      body padding compensates for the header leaving normal flow. */
   .site-header { position: fixed; top: 0; left: 0; right: 0; }
-  body { padding-top: 80px; }
+  /* Scoped to pages using .site-header (not ajanlatkeres.html's separate
+     .wizard-header) so pages without the fixed nav don't get a phantom gap. */
+  body:has(> .site-header) { padding-top: 80px; }
   .nav-links {
     position: absolute;
     top: 100%; left: 0; right: 0;
