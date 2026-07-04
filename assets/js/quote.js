@@ -60,6 +60,7 @@
     sumBusiness: root.querySelector('[data-sum-business]'),
     sumPages: root.querySelector('[data-sum-pages]'),
     sumFeatures: root.querySelector('[data-sum-features]'),
+    sumHasSite: root.querySelector('[data-sum-hassite]'),
     sumBudget: root.querySelector('[data-sum-budget]'),
     success: document.getElementById('wizardSuccess'),
     successName: document.querySelector('[data-success-name]'),
@@ -130,11 +131,17 @@
     '80+': '80 000 Ft felett / hó',
     'nemtudom': 'Még nem tudom'
   };
+  var hasSiteLabels = {
+    'nincs': 'Nincs még weboldala',
+    'van': 'Van már weboldala',
+    'kozossegi': 'Csak közösségi média oldala van'
+  };
   function updateSummary() {
     var bt = businessTypes.filter(function (o) { return o.value === state.businessType; })[0];
     el.sumBusiness.textContent = bt ? bt.label : '—';
     el.sumPages.textContent = labelsFor(pages, state.pages);
     el.sumFeatures.textContent = labelsFor(features, state.features);
+    el.sumHasSite.textContent = hasSiteLabels[state.hasSite] || '—';
     el.sumBudget.textContent = budgetLabels[state.budget] || '—';
   }
 
