@@ -470,7 +470,7 @@ a, button, span, div, input, [onclick] {
   flex-direction: column;
   gap: 14px;
 }
-.service-chip { width: 44px; height: 44px; border-radius: 12px; }
+.service-chip { width: 44px; height: 44px; border-radius: 12px; display: flex; align-items: center; justify-content: center; }
 .service-card h3 { font-size: 17px; font-weight: 700; margin: 0; }
 .service-card p { font-size: 14.5px; line-height: 1.55; color: var(--muted); margin: 0; }
 
