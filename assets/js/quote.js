@@ -42,7 +42,8 @@
     features: {},
     hasSite: 'nincs',
     budget: 'nemtudom',
-    name: '', company: '', email: '', phone: '', message: ''
+    name: '', company: '', email: '', phone: '', message: '',
+    aszf: false
   };
 
   /* ---- Elements ---- */
@@ -65,7 +66,10 @@
     success: document.getElementById('wizardSuccess'),
     successName: document.querySelector('[data-success-name]'),
     honeypot: root.querySelector('[data-honeypot]'),
-    error: root.querySelector('[data-error]')
+    error: root.querySelector('[data-error]'),
+    aszf: root.querySelector('[data-aszf]'),
+    consentError: root.querySelector('[data-consent-error]'),
+    submitWrap: root.querySelector('[data-submit-wrap]')
   };
 
   /* ---- Build option elements ---- */
@@ -112,6 +116,27 @@
   /* ---- Selects & text inputs ---- */
   root.querySelector('[data-hassite]').addEventListener('change', function (e) { state.hasSite = e.target.value; });
   root.querySelector('[data-budget]').addEventListener('change', function (e) { state.budget = e.target.value; });
+  function showConsentError() {
+    el.consentError.hidden = false;
+    el.consentError.classList.remove('shake');
+    void el.consentError.offsetWidth; // restart the shake animation on repeat clicks
+    el.consentError.classList.add('shake');
+  }
+
+  el.aszf.addEventListener('change', function (e) {
+    state.aszf = e.target.checked;
+    if (state.aszf) el.consentError.hidden = true;
+    updateControls();
+  });
+
+  if (el.submitWrap) {
+    el.submitWrap.addEventListener('click', function () {
+      if (el.submit.disabled && !state.aszf) {
+        showConsentError();
+        el.aszf.focus();
+      }
+    });
+  }
   ['name', 'company', 'email', 'phone', 'message'].forEach(function (key) {
     var input = root.querySelector('[data-' + key + ']');
     input.addEventListener('input', function (e) {
@@ -158,7 +183,7 @@
     el.back.hidden = state.step <= 1;
     el.backPlaceholder.hidden = state.step > 1;
     el.next.hidden = state.step >= 5;
-    el.submit.hidden = state.step < 5;
+    el.submitWrap.hidden = state.step < 5;
 
     if (state.step === 5) updateSummary();
     updateControls();
@@ -166,7 +191,7 @@
 
   function updateControls() {
     el.next.disabled = state.step === 1 && !state.businessType;
-    el.submit.disabled = !state.name.trim() || !state.email.trim();
+    el.submit.disabled = !state.name.trim() || !state.email.trim() || !state.aszf;
   }
 
   /* ---- Navigation ---- */
@@ -207,6 +232,11 @@
 
   el.submit.addEventListener('click', function () {
     if (!state.name.trim() || !state.email.trim()) return;
+    if (!state.aszf) {
+      showConsentError();
+      el.aszf.focus();
+      return;
+    }
     el.error.hidden = true;
     el.submit.disabled = true;
     var originalLabel = el.submit.textContent;

@@ -50,6 +50,32 @@
     var cfError = contactForm.querySelector('[data-cf-error]');
     var cfHoneypot = contactForm.querySelector('[data-honeypot]');
     var cfSubmitBtn = contactForm.querySelector('.form-submit');
+    var cfAszf = contactForm.querySelector('#cf-aszf');
+    var cfConsentError = contactForm.querySelector('[data-cf-consent-error]');
+    var cfSubmitWrap = contactForm.querySelector('[data-cf-submit-wrap]');
+
+    function showCfConsentError() {
+      cfConsentError.hidden = false;
+      cfConsentError.classList.remove('shake');
+      void cfConsentError.offsetWidth; // restart the shake animation on repeat clicks
+      cfConsentError.classList.add('shake');
+    }
+
+    if (cfAszf) {
+      cfAszf.addEventListener('change', function () {
+        cfSubmitBtn.disabled = !cfAszf.checked;
+        if (cfAszf.checked) cfConsentError.hidden = true;
+      });
+    }
+
+    if (cfSubmitWrap) {
+      cfSubmitWrap.addEventListener('click', function () {
+        if (cfSubmitBtn.disabled && cfAszf && !cfAszf.checked) {
+          showCfConsentError();
+          cfAszf.focus();
+        }
+      });
+    }
 
     contactForm.addEventListener('submit', function (e) {
       e.preventDefault();
@@ -60,6 +86,12 @@
 
       if (!name.value.trim() || !email.value.trim()) {
         (name.value.trim() ? email : name).focus();
+        return;
+      }
+
+      if (cfAszf && !cfAszf.checked) {
+        showCfConsentError();
+        cfAszf.focus();
         return;
       }
 

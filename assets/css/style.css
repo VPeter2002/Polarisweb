@@ -314,6 +314,17 @@ a, button, span, div, input, [onclick] {
   margin: 0 0 16px;
 }
 .legal .info-card ul { margin: 0; }
+.legal .table-wrap {
+  overflow-x: auto;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  margin: 0 0 20px;
+}
+.legal table { width: 100%; border-collapse: collapse; margin: 0; font-size: 15px; }
+.legal th, .legal td { text-align: left; padding: 12px 16px; white-space: nowrap; }
+.legal thead th { background: var(--surface-2); font-weight: 700; color: var(--ink); border-bottom: 1px solid var(--border); }
+.legal tbody td { color: var(--ink-2); border-bottom: 1px solid var(--border); }
+.legal tbody tr:last-child td { border-bottom: none; }
 
 /* legal link in footer bottom bar */
 .footer-bottom a { color: oklch(60% 0.02 50); text-decoration: none; transition: color .15s ease; }
@@ -632,7 +643,65 @@ a, button, span, div, input, [onclick] {
   border: none;
   cursor: pointer;
   margin-top: 8px;
+  transition: opacity .25s ease, background-color .25s ease, box-shadow .2s ease;
 }
+.form-check {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 13.5px;
+  line-height: 1.5;
+  color: var(--ink-2);
+  cursor: pointer;
+}
+.form-check input[type="checkbox"] {
+  margin-top: 3px;
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+  accent-color: var(--accent-strong);
+  cursor: pointer;
+}
+.form-check a { color: var(--accent-strong); font-weight: 600; text-decoration: none; }
+.form-check a:hover { text-decoration: underline; }
+
+/* Consent gate (ÁSZF + adatkezelés checkbox) shared by the contact form
+   and the quote wizard — button stays natively disabled until checked,
+   and pointer-events:none lets the click "pass through" to the wrapper
+   so we can still surface an error on an attempted click. */
+.consent-block { display: flex; flex-direction: column; gap: 10px; }
+.submit-wrap { position: relative; }
+
+.form-submit:disabled,
+.wizard-nav .btn-fwd:disabled {
+  opacity: .5;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.consent-error {
+  font-size: 13px;
+  font-weight: 600;
+  color: oklch(52% 0.16 25);
+  background: oklch(94% 0.04 25);
+  border: 1px solid oklch(85% 0.08 25);
+  border-radius: 10px;
+  padding: 10px 14px;
+  margin: 0;
+  animation: consentFadeIn .3s ease both;
+}
+.consent-error.shake { animation: consentFadeIn .3s ease both, consentShake .4s ease; }
+@keyframes consentFadeIn {
+  from { opacity: 0; transform: translateY(-4px); }
+  to   { opacity: 1; transform: none; }
+}
+@keyframes consentShake {
+  10%, 90% { transform: translateX(-1px); }
+  20%, 80% { transform: translateX(2px); }
+  30%, 50%, 70% { transform: translateX(-4px); }
+  40%, 60% { transform: translateX(4px); }
+}
+
 .form-success { padding: 40px 10px; text-align: center; }
 .form-success .title { font-family: var(--serif); font-size: 26px; margin-bottom: 10px; }
 .form-success p { font-size: 15px; color: var(--muted); margin: 0; }
@@ -921,9 +990,11 @@ a, button, span, div, input, [onclick] {
   background: var(--ink);
   color: #fff;
   cursor: pointer;
+  transition: opacity .25s ease, background-color .25s ease, color .25s ease;
 }
 .wizard-nav .btn-fwd.submit { background: var(--accent-strong); }
 .wizard-nav .btn-fwd:disabled { background: var(--border); color: oklch(60% 0.02 50); cursor: not-allowed; }
+.wizard-nav .submit-wrap { margin-left: auto; }
 
 .wizard-success { text-align: center; padding: 60px 20px; }
 .wizard-success .badge {
@@ -1016,7 +1087,7 @@ a, button, span, div, input, [onclick] {
   html { scroll-behavior: auto; }
   .reveal { opacity: 1 !important; transform: none !important; transition: none !important; }
   .hero > div:first-child > *, .hero-visual { opacity: 1 !important; animation: none !important; }
-  .blob, .blob-small, .hero-disc, .wizard-success .badge { animation: none !important; }
+  .blob, .blob-small, .hero-disc, .wizard-success .badge, .consent-error { animation: none !important; }
   * { transition-duration: .01ms !important; }
 }
 
