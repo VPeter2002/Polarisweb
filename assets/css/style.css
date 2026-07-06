@@ -923,6 +923,46 @@ a, button, span, div, input, [onclick] {
 
 .opt-list { display: flex; flex-direction: column; gap: 12px; }
 .opt-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+
+/* Optional "Vizuális preferenciák" disclosure — dashed + muted so it reads
+   as clearly skippable next to the required contact fields. */
+.prefs {
+  border: 1.5px dashed var(--border-input);
+  border-radius: 16px;
+  background: var(--surface-2);
+  margin-bottom: 28px;
+  transition: border-color .2s ease;
+}
+.prefs:hover { border-color: var(--accent-soft); }
+.prefs > summary {
+  list-style: none;
+  cursor: pointer;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 20px 22px;
+}
+.prefs > summary::-webkit-details-marker { display: none; }
+.prefs > summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 12px; }
+.prefs-summary-text { display: flex; flex-direction: column; gap: 5px; }
+.prefs-title { font-size: 15.5px; font-weight: 700; color: var(--ink); }
+.prefs-optional { font-weight: 600; font-size: 13.5px; color: var(--muted); }
+.prefs-sub { font-size: 13.5px; line-height: 1.5; color: var(--muted); max-width: 480px; }
+.prefs-chevron {
+  flex-shrink: 0;
+  font-size: 24px;
+  line-height: 1;
+  color: var(--accent-strong);
+  transition: transform .3s cubic-bezier(.2,.7,.2,1);
+}
+.prefs[open] .prefs-chevron { transform: rotate(45deg); }
+.prefs-body {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  padding: 2px 22px 24px;
+}
 .opt {
   display: flex;
   align-items: center;

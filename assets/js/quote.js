@@ -33,6 +33,14 @@
     { value: 'terkep', label: 'Google térkép beágyazás' },
     { value: 'kozossegi', label: 'Közösségi média integráció' }
   ];
+  var styleOptions = [
+    { value: 'minimalista', label: 'Letisztult / minimalista' },
+    { value: 'modern', label: 'Modern / dinamikus' },
+    { value: 'meleg', label: 'Meleg / barátságos' },
+    { value: 'elegans', label: 'Elegáns / prémium' },
+    { value: 'jatekos', label: 'Játékos / színes' },
+    { value: 'klasszikus', label: 'Klasszikus / megbízható' }
+  ];
 
   /* ---- State ---- */
   var state = {
@@ -43,7 +51,8 @@
     hasSite: 'nincs',
     budget: 'nemtudom',
     name: '', company: '', email: '', phone: '', message: '',
-    aszf: false
+    aszf: false,
+    style: {}, audience: '', brandColor: '', reference: ''
   };
 
   /* ---- Elements ---- */
@@ -54,6 +63,7 @@
     business: root.querySelector('[data-business]'),
     pages: root.querySelector('[data-pages]'),
     features: root.querySelector('[data-features]'),
+    style: root.querySelector('[data-style]'),
     back: root.querySelector('[data-back]'),
     backPlaceholder: root.querySelector('[data-back-placeholder]'),
     next: root.querySelector('[data-next]'),
@@ -112,10 +122,16 @@
   buildRadio(el.business, businessTypes, false);
   buildChecks(el.pages, pages, 'pages', true);
   buildChecks(el.features, features, 'features', false);
+  buildChecks(el.style, styleOptions, 'style', true);
 
   /* ---- Selects & text inputs ---- */
   root.querySelector('[data-hassite]').addEventListener('change', function (e) { state.hasSite = e.target.value; });
   root.querySelector('[data-budget]').addEventListener('change', function (e) { state.budget = e.target.value; });
+
+  /* ---- Optional visual-preference inputs (never required) ---- */
+  root.querySelector('[data-audience]').addEventListener('change', function (e) { state.audience = e.target.value; });
+  root.querySelector('[data-brandcolor]').addEventListener('input', function (e) { state.brandColor = e.target.value; });
+  root.querySelector('[data-reference]').addEventListener('input', function (e) { state.reference = e.target.value; });
   function showConsentError() {
     el.consentError.hidden = false;
     el.consentError.classList.remove('shake');
@@ -210,6 +226,7 @@
     var bt = businessTypes.filter(function (o) { return o.value === state.businessType; })[0];
     var pageLabels = pages.filter(function (o) { return state.pages[o.value]; }).map(function (o) { return o.label; });
     var featureLabels = features.filter(function (o) { return state.features[o.value]; }).map(function (o) { return o.label; });
+    var styleLabels = styleOptions.filter(function (o) { return state.style[o.value]; }).map(function (o) { return o.label; });
     return {
       name: state.name.trim(),
       company: state.company.trim(),
@@ -221,6 +238,10 @@
       features: featureLabels,
       hasSite: state.hasSite,
       budget: budgetLabels[state.budget] || state.budget,
+      style: styleLabels,
+      audience: state.audience,
+      brandColor: state.brandColor.trim(),
+      reference: state.reference.trim(),
       website: el.honeypot ? el.honeypot.value : ''
     };
   }

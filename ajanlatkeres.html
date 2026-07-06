@@ -115,6 +115,42 @@
             </div>
           </div>
 
+          <!-- Optional visual-preferences disclosure — fully skippable, feeds the design brief -->
+          <details class="prefs">
+            <summary>
+              <span class="prefs-summary-text">
+                <span class="prefs-title">Vizuális preferenciák <span class="prefs-optional">(nem kötelező)</span></span>
+                <span class="prefs-sub">Ha van elképzelésed a megjelenésről, itt megadhatod — ha nincs, nyugodtan hagyd üresen, javaslunk stílust.</span>
+              </span>
+              <span class="prefs-chevron" aria-hidden="true">+</span>
+            </summary>
+            <div class="prefs-body">
+              <div class="field">
+                <label>Milyen stílus tetszik? (több is választható)</label>
+                <div class="opt-grid" data-style></div>
+              </div>
+              <div class="field">
+                <label for="wz-audience">Kiknek szól elsősorban?</label>
+                <select class="select" id="wz-audience" data-audience>
+                  <option value="">Válasszon… (nem kötelező)</option>
+                  <option value="Fiatal/trendkövető">Fiatal/trendkövető</option>
+                  <option value="Családok">Családok</option>
+                  <option value="Üzleti/B2B ügyfelek">Üzleti/B2B ügyfelek</option>
+                  <option value="Idősebb/hagyományos közönség">Idősebb/hagyományos közönség</option>
+                  <option value="Vegyes">Vegyes</option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="wz-brandcolor">Márkaszín</label>
+                <input class="input" id="wz-brandcolor" type="text" data-brandcolor placeholder="pl. #C9A227 vagy 'zöld árnyalatok'">
+              </div>
+              <div class="field">
+                <label for="wz-reference">Referencia weboldal</label>
+                <input class="input" id="wz-reference" type="text" data-reference placeholder="Van olyan weboldal, aminek tetszik a stílusa? Írd be a linkjét.">
+              </div>
+            </div>
+          </details>
+
           <div class="summary">
             <div class="h">Összegzés</div>
             <div class="body">

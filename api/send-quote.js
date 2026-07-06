@@ -11,6 +11,7 @@ module.exports = async function handler(req, res) {
   const {
     name, company, email, phone, message,
     businessType, pages, features, hasSite, budget,
+    style, audience, brandColor, reference, // optional visual preferences
     website, // honeypot — real users never fill this
   } = body;
 
@@ -31,6 +32,7 @@ module.exports = async function handler(req, res) {
 
   const pagesText = Array.isArray(pages) && pages.length ? pages.join(', ') : '—';
   const featuresText = Array.isArray(features) && features.length ? features.join(', ') : '—';
+  const styleText = Array.isArray(style) && style.length ? style.join(', ') : '—';
 
   const html = `
     <h2>Új ajánlatkérés — Polarisweb</h2>
@@ -44,6 +46,12 @@ module.exports = async function handler(req, res) {
     <p><strong>Funkciók:</strong> ${escapeHtml(featuresText)}</p>
     <p><strong>Van már weboldala:</strong> ${escapeHtml(hasSite || '—')}</p>
     <p><strong>Havi keret:</strong> ${escapeHtml(budget || '—')}</p>
+    <hr>
+    <h3>Vizuális preferenciák</h3>
+    <p><strong>Stílus:</strong> ${escapeHtml(styleText)}</p>
+    <p><strong>Célközönség:</strong> ${escapeHtml(audience || '—')}</p>
+    <p><strong>Márkaszín:</strong> ${escapeHtml(brandColor || '—')}</p>
+    <p><strong>Referencia:</strong> ${escapeHtml(reference || '—')}</p>
     <hr>
     <p><strong>Megjegyzés:</strong><br>${escapeHtml(message || '—').replace(/\n/g, '<br>')}</p>
   `;
