@@ -614,6 +614,53 @@ a, button, span, div, input, [onclick] {
   flex-direction: column;
   gap: 18px;
 }
+.form-fields { display: flex; flex-direction: column; gap: 18px; }
+
+/* Contact form upsell — nudges visitors to the detailed quote wizard while
+   keeping the "just send a message" path clearly open right below it. */
+.contact-upsell {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  background: var(--accent-tint);
+  border: 1px solid var(--accent-soft);
+  border-radius: 16px;
+  padding: 18px 20px;
+  text-decoration: none;
+  transition: border-color .2s ease, box-shadow .2s ease, transform .2s cubic-bezier(.2,.7,.2,1);
+}
+.contact-upsell:hover {
+  border-color: var(--accent);
+  box-shadow: 0 16px 34px -22px var(--accent);
+  transform: translateY(-2px);
+}
+.contact-upsell-icon {
+  flex-shrink: 0;
+  width: 40px; height: 40px;
+  border-radius: 11px;
+  background: linear-gradient(135deg, var(--accent), var(--warm-2));
+  display: flex; align-items: center; justify-content: center;
+  transition: transform .3s cubic-bezier(.2,.7,.2,1);
+}
+.contact-upsell:hover .contact-upsell-icon { transform: rotate(-8deg) scale(1.08); }
+.contact-upsell-text { display: flex; flex-direction: column; }
+.contact-upsell-text strong { font-size: 15.5px; font-weight: 800; color: var(--ink); margin-bottom: 4px; }
+.contact-upsell-desc { font-size: 13.5px; line-height: 1.55; color: var(--ink-2); margin-bottom: 10px; }
+.contact-upsell-cta {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--accent-strong);
+  transition: transform .2s cubic-bezier(.2,.7,.2,1);
+}
+.contact-upsell:hover .contact-upsell-cta { color: var(--accent); }
+.contact-upsell-or {
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--muted);
+  text-align: center;
+  margin: 0;
+}
+
 .field { display: flex; flex-direction: column; gap: 6px; }
 .field label { font-size: 13px; font-weight: 700; color: var(--ink-2); }
 .input, .textarea, .select {
