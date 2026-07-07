@@ -160,7 +160,7 @@
       opt.classList.add('active');
       var mode = opt.getAttribute('data-billing-mode');
       amounts.forEach(function (amt) {
-        amt.textContent = amt.getAttribute(mode === 'annual' ? 'data-annual' : 'data-monthly');
+        amt.textContent = amt.getAttribute('data-' + mode) || amt.getAttribute('data-monthly');
       });
     });
   }

@@ -1145,6 +1145,7 @@ a, button, span, div, input, [onclick] {
   .steps-grid { grid-template-columns: repeat(2, 1fr); }
   .services-grid, .cards-3, .pricing-preview-grid,
   .pf-grid .grid, .pricing-table .grid { grid-template-columns: 1fr 1fr; }
+  .billing-toggle .switch { flex-wrap: wrap; justify-content: center; }
   .contact { grid-template-columns: 1fr; gap: 40px; }
   .founder { padding: 80px 32px; }
   .founder > div { grid-template-columns: 1fr !important; }
