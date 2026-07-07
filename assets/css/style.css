@@ -980,6 +980,11 @@ a, button, span, div, input, [onclick] {
 .opt span { font-size: 15.5px; font-weight: 600; }
 .opt.compact span { font-size: 15px; }
 
+/* "Egyéb" free-text reveal — spans the full width under any option list/select */
+.opt-other { grid-column: 1 / -1; margin-top: 2px; }
+.opt-other .input { width: 100%; }
+.opt-other:not([hidden]) { animation: consentFadeIn .25s ease both; }
+
 .summary {
   background: var(--surface-2);
   border-radius: 16px;
@@ -1127,7 +1132,7 @@ a, button, span, div, input, [onclick] {
   html { scroll-behavior: auto; }
   .reveal { opacity: 1 !important; transform: none !important; transition: none !important; }
   .hero > div:first-child > *, .hero-visual { opacity: 1 !important; animation: none !important; }
-  .blob, .blob-small, .hero-disc, .wizard-success .badge, .consent-error { animation: none !important; }
+  .blob, .blob-small, .hero-disc, .wizard-success .badge, .consent-error, .opt-other { animation: none !important; }
   * { transition-duration: .01ms !important; }
 }
 

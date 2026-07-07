@@ -23,7 +23,8 @@
     { value: 'blog', label: 'Blog' },
     { value: 'kapcsolat', label: 'Kapcsolat' },
     { value: 'foglalas', label: 'Online foglalás' },
-    { value: 'webshop', label: 'Webshop' }
+    { value: 'webshop', label: 'Webshop' },
+    { value: 'egyeb', label: 'Egyéb' }
   ];
   var features = [
     { value: 'idopont', label: 'Online időpontfoglalás' },
@@ -31,7 +32,8 @@
     { value: 'tobbnyelvu', label: 'Többnyelvű oldal' },
     { value: 'hirlevel', label: 'Hírlevél feliratkozás' },
     { value: 'terkep', label: 'Google térkép beágyazás' },
-    { value: 'kozossegi', label: 'Közösségi média integráció' }
+    { value: 'kozossegi', label: 'Közösségi média integráció' },
+    { value: 'egyeb', label: 'Egyéb' }
   ];
   var styleOptions = [
     { value: 'minimalista', label: 'Letisztult / minimalista' },
@@ -39,7 +41,8 @@
     { value: 'meleg', label: 'Meleg / barátságos' },
     { value: 'elegans', label: 'Elegáns / prémium' },
     { value: 'jatekos', label: 'Játékos / színes' },
-    { value: 'klasszikus', label: 'Klasszikus / megbízható' }
+    { value: 'klasszikus', label: 'Klasszikus / megbízható' },
+    { value: 'egyeb', label: 'Egyéb' }
   ];
 
   /* ---- State ---- */
@@ -52,7 +55,20 @@
     budget: 'nemtudom',
     name: '', company: '', email: '', phone: '', message: '',
     aszf: false,
-    style: {}, audience: '', brandColor: '', reference: ''
+    style: {}, audience: '', brandColor: '', reference: '',
+    businessOther: '', pagesOther: '', featuresOther: '', styleOther: '',
+    hasSiteOther: '', budgetOther: ''
+  };
+
+  /* Registry of the reveal-on-"Egyéb" free-text inputs, keyed by state field. */
+  var others = {};
+  var otherPlaceholders = {
+    businessOther: 'pl. telefonszerelő kisvállalkozás',
+    pagesOther: 'pl. Karrier / Állás oldal',
+    featuresOther: 'pl. foglalási naptár, élő chat…',
+    styleOther: 'pl. retró, art deco…',
+    hasSiteOther: 'Írja le röviden a jelenlegi helyzetét',
+    budgetOther: 'pl. inkább egyszeri díjat szeretnék'
   };
 
   /* ---- Elements ---- */
@@ -83,7 +99,35 @@
   };
 
   /* ---- Build option elements ---- */
-  function buildRadio(container, list, compact) {
+  // Reveals a free-text input under a list/select when "Egyéb" is picked.
+  function buildOther(container, stateKey) {
+    var wrap = document.createElement('div');
+    wrap.className = 'opt-other';
+    wrap.hidden = true;
+    var input = document.createElement('input');
+    input.type = 'text';
+    input.className = 'input';
+    input.placeholder = otherPlaceholders[stateKey] || 'Írja le röviden…';
+    input.setAttribute('aria-label', 'Egyéb — saját válasz');
+    input.addEventListener('input', function () { state[stateKey] = input.value; });
+    wrap.appendChild(input);
+    container.appendChild(wrap);
+    others[stateKey] = { wrap: wrap, input: input };
+  }
+
+  function toggleOther(stateKey, show, focus) {
+    var o = others[stateKey];
+    if (!o) return;
+    o.wrap.hidden = !show;
+    if (!show) {
+      o.input.value = '';
+      state[stateKey] = '';
+    } else if (focus) {
+      o.input.focus();
+    }
+  }
+
+  function buildRadio(container, list, compact, otherKey) {
     list.forEach(function (o) {
       var label = document.createElement('label');
       label.className = 'opt' + (compact ? ' compact' : '');
@@ -92,13 +136,15 @@
       label.querySelector('input').addEventListener('change', function () {
         state.businessType = o.value;
         markSelection(container, 'businessType');
+        if (otherKey) toggleOther(otherKey, o.value === 'egyeb', true);
         updateControls();
       });
       container.appendChild(label);
     });
+    if (otherKey) buildOther(container, otherKey);
   }
 
-  function buildChecks(container, list, mapKey, compact) {
+  function buildChecks(container, list, mapKey, compact, otherKey) {
     list.forEach(function (o) {
       var label = document.createElement('label');
       label.className = 'opt' + (compact ? ' compact' : '');
@@ -107,9 +153,11 @@
       label.querySelector('input').addEventListener('change', function (e) {
         state[mapKey][o.value] = e.target.checked;
         label.classList.toggle('checked', e.target.checked);
+        if (otherKey && o.value === 'egyeb') toggleOther(otherKey, e.target.checked, true);
       });
       container.appendChild(label);
     });
+    if (otherKey) buildOther(container, otherKey);
   }
 
   function markSelection(container, key) {
@@ -119,14 +167,25 @@
     });
   }
 
-  buildRadio(el.business, businessTypes, false);
-  buildChecks(el.pages, pages, 'pages', true);
-  buildChecks(el.features, features, 'features', false);
-  buildChecks(el.style, styleOptions, 'style', true);
+  buildRadio(el.business, businessTypes, false, 'businessOther');
+  buildChecks(el.pages, pages, 'pages', true, 'pagesOther');
+  buildChecks(el.features, features, 'features', false, 'featuresOther');
+  buildChecks(el.style, styleOptions, 'style', true, 'styleOther');
 
   /* ---- Selects & text inputs ---- */
-  root.querySelector('[data-hassite]').addEventListener('change', function (e) { state.hasSite = e.target.value; });
-  root.querySelector('[data-budget]').addEventListener('change', function (e) { state.budget = e.target.value; });
+  var hassiteSel = root.querySelector('[data-hassite]');
+  hassiteSel.addEventListener('change', function (e) {
+    state.hasSite = e.target.value;
+    toggleOther('hasSiteOther', e.target.value === 'egyeb', true);
+  });
+  buildOther(hassiteSel.closest('.field'), 'hasSiteOther');
+
+  var budgetSel = root.querySelector('[data-budget]');
+  budgetSel.addEventListener('change', function (e) {
+    state.budget = e.target.value;
+    toggleOther('budgetOther', e.target.value === 'egyeb', true);
+  });
+  buildOther(budgetSel.closest('.field'), 'budgetOther');
 
   /* ---- Optional visual-preference inputs (never required) ---- */
   root.querySelector('[data-audience]').addEventListener('change', function (e) { state.audience = e.target.value; });
@@ -162,9 +221,18 @@
   });
 
   /* ---- Summary ---- */
-  function labelsFor(list, map) {
-    var chosen = list.filter(function (o) { return map[o.value]; }).map(function (o) { return o.label; });
-    return chosen.length ? chosen.join(', ') : '—';
+  // Turns a chosen list into labels, substituting the typed text for "Egyéb".
+  function chosenArray(list, map, otherText) {
+    return list.filter(function (o) { return map[o.value]; }).map(function (o) {
+      if (o.value === 'egyeb') {
+        return otherText && otherText.trim() ? 'Egyéb: ' + otherText.trim() : 'Egyéb';
+      }
+      return o.label;
+    });
+  }
+  function labelsFor(list, map, otherText) {
+    var arr = chosenArray(list, map, otherText);
+    return arr.length ? arr.join(', ') : '—';
   }
   var budgetLabels = {
     '20-40': '20 000 – 40 000 Ft / hó',
@@ -177,13 +245,31 @@
     'van': 'Van már weboldala',
     'kozossegi': 'Csak közösségi média oldala van'
   };
-  function updateSummary() {
+  function businessText() {
+    if (state.businessType === 'egyeb') {
+      return state.businessOther.trim() ? 'Egyéb: ' + state.businessOther.trim() : 'Egyéb';
+    }
     var bt = businessTypes.filter(function (o) { return o.value === state.businessType; })[0];
-    el.sumBusiness.textContent = bt ? bt.label : '—';
-    el.sumPages.textContent = labelsFor(pages, state.pages);
-    el.sumFeatures.textContent = labelsFor(features, state.features);
-    el.sumHasSite.textContent = hasSiteLabels[state.hasSite] || '—';
-    el.sumBudget.textContent = budgetLabels[state.budget] || '—';
+    return bt ? bt.label : '—';
+  }
+  function hasSiteText() {
+    if (state.hasSite === 'egyeb') {
+      return state.hasSiteOther.trim() ? 'Egyéb: ' + state.hasSiteOther.trim() : 'Egyéb';
+    }
+    return hasSiteLabels[state.hasSite] || '—';
+  }
+  function budgetText() {
+    if (state.budget === 'egyeb') {
+      return state.budgetOther.trim() ? 'Egyéb: ' + state.budgetOther.trim() : 'Egyéb';
+    }
+    return budgetLabels[state.budget] || '—';
+  }
+  function updateSummary() {
+    el.sumBusiness.textContent = businessText();
+    el.sumPages.textContent = labelsFor(pages, state.pages, state.pagesOther);
+    el.sumFeatures.textContent = labelsFor(features, state.features, state.featuresOther);
+    el.sumHasSite.textContent = hasSiteText();
+    el.sumBudget.textContent = budgetText();
   }
 
   /* ---- Render ---- */
@@ -223,22 +309,18 @@
     window.scrollTo({ top: 0, behavior: 'smooth' });
   });
   function buildPayload() {
-    var bt = businessTypes.filter(function (o) { return o.value === state.businessType; })[0];
-    var pageLabels = pages.filter(function (o) { return state.pages[o.value]; }).map(function (o) { return o.label; });
-    var featureLabels = features.filter(function (o) { return state.features[o.value]; }).map(function (o) { return o.label; });
-    var styleLabels = styleOptions.filter(function (o) { return state.style[o.value]; }).map(function (o) { return o.label; });
     return {
       name: state.name.trim(),
       company: state.company.trim(),
       email: state.email.trim(),
       phone: state.phone.trim(),
       message: state.message.trim(),
-      businessType: bt ? bt.label : null,
-      pages: pageLabels,
-      features: featureLabels,
-      hasSite: state.hasSite,
-      budget: budgetLabels[state.budget] || state.budget,
-      style: styleLabels,
+      businessType: businessText(),
+      pages: chosenArray(pages, state.pages, state.pagesOther),
+      features: chosenArray(features, state.features, state.featuresOther),
+      hasSite: hasSiteText(),
+      budget: budgetText(),
+      style: chosenArray(styleOptions, state.style, state.styleOther),
       audience: state.audience,
       brandColor: state.brandColor.trim(),
       reference: state.reference.trim(),
