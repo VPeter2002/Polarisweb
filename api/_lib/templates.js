@@ -128,7 +128,7 @@ function contactAutoReply({ name }) {
       heading: `Köszönjük, ${safeName}!`,
       intro: 'Megkaptuk kapcsolatfelvételi üzenetét — ez egy automatikus visszaigazolás, hogy tudja, jó helyen landolt.',
       nextTitle: 'Mi történik most?',
-      nextBody: 'Egy munkanapon belül személyesen jelentkezünk a válaszunkkal. Ha időközben bármi eszébe jut, egyszerűen válaszoljon erre a levélre.',
+      nextBody: 'Pár munkanapon belül személyesen jelentkezünk a válaszunkkal. Ha időközben bármi eszébe jut, egyszerűen válaszoljon erre a levélre.',
     }),
   };
 }
@@ -142,7 +142,7 @@ function quoteAutoReply({ name }) {
       heading: `Köszönjük, ${safeName}!`,
       intro: 'Megkaptuk ajánlatkérését — ez egy automatikus visszaigazolás, hogy tudja, minden rendben megérkezett hozzánk.',
       nextTitle: 'Mi történik most?',
-      nextBody: 'Péter és csapata egy munkanapon belül jelentkezik egy személyre szabott javaslattal, kötelezettség és szakzsargon nélkül. Ha addig bármi eszébe jut, válaszoljon erre a levélre.',
+      nextBody: 'Péter és csapata pár munkanapon belül jelentkezik egy személyre szabott javaslattal, kötelezettség és szakzsargon nélkül. Ha addig bármi eszébe jut, válaszoljon erre a levélre.',
     }),
   };
 }
