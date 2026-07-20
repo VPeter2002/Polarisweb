@@ -29,8 +29,9 @@
 
   header.topbar{position:sticky;top:0;z-index:50;background:rgba(19,39,32,0.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);}
   .topbar .wrap{display:flex;align-items:center;justify-content:space-between;padding:12px 24px;}
-  .back-link{font-size:13px;font-weight:700;color:var(--cream-dim);display:flex;align-items:center;gap:6px;}
+  .back-link{font-size:13px;font-weight:700;color:var(--cream-dim);display:flex;align-items:center;gap:6px;white-space:nowrap;}
   .back-link:hover{color:var(--cream);}
+  .back-link .short{display:none;}
   .brand-mini{display:flex;align-items:center;gap:9px;}
   .brand-mini img{width:34px;height:34px;border-radius:8px;object-fit:cover;}
   .brand-mini span{font-family:'Karla',sans-serif;font-weight:800;font-size:12px;letter-spacing:0.12em;text-transform:uppercase;}
@@ -79,6 +80,18 @@
   .venue p{color:var(--cream-dim);margin-top:12px;}
   .venue a.btn{margin-top:22px;}
 
+  .bar{padding:80px 0;background:var(--green-deep);}
+  .bar .eyebrow{display:block;text-align:center;}
+  .bar h2{font-size:clamp(26px,4vw,38px);text-align:center;}
+  .bar-grid{margin-top:44px;display:grid;grid-template-columns:1fr 1fr;gap:40px 52px;}
+  .bar-cat{border-top:1px solid var(--line);padding-top:16px;}
+  .bar-cat h3{font-family:'Karla',sans-serif;font-weight:800;font-size:12px;letter-spacing:0.13em;text-transform:uppercase;color:var(--gold);margin-bottom:14px;}
+  .bar-item{display:flex;align-items:baseline;gap:8px;padding:8px 0;flex-wrap:wrap;}
+  .bar-item .name{font-family:'Fraunces',serif;font-weight:500;font-size:16.5px;}
+  .bar-item .dots{flex:1;min-width:20px;border-bottom:1.5px dotted var(--line);transform:translateY(-4px);}
+  .bar-item .desc{width:100%;font-size:12.5px;color:var(--cream-dim);margin-top:1px;}
+  .bar-note{margin-top:36px;text-align:center;font-size:13px;color:var(--cream-dim);}
+
   footer{background:var(--green-deep);padding:24px 0 32px;border-top:1px solid var(--line);}
   footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px;font-size:11.5px;color:var(--cream-dim);}
 
@@ -86,6 +99,11 @@
     .banner .grid{grid-template-columns:1fr;}
     .banner img{max-width:260px;margin:0 auto;}
     .form-row{grid-template-columns:1fr;}
+    .bar-grid{grid-template-columns:1fr;gap:30px;}
+  }
+  @media (max-width:600px){
+    .back-link .full{display:none;}
+    .back-link .short{display:inline;}
   }
 </style>
 </head>
@@ -93,7 +111,7 @@
 
 <header class="topbar">
   <div class="wrap">
-    <a class="back-link" href="/demok/tulip-coffee/">← Vissza a Tulip Coffee-hoz</a>
+    <a class="back-link" href="/demok/tulip-coffee/"><span class="full">← Vissza a Tulip Coffee-hoz</span><span class="short">← Vissza</span></a>
     <div class="brand-mini">
       <img src="/demok/tulip-coffee/assets/client-photos/1784443000929-AQADSQ1rG05I4FJ-.jpg" alt="Tulip Darts Club">
       <span>Darts Club</span>
@@ -110,6 +128,7 @@
     <div class="cta-row">
       <a href="#foglalas" class="btn btn-gold">Foglalj asztalt →</a>
       <a href="#mi-az-a-dartsee" class="btn btn-outline">Mi az a Dartsee?</a>
+      <a href="#bar" class="btn btn-outline">Bár &amp; Smash Burger</a>
     </div>
   </div>
 </section>
@@ -147,6 +166,53 @@
         <div><h3>Social gaming</h3><p>Csapatban, baráti körben, céges buliban — a Tulip terében, kávé vagy sör mellett.</p></div>
       </div>
     </div>
+  </div>
+</section>
+
+<section class="bar" id="bar">
+  <div class="wrap">
+    <div class="eyebrow">Amíg dobsz</div>
+    <h2>A bár is nyitva van</h2>
+    <div class="bar-grid">
+      <div class="bar-cat">
+        <h3>Sörök</h3>
+        <div class="bar-item"><span class="name">Pilsner Urquell</span><span class="dots"></span></div>
+        <div class="bar-item"><span class="name">Dreher Meggy</span><span class="dots"></span></div>
+        <div class="bar-item"><span class="name">Vágott sör</span><span class="dots"></span><span class="desc">Nagy Zoltán sörcsapoló mester csapolja</span></div>
+      </div>
+      <div class="bar-cat">
+        <h3>Frissítők &amp; Spritzek</h3>
+        <div class="bar-item"><span class="name">Hugo Spritz</span><span class="dots"></span></div>
+        <div class="bar-item"><span class="name">Aperol Spritz</span><span class="dots"></span></div>
+        <div class="bar-item"><span class="name">Limoncello Spritz</span><span class="dots"></span></div>
+        <div class="bar-item"><span class="name">Eper-rózsa Spritz</span><span class="dots"></span></div>
+        <div class="bar-item"><span class="name">Sarti Spritz</span><span class="dots"></span></div>
+      </div>
+      <div class="bar-cat">
+        <h3>Gin &amp; Tonic</h3>
+        <div class="bar-item"><span class="name">Malfy</span><span class="dots"></span></div>
+        <div class="bar-item"><span class="name">Panda</span><span class="dots"></span></div>
+        <div class="bar-item"><span class="name">Balaton</span><span class="dots"></span></div>
+      </div>
+      <div class="bar-cat">
+        <h3>Prémium rövid italok</h3>
+        <div class="bar-item"><span class="name">Pannonhalmi Feketecseresznye pálinka</span><span class="dots"></span></div>
+        <div class="bar-item"><span class="name">Cornus Málna pálinka</span><span class="dots"></span></div>
+        <div class="bar-item"><span class="name">Árpád Gyömbér párlat</span><span class="dots"></span></div>
+        <div class="bar-item"><span class="name">Jägermeister</span><span class="dots"></span></div>
+        <div class="bar-item"><span class="name">Unicum</span><span class="dots"></span></div>
+      </div>
+      <div class="bar-cat">
+        <h3>Alkoholmentes fröccs</h3>
+        <div class="bar-item"><span class="name">Laposa alkoholmentes</span><span class="dots"></span></div>
+        <div class="bar-item"><span class="name">Olaszrizling</span><span class="dots"></span></div>
+      </div>
+      <div class="bar-cat">
+        <h3>Tulip Smash Burger</h3>
+        <div class="bar-item"><span class="name">Prémium Angus marha</span><span class="dots"></span><span class="desc">Black Angus 97%, Wagyu 3% — bacon, sajt, hagyma, szósz</span></div>
+      </div>
+    </div>
+    <div class="bar-note">A teljes itallap: <a href="/demok/tulip-coffee/assets/menu/menu-italok-burger.jpg" target="_blank" rel="noopener" style="color:var(--gold);border-bottom:1px solid var(--gold)">kép megnyitása →</a></div>
   </div>
 </section>
 

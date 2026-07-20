@@ -40,13 +40,24 @@
   .nav-links{display:flex;align-items:center;gap:22px;font-size:13.5px;font-weight:700;}
   .nav-links a:hover{color:var(--coral-dark);}
   .nav-right{display:flex;align-items:center;gap:10px;}
-  .darts-pill{display:flex;align-items:center;gap:7px;background:#1E3A2F;color:#F2EDD8;border-radius:999px;padding:8px 14px;font-size:12.5px;font-weight:700;}
+  .darts-pill{display:flex;align-items:center;gap:7px;background:#1E3A2F;color:#F2EDD8;border-radius:999px;padding:8px 14px;font-size:12.5px;font-weight:700;white-space:nowrap;}
   .darts-pill:hover{background:#142720;}
-  .status-pill{display:flex;align-items:center;gap:8px;font-size:12.5px;font-weight:700;padding:7px 13px 7px 10px;border-radius:999px;border:1px solid var(--line);background:var(--yellow-soft);}
+  .darts-pill .short{display:none;}
+  .status-pill{display:flex;align-items:center;gap:8px;font-size:12.5px;font-weight:700;padding:7px 13px 7px 10px;border-radius:999px;border:1px solid var(--line);background:var(--yellow-soft);white-space:nowrap;}
   .status-pill .dot{width:8px;height:8px;border-radius:50%;background:#9a8a5a;flex:none;}
   .status-pill.open{background:#3B5C3F;color:#F2EDD8;border-color:#3B5C3F;}
   .status-pill.open .dot{background:#8fd18a;box-shadow:0 0 0 3px rgba(143,209,138,0.25);}
   .status-pill.closed .dot{background:var(--coral);}
+  .nav-toggle{display:none;align-items:center;justify-content:center;width:38px;height:38px;background:var(--ink);border:none;border-radius:10px;cursor:pointer;flex:none;padding:0;}
+  .nav-toggle svg{width:18px;height:18px;}
+  .mobile-menu{display:none;flex-direction:column;background:var(--cream);border-top:1px solid var(--line);}
+  .mobile-menu.open{display:flex;}
+  .mobile-menu a{padding:14px 24px;font-weight:700;font-size:14.5px;border-bottom:1px solid var(--line);}
+  .mobile-status{display:none;align-items:center;gap:8px;padding:12px 24px;font-size:13px;font-weight:700;border-bottom:1px solid var(--line);background:var(--yellow-soft);}
+  .mobile-status .dot{width:8px;height:8px;border-radius:50%;background:#9a8a5a;flex:none;}
+  .mobile-status.open{color:#3B5C3F;}
+  .mobile-status.open .dot{background:#3B5C3F;}
+  .mobile-status.closed .dot{background:var(--coral);}
 
   .hero{position:relative;background:var(--yellow);padding:56px 0 80px;overflow:hidden;}
   .hero .grid{display:grid;grid-template-columns:1.05fr 0.8fr;gap:40px;align-items:center;}
@@ -91,6 +102,9 @@
   .menu-item .name{font-family:'Fraunces',serif;font-weight:500;font-size:17.5px;}
   .menu-item .dots{flex:1;min-width:20px;border-bottom:1.5px dotted rgba(251,246,234,0.26);transform:translateY(-4px);}
   .menu-item .desc{width:100%;font-size:13px;color:#C4B692;margin-top:1px;}
+  .menu-poster-row{margin-top:36px;}
+  .menu-poster-row a{font-size:13px;font-weight:700;color:var(--yellow);border-bottom:1px solid rgba(242,220,141,0.4);padding-bottom:2px;}
+  .menu-poster-row a:hover{border-color:var(--yellow);}
 
   .hours{padding:76px 0;background:var(--cream);}
   .hours .grid{display:grid;grid-template-columns:0.9fr 1.1fr;gap:50px;align-items:start;}
@@ -137,6 +151,17 @@
     .igrid{grid-template-columns:repeat(3,1fr);}
     .hero{padding:44px 0 56px;}
   }
+
+  @media (max-width:700px){
+    .topbar .wrap{padding:9px 16px;}
+    .nav-links{display:none;}
+    .nav-toggle{display:inline-flex;}
+    .darts-pill{display:none;}
+    .status-pill{display:none;}
+    .brand .word{font-size:11px;}
+    .brand img{width:36px;height:36px;}
+    .mobile-status{display:flex;}
+  }
 </style>
 </head>
 <body>
@@ -152,10 +177,19 @@
       <a href="#nyitvatartas">Nyitvatartás</a>
     </nav>
     <div class="nav-right">
-      <a class="darts-pill" href="/demok/tulip-coffee/darts">🎯 Tulip Darts Club</a>
+      <a class="darts-pill" href="/demok/tulip-coffee/darts"><span class="full">🎯 Tulip Darts Club</span><span class="short">🎯 Darts</span></a>
       <div class="status-pill" id="statusPill"><span class="dot"></span><span id="statusText">…</span></div>
+      <button class="nav-toggle" id="navToggle" aria-label="Menü megnyitása" aria-expanded="false">
+        <svg viewBox="0 0 24 24" fill="none" stroke="var(--cream)" stroke-width="2.2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+      </button>
     </div>
   </div>
+  <nav class="mobile-menu" id="mobileMenu">
+    <div class="mobile-status" id="mobileStatusPill"><span class="dot"></span><span id="mobileStatusText">…</span></div>
+    <a href="#menu">Menü</a>
+    <a href="#nyitvatartas">Nyitvatartás</a>
+    <a href="/demok/tulip-coffee/darts">🎯 Tulip Darts Club</a>
+  </nav>
 </header>
 
 <section class="hero">
@@ -214,30 +248,35 @@
     <h2>Amit a pulton találsz</h2>
     <div class="menu-grid">
       <div class="menu-cat">
-        <h3>Kávék</h3>
-        <div class="menu-item"><span class="name">Espresso / Ristretto</span><span class="dots"></span></div>
-        <div class="menu-item"><span class="name">Flat White</span><span class="dots"></span></div>
+        <h3>Speciality Coffee</h3>
+        <div class="menu-item"><span class="name">The Barn · Genesis Omni</span><span class="dots"></span><span class="desc">Yirgacheffe, Etiópia — barack, fekete tea jegyek</span></div>
+        <div class="menu-item"><span class="name">Presszó</span><span class="dots"></span></div>
+        <div class="menu-item"><span class="name">Americano</span><span class="dots"></span></div>
+        <div class="menu-item"><span class="name">Cortado</span><span class="dots"></span></div>
         <div class="menu-item"><span class="name">Cappuccino</span><span class="dots"></span></div>
-        <div class="menu-item"><span class="name">Tulip Latte</span><span class="dots"></span><span class="desc">a mi latte art szívünkkel</span></div>
+        <div class="menu-item"><span class="name">Latte / Jeges Latte</span><span class="dots"></span></div>
       </div>
       <div class="menu-cat">
-        <h3>Chai &amp; matcha</h3>
-        <div class="menu-item"><span class="name">Jeges Chai Latte</span><span class="dots"></span><span class="desc">Flamingo Vanilla chai keverékből</span></div>
-        <div class="menu-item"><span class="name">Matcha bár</span><span class="dots"></span><span class="desc">friss, habosra rázott matcha, jégen is</span></div>
-        <div class="menu-item"><span class="name">Cold Brew</span><span class="dots"></span></div>
+        <h3>Matcha bár</h3>
+        <div class="menu-item"><span class="name">Bodzás matcha limonádé</span><span class="dots"></span></div>
+        <div class="menu-item"><span class="name">Almás matcha felhő</span><span class="dots"></span></div>
+        <div class="menu-item"><span class="name">Eperes matcha</span><span class="dots"></span></div>
+        <div class="menu-item"><span class="name">Eper-narancsos matcha</span><span class="dots"></span></div>
       </div>
       <div class="menu-cat">
-        <h3>Fagyi &amp; desszert</h3>
-        <div class="menu-item"><span class="name">Kézműves gombócfagyi</span><span class="dots"></span></div>
-        <div class="menu-item"><span class="name">Szezonális sorbet</span><span class="dots"></span><span class="desc">pl. cukormentes sárgabarack</span></div>
-        <div class="menu-item"><span class="name">Édes Pillanat parfé</span><span class="dots"></span></div>
+        <h3>Matcha desszertek</h3>
+        <div class="menu-item"><span class="name">Eper matcha torta</span><span class="dots"></span><span class="desc">mindenmentes</span></div>
+        <div class="menu-item"><span class="name">Matchás csoki torta</span><span class="dots"></span><span class="desc">mindenmentes</span></div>
+        <div class="menu-item"><span class="name">Vaníliás bodzás</span><span class="dots"></span><span class="desc">mindenmentes</span></div>
+        <div class="menu-item"><span class="name">Matcha szelet</span><span class="dots"></span><span class="desc">mindenmentes</span></div>
       </div>
       <div class="menu-cat">
-        <h3>Sós &amp; friss</h3>
-        <div class="menu-item"><span class="name">Friss croissant</span><span class="dots"></span></div>
-        <div class="menu-item"><span class="name">Napi péksütemény</span><span class="dots"></span></div>
-        <div class="menu-item"><span class="name">Napi torta-választék</span><span class="dots"></span><span class="desc">mindig más, mindig házi</span></div>
+        <h3>Szezonális különlegesség</h3>
+        <div class="menu-item"><span class="name">Sárgabarack sorbet</span><span class="dots"></span><span class="desc">mangó-maracuja öntettel</span></div>
       </div>
+    </div>
+    <div class="menu-poster-row">
+      <a href="/demok/tulip-coffee/assets/menu/menu-kave-matcha.jpg" target="_blank" rel="noopener">Teljes itallap megtekintése (kép) →</a>
     </div>
   </div>
 </section>
@@ -309,15 +348,35 @@
   var isOpen = range && minutes >= range[0] && minutes < range[1];
   var pill = document.getElementById('statusPill');
   var text = document.getElementById('statusText');
+  var mobilePill = document.getElementById('mobileStatusPill');
+  var mobileText = document.getElementById('mobileStatusText');
   if(isOpen){
+    var closeLabel = 'Nyitva — zár ' + Math.floor(range[1]/60) + ':' + String(range[1]%60).padStart(2,'0');
     pill.classList.add('open');
-    text.textContent = 'Nyitva — zár ' + Math.floor(range[1]/60) + ':' + String(range[1]%60).padStart(2,'0');
+    text.textContent = closeLabel;
+    mobilePill.classList.add('open');
+    mobileText.textContent = closeLabel;
   } else {
     pill.classList.add('closed');
     text.textContent = 'Most zárva';
+    mobilePill.classList.add('closed');
+    mobileText.textContent = 'Most zárva';
   }
   var row = document.querySelector('#hoursTable tr[data-day="' + day + '"]');
   if(row) row.classList.add('today');
+
+  var navToggle = document.getElementById('navToggle');
+  var mobileMenu = document.getElementById('mobileMenu');
+  navToggle.addEventListener('click', function(){
+    var isOpen = mobileMenu.classList.toggle('open');
+    navToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+  });
+  mobileMenu.querySelectorAll('a').forEach(function(link){
+    link.addEventListener('click', function(){
+      mobileMenu.classList.remove('open');
+      navToggle.setAttribute('aria-expanded', 'false');
+    });
+  });
 </script>
 
 </body>
