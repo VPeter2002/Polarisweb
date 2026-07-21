@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 120" width="100" height="120">
+  <!-- Tulip Coffee brand mark: monoline folk-tulip, single confident stroke -->
+  <g fill="none" stroke="#2B1D14" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
+    <!-- stem -->
+    <path d="M50,64 C50,84 44,96 34,104" />
+    <!-- leaf -->
+    <path d="M42,86 C30,84 22,90 18,100 C30,100 40,96 42,86 Z" />
+    <!-- center petal -->
+    <path d="M50,10 C39,10 31,21 31,34 C31,47 40,55 50,64 C60,55 69,47 69,34 C69,21 61,10 50,10 Z" />
+    <!-- left petal -->
+    <path d="M31,20 C21,22 15,32 17,44 C19,54 27,59 36,58 C30,48 27,34 31,20 Z" />
+    <!-- right petal -->
+    <path d="M69,20 C79,22 85,32 83,44 C81,54 73,59 64,58 C70,48 73,34 69,20 Z" />
+  </g>
+</svg>

@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tulip Coffee — Celldömölk</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,340;0,9..144,480;0,9..144,600;0,9..144,780;1,9..144,420;1,9..144,500&family=Karla:wght@400;500;600;700;800&family=Kaushan+Script&family=Yellowtail&family=Italiana&family=Mrs+Saint+Delafield&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --yellow:#F2DC8D;
+    --yellow-soft:#F8EAB9;
+    --cream:#FBF6EA;
+    --coral:#DD7C5C;
+    --coral-dark:#C4623F;
+    --sage:#7E9468;
+    --ink:#3B2E1F;
+    --ink-soft:rgba(59,46,31,0.68);
+    --line:rgba(59,46,31,0.14);
+    --radius:22px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{margin:0;background:var(--cream);color:var(--ink);font-family:'Karla',sans-serif;font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased;}
+  h1,h2,h3{font-family:'Fraunces',serif;font-weight:600;line-height:1.06;margin:0;letter-spacing:-0.01em;}
+  a{color:inherit;text-decoration:none;}
+  img,svg{display:block;max-width:100%;}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 24px;}
+  .eyebrow{font-family:'Karla',sans-serif;font-weight:800;letter-spacing:0.16em;text-transform:uppercase;font-size:12px;color:var(--coral-dark);}
+  .script{font-family:'Kaushan Script',cursive;font-weight:400;}
+
+  header.topbar{position:sticky;top:0;z-index:50;background:rgba(251,246,234,0.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);}
+  .topbar .wrap{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:10px 24px;}
+  .brand{display:flex;align-items:center;gap:10px;}
+  .brand img{width:42px;height:42px;border-radius:10px;object-fit:cover;}
+  .brand .word{font-family:'Karla',sans-serif;font-weight:800;font-size:12.5px;letter-spacing:0.14em;text-transform:uppercase;line-height:1.3;}
+  .brand .word span{display:block;font-weight:500;letter-spacing:0.1em;color:var(--ink-soft);font-size:10.5px;}
+  .nav-links{display:flex;align-items:center;gap:22px;font-size:13.5px;font-weight:700;}
+  .nav-links a:hover{color:var(--coral-dark);}
+  .nav-right{display:flex;align-items:center;gap:10px;}
+  .darts-pill{display:flex;align-items:center;gap:7px;background:#1E3A2F;color:#F2EDD8;border-radius:999px;padding:8px 14px;font-size:12.5px;font-weight:700;white-space:nowrap;}
+  .darts-pill:hover{background:#142720;}
+  .darts-pill .short{display:none;}
+  .status-pill{display:flex;align-items:center;gap:8px;font-size:12.5px;font-weight:700;padding:7px 13px 7px 10px;border-radius:999px;border:1px solid var(--line);background:var(--yellow-soft);white-space:nowrap;}
+  .status-pill .dot{width:8px;height:8px;border-radius:50%;background:#9a8a5a;flex:none;}
+  .status-pill.open{background:#3B5C3F;color:#F2EDD8;border-color:#3B5C3F;}
+  .status-pill.open .dot{background:#8fd18a;box-shadow:0 0 0 3px rgba(143,209,138,0.25);}
+  .status-pill.closed .dot{background:var(--coral);}
+  .nav-toggle{display:none;flex-direction:column;align-items:center;justify-content:center;gap:5px;width:42px;height:42px;background:var(--ink);border:none;border-radius:12px;cursor:pointer;flex:none;padding:0;}
+  .nav-toggle .bar{width:19px;height:2px;border-radius:2px;background:var(--cream);transition:transform .3s ease, opacity .2s ease;}
+  .nav-toggle.open .bar:nth-child(1){transform:translateY(7px) rotate(45deg);}
+  .nav-toggle.open .bar:nth-child(2){opacity:0;}
+  .nav-toggle.open .bar:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+  .mobile-menu{max-height:0;opacity:0;overflow:hidden;background:var(--cream);border-top:1px solid transparent;box-shadow:0 18px 32px rgba(59,46,31,0.14);transition:max-height .38s ease, opacity .28s ease;}
+  .mobile-menu.open{max-height:420px;opacity:1;border-top-color:var(--line);}
+  .mobile-menu-inner{display:flex;flex-direction:column;gap:8px;padding:18px 18px 24px;}
+  .mobile-menu a{display:flex;align-items:center;gap:12px;padding:14px 16px;border-radius:14px;font-weight:700;font-size:15px;background:rgba(59,46,31,0.03);transition:background .2s;}
+  .mobile-menu a:active,.mobile-menu a:hover{background:var(--yellow-soft);}
+  .mobile-menu a .mi{font-size:17px;line-height:1;flex:none;}
+  .mobile-menu a.darts-link{background:#1E3A2F;color:#F2EDD8;}
+  .mobile-menu a.darts-link:hover,.mobile-menu a.darts-link:active{background:#142720;}
+  .mobile-status{display:none;align-items:center;justify-content:center;gap:8px;margin-bottom:6px;padding:11px 16px;border-radius:999px;font-size:13px;font-weight:800;background:var(--yellow-soft);border:1px solid var(--line);}
+  .mobile-status .dot{width:8px;height:8px;border-radius:50%;background:#9a8a5a;flex:none;}
+  .mobile-status.open{background:#3B5C3F;color:#F2EDD8;border-color:#3B5C3F;}
+  .mobile-status.open .dot{background:#8fd18a;box-shadow:0 0 0 3px rgba(143,209,138,0.28);}
+  .mobile-status.closed .dot{background:var(--coral);}
+
+  .hero{position:relative;background:var(--yellow);padding:56px 0 80px;overflow:hidden;}
+  .hero .grid{display:grid;grid-template-columns:1.05fr 0.8fr;gap:40px;align-items:center;}
+  .hero-word{margin-bottom:18px;line-height:0.85;}
+  .hero-word .script-line{display:block;font-family:'Yellowtail',cursive;font-weight:400;font-size:clamp(52px,8vw,88px);color:#fff;text-shadow:0 2px 0 rgba(59,46,31,0.12);}
+  .hero-word .sans-line{display:block;margin-top:8px;font-family:'Karla',sans-serif;font-weight:400;font-size:clamp(15px,2vw,20px);letter-spacing:0.5em;color:var(--ink);text-transform:lowercase;}
+  .hero p.lede{font-size:clamp(16px,2vw,19px);max-width:44ch;color:var(--ink);opacity:0.82;margin-top:16px;}
+  .hero .meta-row{display:flex;flex-wrap:wrap;gap:9px 20px;margin-top:24px;font-size:13.5px;font-weight:600;color:var(--ink);}
+  .icon-link{display:inline-flex;align-items:center;gap:6px;}
+  .icon-link svg{width:16px;height:16px;}
+  .cta-row{display:flex;flex-wrap:wrap;gap:12px;margin-top:30px;}
+  .btn{display:inline-flex;align-items:center;gap:8px;padding:13px 22px;border-radius:999px;font-weight:800;font-size:14px;border:1.5px solid transparent;cursor:pointer;}
+  .btn-primary{background:var(--ink);color:var(--cream);}
+  .btn-primary:hover{background:#241b10;}
+  .btn-ghost{border-color:var(--ink);color:var(--ink);}
+  .btn-ghost:hover{background:rgba(59,46,31,0.06);}
+
+  .polaroid{background:#fff;padding:12px 12px 40px;border-radius:6px;box-shadow:0 20px 44px rgba(59,46,31,0.22);transform:rotate(4deg);max-width:300px;margin:0 auto;}
+  .polaroid img{border-radius:2px;}
+  .polaroid .cap{font-family:'Kaushan Script',cursive;text-align:center;margin-top:12px;font-size:19px;color:var(--ink);}
+
+  .story{padding:76px 0 64px;background:var(--cream);}
+  .story .grid{display:grid;grid-template-columns:1fr 1fr;gap:52px;align-items:start;}
+  .story h2{font-size:clamp(26px,3.6vw,38px);max-width:14ch;}
+  .story p{margin-top:16px;font-size:15.5px;max-width:50ch;color:var(--ink-soft);}
+  .tag-row{display:flex;flex-wrap:wrap;gap:9px;margin-top:20px;}
+  .tag{font-size:12px;font-weight:700;padding:7px 13px;border-radius:999px;background:var(--yellow-soft);color:var(--coral-dark);border:1px solid var(--line);}
+
+  .igrid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;}
+  .igrid a{position:relative;display:block;aspect-ratio:1/1;overflow:hidden;border-radius:10px;}
+  .igrid img{width:100%;height:100%;object-fit:cover;transition:transform .35s;}
+  .igrid a:hover img{transform:scale(1.06);}
+  .ig-cta{display:flex;align-items:center;justify-content:space-between;margin-top:16px;font-size:13px;font-weight:700;color:var(--ink-soft);}
+
+  .menu{background:var(--ink);color:var(--cream);padding:84px 0;}
+  .menu .eyebrow{color:var(--yellow);}
+  .menu h2{color:var(--cream);font-size:clamp(26px,3.6vw,38px);margin-top:10px;}
+  .menu-grid{margin-top:44px;display:grid;grid-template-columns:1fr 1fr;gap:40px 52px;}
+  .menu-cat{border-top:1px solid rgba(251,246,234,0.16);padding-top:16px;}
+  .menu-cat h3{font-family:'Karla',sans-serif;font-weight:800;font-size:12px;letter-spacing:0.13em;text-transform:uppercase;color:#D9C89B;margin-bottom:14px;}
+  .menu-item{display:flex;align-items:baseline;gap:8px;padding:9px 0;flex-wrap:wrap;}
+  .menu-item .name{font-family:'Fraunces',serif;font-weight:500;font-size:17.5px;}
+  .menu-item .dots{flex:1;min-width:20px;border-bottom:1.5px dotted rgba(251,246,234,0.26);transform:translateY(-4px);}
+  .menu-item .desc{width:100%;font-size:13px;color:#C4B692;margin-top:1px;}
+  .menu-poster-row{margin-top:36px;}
+  .menu-poster-row a{font-size:13px;font-weight:700;color:var(--yellow);border-bottom:1px solid rgba(242,220,141,0.4);padding-bottom:2px;}
+  .menu-poster-row a:hover{border-color:var(--yellow);}
+
+  .hours{padding:76px 0;background:var(--cream);}
+  .hours .grid{display:grid;grid-template-columns:0.9fr 1.1fr;gap:50px;align-items:start;}
+  .hours h2{font-size:clamp(26px,3.6vw,38px);}
+  table.hours-table{width:100%;border-collapse:collapse;margin-top:22px;font-size:15.5px;}
+  table.hours-table td{padding:10px 4px;border-bottom:1px solid var(--line);}
+  table.hours-table td:first-child{font-weight:700;font-family:'Fraunces',serif;}
+  table.hours-table td:last-child{text-align:right;color:var(--ink-soft);}
+  table.hours-table tr.today td{color:var(--coral-dark);}
+  table.hours-table tr.today td:first-child::after{content:"ma";display:inline-block;margin-left:8px;font-family:'Karla',sans-serif;font-weight:800;font-size:9.5px;letter-spacing:0.08em;background:var(--coral);color:#fff;padding:2px 7px;border-radius:999px;vertical-align:middle;}
+  .hours-card{background:var(--yellow-soft);border-radius:var(--radius);padding:30px;}
+  .hours-card h3{font-size:21px;margin-bottom:8px;}
+  .hours-card p{color:var(--ink-soft);font-size:14.5px;}
+
+  .darts-banner{background:#1E3A2F;color:#F2EDD8;padding:64px 0;}
+  .darts-banner .grid{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center;}
+  .darts-banner .eyebrow{color:#C9A227;}
+  .darts-banner h2{color:#F2EDD8;font-family:'Italiana',serif;font-weight:400;font-size:clamp(28px,4.2vw,46px);letter-spacing:0.02em;margin-top:10px;}
+  .darts-banner p{color:#CFC7AE;margin-top:14px;max-width:42ch;font-size:15px;}
+  .darts-banner img{border-radius:16px;box-shadow:0 20px 50px rgba(0,0,0,0.35);}
+  .darts-banner .btn-primary{background:#F2EDD8;color:#1E3A2F;margin-top:22px;}
+  .darts-banner .btn-primary:hover{background:#e4dcc0;}
+
+  .location{background:var(--ink);color:var(--cream);padding:76px 0;}
+  .location .grid{display:grid;grid-template-columns:0.9fr 1.1fr;gap:40px;align-items:stretch;}
+  .location .eyebrow{color:var(--yellow);}
+  .location h2{color:var(--cream);font-size:clamp(26px,3.6vw,38px);margin-top:10px;}
+  .location p{color:#C9BEA5;margin-top:14px;max-width:38ch;}
+  .social-row{display:flex;gap:12px;margin-top:24px;flex-wrap:wrap;}
+  .social-chip{display:flex;align-items:center;gap:9px;border:1px solid rgba(251,246,234,0.25);border-radius:999px;padding:10px 16px;font-size:13px;font-weight:700;}
+  .social-chip svg{width:16px;height:16px;flex:none;}
+  .social-chip:hover{border-color:rgba(251,246,234,0.6);}
+  .map-frame{border-radius:var(--radius);overflow:hidden;border:1px solid rgba(251,246,234,0.18);min-height:300px;}
+  .map-frame iframe{width:100%;height:100%;min-height:300px;border:0;filter:sepia(10%) saturate(85%);}
+
+  footer{background:var(--ink);color:#9C8B6C;padding:24px 0 32px;border-top:1px solid rgba(251,246,234,0.1);}
+  footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px;font-size:12px;}
+
+  @media (max-width:860px){
+    .hero .grid,.story .grid,.hours .grid,.location .grid,.darts-banner .grid{grid-template-columns:1fr;gap:32px;}
+    .darts-banner .grid{direction:ltr;}
+    .darts-banner img{max-width:220px;margin:0 auto;}
+    .menu-grid{grid-template-columns:1fr;gap:32px;}
+    .igrid{grid-template-columns:repeat(3,1fr);}
+    .hero{padding:44px 0 56px;}
+  }
+
+  @media (max-width:700px){
+    .topbar .wrap{padding:9px 16px;}
+    .nav-links{display:none;}
+    .nav-toggle{display:inline-flex;}
+    .darts-pill{display:none;}
+    .status-pill{display:none;}
+    .brand .word{font-size:11px;}
+    .brand img{width:36px;height:36px;}
+    .mobile-status{display:flex;}
+  }
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="wrap">
+    <div class="brand">
+      <img src="/demok/tulip-coffee/assets/client-photos/1784442999718-AQADPA1rG05I4FJ-.jpg" alt="Tulip Coffee logó">
+      <div class="word">Tulip Coffee<span>Celldömölk</span></div>
+    </div>
+    <!-- <nav class="nav-links">
+      <a href="#menu">Menü</a>
+      <a href="#nyitvatartas">Nyitvatartás</a>
+    </nav> -->
+    <div class="nav-right">
+      <a class="darts-pill" href="/demok/tulip-coffee/darts"><span class="full" >🎯 Tulip Darts Club</span><span class="short">🎯 Darts</span></a>
+      <a class="status-pill" href="#nyitvatartas" id="statusPill"><span class="dot"></span><span id="statusText">…</span></a>
+      <button class="nav-toggle"  id="navToggle" aria-label="Menü megnyitása" aria-expanded="false">
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+      </button>
+    </div>
+  </div>
+  <nav class="mobile-menu" id="mobileMenu">
+    <div class="mobile-menu-inner">
+      <a class="mobile-status" href="#nyitvatartas" id="mobileStatusPill"><span class="dot"></span><span id="mobileStatusText">…</span></a>
+      <a href="#menu"><span class="mi">☕</span>Menü</a>
+      <a href="#nyitvatartas"><span class="mi">🕐</span>Nyitvatartás</a>
+      <a href="/demok/tulip-coffee/darts" class="darts-link"><span class="mi">🎯</span>Tulip Darts Club</a>
+    </div>
+  </nav>
+</header>
+
+<section class="hero">
+  <div class="wrap grid">
+    <div>
+      <div class="eyebrow">Celldömölk főtere · Dr. Géfin Lajos tér 1.</div>
+      <div class="hero-word"><span class="script-line">Tulip</span><span class="sans-line">coffee</span></div>
+      <p class="lede">Egy friss reggeli espresso, egy délutáni jeges chai, vagy egy vidám hétvégi családi találkozó a főtéren. Egy hely, ahol megállhatsz egy pillanatra, és a saját tempódban élvezheted a kedvencedet.</p>
+      <div class="meta-row">
+        <a class="icon-link" href="https://www.facebook.com/p/Tulip-Coffee-100082962357400/" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M13.5 21v-7.5H16l.5-3.2h-3V8.3c0-.9.3-1.5 1.6-1.5H16.6V4a20 20 0 0 0-2.2-.1c-2.2 0-3.7 1.3-3.7 3.8v2.6H8.2v3.2h2.5V21h2.8z"/></svg> 1554 like</a>
+        <a class="icon-link" href="https://www.instagram.com/tulipcoffeecell/" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="1"/></svg> @tulipcoffeecell</a>
+      </div>
+      <div class="cta-row">
+        <a href="#nyitvatartas" class="btn btn-primary">Nyitvatartás</a>
+        <a href="https://www.google.com/maps/search/?api=1&query=Dr.+G%C3%A9fin+Lajos+t%C3%A9r+1%2C+Celld%C3%B6m%C3%B6lk" target="_blank" rel="noopener" class="btn btn-ghost">Útvonaltervezés →</a>
+      </div>
+    </div>
+    <div class="polaroid">
+      <img src="/demok/tulip-coffee/assets/client-photos/1784442999630-AQADOw1rG05I4FJ-.jpg" alt="Latte art szív">
+      <div class="cap">jó reggelt, Celldömölk</div>
+    </div>
+  </div>
+</section>
+
+<section class="story">
+  <div class="wrap grid">
+    <div>
+      <div class="eyebrow">A hely</div>
+      <h2>A Tulip.</h2>
+      <p>Személyes odafigyelés, minőségi alapanyagok és igazi közösségi élmény a főtéren. Kínálatunkat úgy alakítottuk ki, hogy mindenki megtalálja a számítását, a reggeli kávétól a hűsítő nyári sorbet-ig. Tereink rugalmasan alkalmazkodnak a vendégeinkhez: hétköznap a nyugodt beszélgetéseké, hétvégén pedig a családi pillanatoké és az emlékezetes, zenés rendezvényeké a főszerep.</p>
+      <p>A kínálat szezonálisan változik — Instán mindig kint a legfrissebb: Valentin-napi különlegesség, nyári sárgabarack sorbet, karácsonyi fahéjas chai.</p>
+      <div class="tag-row">
+        <span class="tag">Matcha bár</span>
+        <span class="tag">Kézműves fagyi</span>
+        <span class="tag">Családbarát</span>
+        <span class="tag">Élőzenés esték</span>
+      </div>
+    </div>
+    <div>
+      <div class="igrid">
+        <img src="/demok/tulip-coffee/assets/client-photos/1784443000605-AQADRQ1rG05I4FJ-.jpg" alt="Tulip Coffee — tulipán csokor és latte">
+        <img src="/demok/tulip-coffee/assets/client-photos/1784443000758-AQADRg1rG05I4FJ9.jpg" alt="Édes pillanat parfé">
+        <img src="/demok/tulip-coffee/assets/client-photos/1784443000300-AQADQg1rG05I4FJ-.jpg" alt="Fagyizás a Tulipban">
+        <img src="/demok/tulip-coffee/assets/client-photos/1784443000134-AQADQA1rG05I4FJ-.jpg" alt="Jeges matcha">
+        <img src="/demok/tulip-coffee/assets/client-photos/1784442999963-AQADPg1rG05I4FJ-.jpg" alt="Sárgabarack sorbet">
+        <img src="/demok/tulip-coffee/assets/client-photos/1784443000689-AQADRw1rG05I4FJ-.jpg" alt="Valentin napi különlegesség">
+      </div>
+      <div class="ig-cta"><span>@tulipcoffeecell</span><span>Kövess minket →</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="menu" id="menu">
+  <div class="wrap">
+    <div class="eyebrow">Kínálat</div>
+    <h2>Amit a pulton találsz</h2>
+    <div class="menu-grid">
+      <div class="menu-cat">
+        <h3>Speciality Coffee</h3>
+        <div class="menu-item"><span class="name">The Barn · Genesis Omni</span><span class="dots"></span><span class="desc">Yirgacheffe, Etiópia — barack, fekete tea jegyek</span></div>
+        <div class="menu-item"><span class="name">Presszó</span><span class="dots"></span></div>
+        <div class="menu-item"><span class="name">Americano</span><span class="dots"></span></div>
+        <div class="menu-item"><span class="name">Cortado</span><span class="dots"></span></div>
+        <div class="menu-item"><span class="name">Cappuccino</span><span class="dots"></span></div>
+        <div class="menu-item"><span class="name">Latte / Jeges Latte</span><span class="dots"></span></div>
+      </div>
+      <div class="menu-cat">
+        <h3>Matcha bár</h3>
+        <div class="menu-item"><span class="name">Bodzás matcha limonádé</span><span class="dots"></span></div>
+        <div class="menu-item"><span class="name">Almás matcha felhő</span><span class="dots"></span></div>
+        <div class="menu-item"><span class="name">Eperes matcha</span><span class="dots"></span></div>
+        <div class="menu-item"><span class="name">Eper-narancsos matcha</span><span class="dots"></span></div>
+      </div>
+      <div class="menu-cat">
+        <h3>Matcha desszertek</h3>
+        <div class="menu-item"><span class="name">Eper matcha torta</span><span class="dots"></span><span class="desc">mindenmentes</span></div>
+        <div class="menu-item"><span class="name">Matchás csoki torta</span><span class="dots"></span><span class="desc">mindenmentes</span></div>
+        <div class="menu-item"><span class="name">Vaníliás bodzás</span><span class="dots"></span><span class="desc">mindenmentes</span></div>
+        <div class="menu-item"><span class="name">Matcha szelet</span><span class="dots"></span><span class="desc">mindenmentes</span></div>
+      </div>
+      <div class="menu-cat">
+        <h3>Szezonális különlegesség</h3>
+        <div class="menu-item"><span class="name">Sárgabarack sorbet</span><span class="dots"></span><span class="desc">mangó-maracuja öntettel</span></div>
+      </div>
+    </div>
+    <div class="menu-poster-row">
+      <a  target="_blank" rel="noopener">Teljes itallap megtekintése (kép) →</a>
+    </div>
+  </div>
+</section>
+
+<section class="hours" id="nyitvatartas">
+  <div class="wrap grid">
+    <div>
+      <div class="eyebrow">Nyitvatartás</div>
+      <h2>Mikor tudsz beugrani</h2>
+      <table class="hours-table" id="hoursTable">
+        <tr data-day="1"><td>Hétfő</td><td>14:00 – 20:00</td></tr>
+        <tr data-day="2"><td>Kedd</td><td>9:00 – 20:00</td></tr>
+        <tr data-day="3"><td>Szerda</td><td>9:00 – 20:00</td></tr>
+        <tr data-day="4"><td>Csütörtök</td><td>9:00 – 20:00</td></tr>
+        <tr data-day="5"><td>Péntek</td><td>9:00 – 20:00</td></tr>
+        <tr data-day="6"><td>Szombat</td><td>9:00 – 22:00</td></tr>
+        <tr data-day="0"><td>Vasárnap</td><td>Zárva</td></tr>
+      </table>
+    </div>
+    <div class="hours-card">
+      <h3>Főtéri séta után?</h3>
+      <p>A Tulip a Dr. Géfin Lajos téren van — gyalog öt percre bárhonnan a belvárosból. Szombaton hosszabbított nyitvatartással várunk.</p>
+    </div>
+  </div>
+</section>
+
+<section class="darts-banner">
+  <div class="wrap grid">
+    <div>
+      <div class="eyebrow">Először Magyarországon</div>
+      <h2>Tulip Darts Club</h2>
+      <p>Professzionális okosdarts a kávézó mellett. Dartsee kamerás pontszámlálás és instant visszajátszás egy különleges játéktérben. Kattints, és foglalj táblát!</p>
+      <a href="/demok/tulip-coffee/darts" class="btn btn-primary">Tulip Darts Club megtekintése →</a>
+    </div>
+    <img src="/demok/tulip-coffee/assets/client-photos/1784443000929-AQADSQ1rG05I4FJ-.jpg" alt="Tulip Darts Club">
+  </div>
+</section>
+
+<section class="location" id="helyszin">
+  <div class="wrap grid">
+    <div>
+      <div class="eyebrow">Helyszín</div>
+      <h2>Celldömölk főterén</h2>
+      <p>Dr. Géfin Lajos tér 1, 9500 Celldömölk — a tér közepén, a Tulip terasszal.</p>
+      <div class="social-row">
+        <a class="social-chip" href="https://www.facebook.com/p/Tulip-Coffee-100082962357400/" target="_blank" rel="noopener">Facebook · 1554 like</a>
+        <a class="social-chip" href="https://www.instagram.com/tulipcoffeecell/" target="_blank" rel="noopener">Instagram · @tulipcoffeecell</a>
+      </div>
+    </div>
+    <div class="map-frame">
+      <iframe src="https://www.google.com/maps?q=Dr.+G%C3%A9fin+Lajos+t%C3%A9r+1%2C+Celld%C3%B6m%C3%B6lk&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span>© Tulip Coffee — Celldömölk, Dr. Géfin Lajos tér 1.</span>
+    <span><a href="/demok/tulip-coffee/darts">Tulip Darts Club</a> · Weboldal: Polarisweb</span>
+  </div>
+</footer>
+
+<script>
+  var HOURS = {0:null,1:[14*60,20*60],2:[9*60,20*60],3:[9*60,20*60],4:[9*60,20*60],5:[9*60,20*60],6:[9*60,22*60]};
+  var now = new Date();
+  var day = now.getDay();
+  var minutes = now.getHours()*60 + now.getMinutes();
+  var range = HOURS[day];
+  var isOpen = range && minutes >= range[0] && minutes < range[1];
+  var pill = document.getElementById('statusPill');
+  var text = document.getElementById('statusText');
+  var mobilePill = document.getElementById('mobileStatusPill');
+  var mobileText = document.getElementById('mobileStatusText');
+  if(isOpen){
+    var closeLabel = 'Nyitva — zár ' + Math.floor(range[1]/60) + ':' + String(range[1]%60).padStart(2,'0');
+    pill.classList.add('open');
+    text.textContent = closeLabel;
+    mobilePill.classList.add('open');
+    mobileText.textContent = closeLabel;
+  } else {
+    pill.classList.add('closed');
+    text.textContent = 'Most zárva';
+    mobilePill.classList.add('closed');
+    mobileText.textContent = 'Most zárva';
+  }
+  var row = document.querySelector('#hoursTable tr[data-day="' + day + '"]');
+  if(row) row.classList.add('today');
+
+  var navToggle = document.getElementById('navToggle');
+  var mobileMenu = document.getElementById('mobileMenu');
+  navToggle.addEventListener('click', function(){
+    var isOpen = mobileMenu.classList.toggle('open');
+    navToggle.classList.toggle('open', isOpen);
+    navToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+  });
+  mobileMenu.querySelectorAll('a').forEach(function(link){
+    link.addEventListener('click', function(){
+      mobileMenu.classList.remove('open');
+      navToggle.classList.remove('open');
+      navToggle.setAttribute('aria-expanded', 'false');
+    });
+  });
+</script>
+
+</body>
+</html>

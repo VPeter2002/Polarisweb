@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tulip Darts Club — Celldömölk</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,340;0,9..144,480;0,9..144,600;1,9..144,420&family=Karla:wght@400;500;600;700;800&family=Italiana&family=Mrs+Saint+Delafield&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --green:#1E3A2F;
+    --green-deep:#132720;
+    --cream:#F2EDD8;
+    --cream-dim:rgba(242,237,216,0.72);
+    --gold:#C9A227;
+    --line:rgba(242,237,216,0.16);
+    --radius:20px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{margin:0;background:var(--green);color:var(--cream);font-family:'Karla',sans-serif;font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased;}
+  h1,h2,h3{font-family:'Italiana',serif;font-weight:400;line-height:1.08;margin:0;letter-spacing:0.01em;}
+  a{color:inherit;text-decoration:none;}
+  img,svg{display:block;max-width:100%;}
+  .wrap{max-width:1100px;margin:0 auto;padding:0 24px;}
+  .eyebrow{font-family:'Karla',sans-serif;font-weight:800;letter-spacing:0.2em;text-transform:uppercase;font-size:11.5px;color:var(--gold);}
+
+  header.topbar{position:sticky;top:0;z-index:50;background:rgba(19,39,32,0.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);}
+  .topbar .wrap{display:flex;align-items:center;justify-content:space-between;padding:12px 24px;}
+  .back-link{font-size:13px;font-weight:700;color:var(--cream-dim);display:flex;align-items:center;gap:6px;white-space:nowrap;}
+  .back-link:hover{color:var(--cream);}
+  .back-link .short{display:none;}
+  .brand-mini{display:flex;align-items:center;gap:9px;}
+  .brand-mini img{width:34px;height:34px;border-radius:8px;object-fit:cover;}
+  .brand-mini span{font-family:'Karla',sans-serif;font-weight:800;font-size:12px;letter-spacing:0.12em;text-transform:uppercase;}
+
+  .hero{padding:70px 0 60px;text-align:center;background:radial-gradient(ellipse at 50% 0%, rgba(201,162,39,0.12), transparent 60%);}
+  .hero img.logo{width:min(230px,54%);margin:0 auto 26px;border-radius:16px;box-shadow:0 24px 60px rgba(0,0,0,0.4);}
+  .hero h1{font-size:clamp(34px,6vw,58px);letter-spacing:0.03em;}
+  .hero p.lede{max-width:52ch;margin:20px auto 0;color:var(--cream-dim);font-size:16px;}
+  .cta-row{display:flex;justify-content:center;flex-wrap:wrap;gap:12px;margin-top:32px;}
+  .btn{display:inline-flex;align-items:center;gap:8px;padding:13px 24px;border-radius:999px;font-weight:800;font-size:13.5px;letter-spacing:0.04em;border:1.5px solid transparent;cursor:pointer;font-family:'Karla',sans-serif;}
+  .btn-gold{background:var(--gold);color:var(--green-deep);}
+  .btn-gold:hover{background:#dab432;}
+  .btn-outline{border-color:rgba(242,237,216,0.4);color:var(--cream);}
+  .btn-outline:hover{border-color:var(--cream);}
+
+  .banner{padding:64px 0;background:var(--green-deep);}
+  .banner .grid{display:grid;grid-template-columns:1fr 1fr;gap:44px;align-items:center;}
+  .banner img{border-radius:16px;box-shadow:0 20px 50px rgba(0,0,0,0.4);}
+  .banner h2{font-size:clamp(26px,4vw,38px);}
+  .banner p{margin-top:16px;color:var(--cream-dim);max-width:44ch;font-size:15px;}
+
+  .features{padding:76px 0;}
+  .features h2{font-size:clamp(26px,4vw,38px);text-align:center;}
+  .features .eyebrow{display:block;text-align:center;}
+  .feature-list{margin-top:52px;max-width:760px;margin-left:auto;margin-right:auto;}
+  .feature{display:grid;grid-template-columns:56px 1fr;gap:22px;padding:24px 0;border-top:1px solid var(--line);align-items:flex-start;}
+  .feature:last-child{border-bottom:1px solid var(--line);}
+  .feature svg{width:32px;height:32px;}
+  .feature h3{font-family:'Fraunces',serif;font-weight:500;font-size:19px;letter-spacing:0;}
+  .feature p{margin-top:6px;color:var(--cream-dim);font-size:14.5px;max-width:52ch;}
+
+  .booking{background:var(--green-deep);padding:80px 0;}
+  .booking-box{max-width:620px;margin:0 auto;text-align:center;}
+  .booking h2{font-size:clamp(26px,4vw,38px);}
+  .booking p.lede{color:var(--cream-dim);margin-top:14px;font-size:15px;}
+  .booking-form{margin-top:38px;background:rgba(242,237,216,0.04);border:1px solid var(--line);border-radius:var(--radius);padding:30px;text-align:left;}
+  .form-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px;}
+  .form-row.full{grid-template-columns:1fr;}
+  label{display:block;font-size:11px;font-weight:800;letter-spacing:0.1em;text-transform:uppercase;color:var(--cream-dim);margin-bottom:7px;}
+  input,select{width:100%;padding:11px 12px;border-radius:10px;border:1px solid var(--line);background:rgba(242,237,216,0.06);color:var(--cream);font-family:'Karla',sans-serif;font-size:14px;}
+  input::placeholder{color:rgba(242,237,216,0.4);}
+  .booking-submit{width:100%;margin-top:8px;padding:14px;border-radius:999px;background:var(--gold);color:var(--green-deep);font-weight:800;font-size:14px;border:none;cursor:not-allowed;opacity:0.9;}
+  .booking-note{margin-top:14px;font-size:12px;color:var(--cream-dim);text-align:center;}
+
+  .venue{padding:64px 0 80px;text-align:center;}
+  .venue p{color:var(--cream-dim);margin-top:12px;}
+  .venue a.btn{margin-top:22px;}
+
+  .bar{padding:80px 0;background:var(--green-deep);}
+  .bar .eyebrow{display:block;text-align:center;}
+  .bar h2{font-size:clamp(26px,4vw,38px);text-align:center;}
+  .bar-grid{margin-top:44px;display:grid;grid-template-columns:1fr 1fr;gap:40px 52px;}
+  .bar-cat{border-top:1px solid var(--line);padding-top:16px;}
+  .bar-cat h3{font-family:'Karla',sans-serif;font-weight:800;font-size:12px;letter-spacing:0.13em;text-transform:uppercase;color:var(--gold);margin-bottom:14px;}
+  .bar-item{display:flex;align-items:baseline;gap:8px;padding:8px 0;flex-wrap:wrap;}
+  .bar-item .name{font-family:'Fraunces',serif;font-weight:500;font-size:16.5px;}
+  .bar-item .dots{flex:1;min-width:20px;border-bottom:1.5px dotted var(--line);transform:translateY(-4px);}
+  .bar-item .desc{width:100%;font-size:12.5px;color:var(--cream-dim);margin-top:1px;}
+  .bar-note{margin-top:36px;text-align:center;font-size:13px;color:var(--cream-dim);}
+
+  footer{background:var(--green-deep);padding:24px 0 32px;border-top:1px solid var(--line);}
+  footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px;font-size:11.5px;color:var(--cream-dim);}
+
+  @media (max-width:820px){
+    .banner .grid{grid-template-columns:1fr;}
+    .banner img{max-width:260px;margin:0 auto;}
+    .form-row{grid-template-columns:1fr;}
+    .bar-grid{grid-template-columns:1fr;gap:30px;}
+  }
+  @media (max-width:600px){
+    .back-link .full{display:none;}
+    .back-link .short{display:inline;}
+  }
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="wrap">
+    <a class="back-link" href="/demok/tulip-coffee/"><span class="full">← Vissza a Tulip Coffee-hoz</span><span class="short">← Vissza</span></a>
+    <div class="brand-mini">
+      <img src="/demok/tulip-coffee/assets/client-photos/1784443000929-AQADSQ1rG05I4FJ-.jpg" alt="Tulip Darts Club">
+      <span>Darts Club</span>
+    </div>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap">
+    <img class="logo" src="/demok/tulip-coffee/assets/client-photos/1784443000929-AQADSQ1rG05I4FJ-.jpg" alt="Tulip Darts Club">
+    <div class="eyebrow">Először Magyarországon</div>
+    <h1>Nem csak darts.<br>Élmény.</h1>
+    <p class="lede">Kamerás pontszámláló darts a Tulip Coffee terében. Nálunk elsőként Magyarországon próbálhatod ki a Dartsee rendszert — instant videó-visszajátszással, minden győztes dobásról.</p>
+    <div class="cta-row">
+      <a href="#foglalas" class="btn btn-gold">Foglalj asztalt →</a>
+      <a href="#mi-az-a-dartsee" class="btn btn-outline">Mi az a Dartsee?</a>
+      <a href="#bar" class="btn btn-outline">Bár &amp; Smash Burger</a>
+    </div>
+  </div>
+</section>
+
+<section class="banner" id="mi-az-a-dartsee">
+  <div class="wrap grid">
+    <img src="/demok/tulip-coffee/assets/client-photos/1784443000854-AQADSA1rG05I4FJ9.jpg" alt="Dartsee — először Magyarországon">
+    <div>
+      <div class="eyebrow">A rendszer</div>
+      <h2>Dartsee</h2>
+      <p>A Dartsee egy kamerás, automata pontszámláló darts-rendszer — nem kell számolni, nem kell vitatkozni a dobás pontosságán. A gép mindent lát, mindent rögzít, és minden forduló után visszajátssza a legjobb dobásaidat.</p>
+    </div>
+  </div>
+</section>
+
+<section class="features">
+  <div class="wrap">
+    <div class="eyebrow">Miért más</div>
+    <h2>Amit a Dartsee tud</h2>
+    <div class="feature-list">
+      <div class="feature">
+        <svg viewBox="0 0 48 48" fill="none" stroke="var(--gold)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="14" width="30" height="22" rx="4"/><path d="M36 20l8-5v18l-8-5"/><circle cx="21" cy="25" r="6"/></svg>
+        <div><h3>Kamerás pontszámlálás</h3><p>Nincs kézi számolás — a rendszer automatikusan felismeri és rögzíti minden dobásod pontos helyét.</p></div>
+      </div>
+      <div class="feature">
+        <svg viewBox="0 0 48 48" fill="none" stroke="var(--gold)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="24" cy="24" r="18"/><circle cx="24" cy="24" r="10"/><circle cx="24" cy="24" r="2.5" fill="var(--gold)"/></svg>
+        <div><h3>11 játékmód</h3><p>A klasszikus 501-től a party módokig — mindenkinek van tétje, kezdőtől a rutinos dartsosig.</p></div>
+      </div>
+      <div class="feature">
+        <svg viewBox="0 0 48 48" fill="none" stroke="var(--gold)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="10" width="36" height="24" rx="3"/><path d="M20 18l10 6-10 6z" fill="var(--gold)" stroke="none"/><path d="M16 40h16"/></svg>
+        <div><h3>Instant videó-visszajátszás</h3><p>A legjobb dobásaidról azonnal kapsz egy visszajátszható videót — megosztásra készen.</p></div>
+      </div>
+      <div class="feature">
+        <svg viewBox="0 0 48 48" fill="none" stroke="var(--gold)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="16" cy="18" r="6"/><circle cx="33" cy="18" r="6"/><path d="M6 38c0-6 5-10 10-10s10 4 10 10"/><path d="M22 38c0-6 5-10 10-10s10 4 10 10"/></svg>
+        <div><h3>Social gaming</h3><p>Csapatban, baráti körben, céges buliban — a Tulip terében, kávé vagy sör mellett.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="bar" id="bar">
+  <div class="wrap">
+    <div class="eyebrow">Amíg dobsz</div>
+    <h2>A bár is nyitva van</h2>
+    <div class="bar-grid">
+      <div class="bar-cat">
+        <h3>Sörök</h3>
+        <div class="bar-item"><span class="name">Pilsner Urquell</span><span class="dots"></span></div>
+        <div class="bar-item"><span class="name">Dreher Meggy</span><span class="dots"></span></div>
+        <div class="bar-item"><span class="name">Vágott sör</span><span class="dots"></span><span class="desc">Nagy Zoltán sörcsapoló mester csapolja</span></div>
+      </div>
+      <div class="bar-cat">
+        <h3>Frissítők &amp; Spritzek</h3>
+        <div class="bar-item"><span class="name">Hugo Spritz</span><span class="dots"></span></div>
+        <div class="bar-item"><span class="name">Aperol Spritz</span><span class="dots"></span></div>
+        <div class="bar-item"><span class="name">Limoncello Spritz</span><span class="dots"></span></div>
+        <div class="bar-item"><span class="name">Eper-rózsa Spritz</span><span class="dots"></span></div>
+        <div class="bar-item"><span class="name">Sarti Spritz</span><span class="dots"></span></div>
+      </div>
+      <div class="bar-cat">
+        <h3>Gin &amp; Tonic</h3>
+        <div class="bar-item"><span class="name">Malfy</span><span class="dots"></span></div>
+        <div class="bar-item"><span class="name">Panda</span><span class="dots"></span></div>
+        <div class="bar-item"><span class="name">Balaton</span><span class="dots"></span></div>
+      </div>
+      <div class="bar-cat">
+        <h3>Prémium rövid italok</h3>
+        <div class="bar-item"><span class="name">Pannonhalmi Feketecseresznye pálinka</span><span class="dots"></span></div>
+        <div class="bar-item"><span class="name">Cornus Málna pálinka</span><span class="dots"></span></div>
+        <div class="bar-item"><span class="name">Árpád Gyömbér párlat</span><span class="dots"></span></div>
+        <div class="bar-item"><span class="name">Jägermeister</span><span class="dots"></span></div>
+        <div class="bar-item"><span class="name">Unicum</span><span class="dots"></span></div>
+      </div>
+      <div class="bar-cat">
+        <h3>Alkoholmentes fröccs</h3>
+        <div class="bar-item"><span class="name">Laposa alkoholmentes</span><span class="dots"></span></div>
+        <div class="bar-item"><span class="name">Olaszrizling</span><span class="dots"></span></div>
+      </div>
+      <div class="bar-cat">
+        <h3>Tulip Smash Burger</h3>
+        <div class="bar-item"><span class="name">Prémium Angus marha</span><span class="dots"></span><span class="desc">Black Angus 97%, Wagyu 3% — bacon, sajt, hagyma, szósz</span></div>
+      </div>
+    </div>
+    <div class="bar-note">A teljes itallap: <a href="/demok/tulip-coffee/assets/menu/menu-italok-burger.jpg" target="_blank" rel="noopener" style="color:var(--gold);border-bottom:1px solid var(--gold)">kép megnyitása →</a></div>
+  </div>
+</section>
+
+<section class="booking" id="foglalas">
+  <div class="wrap">
+    <div class="booking-box">
+      <div class="eyebrow">Foglalás</div>
+      <h2>Foglalj asztalt / dartboardot</h2>
+      <p class="lede">Az online foglalás jelenleg fejlesztés alatt — addig hívj minket, vagy írj Instán, és lefoglaljuk a helyed.</p>
+      <div class="booking-form">
+        <div class="form-row full">
+          <div><label>Név</label><input type="text" placeholder="Teljes név"></div>
+        </div>
+        <div class="form-row">
+          <div><label>Dátum</label><input type="date"></div>
+          <div><label>Időpont</label><input type="time"></div>
+        </div>
+        <div class="form-row">
+          <div><label>Létszám</label><input type="number" placeholder="pl. 4 fő"></div>
+          <div><label>Játékmód</label><select><option>501 klasszikus</option></select></div>
+        </div>
+        <button class="booking-submit">Foglalás — hamarosan élesben</button>
+        <div class="booking-note">* Ez egy design-előnézet, a foglalás egyelőre nem működik.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="venue">
+  <div class="wrap">
+    <div class="eyebrow">Helyszín</div>
+    <h2>Ugyanott, mint a Tulip Coffee</h2>
+    <p>Dr. Géfin Lajos tér 1, 9500 Celldömölk — a kávézó terében.</p>
+    <a href="/demok/tulip-coffee/" class="btn btn-outline">Vissza a Tulip Coffee oldalára →</a>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span>© Tulip Darts Club — a Tulip Coffee részeként, Celldömölk</span>
+    <span><a href="/demok/tulip-coffee/">Tulip Coffee</a> · Weboldal: Polarisweb</span>
+  </div>
+</footer>
+
+</body>
+</html>
