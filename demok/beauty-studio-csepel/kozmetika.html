@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+<meta name="robots" content="noindex, nofollow">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kozmetika, Beauty Studio Szépségszalon</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;0,6..96,600;1,6..96,500&family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --clay:#C97B57; --clay-dark:#A2593A; --stone:#EFE6DA; --stone-soft:#F8F2E9;
+    --charcoal:#2B2621; --charcoal-soft:rgba(43,38,33,0.66); --sage:#8B9A76; --blush:#E9C9BA;
+    --line:rgba(43,38,33,0.14); --radius:26px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{margin:0;background:var(--stone-soft);color:var(--charcoal);font-family:'Work Sans',sans-serif;font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased;}
+  h1,h2,h3{font-family:'Bodoni Moda',serif;font-weight:500;line-height:1.05;margin:0;letter-spacing:-0.005em;}
+  a{color:inherit;text-decoration:none;}
+  img,svg{display:block;max-width:100%;}
+  .wrap{max-width:1000px;margin:0 auto;padding:0 24px;}
+  .eyebrow{font-family:'Work Sans',sans-serif;font-weight:600;letter-spacing:0.22em;text-transform:uppercase;font-size:11.5px;color:var(--clay-dark);}
+  .reveal{opacity:0;transform:translateY(16px);transition:opacity .8s ease, transform .8s ease;}
+  .reveal.in{opacity:1;transform:none;}
+
+  header.topbar{position:sticky;top:0;z-index:50;background:rgba(248,242,233,0.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);}
+  .topbar .wrap{max-width:1180px;display:flex;align-items:center;justify-content:space-between;gap:14px;padding:16px 24px;}
+  .brand img{height:44px;width:auto;}
+  .nav-links{display:flex;align-items:center;gap:28px;font-size:13.5px;font-weight:500;}
+  .nav-links a:hover{color:var(--clay-dark);}
+  .btn{display:inline-flex;align-items:center;gap:8px;padding:12px 22px;border-radius:999px;font-weight:600;font-size:13.5px;border:1.5px solid transparent;cursor:pointer;white-space:nowrap;}
+  .btn-primary{background:var(--charcoal);color:var(--stone-soft);}
+  .btn-primary:hover{background:#171310;}
+  .nav-toggle{display:none;flex-direction:column;align-items:center;justify-content:center;gap:5px;width:40px;height:40px;background:var(--charcoal);border:none;border-radius:10px;cursor:pointer;flex:none;padding:0;}
+  .nav-toggle .bar{width:18px;height:1.5px;border-radius:2px;background:var(--stone-soft);}
+  .mobile-menu{max-height:0;opacity:0;overflow:hidden;background:var(--stone-soft);border-top:1px solid transparent;box-shadow:0 18px 32px rgba(43,38,33,0.12);transition:max-height .38s ease, opacity .28s ease;}
+  .mobile-menu.open{max-height:420px;opacity:1;border-top-color:var(--line);}
+  .mobile-menu-inner{display:flex;flex-direction:column;gap:6px;padding:16px 18px 22px;}
+  .mobile-menu a{display:block;padding:13px 16px;border-radius:12px;font-weight:600;font-size:15px;background:rgba(43,38,33,0.03);}
+
+  .page-hero{padding:60px 0 20px;}
+  .page-hero .eyebrow{color:var(--clay-dark);}
+  .page-hero h1{font-size:clamp(32px,4.6vw,48px);margin-top:10px;}
+  .page-hero p{margin-top:16px;max-width:60ch;color:var(--charcoal-soft);font-size:15.5px;}
+
+  .brand-row{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px;}
+  .brand-chip{font-size:12.5px;font-weight:600;padding:8px 14px;border-radius:999px;background:var(--stone);border:1px solid var(--line);}
+
+  .content{padding:20px 0 70px;}
+  .block{margin-top:44px;}
+  .block h2{font-size:22px;font-weight:600;border-bottom:1px solid var(--line);padding-bottom:12px;margin-bottom:16px;}
+  .list-item{display:flex;align-items:baseline;gap:10px;padding:9px 0;}
+  .list-item .name{font-size:15.5px;}
+  .list-item .dots{flex:1;min-width:16px;border-bottom:1px dotted var(--line);transform:translateY(-4px);}
+  .list-item .price{font-weight:600;color:var(--clay-dark);white-space:nowrap;font-size:14px;}
+  .note-card{background:var(--stone);border-radius:18px;padding:22px 24px;font-size:14.5px;color:var(--charcoal-soft);margin-top:44px;}
+
+  .siblings{padding:50px 0 70px;border-top:1px solid var(--line);}
+  .siblings .eyebrow{color:var(--clay-dark);}
+  .sib-row{margin-top:20px;display:flex;flex-wrap:wrap;gap:12px;}
+  .sib-chip{font-size:13.5px;font-weight:600;padding:11px 20px;border-radius:999px;background:#fff;border:1px solid var(--line);}
+  .sib-chip:hover{border-color:var(--clay);}
+  .sib-chip.active{background:var(--charcoal);color:var(--stone-soft);}
+
+  .back-link{display:block;text-align:center;padding-bottom:40px;font-size:13px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:var(--clay-dark);}
+
+  footer{background:var(--charcoal);color:rgba(248,242,233,0.5);padding:22px 0 30px;border-top:1px solid rgba(248,242,233,0.1);}
+  footer .wrap{max-width:1180px;display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px;font-size:12px;}
+
+  @media (max-width:700px){ .nav-links{display:none;} .nav-toggle{display:inline-flex;} }
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="wrap">
+    <div class="brand"><img src="/demok/beauty-studio-csepel/assets/logo.jpg" alt="Beauty Studio Szépségszalon logó"></div>
+    <nav class="nav-links">
+      <a href="/demok/beauty-studio-csepel/#szolgaltatasok">Szolgáltatások</a>
+      <a href="/demok/beauty-studio-csepel/#csapat">Csapat</a>
+      <a href="/demok/beauty-studio-csepel/#nyitvatartas">Nyitvatartás</a>
+      <a href="/demok/beauty-studio-csepel/#helyszin">Helyszín</a>
+    </nav>
+    <a class="btn btn-primary" href="/demok/beauty-studio-csepel/#foglalas">Időpontfoglalás</a>
+    <button class="nav-toggle" id="navToggle" aria-label="Menü megnyitása" aria-expanded="false">
+      <span class="bar"></span><span class="bar"></span><span class="bar"></span>
+    </button>
+  </div>
+  <nav class="mobile-menu" id="mobileMenu">
+    <div class="mobile-menu-inner">
+      <a href="/demok/beauty-studio-csepel/#foglalas">Időpontfoglalás</a>
+      <a href="/demok/beauty-studio-csepel/#szolgaltatasok">Szolgáltatások</a>
+      <a href="/demok/beauty-studio-csepel/#csapat">Csapat</a>
+      <a href="/demok/beauty-studio-csepel/#nyitvatartas">Nyitvatartás</a>
+      <a href="/demok/beauty-studio-csepel/#helyszin">Helyszín</a>
+    </div>
+  </nav>
+</header>
+
+<section class="page-hero reveal">
+  <div class="wrap">
+    <div class="eyebrow">Szolgáltatás · Kozmetika</div>
+    <h1>Arckezelés és kozmetika</h1>
+    <p>Kezelőnk Vámos Tímea vezetésével professzionális kozmetikai kezeléseket kínál, a klasszikus arckezeléstől a géppel támogatott, hatékonyabb eljárásokig, minőségi hazai és nemzetközi márkákkal.</p>
+    <div class="brand-row">
+      <span class="brand-chip">GIGI kozmetikum</span>
+      <span class="brand-chip">Solanie kozmetikum (hazai fejlesztés)</span>
+    </div>
+  </div>
+</section>
+
+<div class="wrap content reveal">
+  <div class="block">
+    <h2>Kezelések</h2>
+    <div class="list-item"><span class="name">Szemránckezelés</span><span class="dots"></span><span class="price">Egyeztetés szerint</span></div>
+    <div class="list-item"><span class="name">Arany arckezelés</span><span class="dots"></span><span class="price">Egyeztetés szerint</span></div>
+    <div class="list-item"><span class="name">Szempilla- és szemöldökfestés</span><span class="dots"></span><span class="price">Egyeztetés szerint</span></div>
+    <div class="list-item"><span class="name">Szempillalifting</span><span class="dots"></span><span class="price">Egyeztetés szerint</span></div>
+    <div class="list-item"><span class="name">Gyantázás</span><span class="dots"></span><span class="price">Egyeztetés szerint</span></div>
+    <div class="list-item"><span class="name">Carboxy kezelés</span><span class="dots"></span><span class="price">Egyeztetés szerint</span></div>
+  </div>
+  <div class="block">
+    <h2>Gépi kezelések</h2>
+    <div class="list-item"><span class="name">Hidroabráziós kezelés</span><span class="dots"></span><span class="price">Egyeztetés szerint</span></div>
+    <div class="list-item"><span class="name">Gyémántfejes bőrcsiszolás</span><span class="dots"></span><span class="price">Egyeztetés szerint</span></div>
+    <div class="list-item"><span class="name">Tűnélküli mezoterápia</span><span class="dots"></span><span class="price">Egyeztetés szerint</span></div>
+    <div class="list-item"><span class="name">Mezopen kezelés</span><span class="dots"></span><span class="price">Egyeztetés szerint</span></div>
+  </div>
+  <div class="note-card">Alkalmi smink is kérhető jeles eseményekre, esküvőre vagy ballagásra. Az árak a szolgáltatás jellegéből adódóan egyénileg alakulnak, a végleges árlista egyeztetés után kerül fel az oldalra.</div>
+</div>
+
+<section class="siblings reveal">
+  <div class="wrap">
+    <div class="eyebrow">További szolgáltatások</div>
+    <div class="sib-row">
+      <a class="sib-chip active" href="/demok/beauty-studio-csepel/kozmetika">Kozmetika</a>
+      <a class="sib-chip" href="/demok/beauty-studio-csepel/fodraszat">Fodrászat</a>
+      <a class="sib-chip" href="/demok/beauty-studio-csepel/mukorom">Műköröm</a>
+      <a class="sib-chip" href="/demok/beauty-studio-csepel/pedikur">Pedikűr</a>
+      <a class="sib-chip" href="/demok/beauty-studio-csepel/masszazs">Masszázs</a>
+    </div>
+  </div>
+</section>
+
+<a class="back-link" href="/demok/beauty-studio-csepel/">← Vissza a főoldalra</a>
+
+<footer>
+  <div class="wrap">
+    <span>© Beauty Studio Szépségszalon, Csepel, Kossuth Lajos u. 106/B.</span>
+    <span>Weboldal: Polarisweb</span>
+  </div>
+</footer>
+
+<script>
+  var navToggle = document.getElementById('navToggle');
+  var mobileMenu = document.getElementById('mobileMenu');
+  navToggle.addEventListener('click', function(){
+    var open = mobileMenu.classList.toggle('open');
+    navToggle.classList.toggle('open', open);
+    navToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+  mobileMenu.querySelectorAll('a').forEach(function(link){
+    link.addEventListener('click', function(){
+      mobileMenu.classList.remove('open');
+      navToggle.classList.remove('open');
+      navToggle.setAttribute('aria-expanded', 'false');
+    });
+  });
+  var revealEls = document.querySelectorAll('.reveal');
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, {threshold:0.12});
+  revealEls.forEach(function(el){ io.observe(el); });
+</script>
+
+</body>
+</html>

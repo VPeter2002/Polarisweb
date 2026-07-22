@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+<meta name="robots" content="noindex, nofollow">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Programok, Kertvárosi Kávézó</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,500&family=Pinyon+Script&family=Jost:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --forest:#2C4A31;
+    --forest-dark:#1E331F;
+    --gold:#A9834D;
+    --gold-soft:#D8C29A;
+    --paper:#FBF8F2;
+    --paper-deep:#F3EEE0;
+    --ink:#20281F;
+    --ink-soft:rgba(32,40,31,0.66);
+    --line:rgba(32,40,31,0.15);
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:'Jost',sans-serif;font-size:16px;line-height:1.65;-webkit-font-smoothing:antialiased;}
+  h1,h2,h3{font-family:'Cormorant Garamond',serif;font-weight:600;line-height:1.1;margin:0;}
+  a{color:inherit;text-decoration:none;}
+  img,svg{display:block;max-width:100%;}
+  .wrap{max-width:1120px;margin:0 auto;padding:0 24px;}
+  .eyebrow{font-family:'Jost',sans-serif;font-weight:600;letter-spacing:0.24em;text-transform:uppercase;font-size:11px;color:var(--gold);}
+  .script{font-family:'Pinyon Script',cursive;font-weight:400;}
+
+  .reveal{opacity:0;transform:translateY(16px);transition:opacity .8s ease, transform .8s ease;}
+  .reveal.in{opacity:1;transform:none;}
+
+  header.topbar{position:sticky;top:0;z-index:50;background:rgba(251,248,242,0.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);}
+  .topbar .wrap{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:10px 24px;}
+  .brand{display:flex;align-items:center;gap:12px;}
+  .brand img{width:52px;height:52px;border-radius:50%;object-fit:cover;mix-blend-mode:multiply;}
+  .brand .word{font-family:'Cormorant Garamond',serif;font-weight:600;font-size:19px;letter-spacing:0.02em;}
+  .nav-links{display:flex;align-items:center;gap:30px;font-size:13px;font-weight:500;letter-spacing:0.04em;}
+  .nav-links a{position:relative;padding-bottom:3px;}
+  .nav-links a.active,.nav-links a:hover{color:var(--forest);}
+  .nav-links a.active::after{content:"";position:absolute;left:0;right:0;bottom:0;height:1px;background:var(--gold);}
+  .nav-toggle{display:none;flex-direction:column;align-items:center;justify-content:center;gap:5px;width:40px;height:40px;background:var(--forest);border:none;border-radius:3px;cursor:pointer;flex:none;padding:0;}
+  .nav-toggle .bar{width:18px;height:1.5px;background:var(--paper);transition:transform .3s ease, opacity .2s ease;}
+  .nav-toggle.open .bar:nth-child(1){transform:translateY(6.5px) rotate(45deg);}
+  .nav-toggle.open .bar:nth-child(2){opacity:0;}
+  .nav-toggle.open .bar:nth-child(3){transform:translateY(-6.5px) rotate(-45deg);}
+  .mobile-menu{max-height:0;opacity:0;overflow:hidden;background:var(--paper);border-top:1px solid transparent;box-shadow:0 18px 32px rgba(32,40,31,0.1);transition:max-height .38s ease, opacity .28s ease;}
+  .mobile-menu.open{max-height:420px;opacity:1;border-top-color:var(--line);}
+  .mobile-menu-inner{display:flex;flex-direction:column;gap:4px;padding:16px 18px 22px;}
+  .mobile-menu a{display:block;padding:13px 16px;font-weight:500;font-size:15px;border-bottom:1px solid var(--line);}
+
+  .page-hero{padding:64px 0 50px;text-align:center;}
+  .page-hero h1{font-size:clamp(30px,4.6vw,44px);font-style:italic;font-weight:500;}
+  .page-hero p{margin:16px auto 0;max-width:48ch;color:var(--ink-soft);font-size:15.5px;}
+
+  .events{padding:20px 0 70px;}
+  .events .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:30px;}
+  .event-card{background:var(--paper-deep);border:1px solid var(--line);padding:34px 28px;}
+  .event-card svg{width:36px;height:36px;margin-bottom:16px;}
+  .event-card h3{font-size:22px;font-weight:600;}
+  .event-card .freq{font-size:11px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--gold);margin-top:6px;}
+  .event-card p{margin-top:12px;font-size:14.5px;color:var(--ink-soft);}
+
+  .howto{background:var(--forest);color:var(--paper);padding:70px 0;text-align:center;}
+  .howto .eyebrow{color:var(--gold-soft);}
+  .howto h2{color:var(--paper);font-style:italic;font-weight:500;font-size:clamp(26px,3.4vw,34px);margin-top:10px;}
+  .howto p{margin:16px auto 0;max-width:52ch;color:rgba(251,248,242,0.75);font-size:15px;}
+  .social-row{display:flex;gap:12px;margin-top:26px;flex-wrap:wrap;justify-content:center;}
+  .social-chip{display:flex;align-items:center;gap:9px;border:1px solid rgba(251,248,242,0.28);border-radius:999px;padding:10px 18px;font-size:13px;font-weight:500;transition:border-color .2s;}
+  .social-chip:hover{border-color:rgba(251,248,242,0.6);}
+
+  .back-link{display:block;text-align:center;padding:40px 0;font-size:13px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:var(--forest);}
+
+  footer{background:var(--ink);color:rgba(251,248,242,0.5);padding:22px 0 30px;border-top:1px solid rgba(251,248,242,0.1);}
+  footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px;font-size:12px;}
+
+  @media (max-width:900px){ .events .grid{grid-template-columns:1fr;} }
+  @media (max-width:700px){ .nav-links{display:none;} .nav-toggle{display:inline-flex;} }
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="wrap">
+    <div class="brand">
+      <img src="/demok/kertvarosi-kavezo/assets/logo.jpg" alt="Kertvárosi Kávézó logó">
+      <div class="word">Kertvárosi Kávézó</div>
+    </div>
+    <nav class="nav-links">
+      <a href="/demok/kertvarosi-kavezo/#kinalat">Kínálat</a>
+      <a href="/demok/kertvarosi-kavezo/programok" class="active">Programok</a>
+      <a href="/demok/kertvarosi-kavezo/#nyitvatartas">Nyitvatartás</a>
+      <a href="/demok/kertvarosi-kavezo/#helyszin">Helyszín</a>
+    </nav>
+    <button class="nav-toggle" id="navToggle" aria-label="Menü megnyitása" aria-expanded="false">
+      <span class="bar"></span><span class="bar"></span><span class="bar"></span>
+    </button>
+  </div>
+  <nav class="mobile-menu" id="mobileMenu">
+    <div class="mobile-menu-inner">
+      <a href="/demok/kertvarosi-kavezo/#kinalat">Kínálat</a>
+      <a href="/demok/kertvarosi-kavezo/programok">Programok</a>
+      <a href="/demok/kertvarosi-kavezo/#nyitvatartas">Nyitvatartás</a>
+      <a href="/demok/kertvarosi-kavezo/#helyszin">Helyszín</a>
+    </div>
+  </nav>
+</header>
+
+<section class="page-hero reveal">
+  <div class="wrap">
+    <div class="eyebrow">Programok</div>
+    <h1>Nem csak <span class="script" style="font-size:1.2em;">kávézó</span></h1>
+    <p>A megszokott kávé és fagyi mellett a Kertvárosi Kávézó rendszeresen ad otthont könnyed esti programoknak is, a park hangulatához illő tempóban.</p>
+  </div>
+</section>
+
+<section class="events reveal">
+  <div class="wrap grid">
+    <div class="event-card">
+      <svg viewBox="0 0 32 32" fill="none"><path d="M10 22V6l14 4v12" stroke="#A9834D" stroke-width="1.6"/><circle cx="8" cy="23" r="3" stroke="#A9834D" stroke-width="1.6"/><circle cx="22" cy="21" r="3" stroke="#A9834D" stroke-width="1.6"/></svg>
+      <h3>Élőzenés esték</h3>
+      <div class="freq">Alkalmanként</div>
+      <p>Akusztikus fellépőkkel a teraszon, jellemzően esti órákban. A pontos dátumokat a Facebook- és Instagram-oldalunkon hirdetjük előre.</p>
+    </div>
+    <div class="event-card">
+      <svg viewBox="0 0 32 32" fill="none"><path d="M8 6h16v20l-8-5-8 5z" stroke="#2C4A31" stroke-width="1.6"/></svg>
+      <h3>Irodalmi karaoke est</h3>
+      <div class="freq">Havi rendszerességgel</div>
+      <p>Felolvasás, közös versmondás és karaoke egy laza estébe sűrítve, a kertváros irodalomkedvelőinek és énekelni szeretőinek egyaránt.</p>
+    </div>
+    <div class="event-card">
+      <svg viewBox="0 0 32 32" fill="none"><path d="M10 26V10a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v16" stroke="#A9834D" stroke-width="1.6"/><path d="M6 26h20" stroke="#A9834D" stroke-width="1.6" stroke-linecap="round"/></svg>
+      <h3>Fröccsterasz</h3>
+      <div class="freq">Minden nyári estén</div>
+      <p>Kisfröccstől a nagyfröccsig, kézműves sörrel és borral kiegészítve, a park esti hangulatában.</p>
+    </div>
+  </div>
+</section>
+
+<section class="howto reveal">
+  <div class="wrap">
+    <div class="eyebrow">Ne maradjon le</div>
+    <h2>Naprakész programnaptár</h2>
+    <p>Az alkalmi esték pontos időpontjait közösségi oldalainkon tesszük közzé. A legegyszerűbb, ha ott követi a kávézót.</p>
+    <div class="social-row">
+      <a class="social-chip" href="https://www.instagram.com/kertvarosikavezo/" target="_blank" rel="noopener">Instagram · @kertvarosikavezo</a>
+      <a class="social-chip" href="https://www.facebook.com/kertvarosikavezo/" target="_blank" rel="noopener">Facebook</a>
+    </div>
+  </div>
+</section>
+
+<a class="back-link" href="/demok/kertvarosi-kavezo/">← Vissza a főoldalra</a>
+
+<footer>
+  <div class="wrap">
+    <span>© Kertvárosi Kávézó, Sashalom, Reformátorok tere.</span>
+    <span>Weboldal: Polarisweb</span>
+  </div>
+</footer>
+
+<script>
+  var navToggle = document.getElementById('navToggle');
+  var mobileMenu = document.getElementById('mobileMenu');
+  navToggle.addEventListener('click', function(){
+    var open = mobileMenu.classList.toggle('open');
+    navToggle.classList.toggle('open', open);
+    navToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+  mobileMenu.querySelectorAll('a').forEach(function(link){
+    link.addEventListener('click', function(){
+      mobileMenu.classList.remove('open');
+      navToggle.classList.remove('open');
+      navToggle.setAttribute('aria-expanded', 'false');
+    });
+  });
+  var revealEls = document.querySelectorAll('.reveal');
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, {threshold:0.12});
+  revealEls.forEach(function(el){ io.observe(el); });
+</script>
+
+</body>
+</html>

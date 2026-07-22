@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+<meta name="robots" content="noindex, nofollow">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Főzelék Varázs, Rákospalota</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bitter:wght@500;700;800;900&family=PT+Sans:wght@400;700&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paprika:#B23A26;
+    --paprika-dark:#7E2818;
+    --cream:#F4EAD2;
+    --cream-soft:#FBF5E6;
+    --mustard:#E0A72F;
+    --dill:#4B6B44;
+    --dill-dark:#374F30;
+    --ink:#2C2218;
+    --ink-soft:rgba(44,34,24,0.68);
+    --line:rgba(44,34,24,0.16);
+    --radius:18px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{margin:0;background:var(--cream);color:var(--ink);font-family:'PT Sans',sans-serif;font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased;}
+  h1,h2,h3{font-family:'Bitter',serif;font-weight:800;line-height:1.08;margin:0;letter-spacing:-0.01em;}
+  a{color:inherit;text-decoration:none;}
+  img,svg{display:block;max-width:100%;}
+  .wrap{max-width:1160px;margin:0 auto;padding:0 24px;}
+  .eyebrow{font-family:'PT Sans',sans-serif;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;font-size:12px;color:var(--paprika-dark);}
+  .chalk{font-family:'Caveat',cursive;font-weight:700;}
+
+  .reveal{opacity:0;transform:translateY(18px);transition:opacity .7s ease, transform .7s ease;}
+  .reveal.in{opacity:1;transform:none;}
+
+  header.topbar{position:sticky;top:0;z-index:50;background:rgba(244,234,210,0.94);backdrop-filter:blur(8px);border-bottom:2px solid var(--ink);}
+  .topbar .wrap{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:11px 24px;}
+  .brand{display:flex;align-items:center;gap:11px;}
+  .brand .mark{width:44px;height:44px;flex:none;}
+  .brand .word{font-family:'Bitter',serif;font-weight:800;font-size:16px;line-height:1.1;}
+  .brand .word span{display:block;font-family:'PT Sans',sans-serif;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--ink-soft);font-size:10px;margin-top:2px;}
+  .nav-links{display:flex;align-items:center;gap:22px;font-size:14px;font-weight:700;}
+  .nav-links a:hover{color:var(--paprika-dark);}
+  .nav-right{display:flex;align-items:center;gap:10px;}
+  .status-pill{display:flex;align-items:center;gap:8px;font-size:12.5px;font-weight:700;padding:7px 13px 7px 10px;border-radius:999px;border:1.5px solid var(--ink);background:var(--mustard);white-space:nowrap;}
+  .status-pill .dot{width:8px;height:8px;border-radius:50%;background:var(--ink);flex:none;}
+  .status-pill.open{background:var(--dill);color:var(--cream-soft);border-color:var(--dill-dark);}
+  .status-pill.open .dot{background:#B7D68E;box-shadow:0 0 0 3px rgba(183,214,142,0.28);}
+  .status-pill.closed{background:var(--paprika);color:var(--cream-soft);border-color:var(--paprika-dark);}
+  .status-pill.closed .dot{background:#E9C7BC;}
+  .nav-toggle{display:none;flex-direction:column;align-items:center;justify-content:center;gap:5px;width:42px;height:42px;background:var(--ink);border:none;border-radius:10px;cursor:pointer;flex:none;padding:0;}
+  .nav-toggle .bar{width:19px;height:2px;border-radius:2px;background:var(--cream);transition:transform .3s ease, opacity .2s ease;}
+  .nav-toggle.open .bar:nth-child(1){transform:translateY(7px) rotate(45deg);}
+  .nav-toggle.open .bar:nth-child(2){opacity:0;}
+  .nav-toggle.open .bar:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+  .mobile-menu{max-height:0;opacity:0;overflow:hidden;background:var(--cream-soft);border-top:1px solid transparent;box-shadow:0 18px 32px rgba(44,34,24,0.16);transition:max-height .38s ease, opacity .28s ease;}
+  .mobile-menu.open{max-height:520px;opacity:1;border-top-color:var(--line);}
+  .mobile-menu-inner{display:flex;flex-direction:column;gap:8px;padding:18px 18px 24px;}
+  .mobile-menu a{display:flex;align-items:center;gap:12px;padding:14px 16px;border-radius:12px;font-weight:700;font-size:15px;background:rgba(44,34,24,0.04);}
+  .mobile-menu a:active,.mobile-menu a:hover{background:var(--mustard);}
+  .mobile-status{display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:6px;padding:11px 16px;border-radius:999px;font-size:13px;font-weight:800;background:var(--mustard);border:1.5px solid var(--ink);}
+  .mobile-status .dot{width:8px;height:8px;border-radius:50%;background:var(--ink);flex:none;}
+  .mobile-status.open{background:var(--dill);color:var(--cream-soft);border-color:var(--dill-dark);}
+  .mobile-status.open .dot{background:#B7D68E;}
+  .mobile-status.closed{background:var(--paprika);color:var(--cream-soft);border-color:var(--paprika-dark);}
+  .mobile-status.closed .dot{background:#E9C7BC;}
+
+  .hero{position:relative;background:var(--paprika);color:var(--cream-soft);padding:60px 0 76px;overflow:hidden;}
+  .hero .grid{display:grid;grid-template-columns:1.1fr 0.9fr;gap:44px;align-items:center;}
+  .hero h1{font-size:clamp(34px,5.4vw,58px);color:#fff;max-width:11ch;}
+  .hero h1 .accent{color:var(--mustard);}
+  .hero p.lede{font-size:clamp(16px,2vw,18.5px);max-width:44ch;color:rgba(251,245,230,0.88);margin-top:16px;}
+  .hero .meta-row{display:flex;flex-wrap:wrap;gap:9px 20px;margin-top:22px;font-size:13.5px;font-weight:700;}
+  .icon-link{display:inline-flex;align-items:center;gap:6px;}
+  .icon-link svg{width:16px;height:16px;}
+  .cta-row{display:flex;flex-wrap:wrap;gap:12px;margin-top:28px;}
+  .btn{display:inline-flex;align-items:center;gap:8px;padding:13px 22px;border-radius:999px;font-weight:800;font-size:14px;border:2px solid transparent;cursor:pointer;transition:background .2s,transform .2s;}
+  .btn:hover{transform:translateY(-1px);}
+  .btn-primary{background:var(--mustard);color:var(--ink);border-color:var(--mustard);}
+  .btn-primary:hover{background:#cf9522;}
+  .btn-ghost{border-color:var(--cream-soft);color:var(--cream-soft);}
+  .btn-ghost:hover{background:rgba(251,245,230,0.12);}
+
+  .plate-wrap{display:flex;align-items:center;justify-content:center;}
+  .plate{width:min(340px,90%);filter:drop-shadow(0 20px 40px rgba(0,0,0,0.28));}
+
+  .strip{height:14px;background-image:repeating-linear-gradient(45deg,var(--cream) 0 10px,var(--mustard) 10px 20px);}
+
+  .today{padding:70px 0 60px;background:var(--cream);}
+  .today .board{background:var(--ink);color:var(--cream-soft);border-radius:var(--radius);padding:38px 34px;position:relative;overflow:hidden;}
+  .today .board::before{content:"";position:absolute;inset:0;background-image:radial-gradient(rgba(251,245,230,0.05) 1px, transparent 1.4px);background-size:8px 8px;}
+  .today .board-head{display:flex;align-items:baseline;justify-content:space-between;flex-wrap:wrap;gap:10px;position:relative;}
+  .today .board-head h2{color:var(--cream-soft);font-size:clamp(24px,3.2vw,32px);}
+  .today .board-head .date{font-family:'PT Sans',sans-serif;font-size:13px;font-weight:700;color:#C9A227;}
+  .tier-list{margin-top:22px;position:relative;}
+  .tier{display:flex;justify-content:space-between;gap:14px;align-items:baseline;border-bottom:1px dashed rgba(251,245,230,0.22);padding:11px 0;}
+  .tier .tn{font-family:'PT Sans',sans-serif;font-weight:700;font-size:11px;letter-spacing:0.08em;text-transform:uppercase;color:#C9A227;}
+  .tier .td{font-family:'Caveat',cursive;font-weight:700;font-size:clamp(19px,2.3vw,23px);margin-top:2px;}
+  .tier .tp{font-family:'Bitter',serif;font-weight:900;font-size:18px;color:var(--mustard);white-space:nowrap;}
+  .today .sub-row{margin-top:22px;display:grid;grid-template-columns:1fr 1fr;gap:24px;position:relative;}
+  .today .sub-row h4{font-family:'PT Sans',sans-serif;font-weight:700;font-size:11px;letter-spacing:0.08em;text-transform:uppercase;color:#C9A227;margin-bottom:8px;}
+  .today .sub-row .item{font-family:'Caveat',cursive;font-weight:700;font-size:19px;display:flex;justify-content:space-between;gap:10px;}
+  .today .note{margin-top:22px;font-family:'PT Sans',sans-serif;font-size:13px;color:rgba(251,245,230,0.6);position:relative;}
+
+  .about{padding:70px 0;background:var(--cream-soft);}
+  .about .grid{display:grid;grid-template-columns:1fr 1fr;gap:52px;align-items:start;}
+  .about h2{font-size:clamp(26px,3.6vw,36px);max-width:13ch;}
+  .about p{margin-top:16px;font-size:15.5px;max-width:50ch;color:var(--ink-soft);}
+  .stat-row{display:flex;gap:28px;margin-top:26px;flex-wrap:wrap;}
+  .stat{min-width:110px;}
+  .stat .num{font-family:'Bitter',serif;font-weight:900;font-size:30px;color:var(--paprika-dark);}
+  .stat .lbl{font-size:12.5px;font-weight:700;color:var(--ink-soft);text-transform:uppercase;letter-spacing:0.06em;}
+  .tag-row{display:flex;flex-wrap:wrap;gap:9px;margin-top:20px;}
+  .tag{font-size:12px;font-weight:700;padding:7px 13px;border-radius:999px;background:var(--mustard);color:var(--ink);border:1.5px solid var(--ink);}
+  .bowls{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}
+  .bowl-card{background:var(--cream);border:1.5px solid var(--line);border-radius:14px;padding:18px 12px;text-align:center;transition:transform .25s;}
+  .bowl-card:hover{transform:translateY(-4px);}
+  .bowl-card svg{width:46px;height:46px;margin:0 auto 8px;}
+  .bowl-card span{display:block;font-size:12.5px;font-weight:700;color:var(--ink-soft);}
+
+  .menu{background:var(--ink);color:var(--cream-soft);padding:80px 0;}
+  .menu .eyebrow{color:var(--mustard);}
+  .menu h2{color:var(--cream-soft);font-size:clamp(26px,3.6vw,36px);margin-top:10px;}
+  .menu-grid{margin-top:40px;display:grid;grid-template-columns:repeat(3,1fr);gap:36px 40px;}
+  .menu-cat{border-top:2px solid rgba(251,245,230,0.18);padding-top:16px;}
+  .menu-cat h3{font-family:'PT Sans',sans-serif;font-weight:700;font-size:12px;letter-spacing:0.12em;text-transform:uppercase;color:#D9A93F;margin-bottom:14px;}
+  .menu-item{display:flex;align-items:baseline;gap:8px;padding:7px 0;flex-wrap:wrap;}
+  .menu-item .name{font-family:'Bitter',serif;font-weight:700;font-size:15.5px;}
+  .menu-item .dots{flex:1;min-width:14px;border-bottom:1.5px dotted rgba(251,245,230,0.26);transform:translateY(-4px);}
+  .menu-item .price{font-family:'Bitter',serif;font-weight:700;font-size:13.5px;color:#D9A93F;white-space:nowrap;}
+  .menu-item .desc{width:100%;font-size:12.5px;color:#B9AE95;margin-top:1px;}
+  .menu-foot{margin-top:30px;font-size:13px;color:#9C917A;max-width:64ch;}
+
+  .delivery{background:var(--mustard);padding:64px 0;}
+  .delivery .wrap{display:grid;grid-template-columns:0.9fr 1.1fr;gap:44px;align-items:start;}
+  .delivery .eyebrow{color:var(--paprika-dark);}
+  .delivery h2{font-size:clamp(24px,3.2vw,32px);}
+  .delivery p{margin-top:14px;font-size:15px;color:var(--ink);opacity:0.85;max-width:42ch;}
+  .delivery-card{background:var(--ink);color:var(--cream-soft);border-radius:var(--radius);padding:28px 26px;}
+  .delivery-card .drow{display:flex;justify-content:space-between;gap:14px;padding:10px 0;border-bottom:1px solid rgba(251,245,230,0.16);font-size:14px;}
+  .delivery-card .drow:last-child{border-bottom:none;}
+  .delivery-card .dlabel{color:#B9AE95;}
+  .delivery-card .dvalue{font-weight:700;text-align:right;}
+  .delivery-card .phone-btn{display:block;text-align:center;margin-top:18px;background:var(--mustard);color:var(--ink);border-radius:999px;padding:13px;font-weight:800;font-size:15px;}
+
+  .why{padding:74px 0;background:var(--cream);}
+  .why .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;}
+  .why-card{background:var(--cream-soft);border-radius:var(--radius);padding:26px 22px;border:1.5px solid var(--line);}
+  .why-card svg{width:34px;height:34px;margin-bottom:12px;}
+  .why-card h3{font-size:18px;}
+  .why-card p{margin-top:8px;font-size:14px;color:var(--ink-soft);}
+
+  .hours{padding:74px 0;background:var(--cream-soft);}
+  .hours .grid{display:grid;grid-template-columns:0.9fr 1.1fr;gap:50px;align-items:start;}
+  .hours h2{font-size:clamp(26px,3.6vw,36px);}
+  table.hours-table{width:100%;border-collapse:collapse;margin-top:22px;font-size:15.5px;}
+  table.hours-table td{padding:10px 4px;border-bottom:1px solid var(--line);}
+  table.hours-table td:first-child{font-weight:700;font-family:'Bitter',serif;}
+  table.hours-table td:last-child{text-align:right;color:var(--ink-soft);}
+  table.hours-table tr.today td{color:var(--paprika-dark);}
+  table.hours-table tr.today td:first-child::after{content:"ma";display:inline-block;margin-left:8px;font-family:'PT Sans',sans-serif;font-weight:800;font-size:9.5px;letter-spacing:0.08em;background:var(--paprika);color:#fff;padding:2px 7px;border-radius:999px;vertical-align:middle;}
+  .hours-card{background:var(--mustard);border-radius:var(--radius);padding:30px;border:1.5px solid var(--ink);}
+  .hours-card h3{font-size:20px;}
+  .hours-card p{color:var(--ink);opacity:0.82;font-size:14.5px;margin-top:8px;}
+
+  .location{background:var(--ink);color:var(--cream-soft);padding:76px 0;}
+  .location .grid{display:grid;grid-template-columns:0.9fr 1.1fr;gap:40px;align-items:stretch;}
+  .location .eyebrow{color:var(--mustard);}
+  .location h2{color:var(--cream-soft);font-size:clamp(26px,3.6vw,36px);margin-top:10px;}
+  .location p{color:#C9BEA0;margin-top:14px;max-width:38ch;}
+  .social-row{display:flex;gap:12px;margin-top:24px;flex-wrap:wrap;}
+  .social-chip{display:flex;align-items:center;gap:9px;border:1.5px solid rgba(251,245,230,0.3);border-radius:999px;padding:10px 16px;font-size:13px;font-weight:700;transition:border-color .2s;}
+  .social-chip:hover{border-color:rgba(251,245,230,0.6);}
+  .map-frame{border-radius:var(--radius);overflow:hidden;border:1.5px solid rgba(251,245,230,0.2);min-height:300px;}
+  .map-frame iframe{width:100%;height:100%;min-height:300px;border:0;filter:sepia(12%) saturate(85%);}
+
+  footer{background:var(--ink);color:#9C917A;padding:22px 0 30px;border-top:1px solid rgba(251,245,230,0.1);}
+  footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px;font-size:12px;}
+
+  @media (max-width:860px){
+    .hero .grid,.about .grid,.hours .grid,.location .grid,.delivery .wrap{grid-template-columns:1fr;gap:32px;}
+    .menu-grid{grid-template-columns:1fr 1fr;gap:32px;}
+    .why .grid{grid-template-columns:1fr;}
+    .bowls{grid-template-columns:repeat(3,1fr);}
+    .hero{padding:44px 0 56px;}
+    .plate-wrap{order:-1;}
+    .today .sub-row{grid-template-columns:1fr;}
+  }
+  @media (max-width:700px){
+    .topbar .wrap{padding:9px 16px;}
+    .nav-links{display:none;}
+    .nav-toggle{display:inline-flex;}
+    .status-pill{display:none;}
+    .brand .word{font-size:14px;}
+    .brand .mark{width:38px;height:38px;}
+    .today .board{padding:28px 20px;}
+    .menu-grid{grid-template-columns:1fr;}
+  }
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="wrap">
+    <div class="brand">
+      <svg class="mark" viewBox="0 0 48 48" fill="none">
+        <circle cx="24" cy="24" r="22" fill="#FBF5E6" stroke="#2C2218" stroke-width="2"/>
+        <circle cx="24" cy="24" r="15" fill="none" stroke="#B23A26" stroke-width="2"/>
+        <path d="M17 20c1.5-3 4-4 7-4s5.5 1 7 4" stroke="#4B6B44" stroke-width="2" stroke-linecap="round"/>
+        <path d="M15 26c3 4 6 5 9 5s6-1 9-5" stroke="#E0A72F" stroke-width="2.4" stroke-linecap="round"/>
+      </svg>
+      <div class="word">Főzelék Varázs<span>Rákospalota, XV.</span></div>
+    </div>
+    <nav class="nav-links">
+      <a href="#ma">Ma a pulton</a>
+      <a href="#etlap">Étlap</a>
+      <a href="#kiszallitas">Kiszállítás</a>
+      <a href="#nyitvatartas">Nyitvatartás</a>
+      <a href="#helyszin">Helyszín</a>
+    </nav>
+    <div class="nav-right">
+      <a class="status-pill" href="#nyitvatartas" id="statusPill"><span class="dot"></span><span id="statusText">…</span></a>
+      <button class="nav-toggle" id="navToggle" aria-label="Menü megnyitása" aria-expanded="false">
+        <span class="bar"></span><span class="bar"></span><span class="bar"></span>
+      </button>
+    </div>
+  </div>
+  <nav class="mobile-menu" id="mobileMenu">
+    <div class="mobile-menu-inner">
+      <a class="mobile-status" href="#nyitvatartas" id="mobileStatusPill"><span class="dot"></span><span id="mobileStatusText">…</span></a>
+      <a href="#ma">🍲 Ma a pulton</a>
+      <a href="#etlap">📋 Étlap</a>
+      <a href="#kiszallitas">🚚 Kiszállítás</a>
+      <a href="#nyitvatartas">🕐 Nyitvatartás</a>
+      <a href="#helyszin">📍 Helyszín</a>
+    </div>
+  </nav>
+</header>
+
+<section class="hero">
+  <div class="wrap grid">
+    <div>
+      <div class="eyebrow" style="color:var(--mustard)">Páskomliget u. 2 · Rákospalota</div>
+      <h1>Otthoni íz,<br><span class="accent">gyors kiszolgálás.</span></h1>
+      <p class="lede">Önkiszolgáló étterem a szomszédban: leves, főzelék, meleg étel, minden nap frissen készítve. Nem sallangos, nem trendi, csak jó és tisztességes, ahogy otthon is elkészülne.</p>
+      <div class="meta-row">
+        <a class="icon-link" href="https://www.facebook.com/p/F%C5%91zel%C3%A9k-Var%C3%A1zs-%C3%B6nkiszolg%C3%A1l%C3%B3-%C3%A9tterem-100057489608820/" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M13.5 21v-7.5H16l.5-3.2h-3V8.3c0-.9.3-1.5 1.6-1.5H16.6V4a20 20 0 0 0-2.2-.1c-2.2 0-3.7 1.3-3.7 3.8v2.6H8.2v3.2h2.5V21h2.8z"/></svg> 5615 like</a>
+        <span class="icon-link"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2 14.9 9h7.3l-5.9 4.3 2.3 7.2L12 16l-6.6 4.5 2.3-7.2L1.8 9h7.3z"/></svg> 4,4 Google · 525 értékelés</span>
+      </div>
+      <div class="cta-row">
+        <a href="#nyitvatartas" class="btn btn-primary">Nyitvatartás</a>
+        <a href="https://www.google.com/maps/search/?api=1&query=P%C3%A1skomliget+utca+2%2C+Budapest" target="_blank" rel="noopener" class="btn btn-ghost">Útvonaltervezés →</a>
+      </div>
+    </div>
+    <div class="plate-wrap">
+      <svg class="plate" viewBox="0 0 320 320" fill="none">
+        <circle cx="160" cy="160" r="150" fill="#FBF5E6"/>
+        <circle cx="160" cy="160" r="150" fill="none" stroke="#2C2218" stroke-width="3"/>
+        <circle cx="160" cy="160" r="128" fill="none" stroke="#2C2218" stroke-width="1.5" stroke-opacity="0.25"/>
+        <circle cx="160" cy="160" r="92" fill="#E0A72F"/>
+        <circle cx="160" cy="160" r="92" fill="none" stroke="#B9821F" stroke-width="2"/>
+        <ellipse cx="130" cy="140" rx="10" ry="6" fill="#F0C868" opacity="0.75"/>
+        <ellipse cx="185" cy="175" rx="14" ry="7" fill="#F0C868" opacity="0.65"/>
+        <ellipse cx="150" cy="190" rx="9" ry="5" fill="#C98F1E" opacity="0.55"/>
+        <path d="M118 118c-3-14-3-24 4-30" stroke="#FBF5E6" stroke-width="3" stroke-linecap="round" opacity="0.7"/>
+        <path d="M160 108c-2-16 0-26 6-32" stroke="#FBF5E6" stroke-width="3" stroke-linecap="round" opacity="0.55"/>
+        <path d="M202 118c3-14 2-24-5-30" stroke="#FBF5E6" stroke-width="3" stroke-linecap="round" opacity="0.7"/>
+        <g transform="translate(258 60) rotate(18)">
+          <rect x="-4" y="-38" width="8" height="70" rx="4" fill="#2C2218"/>
+          <path d="M-8 -38 h16 v22 c0 6 -3 9 -8 9 s-8 -3 -8 -9 z" fill="#2C2218"/>
+        </g>
+        <g transform="translate(60 250) rotate(-18)">
+          <rect x="-4" y="-38" width="8" height="66" rx="4" fill="#2C2218"/>
+          <ellipse cx="0" cy="-42" rx="11" ry="15" fill="#2C2218"/>
+        </g>
+      </svg>
+    </div>
+  </div>
+</section>
+<div class="strip"></div>
+
+<section class="today reveal" id="ma">
+  <div class="wrap">
+    <div class="eyebrow">Napi ajánlat</div>
+    <div class="board">
+      <div class="board-head">
+        <h2>Ma a pulton</h2>
+        <div class="date">2026. július 22., szerda</div>
+      </div>
+      <div class="tier-list">
+        <div class="tier">
+          <div><div class="tn">Napi menü</div><div class="td">Lecsós virsli tarhonyával</div></div>
+          <div class="tp">2400 Ft</div>
+        </div>
+        <div class="tier">
+          <div><div class="tn">Napi extra</div><div class="td">Vasalt csirkecombfilé baconos zöldségraguval, vegyes körettel</div></div>
+          <div class="tp">4490 Ft</div>
+        </div>
+        <div class="tier">
+          <div><div class="tn">Séf ajánlata</div><div class="td">Borsós Brassói aprópecsenye gazdagon</div></div>
+          <div class="tp">3200 Ft</div>
+        </div>
+      </div>
+      <div class="sub-row">
+        <div>
+          <h4>Levesek</h4>
+          <div class="item"><span>Nyírségi gombócleves csirkemellel</span><span>1400 Ft</span></div>
+          <div class="item"><span>Zöldséges mustáros lencseleves</span><span>1000 Ft</span></div>
+          <div class="item"><span>Hideg kókuszos mangóleves</span><span>1350 Ft</span></div>
+        </div>
+        <div>
+          <h4>Főzelék</h4>
+          <div class="item"><span>Zöldborsó főzelék</span><span>1200 Ft</span></div>
+          <div class="item"><span>Kapros tökfőzelék</span><span>1200 Ft</span></div>
+        </div>
+      </div>
+      <div class="note">A napi menü, a levesek és a főzelékek naponta változnak. A választható levesek a napi menü és a napi extra mellé kérhetők.</div>
+    </div>
+  </div>
+</section>
+
+<section class="about reveal">
+  <div class="wrap grid">
+    <div>
+      <div class="eyebrow">A hely</div>
+      <h2>Rákospalota asztala.</h2>
+      <p>Facebook-oldalunkat több mint ötezren kedvelik, és sokan térnek vissza hétről hétre, mert tudják, mit kapnak: forró levest, igazi főzeléket, tisztességes adagot, gyors kiszolgálással. Önkiszolgáló rendszerben, hogy ne kelljen várni, csak enni.</p>
+      <p>Nincs cifrázás. Amit az asztalra teszünk, azt otthon is megennénk.</p>
+      <div class="stat-row">
+        <div class="stat"><div class="num">5615</div><div class="lbl">FB kedvelés</div></div>
+        <div class="stat"><div class="num">525</div><div class="lbl">Értékelés</div></div>
+        <div class="stat"><div class="num">4,4</div><div class="lbl">Google csillag</div></div>
+      </div>
+      <div class="tag-row">
+        <span class="tag">Önkiszolgáló</span>
+        <span class="tag">Napi menü</span>
+        <span class="tag">Házias ízek</span>
+        <span class="tag">Kiszállítás</span>
+      </div>
+    </div>
+    <div class="bowls">
+      <div class="bowl-card">
+        <svg viewBox="0 0 48 48" fill="none"><circle cx="24" cy="30" r="14" fill="#B23A26"/><ellipse cx="24" cy="18" rx="17" ry="4" fill="#2C2218"/></svg>
+        <span>Napi leves</span>
+      </div>
+      <div class="bowl-card">
+        <svg viewBox="0 0 48 48" fill="none"><circle cx="24" cy="30" r="14" fill="#E0A72F"/><ellipse cx="24" cy="18" rx="17" ry="4" fill="#2C2218"/></svg>
+        <span>Friss főzelék</span>
+      </div>
+      <div class="bowl-card">
+        <svg viewBox="0 0 48 48" fill="none"><circle cx="24" cy="30" r="14" fill="#4B6B44"/><ellipse cx="24" cy="18" rx="17" ry="4" fill="#2C2218"/></svg>
+        <span>Meleg sültek</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="menu reveal" id="etlap">
+  <div class="wrap">
+    <div class="eyebrow">Étlap</div>
+    <h2>Amit rendszeresen kínálunk</h2>
+    <div class="menu-grid">
+      <div class="menu-cat">
+        <h3>Frissensültek</h3>
+        <div class="menu-item"><span class="name">Rántott csirkemell</span><span class="dots"></span><span class="price">790 Ft/10dkg</span></div>
+        <div class="menu-item"><span class="name">Rántott csirkecombfilé</span><span class="dots"></span><span class="price">790 Ft/10dkg</span></div>
+        <div class="menu-item"><span class="name">Rántott karaj</span><span class="dots"></span><span class="price">790 Ft/10dkg</span></div>
+        <div class="menu-item"><span class="name">Rántott trappista sajt</span><span class="dots"></span><span class="price">990 Ft/10dkg</span></div>
+        <div class="menu-item"><span class="name">Fasírt</span><span class="dots"></span><span class="price">700 Ft/db</span></div>
+      </div>
+      <div class="menu-cat">
+        <h3>Köretek</h3>
+        <div class="menu-item"><span class="name">Jázmin rizs</span><span class="dots"></span><span class="price">750 Ft</span></div>
+        <div class="menu-item"><span class="name">Burgonyapüré</span><span class="dots"></span><span class="price">750 Ft</span></div>
+        <div class="menu-item"><span class="name">Hasábburgonya</span><span class="dots"></span><span class="price">750 Ft</span></div>
+        <div class="menu-item"><span class="name">Édesburgonya</span><span class="dots"></span><span class="price">1450 Ft</span></div>
+        <div class="menu-item"><span class="name">Tészta, galuska</span><span class="dots"></span><span class="price">750 Ft</span><span class="desc">naponta változó</span></div>
+      </div>
+      <div class="menu-cat">
+        <h3>Készételek (válogatás)</h3>
+        <div class="menu-item"><span class="name">Körömpörkölt</span><span class="dots"></span><span class="price">1990 Ft</span></div>
+        <div class="menu-item"><span class="name">Bolognai tészta sajtszórással</span><span class="dots"></span><span class="price">2550 Ft</span></div>
+        <div class="menu-item"><span class="name">Klasszikus görög muszaka</span><span class="dots"></span><span class="price">2650 Ft</span></div>
+        <div class="menu-item"><span class="name">Sertéspörkölt</span><span class="dots"></span><span class="price">2200 Ft</span></div>
+      </div>
+      <div class="menu-cat">
+        <h3>Desszertek</h3>
+        <div class="menu-item"><span class="name">Somlói galuska</span><span class="dots"></span><span class="price">1390 Ft</span></div>
+        <div class="menu-item"><span class="name">Retró kókuszkocka</span><span class="dots"></span><span class="price">1390 Ft/2db</span></div>
+        <div class="menu-item"><span class="name">Nagyi palacsintája</span><span class="dots"></span><span class="price">400 Ft/db</span><span class="desc">nutellás vagy túrós</span></div>
+        <div class="menu-item"><span class="name">Madártej</span><span class="dots"></span><span class="price">990 Ft/db</span></div>
+      </div>
+      <div class="menu-cat">
+        <h3>Savanyúságok</h3>
+        <div class="menu-item"><span class="name">Kovászos uborka</span><span class="dots"></span><span class="price">500 Ft</span></div>
+        <div class="menu-item"><span class="name">Csípős csalamádé</span><span class="dots"></span><span class="price">500 Ft</span></div>
+        <div class="menu-item"><span class="name">Cékla</span><span class="dots"></span><span class="price">500 Ft</span></div>
+        <div class="menu-item"><span class="name">Uborkasaláta</span><span class="dots"></span><span class="price">600 Ft</span></div>
+      </div>
+      <div class="menu-cat">
+        <h3>Italok</h3>
+        <div class="menu-item"><span class="name">Üdítő 0,5l</span><span class="dots"></span><span class="price">650 Ft</span><span class="desc">Pepsi, Schweppes, Lipton</span></div>
+        <div class="menu-item"><span class="name">Ásványvíz 0,5l</span><span class="dots"></span><span class="price">350 Ft</span></div>
+        <div class="menu-item"><span class="name">Kávé</span><span class="dots"></span><span class="price">200 Ft</span></div>
+      </div>
+    </div>
+    <div class="menu-foot">A levesek, főzelékek és készételek naponta változnak, az aktuális kínálatot a "Ma a pulton" szekció mutatja. Az itt látható árak a 2026. július 20-22. közötti étlap alapján tájékoztató jellegűek, a végleges lista egyeztetés után kerül fel.</div>
+  </div>
+</section>
+
+<section class="delivery reveal" id="kiszallitas">
+  <div class="wrap">
+    <div>
+      <div class="eyebrow">Kiszállítás</div>
+      <h2>Rendelhető házhoz is</h2>
+      <p>A napi kínálat telefonos rendelés után házhoz szállítható a XV. kerület egész területén, valamint a XVI. és a XIV. kerület egyes részein.</p>
+    </div>
+    <div class="delivery-card">
+      <div class="drow"><span class="dlabel">Telefonos rendelés</span><span class="dvalue">06 30 461 2282</span></div>
+      <div class="drow"><span class="dlabel">Rendelésfelvétel</span><span class="dvalue">H-P 10:00-13:45</span></div>
+      <div class="drow"><span class="dlabel">Minimum rendelés</span><span class="dvalue">2000 Ft</span></div>
+      <div class="drow"><span class="dlabel">Kiszállítási díj</span><span class="dvalue">700 Ft</span></div>
+      <div class="drow"><span class="dlabel">Kiszállítási idő</span><span class="dvalue">12:00-13:00 között akár 90 perc</span></div>
+      <div class="drow"><span class="dlabel">Fizetés</span><span class="dvalue">készpénz, kártya előre jelezve</span></div>
+      <a class="phone-btn" href="tel:+36304612282">Rendelés telefonon</a>
+    </div>
+  </div>
+</section>
+
+<section class="why reveal">
+  <div class="wrap grid">
+    <div class="why-card">
+      <svg viewBox="0 0 32 32" fill="none"><circle cx="16" cy="16" r="14" stroke="#B23A26" stroke-width="2"/><path d="M16 9v7l5 3" stroke="#B23A26" stroke-width="2" stroke-linecap="round"/></svg>
+      <h3>Gyors</h3>
+      <p>Önkiszolgáló pult, nincs várakozás, a kiválasztott ételek azonnal tálalásra kerülnek.</p>
+    </div>
+    <div class="why-card">
+      <svg viewBox="0 0 32 32" fill="none"><path d="M16 4c6 6 10 9.6 10 15a10 10 0 0 1-20 0c0-5.4 4-9 10-15z" stroke="#4B6B44" stroke-width="2"/></svg>
+      <h3>Házias</h3>
+      <p>Levesek, főzelékek, sültek, nem gyorsétterem, hanem otthoni konyha.</p>
+    </div>
+    <div class="why-card">
+      <svg viewBox="0 0 32 32" fill="none"><path d="M6 26 26 6M10 6h-4v4M22 26h4v-4" stroke="#E0A72F" stroke-width="2" stroke-linecap="round"/></svg>
+      <h3>Barátságos ár</h3>
+      <p>Napi menüben leves és főétel, kedvező, kiszámítható árazással.</p>
+    </div>
+  </div>
+</section>
+
+<section class="hours reveal" id="nyitvatartas">
+  <div class="wrap grid">
+    <div>
+      <div class="eyebrow">Nyitvatartás</div>
+      <h2>Mikor várjuk Önöket</h2>
+      <table class="hours-table" id="hoursTable">
+        <tr data-day="1"><td>Hétfő</td><td>10:00 – 17:00</td></tr>
+        <tr data-day="2"><td>Kedd</td><td>10:00 – 17:00</td></tr>
+        <tr data-day="3"><td>Szerda</td><td>10:00 – 17:00</td></tr>
+        <tr data-day="4"><td>Csütörtök</td><td>10:00 – 17:00</td></tr>
+        <tr data-day="5"><td>Péntek</td><td>10:00 – 17:00</td></tr>
+        <tr data-day="6"><td>Szombat</td><td>10:00 – 14:00</td></tr>
+        <tr data-day="0"><td>Vasárnap</td><td>Zárva</td></tr>
+      </table>
+    </div>
+    <div class="hours-card">
+      <h3>Elvitelre is kérhető</h3>
+      <p>Ha helyben fogyasztásra nincs idő, az ebéd dobozban is elvihető, ugyanaz a friss főzelék, csak úton fogyasztva.</p>
+    </div>
+  </div>
+</section>
+
+<section class="location reveal" id="helyszin">
+  <div class="wrap grid">
+    <div>
+      <div class="eyebrow">Helyszín</div>
+      <h2>Rákospalota szívében</h2>
+      <p>Páskomliget utca 2, 1156 Budapest, a XV. kerület egyik ismert asztala.</p>
+      <div class="social-row">
+        <a class="social-chip" href="https://www.facebook.com/p/F%C5%91zel%C3%A9k-Var%C3%A1zs-%C3%B6nkiszolg%C3%A1l%C3%B3-%C3%A9tterem-100057489608820/" target="_blank" rel="noopener">Facebook · 5615 like</a>
+        <a class="social-chip" href="tel:+36304612282">+36 30 461 2282</a>
+      </div>
+    </div>
+    <div class="map-frame">
+      <iframe src="https://www.google.com/maps?q=P%C3%A1skomliget+utca+2%2C+Budapest&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span>© Főzelék Varázs, Rákospalota, Páskomliget u. 2.</span>
+    <span>Weboldal: Polarisweb</span>
+  </div>
+</footer>
+
+<script>
+  var HOURS = {0:null,1:[10*60,17*60],2:[10*60,17*60],3:[10*60,17*60],4:[10*60,17*60],5:[10*60,17*60],6:[10*60,14*60]};
+  var now = new Date();
+  var day = now.getDay();
+  var minutes = now.getHours()*60 + now.getMinutes();
+  var range = HOURS[day];
+  var isOpen = range && minutes >= range[0] && minutes < range[1];
+  var pill = document.getElementById('statusPill');
+  var text = document.getElementById('statusText');
+  var mobilePill = document.getElementById('mobileStatusPill');
+  var mobileText = document.getElementById('mobileStatusText');
+  if(isOpen){
+    var closeLabel = 'Nyitva, zár ' + Math.floor(range[1]/60) + ':' + String(range[1]%60).padStart(2,'0');
+    pill.classList.add('open'); text.textContent = closeLabel;
+    mobilePill.classList.add('open'); mobileText.textContent = closeLabel;
+  } else {
+    pill.classList.add('closed'); text.textContent = 'Most zárva';
+    mobilePill.classList.add('closed'); mobileText.textContent = 'Most zárva';
+  }
+  var row = document.querySelector('#hoursTable tr[data-day="' + day + '"]');
+  if(row) row.classList.add('today');
+
+  var navToggle = document.getElementById('navToggle');
+  var mobileMenu = document.getElementById('mobileMenu');
+  navToggle.addEventListener('click', function(){
+    var open = mobileMenu.classList.toggle('open');
+    navToggle.classList.toggle('open', open);
+    navToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+  mobileMenu.querySelectorAll('a').forEach(function(link){
+    link.addEventListener('click', function(){
+      mobileMenu.classList.remove('open');
+      navToggle.classList.remove('open');
+      navToggle.setAttribute('aria-expanded', 'false');
+    });
+  });
+
+  var revealEls = document.querySelectorAll('.reveal');
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, {threshold:0.12});
+  revealEls.forEach(function(el){ io.observe(el); });
+</script>
+
+</body>
+</html>

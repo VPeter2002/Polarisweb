@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+<meta name="robots" content="noindex, nofollow">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kertvárosi Kávézó, Sashalom</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,500&family=Pinyon+Script&family=Jost:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --forest:#2C4A31;
+    --forest-dark:#1E331F;
+    --gold:#A9834D;
+    --gold-soft:#D8C29A;
+    --paper:#FBF8F2;
+    --paper-deep:#F3EEE0;
+    --ink:#20281F;
+    --ink-soft:rgba(32,40,31,0.66);
+    --line:rgba(32,40,31,0.15);
+    --radius:4px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:'Jost',sans-serif;font-size:16px;line-height:1.65;-webkit-font-smoothing:antialiased;}
+  h1,h2,h3{font-family:'Cormorant Garamond',serif;font-weight:600;line-height:1.1;margin:0;}
+  a{color:inherit;text-decoration:none;}
+  img,svg{display:block;max-width:100%;}
+  .wrap{max-width:1120px;margin:0 auto;padding:0 24px;}
+  .eyebrow{font-family:'Jost',sans-serif;font-weight:600;letter-spacing:0.24em;text-transform:uppercase;font-size:11px;color:var(--gold);}
+  .script{font-family:'Pinyon Script',cursive;font-weight:400;}
+  .rule{width:52px;height:1px;background:var(--gold);margin:18px 0;}
+  .rule.center{margin-left:auto;margin-right:auto;}
+
+  .reveal{opacity:0;transform:translateY(16px);transition:opacity .8s ease, transform .8s ease;}
+  .reveal.in{opacity:1;transform:none;}
+
+  header.topbar{position:sticky;top:0;z-index:50;background:rgba(251,248,242,0.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);}
+  .topbar .wrap{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:10px 24px;}
+  .brand{display:flex;align-items:center;gap:12px;}
+  .brand img{width:52px;height:52px;border-radius:50%;object-fit:cover;mix-blend-mode:multiply;}
+  .brand .word{font-family:'Cormorant Garamond',serif;font-weight:600;font-size:19px;letter-spacing:0.02em;}
+  .nav-links{display:flex;align-items:center;gap:30px;font-size:13px;font-weight:500;letter-spacing:0.04em;}
+  .nav-links a{position:relative;padding-bottom:3px;}
+  .nav-links a.active,.nav-links a:hover{color:var(--forest);}
+  .nav-links a.active::after{content:"";position:absolute;left:0;right:0;bottom:0;height:1px;background:var(--gold);}
+  .nav-right{display:flex;align-items:center;gap:10px;}
+  .status-pill{display:flex;align-items:center;gap:8px;font-size:12px;font-weight:500;padding:7px 14px;border-radius:999px;border:1px solid var(--line);white-space:nowrap;}
+  .status-pill .dot{width:6px;height:6px;border-radius:50%;background:var(--ink-soft);flex:none;}
+  .status-pill.open .dot{background:var(--forest);box-shadow:0 0 0 3px rgba(44,74,49,0.15);}
+  .status-pill.closed .dot{background:var(--gold);}
+  .nav-toggle{display:none;flex-direction:column;align-items:center;justify-content:center;gap:5px;width:40px;height:40px;background:var(--forest);border:none;border-radius:3px;cursor:pointer;flex:none;padding:0;}
+  .nav-toggle .bar{width:18px;height:1.5px;background:var(--paper);transition:transform .3s ease, opacity .2s ease;}
+  .nav-toggle.open .bar:nth-child(1){transform:translateY(6.5px) rotate(45deg);}
+  .nav-toggle.open .bar:nth-child(2){opacity:0;}
+  .nav-toggle.open .bar:nth-child(3){transform:translateY(-6.5px) rotate(-45deg);}
+  .mobile-menu{max-height:0;opacity:0;overflow:hidden;background:var(--paper);border-top:1px solid transparent;box-shadow:0 18px 32px rgba(32,40,31,0.1);transition:max-height .38s ease, opacity .28s ease;}
+  .mobile-menu.open{max-height:420px;opacity:1;border-top-color:var(--line);}
+  .mobile-menu-inner{display:flex;flex-direction:column;gap:4px;padding:16px 18px 22px;}
+  .mobile-menu a{display:block;padding:13px 16px;font-weight:500;font-size:15px;border-bottom:1px solid var(--line);}
+
+  .hero{padding:70px 0 66px;text-align:center;}
+  .hero .logo-big{width:150px;height:150px;margin:0 auto 22px;border-radius:50%;object-fit:cover;mix-blend-mode:multiply;}
+  .hero h1{font-size:clamp(32px,5.2vw,50px);font-style:italic;font-weight:500;max-width:16ch;margin:0 auto;}
+  .hero p.lede{font-size:clamp(15.5px,1.8vw,17.5px);max-width:46ch;color:var(--ink-soft);margin:20px auto 0;}
+  .cta-row{display:flex;flex-wrap:wrap;gap:14px;margin-top:30px;justify-content:center;}
+  .btn{display:inline-flex;align-items:center;gap:8px;padding:12px 26px;border-radius:2px;font-weight:600;font-size:12.5px;letter-spacing:0.08em;text-transform:uppercase;border:1px solid transparent;cursor:pointer;transition:background .2s,color .2s,border-color .2s;}
+  .btn-primary{background:var(--forest);color:var(--paper);border-color:var(--forest);}
+  .btn-primary:hover{background:var(--forest-dark);}
+  .btn-ghost{border-color:var(--ink);color:var(--ink);}
+  .btn-ghost:hover{background:var(--ink);color:var(--paper);}
+  .meta-row{display:flex;flex-wrap:wrap;gap:10px 22px;margin-top:24px;justify-content:center;font-size:12.5px;font-weight:500;color:var(--ink-soft);}
+  .icon-link{display:inline-flex;align-items:center;gap:6px;}
+  .icon-link svg{width:14px;height:14px;}
+
+  .sprig{display:flex;justify-content:center;padding:10px 0 46px;}
+  .sprig svg{width:160px;height:20px;display:block;}
+
+  .programs{padding:64px 0 78px;background:var(--paper-deep);}
+  .programs .head{text-align:center;max-width:60ch;margin:0 auto;}
+  .programs .grid{margin-top:48px;display:grid;grid-template-columns:repeat(3,1fr);gap:30px;}
+  .prog-card{background:var(--paper);border:1px solid var(--line);padding:30px 26px;text-align:center;transition:transform .3s,box-shadow .3s;}
+  .prog-card:hover{transform:translateY(-4px);box-shadow:0 18px 34px rgba(32,40,31,0.08);}
+  .prog-card svg{width:34px;height:34px;margin:0 auto 16px;}
+  .prog-card h3{font-size:21px;font-weight:600;}
+  .prog-card p{margin-top:8px;font-size:14px;color:var(--ink-soft);}
+  .programs-link{display:block;text-align:center;margin-top:36px;font-size:13px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:var(--forest);}
+  .programs-link:hover{color:var(--gold);}
+
+  .about{padding:80px 0;}
+  .about .grid{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:start;}
+  .about h2{font-size:clamp(26px,3.4vw,36px);font-style:italic;font-weight:500;max-width:14ch;}
+  .about p{margin-top:18px;font-size:15.5px;max-width:50ch;color:var(--ink-soft);}
+  .badge-row{display:flex;flex-wrap:wrap;gap:24px;margin-top:26px;}
+  .badge{display:flex;align-items:center;gap:9px;font-size:13px;font-weight:500;}
+  .badge svg{width:20px;height:20px;flex:none;}
+  .quote{border-left:2px solid var(--gold);padding-left:24px;}
+  .quote p{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:23px;color:var(--ink);line-height:1.4;}
+  .quote span{display:block;margin-top:12px;font-family:'Jost',sans-serif;font-size:12px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--ink-soft);}
+
+  .kinalat-teaser{background:var(--forest);color:var(--paper);padding:70px 0;}
+  .kinalat-teaser .eyebrow{color:var(--gold-soft);}
+  .kinalat-teaser h2{color:var(--paper);font-style:italic;font-weight:500;font-size:clamp(26px,3.4vw,36px);}
+  .kt-grid{margin-top:36px;display:grid;grid-template-columns:repeat(4,1fr);gap:20px;}
+  .kt-item{border-top:1px solid rgba(251,248,242,0.2);padding-top:14px;}
+  .kt-item .name{font-family:'Cormorant Garamond',serif;font-size:19px;font-weight:600;}
+  .kt-item .desc{font-size:12.5px;color:rgba(251,248,242,0.6);margin-top:4px;}
+  .kt-link{display:inline-block;margin-top:34px;font-size:13px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;border-bottom:1px solid var(--gold-soft);padding-bottom:2px;}
+
+  .hours{padding:80px 0;}
+  .hours .grid{display:grid;grid-template-columns:0.9fr 1.1fr;gap:56px;align-items:start;}
+  .hours h2{font-size:clamp(26px,3.4vw,36px);font-style:italic;font-weight:500;}
+  table.hours-table{width:100%;border-collapse:collapse;margin-top:24px;font-size:15px;}
+  table.hours-table td{padding:11px 4px;border-bottom:1px solid var(--line);}
+  table.hours-table td:first-child{font-weight:500;font-family:'Cormorant Garamond',serif;font-size:17px;}
+  table.hours-table td:last-child{text-align:right;color:var(--ink-soft);}
+  table.hours-table tr.today td{color:var(--forest);}
+  table.hours-table tr.today td:first-child::after{content:"ma";display:inline-block;margin-left:8px;font-family:'Jost',sans-serif;font-weight:600;font-size:9px;letter-spacing:0.08em;background:var(--gold);color:#fff;padding:2px 7px;border-radius:999px;vertical-align:middle;text-transform:uppercase;}
+  .hours-card{background:var(--paper-deep);padding:32px;border:1px solid var(--line);}
+  .hours-card h3{font-size:20px;font-weight:600;}
+  .hours-card p{color:var(--ink-soft);font-size:14px;margin-top:10px;}
+
+  .location{background:var(--ink);color:var(--paper);padding:80px 0;}
+  .location .grid{display:grid;grid-template-columns:0.9fr 1.1fr;gap:40px;align-items:stretch;}
+  .location .eyebrow{color:var(--gold-soft);}
+  .location h2{color:var(--paper);font-style:italic;font-weight:500;font-size:clamp(26px,3.4vw,36px);}
+  .location p{color:rgba(251,248,242,0.65);margin-top:14px;max-width:38ch;}
+  .social-row{display:flex;gap:12px;margin-top:24px;flex-wrap:wrap;}
+  .social-chip{display:flex;align-items:center;gap:9px;border:1px solid rgba(251,248,242,0.28);border-radius:999px;padding:10px 16px;font-size:13px;font-weight:500;transition:border-color .2s;}
+  .social-chip:hover{border-color:rgba(251,248,242,0.6);}
+  .map-frame{overflow:hidden;border:1px solid rgba(251,248,242,0.2);min-height:300px;filter:grayscale(0.3);}
+  .map-frame iframe{width:100%;height:100%;min-height:300px;border:0;}
+
+  footer{background:var(--ink);color:rgba(251,248,242,0.5);padding:22px 0 30px;border-top:1px solid rgba(251,248,242,0.1);}
+  footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px;font-size:12px;}
+
+  @media (max-width:900px){
+    .about .grid,.hours .grid,.location .grid{grid-template-columns:1fr;gap:36px;}
+    .programs .grid{grid-template-columns:1fr;}
+    .kt-grid{grid-template-columns:1fr 1fr;}
+  }
+  @media (max-width:700px){
+    .nav-links{display:none;}
+    .nav-toggle{display:inline-flex;}
+    .status-pill{display:none;}
+    .kt-grid{grid-template-columns:1fr;}
+  }
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="wrap">
+    <div class="brand">
+      <img src="/demok/kertvarosi-kavezo/assets/logo.jpg" alt="Kertvárosi Kávézó logó">
+      <div class="word">Kertvárosi Kávézó</div>
+    </div>
+    <nav class="nav-links">
+      <a href="#kinalat" class="active">Kínálat</a>
+      <a href="/demok/kertvarosi-kavezo/programok">Programok</a>
+      <a href="#nyitvatartas">Nyitvatartás</a>
+      <a href="#helyszin">Helyszín</a>
+    </nav>
+    <div class="nav-right">
+      <a class="status-pill" href="#nyitvatartas" id="statusPill"><span class="dot"></span><span id="statusText">…</span></a>
+      <button class="nav-toggle" id="navToggle" aria-label="Menü megnyitása" aria-expanded="false">
+        <span class="bar"></span><span class="bar"></span><span class="bar"></span>
+      </button>
+    </div>
+  </div>
+  <nav class="mobile-menu" id="mobileMenu">
+    <div class="mobile-menu-inner">
+      <a href="#kinalat">Kínálat</a>
+      <a href="/demok/kertvarosi-kavezo/programok">Programok</a>
+      <a href="#nyitvatartas">Nyitvatartás</a>
+      <a href="#helyszin">Helyszín</a>
+    </div>
+  </nav>
+</header>
+
+<section class="hero reveal">
+  <div class="wrap">
+    <img class="logo-big" src="/demok/kertvarosi-kavezo/assets/logo.jpg" alt="Kertvárosi Kávézó embléma">
+    <div class="eyebrow">Reformátorok tere · Sashalom</div>
+    <h1>Kávézó a park <span class="script" style="font-size:1.3em;">szívében</span></h1>
+    <p class="lede">A Reformátorok terén, a kilátó tövében várjuk Önöket egy csésze kávéra, könnyű ebédre vagy esti fröccsteraszra. Egy hely, ahol a kertváros megáll egy pillanatra.</p>
+    <div class="cta-row">
+      <a href="#nyitvatartas" class="btn btn-primary">Nyitvatartás</a>
+      <a href="https://www.google.com/maps/search/?api=1&query=Reform%C3%A1torok+tere%2C+Sashalom+utca+6%2C+Budapest" target="_blank" rel="noopener" class="btn btn-ghost">Útvonaltervezés</a>
+    </div>
+    <div class="meta-row">
+      <a class="icon-link" href="https://www.instagram.com/kertvarosikavezo/" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="1"/></svg> @kertvarosikavezo</a>
+      <a class="icon-link" href="https://www.facebook.com/kertvarosikavezo/" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M13.5 21v-7.5H16l.5-3.2h-3V8.3c0-.9.3-1.5 1.6-1.5H16.6V4a20 20 0 0 0-2.2-.1c-2.2 0-3.7 1.3-3.7 3.8v2.6H8.2v3.2h2.5V21h2.8z"/></svg> Facebook</a>
+    </div>
+  </div>
+</section>
+
+<div class="sprig">
+  <svg viewBox="0 0 160 20" fill="none">
+    <line x1="0" y1="10" x2="66" y2="10" stroke="#A9834D" stroke-width="1"/>
+    <line x1="94" y1="10" x2="160" y2="10" stroke="#A9834D" stroke-width="1"/>
+    <rect x="73" y="3" width="14" height="14" transform="rotate(45 80 10)" fill="none" stroke="#2C4A31" stroke-width="1.2"/>
+  </svg>
+</div>
+
+<section class="programs reveal">
+  <div class="wrap">
+    <div class="head">
+      <div class="eyebrow">Programok</div>
+      <h2>Nem csak kávézó</h2>
+      <p style="margin-top:14px;color:var(--ink-soft);font-size:15px;">Alkalmanként élőzenés esték és irodalmi karaoke est is várja a betérő vendégeket, a fröccsterasz pedig nyáron minden estén nyitva.</p>
+    </div>
+    <div class="grid">
+      <div class="prog-card">
+        <svg viewBox="0 0 32 32" fill="none"><path d="M10 22V6l14 4v12" stroke="#A9834D" stroke-width="1.6"/><circle cx="8" cy="23" r="3" stroke="#A9834D" stroke-width="1.6"/><circle cx="22" cy="21" r="3" stroke="#A9834D" stroke-width="1.6"/></svg>
+        <h3>Élőzenés esték</h3>
+        <p>Alkalmanként akusztikus koncertekkel a teraszon, a pontos időpontokat a közösségi oldalainkon hirdetjük.</p>
+      </div>
+      <div class="prog-card">
+        <svg viewBox="0 0 32 32" fill="none"><path d="M8 6h16v20l-8-5-8 5z" stroke="#2C4A31" stroke-width="1.6"/></svg>
+        <h3>Irodalmi karaoke est</h3>
+        <p>Felolvasás, közös versmondás és karaoke egy estébe sűrítve, a kertváros irodalomkedvelőinek.</p>
+      </div>
+      <div class="prog-card">
+        <svg viewBox="0 0 32 32" fill="none"><path d="M10 26V10a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v16" stroke="#A9834D" stroke-width="1.6"/><path d="M6 26h20" stroke="#A9834D" stroke-width="1.6" stroke-linecap="round"/></svg>
+        <h3>Fröccsterasz</h3>
+        <p>Nyári estéken a terasz kisfröccstől a nagyfröccsig kínálja a hűsítőt, jó társaságban.</p>
+      </div>
+    </div>
+    <a href="/demok/kertvarosi-kavezo/programok" class="programs-link">Programok és események →</a>
+  </div>
+</section>
+
+<section class="about reveal">
+  <div class="wrap grid">
+    <div>
+      <div class="eyebrow">A hely</div>
+      <h2>A kertváros nappalija</h2>
+      <p>A Reformátorok terén, a kilátó tövében nyílt kávézónk gyorsan a környék kedvelt találkozóhelyévé vált. Zöldfalas, üvegezett belső tér néz a hegyekre, kint pedig a park ad otthont a reggeli kávénak, a délutáni fagyinak és az esti fröccsnek.</p>
+      <div class="badge-row">
+        <div class="badge"><svg viewBox="0 0 24 24" fill="none" stroke="var(--forest)" stroke-width="1.6"><path d="M12 21c-4-3-7-6-7-10a7 7 0 0 1 14 0c0 4-3 7-7 10z"/></svg> Gyerekbarát</div>
+        <div class="badge"><svg viewBox="0 0 24 24" fill="none" stroke="var(--forest)" stroke-width="1.6"><circle cx="8" cy="10" r="2"/><circle cx="16" cy="10" r="2"/><path d="M6 20c0-4 2-6 6-6s6 2 6 6"/></svg> Kutyabarát</div>
+        <div class="badge"><svg viewBox="0 0 24 24" fill="none" stroke="var(--forest)" stroke-width="1.6"><path d="M4 20h16M8 20V10l4-6 4 6v10"/></svg> Fűtött terasz</div>
+      </div>
+    </div>
+    <div class="quote">
+      <p>Nagyon kedves kis hely.</p>
+      <span>Vendégvélemény</span>
+    </div>
+  </div>
+</section>
+
+<section class="kinalat-teaser reveal" id="kinalat">
+  <div class="wrap">
+    <div class="eyebrow">Kínálat</div>
+    <h2>Amit a pulton talál</h2>
+    <div class="kt-grid">
+      <div class="kt-item"><div class="name">Olasz kávé</div><div class="desc">espresso, cappuccino, latte</div></div>
+      <div class="kt-item"><div class="name">Kézműves fagyi</div><div class="desc">napi 8-10 ízben</div></div>
+      <div class="kt-item"><div class="name">Fröccsterasz</div><div class="desc">kisfröccstől a nagyfröccsig</div></div>
+      <div class="kt-item"><div class="name">Sütemények</div><div class="desc">frissen, naponta változó</div></div>
+    </div>
+    <a href="/demok/kertvarosi-kavezo/etlap" class="kt-link">Teljes étlap megtekintése →</a>
+  </div>
+</section>
+
+<section class="hours reveal" id="nyitvatartas">
+  <div class="wrap grid">
+    <div>
+      <div class="eyebrow">Nyitvatartás</div>
+      <h2>Mikor várjuk</h2>
+      <table class="hours-table" id="hoursTable">
+        <tr data-day="1"><td>Hétfő</td><td>10:00 – 18:30</td></tr>
+        <tr data-day="2"><td>Kedd</td><td>10:00 – 18:30</td></tr>
+        <tr data-day="3"><td>Szerda</td><td>10:00 – 18:30</td></tr>
+        <tr data-day="4"><td>Csütörtök</td><td>10:00 – 18:30</td></tr>
+        <tr data-day="5"><td>Péntek</td><td>10:00 – 18:30</td></tr>
+        <tr data-day="6"><td>Szombat</td><td>10:00 – 18:30</td></tr>
+        <tr data-day="0"><td>Vasárnap</td><td>10:00 – 18:00</td></tr>
+      </table>
+    </div>
+    <div class="hours-card">
+      <h3>Séta után betérve</h3>
+      <p>A Reformátorok terén, a kilátó lábánál található a kávézó, egy park sétáját vagy játszótéri kört követően könnyen elérhető.</p>
+    </div>
+  </div>
+</section>
+
+<section class="location reveal" id="helyszin">
+  <div class="wrap grid">
+    <div>
+      <div class="eyebrow">Helyszín</div>
+      <h2>Sashalom, Reformátorok tere</h2>
+      <p>Reformátorok tere, Sashalom utca 6, 1161 Budapest.</p>
+      <div class="social-row">
+        <a class="social-chip" href="https://www.instagram.com/kertvarosikavezo/" target="_blank" rel="noopener">Instagram · @kertvarosikavezo</a>
+        <a class="social-chip" href="https://www.facebook.com/kertvarosikavezo/" target="_blank" rel="noopener">Facebook</a>
+        <a class="social-chip" href="tel:+3617919141">+36 1 791 9141</a>
+      </div>
+    </div>
+    <div class="map-frame">
+      <iframe src="https://www.google.com/maps?q=Reform%C3%A1torok+tere%2C+Sashalom+utca+6%2C+Budapest&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span>© Kertvárosi Kávézó, Sashalom, Reformátorok tere.</span>
+    <span>Weboldal: Polarisweb</span>
+  </div>
+</footer>
+
+<script>
+  var HOURS = {0:[10*60,18*60],1:[10*60,18*60+30],2:[10*60,18*60+30],3:[10*60,18*60+30],4:[10*60,18*60+30],5:[10*60,18*60+30],6:[10*60,18*60+30]};
+  var now = new Date();
+  var day = now.getDay();
+  var minutes = now.getHours()*60 + now.getMinutes();
+  var range = HOURS[day];
+  var isOpen = range && minutes >= range[0] && minutes < range[1];
+  var pill = document.getElementById('statusPill');
+  var text = document.getElementById('statusText');
+  if(isOpen){
+    var closeLabel = 'Nyitva, zár ' + Math.floor(range[1]/60) + ':' + String(range[1]%60).padStart(2,'0');
+    pill.classList.add('open'); text.textContent = closeLabel;
+  } else {
+    pill.classList.add('closed'); text.textContent = 'Most zárva';
+  }
+  var row = document.querySelector('#hoursTable tr[data-day="' + day + '"]');
+  if(row) row.classList.add('today');
+
+  var navToggle = document.getElementById('navToggle');
+  var mobileMenu = document.getElementById('mobileMenu');
+  navToggle.addEventListener('click', function(){
+    var open = mobileMenu.classList.toggle('open');
+    navToggle.classList.toggle('open', open);
+    navToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+  mobileMenu.querySelectorAll('a').forEach(function(link){
+    link.addEventListener('click', function(){
+      mobileMenu.classList.remove('open');
+      navToggle.classList.remove('open');
+      navToggle.setAttribute('aria-expanded', 'false');
+    });
+  });
+
+  var revealEls = document.querySelectorAll('.reveal');
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, {threshold:0.12});
+  revealEls.forEach(function(el){ io.observe(el); });
+</script>
+
+</body>
+</html>

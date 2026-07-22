@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+<meta name="robots" content="noindex, nofollow">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Étlap, Kertvárosi Kávézó</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,500&family=Pinyon+Script&family=Jost:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --forest:#2C4A31;
+    --forest-dark:#1E331F;
+    --gold:#A9834D;
+    --gold-soft:#D8C29A;
+    --paper:#FBF8F2;
+    --paper-deep:#F3EEE0;
+    --ink:#20281F;
+    --ink-soft:rgba(32,40,31,0.66);
+    --line:rgba(32,40,31,0.15);
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:'Jost',sans-serif;font-size:16px;line-height:1.65;-webkit-font-smoothing:antialiased;}
+  h1,h2,h3{font-family:'Cormorant Garamond',serif;font-weight:600;line-height:1.1;margin:0;}
+  a{color:inherit;text-decoration:none;}
+  img,svg{display:block;max-width:100%;}
+  .wrap{max-width:1000px;margin:0 auto;padding:0 24px;}
+  .eyebrow{font-family:'Jost',sans-serif;font-weight:600;letter-spacing:0.24em;text-transform:uppercase;font-size:11px;color:var(--gold);}
+  .script{font-family:'Pinyon Script',cursive;font-weight:400;}
+
+  .reveal{opacity:0;transform:translateY(16px);transition:opacity .8s ease, transform .8s ease;}
+  .reveal.in{opacity:1;transform:none;}
+
+  header.topbar{position:sticky;top:0;z-index:50;background:rgba(251,248,242,0.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);}
+  .topbar .wrap{max-width:1120px;display:flex;align-items:center;justify-content:space-between;gap:14px;padding:10px 24px;}
+  .brand{display:flex;align-items:center;gap:12px;}
+  .brand img{width:52px;height:52px;border-radius:50%;object-fit:cover;mix-blend-mode:multiply;}
+  .brand .word{font-family:'Cormorant Garamond',serif;font-weight:600;font-size:19px;letter-spacing:0.02em;}
+  .nav-links{display:flex;align-items:center;gap:30px;font-size:13px;font-weight:500;letter-spacing:0.04em;}
+  .nav-links a{position:relative;padding-bottom:3px;}
+  .nav-links a.active,.nav-links a:hover{color:var(--forest);}
+  .nav-links a.active::after{content:"";position:absolute;left:0;right:0;bottom:0;height:1px;background:var(--gold);}
+  .nav-toggle{display:none;flex-direction:column;align-items:center;justify-content:center;gap:5px;width:40px;height:40px;background:var(--forest);border:none;border-radius:3px;cursor:pointer;flex:none;padding:0;}
+  .nav-toggle .bar{width:18px;height:1.5px;background:var(--paper);transition:transform .3s ease, opacity .2s ease;}
+  .nav-toggle.open .bar:nth-child(1){transform:translateY(6.5px) rotate(45deg);}
+  .nav-toggle.open .bar:nth-child(2){opacity:0;}
+  .nav-toggle.open .bar:nth-child(3){transform:translateY(-6.5px) rotate(-45deg);}
+  .mobile-menu{max-height:0;opacity:0;overflow:hidden;background:var(--paper);border-top:1px solid transparent;box-shadow:0 18px 32px rgba(32,40,31,0.1);transition:max-height .38s ease, opacity .28s ease;}
+  .mobile-menu.open{max-height:420px;opacity:1;border-top-color:var(--line);}
+  .mobile-menu-inner{display:flex;flex-direction:column;gap:4px;padding:16px 18px 22px;}
+  .mobile-menu a{display:block;padding:13px 16px;font-weight:500;font-size:15px;border-bottom:1px solid var(--line);}
+
+  .page-hero{padding:64px 0 50px;text-align:center;}
+  .page-hero h1{font-size:clamp(30px,4.6vw,44px);font-style:italic;font-weight:500;}
+  .page-hero p{margin:16px auto 0;max-width:48ch;color:var(--ink-soft);font-size:15.5px;}
+
+  .menu-wrap{padding:10px 0 60px;}
+  .menu-cat{margin-bottom:44px;}
+  .menu-cat h2{font-size:22px;font-weight:600;font-style:italic;border-bottom:1px solid var(--line);padding-bottom:12px;margin-bottom:16px;}
+  .menu-item{display:flex;align-items:baseline;gap:10px;padding:9px 0;flex-wrap:wrap;}
+  .menu-item .name{font-size:15.5px;font-weight:500;}
+  .menu-item .dots{flex:1;min-width:16px;border-bottom:1px dotted var(--line);transform:translateY(-4px);}
+  .menu-item .price{font-weight:600;color:var(--forest);white-space:nowrap;font-size:14.5px;}
+  .menu-item .desc{width:100%;font-size:12.5px;color:var(--ink-soft);}
+
+  .menu-foot{padding:30px 0 60px;text-align:center;font-size:13px;color:var(--ink-soft);border-top:1px solid var(--line);}
+  .back-link{display:block;text-align:center;padding-bottom:40px;font-size:13px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:var(--forest);}
+
+  footer{background:var(--ink);color:rgba(251,248,242,0.5);padding:22px 0 30px;border-top:1px solid rgba(251,248,242,0.1);}
+  footer .wrap{max-width:1120px;display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px;font-size:12px;}
+
+  @media (max-width:700px){ .nav-links{display:none;} .nav-toggle{display:inline-flex;} }
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="wrap">
+    <div class="brand">
+      <img src="/demok/kertvarosi-kavezo/assets/logo.jpg" alt="Kertvárosi Kávézó logó">
+      <div class="word">Kertvárosi Kávézó</div>
+    </div>
+    <nav class="nav-links">
+      <a href="/demok/kertvarosi-kavezo/etlap" class="active">Kínálat</a>
+      <a href="/demok/kertvarosi-kavezo/programok">Programok</a>
+      <a href="/demok/kertvarosi-kavezo/#nyitvatartas">Nyitvatartás</a>
+      <a href="/demok/kertvarosi-kavezo/#helyszin">Helyszín</a>
+    </nav>
+    <button class="nav-toggle" id="navToggle" aria-label="Menü megnyitása" aria-expanded="false">
+      <span class="bar"></span><span class="bar"></span><span class="bar"></span>
+    </button>
+  </div>
+  <nav class="mobile-menu" id="mobileMenu">
+    <div class="mobile-menu-inner">
+      <a href="/demok/kertvarosi-kavezo/etlap">Kínálat</a>
+      <a href="/demok/kertvarosi-kavezo/programok">Programok</a>
+      <a href="/demok/kertvarosi-kavezo/#nyitvatartas">Nyitvatartás</a>
+      <a href="/demok/kertvarosi-kavezo/#helyszin">Helyszín</a>
+    </div>
+  </nav>
+</header>
+
+<section class="page-hero reveal">
+  <div class="wrap">
+    <div class="eyebrow">Étlap</div>
+    <h1>Amit a pulton <span class="script" style="font-size:1.2em;">talál</span></h1>
+    <p>Kávé, fagyi és terasz-hangulat egy helyen. Az árak tájékoztató jellegűek, a végleges lista egyeztetés után kerül fel.</p>
+  </div>
+</section>
+
+<div class="wrap menu-wrap reveal">
+  <div class="menu-cat">
+    <h2>Kávé</h2>
+    <div class="menu-item"><span class="name">Espresso</span><span class="dots"></span><span class="price">650 Ft</span></div>
+    <div class="menu-item"><span class="name">Cappuccino</span><span class="dots"></span><span class="price">850 Ft</span></div>
+    <div class="menu-item"><span class="name">Latte</span><span class="dots"></span><span class="price">950 Ft</span></div>
+    <div class="menu-item"><span class="name">Jeges latte</span><span class="dots"></span><span class="price">990 Ft</span></div>
+  </div>
+  <div class="menu-cat">
+    <h2>Fagyi</h2>
+    <div class="menu-item"><span class="name">1 gombóc</span><span class="dots"></span><span class="price">450 Ft</span></div>
+    <div class="menu-item"><span class="name">Kehely, 3 gombóc</span><span class="dots"></span><span class="price">1690 Ft</span><span class="desc">választható öntettel</span></div>
+  </div>
+  <div class="menu-cat">
+    <h2>Fröccsterasz</h2>
+    <div class="menu-item"><span class="name">Kisfröccs</span><span class="dots"></span><span class="price">690 Ft</span></div>
+    <div class="menu-item"><span class="name">Nagyfröccs</span><span class="dots"></span><span class="price">890 Ft</span></div>
+    <div class="menu-item"><span class="name">Csapolt sör 0,4 l</span><span class="dots"></span><span class="price">890 Ft</span></div>
+    <div class="menu-item"><span class="name">Kézműves sör, üveges</span><span class="dots"></span><span class="price">1290 Ft</span></div>
+  </div>
+  <div class="menu-cat">
+    <h2>Harapnivaló</h2>
+    <div class="menu-item"><span class="name">Zsíroskenyér</span><span class="dots"></span><span class="price">790 Ft</span></div>
+    <div class="menu-item"><span class="name">Napi sütemény</span><span class="dots"></span><span class="price">850 Ft</span></div>
+  </div>
+</div>
+
+<div class="menu-foot">A kínálat és az árak tájékoztató jellegűek, a végleges lista egyeztetés után kerül fel.</div>
+
+<a class="back-link" href="/demok/kertvarosi-kavezo/">← Vissza a főoldalra</a>
+
+<footer>
+  <div class="wrap">
+    <span>© Kertvárosi Kávézó, Sashalom, Reformátorok tere.</span>
+    <span>Weboldal: Polarisweb</span>
+  </div>
+</footer>
+
+<script>
+  var navToggle = document.getElementById('navToggle');
+  var mobileMenu = document.getElementById('mobileMenu');
+  navToggle.addEventListener('click', function(){
+    var open = mobileMenu.classList.toggle('open');
+    navToggle.classList.toggle('open', open);
+    navToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+  mobileMenu.querySelectorAll('a').forEach(function(link){
+    link.addEventListener('click', function(){
+      mobileMenu.classList.remove('open');
+      navToggle.classList.remove('open');
+      navToggle.setAttribute('aria-expanded', 'false');
+    });
+  });
+  var revealEls = document.querySelectorAll('.reveal');
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, {threshold:0.12});
+  revealEls.forEach(function(el){ io.observe(el); });
+</script>
+
+</body>
+</html>
