@@ -49,6 +49,13 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   }
 
+  function hasValue(datasetValue, value) {
+    if (!value) return true;
+    if (!datasetValue) return false;
+    var values = datasetValue.split(',').map(function (v) { return v.trim(); });
+    return values.indexOf(value) !== -1;
+  }
+
   function applyFilters() {
     var mufaj = mufajSelect.value;
     var regio = regioSelect.value;
@@ -57,9 +64,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
     cards.forEach(function (card) {
       var matches =
-        (!mufaj || card.dataset.mufaj === mufaj) &&
+        hasValue(card.dataset.mufaj, mufaj) &&
         (!regio || card.dataset.regio === regio) &&
-        (!stilus || card.dataset.stilus === stilus);
+        hasValue(card.dataset.stilus, stilus);
       card.hidden = !matches;
       if (matches) visibleCount++;
     });
