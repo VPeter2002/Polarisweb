@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+<meta name="robots" content="noindex, nofollow">
+<meta charset="UTF-8">
+<title>Fotósok &middot; Fénykereső</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="/demok/fenykereso/css/style.css">
+</head>
+<body>
+
+<svg style="display:none">
+  <symbol id="ic-rings" viewBox="0 0 24 24"><circle cx="9" cy="12" r="6"/><circle cx="15" cy="12" r="6"/></symbol>
+  <symbol id="ic-heart" viewBox="0 0 24 24"><path d="M12 20s-7-4.5-9.5-9C1 7.5 2.5 4 6 4c2 0 3.5 1.3 4 2.5.5-1.2 2-2.5 4-2.5 3.5 0 5 3.5 3.5 7-2.5 4.5-9.5 9-9.5 9z"/></symbol>
+  <symbol id="ic-sprig" viewBox="0 0 24 24"><path d="M12 21V5"/><path d="M12 9c-3-1-5-4-5-4s0 4 3 5"/><path d="M12 13c3-1 5-4 5-4s0 4-3 5"/><path d="M12 17c-2.5-1-4-3-4-3s0 3 2.5 4"/></symbol>
+  <symbol id="ic-camera" viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7l1.5-2.5h5L16 7"/><circle cx="12" cy="13.5" r="3.5"/></symbol>
+  <symbol id="ic-confetti" viewBox="0 0 24 24"><circle cx="6" cy="6" r="1"/><circle cx="18" cy="8" r="1"/><circle cx="15" cy="18" r="1"/><path d="M4 16l2 2"/><path d="M19 15l2 2"/><path d="M9 4l1.5 1.5"/></symbol>
+</svg>
+
+<header class="site-header solid">
+  <div class="wrap header-row">
+    <a href="/demok/fenykereso/" class="brand">Fénykereső<small>találd meg a fotósod</small></a>
+    <nav class="main-nav">
+      <a href="/demok/fenykereso/">Főoldal</a>
+      <a href="/demok/fenykereso/talalatok" class="active">Fotósok</a>
+      <a href="/demok/fenykereso/listazz-nalunk">Listázz nálunk</a>
+    </nav>
+    <button class="nav-toggle" id="navToggle" aria-label="Menü megnyitása" aria-expanded="false">
+      <span class="bar"></span><span class="bar"></span><span class="bar"></span>
+    </button>
+  </div>
+  <nav class="mobile-menu" id="mobileMenu">
+    <div class="mobile-menu-inner">
+      <a href="/demok/fenykereso/">Főoldal</a>
+      <a href="/demok/fenykereso/talalatok" class="active">Fotósok</a>
+      <a href="/demok/fenykereso/listazz-nalunk">Listázz nálunk</a>
+    </div>
+  </nav>
+</header>
+
+<section class="page-header">
+  <div class="wrap">
+    <span class="kicker">Fotósok</span>
+    <h1>Fotósok Magyarországon</h1>
+    <p>Szűrj műfaj, régió és stílus szerint, aztán nyisd meg a profilokat a teljes portfólióért.</p>
+    <div class="filter-bar">
+      <select id="filterMufaj" aria-label="Műfaj">
+        <option value="">Összes műfaj</option>
+        <option>Esküvő</option>
+        <option>Portré</option>
+        <option>Család</option>
+        <option>Kismama</option>
+        <option>Újszülött</option>
+        <option>Páros</option>
+        <option>Esemény</option>
+        <option>Üzleti portré</option>
+      </select>
+      <select id="filterRegio" aria-label="Régió">
+        <option value="">Összes régió</option>
+        <option>Budapest és környéke</option>
+        <option>Balaton</option>
+        <option>Dunántúl</option>
+        <option>Alföld</option>
+        <option>Erdély</option>
+      </select>
+      <div class="filter-chips" id="filterStilus" role="group" aria-label="Stílus szűrő">
+        <button type="button" class="filter-chip active" data-stilus="">Összes stílus</button>
+        <button type="button" class="filter-chip" data-stilus="Klasszikus">Klasszikus</button>
+        <button type="button" class="filter-chip" data-stilus="Természetes">Természetes</button>
+        <button type="button" class="filter-chip" data-stilus="Dokumentarista">Dokumentarista</button>
+        <button type="button" class="filter-chip" data-stilus="Fine Art">Fine Art</button>
+        <button type="button" class="filter-chip" data-stilus="Editoriális">Editoriális</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="results">
+  <div class="wrap">
+    <div class="results-count" id="resultsCount" aria-live="polite">12 fotós található</div>
+    <p class="no-results" id="noResults" hidden>Ezekkel a szűrőkkel nincs találat. Próbálj tágabb keresést.</p>
+    <div class="results-grid" id="resultsGrid">
+      <article class="photog-card" data-mufaj="Esküvő" data-regio="Budapest és környéke" data-stilus="Természetes">
+        <a class="card-link" href="/demok/fenykereso/fotos-profil">
+          <div class="ph-cover ph-1"><svg class="ph-icon" viewBox="0 0 24 24"><use href="#ic-rings"></use></svg></div>
+          <div class="info">
+            <div class="name">Bridal Fotó</div>
+            <div class="region">Budapest és környéke</div>
+            <div class="tags"><span class="tag terracotta">Esküvő</span><span class="tag">Természetes</span></div>
+          </div>
+        </a>
+        <a class="portfolio-link" href="https://bridalfoto.hu/" target="_blank" rel="noopener noreferrer">Portfólió &#8599;</a>
+      </article>
+      <article class="photog-card" data-mufaj="Esküvő" data-regio="Budapest és környéke" data-stilus="Editoriális">
+        <a class="card-link" href="/demok/fenykereso/fotos-profil">
+          <div class="ph-cover ph-2"><svg class="ph-icon" viewBox="0 0 24 24"><use href="#ic-heart"></use></svg></div>
+          <div class="info">
+            <div class="name">G. Nagy Rita</div>
+            <div class="region">Budapest és környéke</div>
+            <div class="tags"><span class="tag sage">Esküvő</span><span class="tag">Editoriális</span></div>
+          </div>
+        </a>
+        <a class="portfolio-link" href="https://gnagyrita.hu/" target="_blank" rel="noopener noreferrer">Portfólió &#8599;</a>
+      </article>
+      <article class="photog-card" data-mufaj="Esküvő" data-regio="Budapest és környéke" data-stilus="Klasszikus">
+        <a class="card-link" href="/demok/fenykereso/fotos-profil">
+          <div class="ph-cover ph-3"><svg class="ph-icon" viewBox="0 0 24 24"><use href="#ic-rings"></use></svg></div>
+          <div class="info">
+            <div class="name">S. Péter</div>
+            <div class="region">Budapest és környéke</div>
+            <div class="tags"><span class="tag terracotta">Esküvő</span><span class="tag">Klasszikus</span></div>
+          </div>
+        </a>
+        <a class="portfolio-link" href="https://www.speter.hu/eskuvoi-fotos-budapest/" target="_blank" rel="noopener noreferrer">Portfólió &#8599;</a>
+      </article>
+      <article class="photog-card" data-mufaj="Esküvő" data-regio="Balaton" data-stilus="Dokumentarista">
+        <a class="card-link" href="/demok/fenykereso/fotos-profil">
+          <div class="ph-cover ph-4"><svg class="ph-icon" viewBox="0 0 24 24"><use href="#ic-heart"></use></svg></div>
+          <div class="info">
+            <div class="name">Kristoban Wedding Photography</div>
+            <div class="region">Balaton</div>
+            <div class="tags"><span class="tag sage">Esküvő</span><span class="tag">Dokumentarista</span></div>
+          </div>
+        </a>
+        <a class="portfolio-link" href="https://kristobanphotography.hu/" target="_blank" rel="noopener noreferrer">Portfólió &#8599;</a>
+      </article>
+      <article class="photog-card" data-mufaj="Újszülött" data-regio="Alföld" data-stilus="Klasszikus">
+        <a class="card-link" href="/demok/fenykereso/fotos-profil">
+          <div class="ph-cover ph-5"><svg class="ph-icon" viewBox="0 0 24 24"><use href="#ic-sprig"></use></svg></div>
+          <div class="info">
+            <div class="name">Szabina Fotó</div>
+            <div class="region">Alföld</div>
+            <div class="tags"><span class="tag terracotta">Újszülött</span><span class="tag">Klasszikus</span></div>
+          </div>
+        </a>
+        <a class="portfolio-link" href="https://szabina-foto.hu/" target="_blank" rel="noopener noreferrer">Portfólió &#8599;</a>
+      </article>
+      <article class="photog-card" data-mufaj="Kismama" data-regio="Alföld" data-stilus="Természetes">
+        <a class="card-link" href="/demok/fenykereso/fotos-profil">
+          <div class="ph-cover ph-6"><svg class="ph-icon" viewBox="0 0 24 24"><use href="#ic-sprig"></use></svg></div>
+          <div class="info">
+            <div class="name">LaceE Photography</div>
+            <div class="region">Alföld</div>
+            <div class="tags"><span class="tag sage">Kismama</span><span class="tag">Természetes</span></div>
+          </div>
+        </a>
+        <a class="portfolio-link" href="https://www.laceephoto.hu/" target="_blank" rel="noopener noreferrer">Portfólió &#8599;</a>
+      </article>
+      <article class="photog-card" data-mufaj="Portré" data-regio="Alföld" data-stilus="Klasszikus">
+        <a class="card-link" href="/demok/fenykereso/fotos-profil">
+          <div class="ph-cover ph-1"><svg class="ph-icon" viewBox="0 0 24 24"><use href="#ic-camera"></use></svg></div>
+          <div class="info">
+            <div class="name">Márti fotóz</div>
+            <div class="region">Alföld</div>
+            <div class="tags"><span class="tag terracotta">Portré</span><span class="tag">Klasszikus</span></div>
+          </div>
+        </a>
+        <a class="portfolio-link" href="https://martifotoz.hu/" target="_blank" rel="noopener noreferrer">Portfólió &#8599;</a>
+      </article>
+      <article class="photog-card" data-mufaj="Család" data-regio="Dunántúl" data-stilus="Editoriális">
+        <a class="card-link" href="/demok/fenykereso/fotos-profil">
+          <div class="ph-cover ph-2"><svg class="ph-icon" viewBox="0 0 24 24"><use href="#ic-sprig"></use></svg></div>
+          <div class="info">
+            <div class="name">Nyári Fanny Photo</div>
+            <div class="region">Dunántúl</div>
+            <div class="tags"><span class="tag sage">Család</span><span class="tag">Editoriális</span></div>
+          </div>
+        </a>
+        <a class="portfolio-link" href="https://nyarifanny.com/" target="_blank" rel="noopener noreferrer">Portfólió &#8599;</a>
+      </article>
+      <article class="photog-card" data-mufaj="Esemény" data-regio="Dunántúl" data-stilus="Dokumentarista">
+        <a class="card-link" href="/demok/fenykereso/fotos-profil">
+          <div class="ph-cover ph-3"><svg class="ph-icon" viewBox="0 0 24 24"><use href="#ic-confetti"></use></svg></div>
+          <div class="info">
+            <div class="name">naszfoto.hu</div>
+            <div class="region">Dunántúl</div>
+            <div class="tags"><span class="tag terracotta">Esemény</span><span class="tag">Dokumentarista</span></div>
+          </div>
+        </a>
+        <a class="portfolio-link" href="http://www.naszfoto.hu/" target="_blank" rel="noopener noreferrer">Portfólió &#8599;</a>
+      </article>
+      <article class="photog-card" data-mufaj="Üzleti portré" data-regio="Dunántúl" data-stilus="Klasszikus">
+        <a class="card-link" href="/demok/fenykereso/fotos-profil">
+          <div class="ph-cover ph-4"><svg class="ph-icon" viewBox="0 0 24 24"><use href="#ic-camera"></use></svg></div>
+          <div class="info">
+            <div class="name">Birta Photo</div>
+            <div class="region">Dunántúl</div>
+            <div class="tags"><span class="tag sage">Üzleti portré</span><span class="tag">Klasszikus</span></div>
+          </div>
+        </a>
+        <a class="portfolio-link" href="https://birtafoto.hu/" target="_blank" rel="noopener noreferrer">Portfólió &#8599;</a>
+      </article>
+      <article class="photog-card" data-mufaj="Üzleti portré" data-regio="Budapest és környéke" data-stilus="Editoriális">
+        <a class="card-link" href="/demok/fenykereso/fotos-profil">
+          <div class="ph-cover ph-5"><svg class="ph-icon" viewBox="0 0 24 24"><use href="#ic-camera"></use></svg></div>
+          <div class="info">
+            <div class="name">Draskovics Ádám</div>
+            <div class="region">Budapest és környéke</div>
+            <div class="tags"><span class="tag terracotta">Üzleti portré</span><span class="tag">Editoriális</span></div>
+          </div>
+        </a>
+        <a class="portfolio-link" href="https://www.adamdraskovics.com/uzleti-portre" target="_blank" rel="noopener noreferrer">Portfólió &#8599;</a>
+      </article>
+      <article class="photog-card" data-mufaj="Üzleti portré" data-regio="Budapest és környéke" data-stilus="Klasszikus">
+        <a class="card-link" href="/demok/fenykereso/fotos-profil">
+          <div class="ph-cover ph-6"><svg class="ph-icon" viewBox="0 0 24 24"><use href="#ic-camera"></use></svg></div>
+          <div class="info">
+            <div class="name">PollakPhoto</div>
+            <div class="region">Budapest és környéke</div>
+            <div class="tags"><span class="tag sage">Üzleti portré</span><span class="tag">Klasszikus</span></div>
+          </div>
+        </a>
+        <a class="portfolio-link" href="https://www.portrefotos.hu/" target="_blank" rel="noopener noreferrer">Portfólió &#8599;</a>
+      </article>
+    </div>
+    <div class="pagination">
+      <a href="#" class="active">1</a>
+      <a href="#">2</a>
+      <a href="#">3</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-grid">
+      <div class="footer-brand">Fénykereső<small>találd meg a fotósod</small></div>
+      <div class="footer-links">
+        <a href="/demok/fenykereso/talalatok">Fotósok</a>
+        <a href="/demok/fenykereso/listazz-nalunk">Listázz nálunk</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>Fénykereső &middot; koncepció-mockup</span>
+      <span>Minden fotó helyőrző, a valódi portfóliók a fotósok saját anyagai lesznek.</span>
+    </div>
+  </div>
+</footer>
+
+<script src="/demok/fenykereso/js/nav.js"></script>
+<script src="/demok/fenykereso/js/filter.js"></script>
+</body>
+</html>

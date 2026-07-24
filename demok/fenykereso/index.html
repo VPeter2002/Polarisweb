@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+<meta name="robots" content="noindex, nofollow">
+<meta charset="UTF-8">
+<title>Fénykereső &middot; Találd meg a fotósod</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="/demok/fenykereso/css/style.css">
+</head>
+<body>
+
+<svg style="display:none">
+  <symbol id="ic-rings" viewBox="0 0 24 24"><circle cx="9" cy="12" r="6"/><circle cx="15" cy="12" r="6"/></symbol>
+  <symbol id="ic-heart" viewBox="0 0 24 24"><path d="M12 20s-7-4.5-9.5-9C1 7.5 2.5 4 6 4c2 0 3.5 1.3 4 2.5.5-1.2 2-2.5 4-2.5 3.5 0 5 3.5 3.5 7-2.5 4.5-9.5 9-9.5 9z"/></symbol>
+  <symbol id="ic-sprig" viewBox="0 0 24 24"><path d="M12 21V5"/><path d="M12 9c-3-1-5-4-5-4s0 4 3 5"/><path d="M12 13c3-1 5-4 5-4s0 4-3 5"/><path d="M12 17c-2.5-1-4-3-4-3s0 3 2.5 4"/></symbol>
+  <symbol id="ic-camera" viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7l1.5-2.5h5L16 7"/><circle cx="12" cy="13.5" r="3.5"/></symbol>
+  <symbol id="ic-confetti" viewBox="0 0 24 24"><circle cx="6" cy="6" r="1"/><circle cx="18" cy="8" r="1"/><circle cx="15" cy="18" r="1"/><path d="M4 16l2 2"/><path d="M19 15l2 2"/><path d="M9 4l1.5 1.5"/></symbol>
+</svg>
+
+<header class="site-header">
+  <div class="wrap header-row">
+    <a href="/demok/fenykereso/" class="brand">Fénykereső<small>találd meg a fotósod</small></a>
+    <nav class="main-nav">
+      <a href="/demok/fenykereso/" class="active">Főoldal</a>
+      <a href="/demok/fenykereso/talalatok">Fotósok</a>
+      <a href="/demok/fenykereso/listazz-nalunk">Listázz nálunk</a>
+    </nav>
+    <button class="nav-toggle" id="navToggle" aria-label="Menü megnyitása" aria-expanded="false">
+      <span class="bar"></span><span class="bar"></span><span class="bar"></span>
+    </button>
+  </div>
+  <nav class="mobile-menu" id="mobileMenu">
+    <div class="mobile-menu-inner">
+      <a href="/demok/fenykereso/" class="active">Főoldal</a>
+      <a href="/demok/fenykereso/talalatok">Fotósok</a>
+      <a href="/demok/fenykereso/listazz-nalunk">Listázz nálunk</a>
+    </div>
+  </nav>
+</header>
+
+<section class="hero">
+  <div class="hero-motif"></div>
+  <svg class="hero-rings" viewBox="0 0 24 24" style="stroke:#fffbf6;fill:none;stroke-width:0.4;"><use href="#ic-camera"></use></svg>
+  <div class="hero-content">
+    <span class="kicker">Magyarország fotósai, egy helyen</span>
+    <h1>Találd meg a fotóst az élet fontos pillanataihoz.</h1>
+    <p>Esküvőtől a családi fotózásig, a kismama-fényképektől az üzleti portréig: böngéssz műfaj, stílus és régió szerint, és kérj ajánlatot közvetlenül attól, aki passzol hozzátok.</p>
+    <form class="search-bar" action="/demok/fenykereso/talalatok">
+      <select name="mufaj" aria-label="Műfaj">
+        <option value="">Műfaj</option>
+        <option>Esküvő</option>
+        <option>Portré</option>
+        <option>Család</option>
+        <option>Kismama</option>
+        <option>Újszülött</option>
+        <option>Páros</option>
+        <option>Esemény</option>
+        <option>Üzleti portré</option>
+      </select>
+      <select name="regio" aria-label="Régió">
+        <option value="">Régió</option>
+        <option>Budapest és környéke</option>
+        <option>Balaton</option>
+        <option>Dunántúl</option>
+        <option>Alföld</option>
+        <option>Erdély</option>
+      </select>
+      <select name="stilus" aria-label="Stílus">
+        <option value="">Stílus</option>
+        <option>Klasszikus</option>
+        <option>Természetes</option>
+        <option>Dokumentarista</option>
+        <option>Fine Art</option>
+        <option>Editoriális</option>
+      </select>
+      <button type="submit" class="search-btn">Keresés</button>
+    </form>
+  </div>
+</section>
+
+<section class="featured">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <span class="kicker">Kiemelt fotósok</span>
+        <h2>Ismerd meg őket közelebbről</h2>
+      </div>
+      <p class="lede">Válogatás azokból a fotósokból, akik ezen a héten a legtöbb megkeresést kapták, minden műfajból.</p>
+    </div>
+    <div class="photog-grid">
+      <a href="/demok/fenykereso/fotos-profil" class="photog-card">
+        <div class="ph-cover ph-1"><svg class="ph-icon" viewBox="0 0 24 24"><use href="#ic-rings"></use></svg></div>
+        <div class="info">
+          <div class="name">G. Nagy Rita</div>
+          <div class="region">Budapest és környéke</div>
+          <div class="tags"><span class="tag terracotta">Esküvő</span><span class="tag">Dokumentarista</span></div>
+        </div>
+      </a>
+      <a href="/demok/fenykereso/fotos-profil" class="photog-card">
+        <div class="ph-cover ph-2"><svg class="ph-icon" viewBox="0 0 24 24"><use href="#ic-sprig"></use></svg></div>
+        <div class="info">
+          <div class="name">Szabina Fotó</div>
+          <div class="region">Alföld</div>
+          <div class="tags"><span class="tag sage">Újszülött</span><span class="tag">Természetes</span></div>
+        </div>
+      </a>
+      <a href="/demok/fenykereso/fotos-profil" class="photog-card">
+        <div class="ph-cover ph-3"><svg class="ph-icon" viewBox="0 0 24 24"><use href="#ic-heart"></use></svg></div>
+        <div class="info">
+          <div class="name">Nyári Fanny Photo</div>
+          <div class="region">Dunántúl</div>
+          <div class="tags"><span class="tag terracotta">Család</span><span class="tag">Természetes</span></div>
+        </div>
+      </a>
+      <a href="/demok/fenykereso/fotos-profil" class="photog-card">
+        <div class="ph-cover ph-4"><svg class="ph-icon" viewBox="0 0 24 24"><use href="#ic-camera"></use></svg></div>
+        <div class="info">
+          <div class="name">Draskovics Ádám</div>
+          <div class="region">Budapest és környéke</div>
+          <div class="tags"><span class="tag sage">Üzleti portré</span><span class="tag">Klasszikus</span></div>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<section class="how">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <span class="kicker">Hogyan működik</span>
+        <h2>Három lépés a jó fotóstól az ajánlatig</h2>
+      </div>
+    </div>
+    <div class="how-grid">
+      <div class="how-step">
+        <div class="step-num">01</div>
+        <h3>Szűrj műfaj, régió és stílus szerint</h3>
+        <p>Add meg, milyen alkalomra keresel fotóst, hol lesz a fotózás, és milyen hangulatú képekben gondolkodtok.</p>
+      </div>
+      <div class="how-step">
+        <div class="step-num">02</div>
+        <h3>Nézd át a portfóliókat</h3>
+        <p>Minden fotósnak saját oldala van teljes galériával, hogy tényleg lásd, mit kapnátok.</p>
+      </div>
+      <div class="how-step">
+        <div class="step-num">03</div>
+        <h3>Kérj ajánlatot</h3>
+        <p>Egy rövid űrlappal közvetlenül a fotóstól kérsz visszajelzést, se közvetítő, se felesleges kör.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cta-band">
+  <div class="wrap">
+    <span class="script">fényképész vagy?</span>
+    <h2>Legyél te is megtalálható azok számára, akik pont téged keresnek.</h2>
+    <a href="/demok/fenykereso/listazz-nalunk" class="btn btn-terracotta">Listázz nálunk</a>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-grid">
+      <div class="footer-brand">Fénykereső<small>találd meg a fotósod</small></div>
+      <div class="footer-links">
+        <a href="/demok/fenykereso/talalatok">Fotósok</a>
+        <a href="/demok/fenykereso/listazz-nalunk">Listázz nálunk</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>Fénykereső &middot; koncepció-mockup</span>
+      <span>Minden fotó helyőrző, a valódi portfóliók a fotósok saját anyagai lesznek.</span>
+    </div>
+  </div>
+</footer>
+
+<script src="/demok/fenykereso/js/nav.js"></script>
+</body>
+</html>
