@@ -1,15 +1,18 @@
 document.addEventListener('DOMContentLoaded', function () {
   var toggle = document.querySelector('.nav-toggle');
-  var nav = document.querySelector('.main-nav');
-  if (!toggle || !nav) return;
+  var menu = document.querySelector('.mobile-menu');
+  if (!toggle || !menu) return;
+  function close() {
+    toggle.classList.remove('open');
+    menu.classList.remove('open');
+    toggle.setAttribute('aria-expanded', 'false');
+  }
   toggle.addEventListener('click', function () {
-    nav.classList.toggle('open');
-    document.body.classList.toggle('nav-open');
+    var isOpen = menu.classList.toggle('open');
+    toggle.classList.toggle('open', isOpen);
+    toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
   });
-  nav.querySelectorAll('a').forEach(function (a) {
-    a.addEventListener('click', function () {
-      nav.classList.remove('open');
-      document.body.classList.remove('nav-open');
-    });
+  menu.querySelectorAll('a').forEach(function (a) {
+    a.addEventListener('click', close);
   });
 });

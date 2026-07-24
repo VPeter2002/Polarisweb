@@ -16,12 +16,25 @@
       <a href="/demok/arany-szandi-foto/csaladi">Családi</a>
       <a href="/demok/arany-szandi-foto/kapcsolat">Kapcsolat</a>
     </nav>
-    <button class="nav-toggle" aria-label="Menü"><span></span><span></span><span></span></button>
+    <button class="nav-toggle" id="navToggle" aria-label="Menü megnyitása" aria-expanded="false">
+      <span class="bar"></span><span class="bar"></span><span class="bar"></span>
+    </button>
   </div>
+  <nav class="mobile-menu" id="mobileMenu">
+    <div class="mobile-menu-inner">
+      <a href="/demok/arany-szandi-foto/" class="active">Főoldal</a>
+      <a href="/demok/arany-szandi-foto/#rolam">Rólam</a>
+      <a href="/demok/arany-szandi-foto/portre">Portré</a>
+      <a href="/demok/arany-szandi-foto/paros">Páros</a>
+      <a href="/demok/arany-szandi-foto/kismama">Kismama</a>
+      <a href="/demok/arany-szandi-foto/csaladi">Családi</a>
+      <a href="/demok/arany-szandi-foto/kapcsolat">Kapcsolat</a>
+    </div>
+  </nav>
 </header>
 
 <section class="hero">
-  <img src="/demok/arany-szandi-foto/img/hero.jpg" alt="Arany Szandi fotós munkája, portré az őszi erdőben">
+  <img src="/demok/arany-szandi-foto/img/hero.jpg" alt="Arany Szandi fotós munkája, közeli portré meleg fényben">
   <div class="hero-content">
     <span class="kicker">Csabrendek és környéke</span>
     <h1>A fényképezés a múltat<br>hozza elénk.</h1>
@@ -42,13 +55,13 @@
       <h2 style="margin:12px 0 22px;font-size:clamp(1.9rem,3.6vw,2.6rem);">Nem a pózt fotózom, hanem a pillanatot, ami utána is megmarad.</h2>
       <p>Csabrendeken és a környező falvakban fotózok éveket, gyerekeket, várandós hasakat és összetartozó embereket. Nem a mesterkélt beállítást keresem, hanem azt a pár másodpercet, amikor mindenki elfelejti, hogy kattan a gép.</p>
       <p class="quote">„Jelentkezz fotózásra, és készítsünk közösen valami maradandót!”</p>
-      <p>Minden fotózás más: van, aki egy őszi erdőben szeretne királynőnek érezni magát, van, aki csak a karácsonyfa mellett akarja megörökíteni a családot. Mindkettőt ugyanolyan komolyan veszem.</p>
+      <p>Minden fotózás más: van, aki egy csendes családi délutánt szeretne megörökíteni, van, aki a várandósság utolsó heteit. Mindkettőt ugyanolyan komolyan veszem.</p>
       <a href="/demok/arany-szandi-foto/kapcsolat" class="btn">Írj nekem</a>
     </div>
   </div>
 </section>
 
-<section class="categories">
+<section class="categories" id="galeriak">
   <div class="wrap">
     <div class="section-head">
       <div>
@@ -59,20 +72,36 @@
     </div>
     <div class="cat-grid">
       <a href="/demok/arany-szandi-foto/portre" class="cat-tile">
-        <img src="/demok/arany-szandi-foto/img/portre-06.jpg" alt="Portré fotózás">
-        <div class="cat-tile-label"><span class="num">01</span><h3>Portré</h3></div>
+        <img src="/demok/arany-szandi-foto/img/portre-05.jpg" alt="Portré fotózás">
+        <div class="cat-tile-label">
+          <span class="num">01</span>
+          <h3>Portré</h3>
+          <span class="desc">Klasszikus és természetes egyéni fotózás</span>
+        </div>
       </a>
       <a href="/demok/arany-szandi-foto/paros" class="cat-tile">
         <img src="/demok/arany-szandi-foto/img/paros-02.jpg" alt="Páros fotózás">
-        <div class="cat-tile-label"><span class="num">02</span><h3>Páros</h3></div>
+        <div class="cat-tile-label">
+          <span class="num">02</span>
+          <h3>Páros</h3>
+          <span class="desc">Kettesben, a hétköznapokon kívül</span>
+        </div>
       </a>
       <a href="/demok/arany-szandi-foto/kismama" class="cat-tile">
         <img src="/demok/arany-szandi-foto/img/kismama-01.jpg" alt="Kismama fotózás">
-        <div class="cat-tile-label"><span class="num">03</span><h3>Kismama</h3></div>
+        <div class="cat-tile-label">
+          <span class="num">03</span>
+          <h3>Kismama</h3>
+          <span class="desc">A várandósság és az első napok</span>
+        </div>
       </a>
       <a href="/demok/arany-szandi-foto/csaladi" class="cat-tile">
         <img src="/demok/arany-szandi-foto/img/csaladi-01.jpg" alt="Családi fotózás">
-        <div class="cat-tile-label"><span class="num">04</span><h3>Családi</h3></div>
+        <div class="cat-tile-label">
+          <span class="num">04</span>
+          <h3>Családi</h3>
+          <span class="desc">Azok, akik körülvesznek</span>
+        </div>
       </a>
     </div>
   </div>
@@ -82,7 +111,7 @@
   <div class="wrap">
     <span class="script">örökre velünk marad</span>
     <h2>Készítsünk közösen valami maradandót.</h2>
-    <a href="/demok/arany-szandi-foto/kapcsolat" class="btn btn-solid" style="background:var(--gold);border-color:var(--gold);">Jelentkezz fotózásra</a>
+    <a href="/demok/arany-szandi-foto/kapcsolat" class="btn btn-gold">Jelentkezz fotózásra</a>
   </div>
 </section>
 
