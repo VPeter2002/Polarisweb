@@ -487,7 +487,7 @@ section{ padding:110px 0; }
   display:grid;
   grid-template-columns:minmax(0,0.9fr) minmax(0,1.1fr);
   gap:70px;
-  background:var(--paper);
+  background:var(--gold-soft);
 }
 .contact-info h2{ font-size:2.2rem; margin-bottom:20px; }
 .contact-info p{ color:var(--ink-soft); }
