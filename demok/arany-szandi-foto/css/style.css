@@ -225,6 +225,14 @@ nav.main-nav a:hover{ color:var(--gold); }
   background:var(--paper);
   opacity:0.6;
 }
+.oldal-kapcsolat .galleria-hero {
+    margin-bottom: 0;
+}
+
+.oldal-kapcsolat .tight-top {
+    margin-top: 0;
+}
+
 
 /* ---------- Buttons ---------- */
 .btn{
