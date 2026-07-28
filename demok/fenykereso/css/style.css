@@ -484,3 +484,184 @@ footer{ background:var(--ink); color:rgba(255,251,246,0.72); padding:56px 0 36px
 .photog-card[hidden]{ display:none; }
 
 body.nav-open{ overflow:hidden; }
+
+/* ==========================================================================
+   ELEVATION PASS -- interactivity, polish, micro-interactions (Opus 4.8)
+   Additive layer: refines the existing design language, does not replace it.
+   All motion is JS-gated (html.js-anim) and reduced-motion aware.
+   ========================================================================== */
+
+:root{
+  --ease-out:cubic-bezier(.2,.7,.2,1);
+  --ease-soft:cubic-bezier(.33,.9,.35,1);
+  --shadow-soft:0 20px 46px -28px rgba(42,31,34,0.45);
+  --shadow-lift:0 34px 64px -32px rgba(42,31,34,0.5);
+}
+
+/* ---- Reveal on scroll (staggered) ---- */
+html.js-anim [data-reveal]{
+  opacity:0;
+  transform:translateY(22px);
+  transition:opacity .75s var(--ease-out), transform .75s var(--ease-out);
+  transition-delay:var(--reveal-delay,0s);
+  will-change:opacity,transform;
+}
+html.js-anim [data-reveal].is-visible{ opacity:1; transform:none; }
+
+/* ---- Nav: animated underline ---- */
+nav.main-nav a{ position:relative; padding-bottom:3px; transition:color .25s ease; }
+nav.main-nav a::after{
+  content:""; position:absolute; left:0; bottom:0; height:1.5px; width:100%;
+  background:currentColor; transform:scaleX(0); transform-origin:left;
+  transition:transform .32s var(--ease-out); opacity:.85;
+}
+nav.main-nav a:hover::after,
+nav.main-nav a.active::after{ transform:scaleX(1); }
+
+/* ---- Buttons & links: subtle lift ---- */
+.btn{ transition:background .25s ease,color .25s ease,border-color .25s ease,box-shadow .3s ease,transform .25s var(--ease-out); }
+.btn:hover{ transform:translateY(-2px); }
+.btn:active{ transform:translateY(0); }
+.portfolio-link{ transition:color .2s ease; }
+.photog-card .portfolio-link::after{
+  content:" \2197"; display:inline-block; transition:transform .28s var(--ease-out);
+}
+.photog-card:hover .portfolio-link::after{ transform:translate(3px,-3px); }
+
+/* ---- Photographer cards: premium hover ---- */
+.photog-card{
+  transition:transform .38s var(--ease-out), box-shadow .38s var(--ease-out);
+  box-shadow:0 2px 0 rgba(42,31,34,0);
+}
+.photog-card:hover{ transform:translateY(-8px); box-shadow:var(--shadow-lift); }
+.photog-card .ph-cover{ transition:filter .4s ease; }
+.photog-card:hover .ph-cover{ filter:saturate(1.08) brightness(1.04); }
+.photog-card .ph-cover .ph-icon{ transition:transform .5s var(--ease-soft), opacity .4s ease; }
+.photog-card:hover .ph-cover .ph-icon{ transform:scale(1.08) translateY(-2px); opacity:.75; }
+/* sheen sweep across the cover on hover */
+.photog-card .ph-cover .ph-icon{ position:relative; z-index:2; }
+.photog-card .card-link .ph-cover::before{
+  content:"Profil megtekintése \2192";
+  position:absolute; left:0; right:0; bottom:0; z-index:3;
+  padding:14px 16px;
+  font-family:'Jost',sans-serif; font-weight:500;
+  font-size:0.78rem; letter-spacing:0.06em;
+  color:var(--paper);
+  background:linear-gradient(180deg, rgba(20,14,15,0) 0%, rgba(20,14,15,0.55) 100%);
+  opacity:0; transform:translateY(10px);
+  transition:opacity .35s ease, transform .4s var(--ease-out);
+  pointer-events:none;
+}
+.photog-card:hover .card-link .ph-cover::before{ opacity:1; transform:translateY(0); }
+
+/* idle micro-float of cover icons (very subtle, reduced-motion off) */
+@media (prefers-reduced-motion:no-preference){
+  html.js-anim .results-grid .ph-cover .ph-icon,
+  html.js-anim .photog-grid .ph-cover .ph-icon{
+    animation:iconFloat 7s var(--ease-soft) infinite;
+  }
+  html.js-anim .results-grid .photog-card:nth-child(3n) .ph-icon{ animation-delay:-2.3s; }
+  html.js-anim .results-grid .photog-card:nth-child(3n+1) .ph-icon{ animation-delay:-4.6s; }
+}
+@keyframes iconFloat{ 0%,100%{ transform:translateY(0);} 50%{ transform:translateY(-6px);} }
+
+/* card filter transitions */
+.photog-card{ --enter:0; }
+html.js-anim .photog-card.card-enter{ animation:cardIn .5s var(--ease-out) both; }
+@keyframes cardIn{ from{ opacity:0; transform:translateY(14px) scale(.985);} to{ opacity:1; transform:none;} }
+
+/* ---- Filter bar: refined, sticky, tactile ---- */
+.filter-bar select{
+  border-radius:100px; cursor:pointer;
+  transition:border-color .25s ease, box-shadow .25s ease, background .25s ease;
+  background-image:linear-gradient(45deg,transparent 50%,var(--ink-soft) 50%),linear-gradient(135deg,var(--ink-soft) 50%,transparent 50%);
+  background-position:calc(100% - 18px) 55%, calc(100% - 13px) 55%;
+  background-size:5px 5px,5px 5px; background-repeat:no-repeat;
+  padding-right:38px; appearance:none; -webkit-appearance:none;
+}
+.filter-bar select:hover{ border-color:var(--terracotta-soft); }
+.filter-bar select:focus-visible{ box-shadow:0 0 0 3px rgba(177,96,74,0.18); border-color:var(--terracotta); }
+.filter-chip{
+  border-radius:100px;
+  transition:background .28s var(--ease-out), color .28s ease, border-color .28s ease, transform .2s var(--ease-out);
+}
+.filter-chip:hover{ border-color:var(--terracotta-soft); color:var(--terracotta); transform:translateY(-1px); }
+.filter-chip.active{ background:var(--terracotta); border-color:var(--terracotta); color:var(--paper); }
+.filter-chip.active:hover{ color:var(--paper); }
+.results-count{ transition:opacity .2s ease; }
+.results-count .count-num{ font-variant-numeric:tabular-nums; font-weight:600; color:var(--ink); }
+
+/* sticky filter bar once scrolled into the results context */
+.page-header{ position:sticky; top:0; z-index:30; }
+
+/* ---- Tag pills: gentle hover ---- */
+.tag{ transition:border-color .25s ease, color .25s ease, background .25s ease; }
+
+/* ---- Pagination ---- */
+.pagination a{ border-radius:100px; transition:background .25s ease,color .25s ease,border-color .25s ease,transform .2s var(--ease-out); }
+.pagination a:hover{ border-color:var(--ink); transform:translateY(-2px); }
+.pagination a.active:hover{ color:var(--paper); }
+
+/* ---- Hero: entrance + living motif ---- */
+.hero-content .kicker,
+.hero-content h1,
+.hero-content p,
+.hero-content .search-bar{ opacity:1; }
+html.js-anim .hero-content .kicker,
+html.js-anim .hero-content h1,
+html.js-anim .hero-content p,
+html.js-anim .hero-content .search-bar{
+  opacity:0; animation:heroRise .9s var(--ease-out) forwards;
+}
+html.js-anim .hero-content .kicker{ animation-delay:.15s; }
+html.js-anim .hero-content h1{ animation-delay:.28s; }
+html.js-anim .hero-content p{ animation-delay:.46s; }
+html.js-anim .hero-content .search-bar{ animation-delay:.62s; }
+@keyframes heroRise{ from{ opacity:0; transform:translateY(26px);} to{ opacity:1; transform:none;} }
+
+@media (prefers-reduced-motion:no-preference){
+  html.js-anim .hero-rings{ animation:motifDrift 14s ease-in-out infinite; }
+}
+@keyframes motifDrift{
+  0%,100%{ transform:translateY(-50%) translateX(0) rotate(0); }
+  50%{ transform:translateY(-52%) translateX(-14px) rotate(-2deg); }
+}
+.hero-motif{ transition:opacity .6s ease; }
+
+/* scroll cue at bottom of hero */
+.hero .scroll-cue{
+  position:absolute; left:50%; bottom:28px; transform:translateX(-50%);
+  z-index:3; color:var(--paper); opacity:.6;
+  font-size:0.66rem; letter-spacing:0.22em; text-transform:uppercase;
+  display:flex; flex-direction:column; align-items:center; gap:8px;
+}
+.hero .scroll-cue span{ width:1px; height:34px; background:linear-gradient(var(--paper),transparent); }
+@media (prefers-reduced-motion:no-preference){
+  html.js-anim .hero .scroll-cue span{ animation:cueDrop 2.2s var(--ease-soft) infinite; transform-origin:top; }
+}
+@keyframes cueDrop{ 0%{ transform:scaleY(.2); opacity:0;} 40%{ opacity:.8;} 100%{ transform:scaleY(1); opacity:0;} }
+
+/* ---- Search bar: rounded, focus glow, tactile ---- */
+.search-bar{ border-radius:4px; overflow:hidden; transition:box-shadow .4s ease; }
+.search-bar:focus-within{ box-shadow:0 34px 70px -26px rgba(20,14,15,0.62); }
+.search-bar select{ transition:background .25s ease; cursor:pointer; }
+.search-bar select:hover{ background:var(--cream); }
+.search-bar .search-btn{ transition:background .3s ease, letter-spacing .3s ease; }
+.search-bar .search-btn:hover{ background:var(--ink); letter-spacing:0.12em; }
+
+/* ---- How-it-works steps: number accent on reveal ---- */
+.how-step .step-num{ transition:color .4s ease, transform .5s var(--ease-out); }
+.how-step:hover .step-num{ color:var(--terracotta); transform:translateY(-3px); }
+
+/* ---- Reduced motion: neutralize all added motion ---- */
+@media (prefers-reduced-motion:reduce){
+  html.js-anim [data-reveal]{ opacity:1 !important; transform:none !important; transition:none !important; }
+  html.js-anim .hero-content .kicker,
+  html.js-anim .hero-content h1,
+  html.js-anim .hero-content p,
+  html.js-anim .hero-content .search-bar{ opacity:1 !important; animation:none !important; }
+  html.js-anim .hero-rings,
+  html.js-anim .hero .scroll-cue span,
+  html.js-anim .ph-icon{ animation:none !important; }
+  .photog-card.card-enter{ animation:none !important; }
+}

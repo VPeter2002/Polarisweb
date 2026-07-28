@@ -56,7 +56,30 @@ document.addEventListener('DOMContentLoaded', function () {
     return values.indexOf(value) !== -1;
   }
 
-  function applyFilters() {
+  var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var lastCount = null;
+
+  function renderCount(n) {
+    if (!countEl) return;
+    var suffix = ' fotós található';
+    if (reduceMotion || lastCount === null || lastCount === n) {
+      countEl.innerHTML = '<span class="count-num">' + n + '</span>' + suffix;
+      lastCount = n;
+      return;
+    }
+    var from = lastCount, to = n, start = null, dur = 380;
+    function tick(ts) {
+      if (start === null) start = ts;
+      var p = Math.min((ts - start) / dur, 1);
+      var val = Math.round(from + (to - from) * (1 - Math.pow(1 - p, 3)));
+      countEl.innerHTML = '<span class="count-num">' + val + '</span>' + suffix;
+      if (p < 1) requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
+    lastCount = n;
+  }
+
+  function applyFilters(animate) {
     var mufaj = mufajSelect.value;
     var regio = regioSelect.value;
     var stilus = activeStilus();
@@ -67,28 +90,38 @@ document.addEventListener('DOMContentLoaded', function () {
         hasValue(card.dataset.mufaj, mufaj) &&
         (!regio || card.dataset.regio === regio) &&
         hasValue(card.dataset.stilus, stilus);
+      var wasHidden = card.hidden;
       card.hidden = !matches;
-      if (matches) visibleCount++;
+      if (matches) {
+        visibleCount++;
+        if (animate && !reduceMotion && wasHidden) {
+          card.classList.remove('card-enter');
+          // force reflow so the animation restarts
+          void card.offsetWidth;
+          card.classList.add('card-enter');
+        }
+      }
     });
 
-    if (countEl) {
-      countEl.textContent = visibleCount === 1 ? '1 fotós található' : visibleCount + ' fotós található';
-    }
+    renderCount(visibleCount);
     if (noResults) noResults.hidden = visibleCount !== 0;
-
     updateUrl(mufaj, regio, stilus);
   }
 
-  mufajSelect.addEventListener('change', applyFilters);
-  regioSelect.addEventListener('change', applyFilters);
+  cards.forEach(function (card) {
+    card.addEventListener('animationend', function () { card.classList.remove('card-enter'); });
+  });
+
+  mufajSelect.addEventListener('change', function () { applyFilters(true); });
+  regioSelect.addEventListener('change', function () { applyFilters(true); });
   chips.forEach(function (chip) {
     chip.addEventListener('click', function () {
       chips.forEach(function (c) { c.classList.remove('active'); });
       chip.classList.add('active');
-      applyFilters();
+      applyFilters(true);
     });
   });
 
   readQueryParams();
-  applyFilters();
+  applyFilters(false);
 });
