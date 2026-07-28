@@ -611,12 +611,13 @@ html.js-anim .hero-content .kicker,
 html.js-anim .hero-content h1,
 html.js-anim .hero-content p,
 html.js-anim .hero-content .search-bar{
-  opacity:0; animation:heroRise .9s var(--ease-out) forwards;
+  opacity:0; animation:heroRise .7s var(--ease-out) forwards;
 }
-html.js-anim .hero-content .kicker{ animation-delay:.15s; }
-html.js-anim .hero-content h1{ animation-delay:.28s; }
-html.js-anim .hero-content p{ animation-delay:.46s; }
-html.js-anim .hero-content .search-bar{ animation-delay:.62s; }
+html.js-anim .hero-content .kicker{ animation-delay:.08s; }
+html.js-anim .hero-content h1{ animation-delay:.16s; }
+html.js-anim .hero-content p{ animation-delay:.26s; }
+/* search bar is the primary action -- bring it in early so a fast searcher isn't delayed */
+html.js-anim .hero-content .search-bar{ animation-delay:.3s; }
 @keyframes heroRise{ from{ opacity:0; transform:translateY(26px);} to{ opacity:1; transform:none;} }
 
 @media (prefers-reduced-motion:no-preference){
