@@ -52,11 +52,43 @@
   .mobile-menu-inner{display:flex;flex-direction:column;gap:4px;padding:16px 18px 22px;}
   .mobile-menu a{display:block;padding:13px 16px;font-weight:500;font-size:15px;border-bottom:1px solid var(--line);}
 
+  .nav-dropdown{position:relative;}
+  .nav-dropdown > summary{list-style:none;cursor:pointer;position:relative;padding-bottom:3px;display:inline-flex;align-items:center;gap:5px;}
+  .nav-dropdown > summary::-webkit-details-marker{display:none;}
+  .nav-dropdown > summary::marker{content:"";}
+  .nav-dropdown > summary:hover{color:var(--forest);}
+  .nav-dropdown > summary:focus-visible{outline:2px solid var(--forest);outline-offset:4px;border-radius:2px;}
+  .nav-dropdown.active > summary{color:var(--forest);}
+  .nav-dropdown.active > summary::after{content:"";position:absolute;left:0;right:0;bottom:0;height:1px;background:var(--gold);}
+  .nav-dropdown .chevron{width:8px;height:8px;flex:none;transition:transform .25s ease;}
+  .nav-dropdown[open] > summary .chevron{transform:rotate(180deg);}
+  .nav-dropdown .dropdown-panel{position:absolute;top:100%;left:0;margin-top:16px;min-width:168px;background:var(--paper);border:1px solid var(--line);box-shadow:0 20px 38px rgba(32,40,31,0.16);padding:8px;display:flex;flex-direction:column;gap:2px;z-index:60;}
+  .nav-dropdown .dropdown-panel a{display:block;padding:10px 12px;border-radius:2px;font-size:13px;font-weight:500;}
+  .nav-dropdown .dropdown-panel a:hover{background:var(--paper-deep);color:var(--forest);}
+  .nav-dropdown .dropdown-panel a.active{color:var(--forest);font-weight:600;}
+  @media (prefers-reduced-motion:no-preference){
+    .nav-dropdown[open] .dropdown-panel{animation:navDropIn .22s ease both;}
+  }
+  @keyframes navDropIn{from{opacity:0;transform:translateY(-6px);}to{opacity:1;transform:none;}}
+
+  .mobile-dropdown{border-bottom:1px solid var(--line);}
+  .mobile-dropdown > summary{list-style:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;padding:13px 16px;font-weight:500;font-size:15px;}
+  .mobile-dropdown > summary::-webkit-details-marker{display:none;}
+  .mobile-dropdown > summary::marker{content:"";}
+  .mobile-dropdown > summary:focus-visible{outline:2px solid var(--forest);outline-offset:-2px;border-radius:2px;}
+  .mobile-dropdown.active > summary{color:var(--forest);}
+  .mobile-dropdown .chevron{width:10px;height:10px;flex:none;transition:transform .25s ease;}
+  .mobile-dropdown[open] > summary .chevron{transform:rotate(180deg);}
+  .mobile-dropdown .dropdown-panel{display:flex;flex-direction:column;padding:0 0 6px 14px;}
+  .mobile-dropdown .dropdown-panel a{padding:11px 16px;font-size:14px;color:var(--ink-soft);border-bottom:none;}
+  .mobile-dropdown .dropdown-panel a:hover,.mobile-dropdown .dropdown-panel a:active{color:var(--forest);}
+  .mobile-dropdown .dropdown-panel a.active{color:var(--forest);font-weight:600;}
+
   .page-hero{padding:64px 0 50px;text-align:center;}
   .page-hero h1{font-size:clamp(30px,4.6vw,44px);font-style:italic;font-weight:500;}
   .page-hero p{margin:16px auto 0;max-width:48ch;color:var(--ink-soft);font-size:15.5px;}
 
-  .menu-wrap{padding:10px 0 60px;}
+  .menu-wrap{padding-top:10px;padding-bottom:60px;}
   .menu-cat{margin-bottom:44px;}
   .menu-cat h2{font-size:22px;font-weight:600;font-style:italic;border-bottom:1px solid var(--line);padding-bottom:12px;margin-bottom:16px;}
   .menu-item{display:flex;align-items:baseline;gap:10px;padding:9px 0;flex-wrap:wrap;}
@@ -83,8 +115,14 @@
       <div class="word">Kertvárosi Kávézó</div>
     </div>
     <nav class="nav-links">
-      <a href="/demok/kertvarosi-kavezo/etlap" class="active">Kínálat</a>
-      <a href="/demok/kertvarosi-kavezo/programok">Programok</a>
+      <a href="/demok/kertvarosi-kavezo/#kinalat">Kínálat</a>
+      <details class="nav-dropdown active">
+        <summary>Szolgáltatás <svg class="chevron" viewBox="0 0 10 6" fill="none"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></summary>
+        <div class="dropdown-panel">
+          <a href="/demok/kertvarosi-kavezo/etlap" class="active">Étlap</a>
+          <a href="/demok/kertvarosi-kavezo/programok">Programok</a>
+        </div>
+      </details>
       <a href="/demok/kertvarosi-kavezo/#nyitvatartas">Nyitvatartás</a>
       <a href="/demok/kertvarosi-kavezo/#helyszin">Helyszín</a>
     </nav>
@@ -94,8 +132,14 @@
   </div>
   <nav class="mobile-menu" id="mobileMenu">
     <div class="mobile-menu-inner">
-      <a href="/demok/kertvarosi-kavezo/etlap">Kínálat</a>
-      <a href="/demok/kertvarosi-kavezo/programok">Programok</a>
+      <a href="/demok/kertvarosi-kavezo/#kinalat">Kínálat</a>
+      <details class="mobile-dropdown active">
+        <summary>Szolgáltatás <svg class="chevron" viewBox="0 0 10 6" fill="none"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></summary>
+        <div class="dropdown-panel">
+          <a href="/demok/kertvarosi-kavezo/etlap" class="active">Étlap</a>
+          <a href="/demok/kertvarosi-kavezo/programok">Programok</a>
+        </div>
+      </details>
       <a href="/demok/kertvarosi-kavezo/#nyitvatartas">Nyitvatartás</a>
       <a href="/demok/kertvarosi-kavezo/#helyszin">Helyszín</a>
     </div>
@@ -163,6 +207,26 @@
       navToggle.setAttribute('aria-expanded', 'false');
     });
   });
+
+  var navDropdowns = document.querySelectorAll('.nav-dropdown');
+  navDropdowns.forEach(function(dd){
+    dd.addEventListener('toggle', function(){
+      if(dd.open){
+        navDropdowns.forEach(function(other){ if(other !== dd) other.open = false; });
+      }
+    });
+  });
+  document.addEventListener('click', function(e){
+    navDropdowns.forEach(function(dd){
+      if(dd.open && !dd.contains(e.target)) dd.open = false;
+    });
+  });
+  document.addEventListener('keydown', function(e){
+    if(e.key === 'Escape'){
+      navDropdowns.forEach(function(dd){ dd.open = false; });
+    }
+  });
+
   var revealEls = document.querySelectorAll('.reveal');
   var io = new IntersectionObserver(function(entries){
     entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
