@@ -256,6 +256,38 @@
         <a class="btn btn-outline" href="mailto:balogh.mark83@gmail.com">balogh.mark83@gmail.com</a>
       </div>
     </div>
+    <form class="contact-form" style="max-width:720px;margin:28px auto 0;">
+      <div class="form-row">
+        <div class="form-field">
+          <label for="cf-name-home">Név</label>
+          <input type="text" id="cf-name-home" name="name" placeholder="Az Ön neve">
+        </div>
+        <div class="form-field">
+          <label for="cf-phone-home">Telefon</label>
+          <input type="tel" id="cf-phone-home" name="phone" placeholder="+36 ...">
+        </div>
+      </div>
+      <div class="form-field">
+        <label for="cf-service-home">Szolgáltatás</label>
+        <select id="cf-service-home" name="service">
+          <option value="Új hálózat kiépítése">Új hálózat kiépítése</option>
+          <option value="Rendszer-korszerűsítés">Rendszer-korszerűsítés</option>
+          <option value="Karbantartás">Karbantartás</option>
+          <option value="Hibaelhárítás">Hibaelhárítás</option>
+          <option value="Kamerarendszer telepítés">Kamerarendszer telepítés</option>
+          <option value="Riasztórendszer beszerelés">Riasztórendszer beszerelés</option>
+          <option value="Egyéb">Egyéb</option>
+        </select>
+      </div>
+      <div class="form-field">
+        <label for="cf-message-home">Üzenet</label>
+        <textarea id="cf-message-home" name="message" placeholder="Röviden írja le, mire van szüksége, és mikor lenne ráérő."></textarea>
+      </div>
+      <div class="form-submit-row">
+        <button type="submit" class="btn btn-copper">Ajánlatkérés küldése</button>
+        <span class="form-hint">Vagy hívjon közvetlenül: <a href="tel:+36704331928" style="color:var(--copper-dark);font-weight:700;">+36 70 433 1928</a></span>
+      </div>
+    </form>
   </div>
 </section>
 
@@ -293,5 +325,6 @@
 </footer>
 
 <script src="/demok/balogh-mark-villany/js/nav.js"></script>
+<script src="/demok/balogh-mark-villany/js/contact-form.js"></script>
 </body>
 </html>
