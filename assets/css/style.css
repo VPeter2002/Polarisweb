@@ -1263,3 +1263,32 @@ a, button, span, div, input, [onclick] {
   .blob-small { width: 150px; height: 150px; }
   .footer-cols { grid-template-columns: 1fr; }
 }
+
+/* Portfolio tile additions: real-work vs. concept-sample distinction + tech-stack chip.
+   Illeszd .pf-tile es a hozza tartozo szabalyok ALA (assets/css/style.css kb. 817. sor utan),
+   meglevo osztalyt sehol nem ir felul, csak kiegesziti oket. -- Irisz, 2026-08-01 */
+
+.pf-tile { text-decoration: none; }
+.pf-tile .cover img { width: 100%; height: 100%; object-fit: cover; object-position: left top; display: block; }
+
+.pf-tile .cat.cat-live { color: var(--ink); font-weight: 700; }
+
+.tag.tag-stack {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-weight: 500;
+  color: #fff;
+  background: var(--ink);
+  border-color: var(--ink);
+}
+
+.pf-tile .challenge {
+  margin-top: 4px;
+  padding-top: 14px;
+  border-top: 1px dashed var(--border);
+  font-size: 13.5px;
+  line-height: 1.55;
+  color: var(--ink-2);
+  font-style: italic;
+}
+
+.pf-tile .challenge b { font-style: normal; color: var(--accent-strong); }
