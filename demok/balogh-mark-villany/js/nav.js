@@ -54,4 +54,15 @@ document.addEventListener('DOMContentLoaded', function () {
     }, { threshold: 0.12 });
     revealEls.forEach(function (el) { io.observe(el); });
   }
+
+  var logo = document.getElementById('brandLogo');
+  if (logo) {
+    var spin = function () {
+      logo.classList.remove('logo-spin');
+      void logo.offsetWidth;
+      logo.classList.add('logo-spin');
+    };
+    window.setTimeout(spin, 350);
+    logo.addEventListener('mouseenter', spin);
+  }
 });
