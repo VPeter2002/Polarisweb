@@ -84,29 +84,256 @@
   <div class="wrap">
     <span class="kicker on-dark">Referenciák</span>
     <h1>Munkák, díjak, értékelések.</h1>
-    <p class="lede">Amit nem lehet elmondani, csak megmutatni, és amit mások mondtak el helyettünk.</p>
+    <p class="lede">Amit nem lehet elmondani, csak megmutatni, és amit mások mondtak el helyettem.</p>
   </div>
 </section>
 
-<section>
+<section id="galeria">
   <div class="wrap">
-    <div class="section-head">
+    <div class="section-head gal-head">
       <span class="kicker">Munkafotók</span>
-      <h2>Amit eddig megcsinált.</h2>
+      <h2>Amit eddig megcsináltam.</h2>
+      <p class="lede">36 saját fotó a munkáimról, a falba fektetett védőcsőtől a kész, rejtett világításig. Szűrhet kategóriára, vagy végignézheti az egészet.</p>
     </div>
-    <div class="gallery-feature">
-      <img src="/demok/balogh-mark-villany/img/work-02.jpg" alt="Folyosó lineáris LED-világítással, fal és mennyezet mentén">
+    <div class="gal-filters" id="galFilters" role="group" aria-label="Galéria szűrése kategóriára">
+        <button type="button" class="gal-chip is-active" data-cat="mind" aria-pressed="true">Mind <span>36</span></button>
+        <button type="button" class="gal-chip" data-cat="vilagitas" aria-pressed="false">Világítás, LED <span>10</span></button>
+        <button type="button" class="gal-chip" data-cat="kiepites" aria-pressed="false">Kiépítés, vezetékezés <span>15</span></button>
+        <button type="button" class="gal-chip" data-cat="szekreny" aria-pressed="false">Kapcsolószekrény <span>3</span></button>
+        <button type="button" class="gal-chip" data-cat="kazan" aria-pressed="false">Gázkazán, bojler <span>4</span></button>
+        <button type="button" class="gal-chip" data-cat="merohely" aria-pressed="false">Mérőhely, bekötés <span>2</span></button>
+        <button type="button" class="gal-chip" data-cat="auto" aria-pressed="false">Munkaautó <span>2</span></button>
     </div>
-    <div class="gallery-grid cols-3">
-      <div class="gallery-tile"><img src="/demok/balogh-mark-villany/img/work-08.jpg" alt="Fürdőszoba mennyezeti LED-fényprofil és szabadonálló kád"><span class="gt-cap">Fürdőszobai LED</span></div>
-      <div class="gallery-tile"><img src="/demok/balogh-mark-villany/img/work-09.jpg" alt="Háttérvilágított díszfal hálószobában"><span class="gt-cap">Háttérvilágított díszfal</span></div>
-      <div class="gallery-tile"><img src="/demok/balogh-mark-villany/img/work-01.jpg" alt="Beépített bútor alatti LED-szalag"><span class="gt-cap">LED-szalag</span></div>
-      <div class="gallery-tile"><img src="/demok/balogh-mark-villany/img/work-07.jpg" alt="Sűrűn bekötött elosztószekrény"><span class="gt-cap">Elosztószekrény</span></div>
-      <div class="gallery-tile"><img src="/demok/balogh-mark-villany/img/work-06.jpg" alt="Vezetékköteg falüregből, vakolás előtt"><span class="gt-cap">Vezetékezés</span></div>
-      <div class="gallery-tile"><img src="/demok/balogh-mark-villany/img/work-05.jpg" alt="Lézeres szintezés munka közben"><span class="gt-cap">Lézeres szintezés</span></div>
+    <div class="gal-masonry" id="galGrid">
+        <figure class="gal-item" data-cat="vilagitas">
+          <button type="button" class="gal-open" aria-label="Folyosó rejtett LED-vonallal megnyitása nagyban">
+            <img src="/demok/balogh-mark-villany/img/galeria/01-t.jpg" width="640" height="853" alt="Folyosó rejtett LED-vonallal, Balogh Márk munkája" loading="lazy" decoding="async">
+          </button>
+          <figcaption>Folyosó rejtett LED-vonallal</figcaption>
+        </figure>
+        <figure class="gal-item" data-cat="kazan">
+          <button type="button" class="gal-open" aria-label="Gázkazán vezérléssel bekötve megnyitása nagyban">
+            <img src="/demok/balogh-mark-villany/img/galeria/02-t.jpg" width="640" height="853" alt="Gázkazán vezérléssel bekötve, Balogh Márk munkája" loading="lazy" decoding="async">
+          </button>
+          <figcaption>Gázkazán vezérléssel bekötve</figcaption>
+        </figure>
+        <figure class="gal-item" data-cat="vilagitas">
+          <button type="button" class="gal-open" aria-label="Folyosó spotvilágítással megnyitása nagyban">
+            <img src="/demok/balogh-mark-villany/img/galeria/03-t.jpg" width="640" height="853" alt="Folyosó spotvilágítással, Balogh Márk munkája" loading="lazy" decoding="async">
+          </button>
+          <figcaption>Folyosó spotvilágítással</figcaption>
+        </figure>
+        <figure class="gal-item" data-cat="kiepites">
+          <button type="button" class="gal-open" aria-label="Felújítás alatti szoba vezetékezése megnyitása nagyban">
+            <img src="/demok/balogh-mark-villany/img/galeria/04-t.jpg" width="640" height="480" alt="Felújítás alatti szoba vezetékezése, Balogh Márk munkája" loading="lazy" decoding="async">
+          </button>
+          <figcaption>Felújítás alatti szoba vezetékezése</figcaption>
+        </figure>
+        <figure class="gal-item" data-cat="kazan">
+          <button type="button" class="gal-open" aria-label="Elhasználódott bojler fűtőbetét megnyitása nagyban">
+            <img src="/demok/balogh-mark-villany/img/galeria/05-t.jpg" width="640" height="853" alt="Elhasználódott bojler fűtőbetét, Balogh Márk munkája" loading="lazy" decoding="async">
+          </button>
+          <figcaption>Elhasználódott bojler fűtőbetét</figcaption>
+        </figure>
+        <figure class="gal-item" data-cat="kiepites">
+          <button type="button" class="gal-open" aria-label="Új hálózat kiépítése megnyitása nagyban">
+            <img src="/demok/balogh-mark-villany/img/galeria/06-t.jpg" width="640" height="853" alt="Új hálózat kiépítése, Balogh Márk munkája" loading="lazy" decoding="async">
+          </button>
+          <figcaption>Új hálózat kiépítése</figcaption>
+        </figure>
+        <figure class="gal-item" data-cat="kiepites">
+          <button type="button" class="gal-open" aria-label="Szerelvénydobozok vakolás előtt megnyitása nagyban">
+            <img src="/demok/balogh-mark-villany/img/galeria/07-t.jpg" width="640" height="480" alt="Szerelvénydobozok vakolás előtt, Balogh Márk munkája" loading="lazy" decoding="async">
+          </button>
+          <figcaption>Szerelvénydobozok vakolás előtt</figcaption>
+        </figure>
+        <figure class="gal-item" data-cat="vilagitas">
+          <button type="button" class="gal-open" aria-label="Nappali lineáris LED-világítással megnyitása nagyban">
+            <img src="/demok/balogh-mark-villany/img/galeria/08-t.jpg" width="640" height="444" alt="Nappali lineáris LED-világítással, Balogh Márk munkája" loading="lazy" decoding="async">
+          </button>
+          <figcaption>Nappali lineáris LED-világítással</figcaption>
+        </figure>
+        <figure class="gal-item" data-cat="vilagitas">
+          <button type="button" class="gal-open" aria-label="Folyosói spotsor megnyitása nagyban">
+            <img src="/demok/balogh-mark-villany/img/galeria/09-t.jpg" width="640" height="853" alt="Folyosói spotsor, Balogh Márk munkája" loading="lazy" decoding="async">
+          </button>
+          <figcaption>Folyosói spotsor</figcaption>
+        </figure>
+        <figure class="gal-item" data-cat="auto">
+          <button type="button" class="gal-open" aria-label="A munkaautó cégtáblával megnyitása nagyban">
+            <img src="/demok/balogh-mark-villany/img/galeria/10-t.jpg" width="640" height="853" alt="A munkaautó cégtáblával, Balogh Márk munkája" loading="lazy" decoding="async">
+          </button>
+          <figcaption>A munkaautó cégtáblával</figcaption>
+        </figure>
+        <figure class="gal-item" data-cat="szekreny">
+          <button type="button" class="gal-open" aria-label="Bekötött kapcsolószekrény megnyitása nagyban">
+            <img src="/demok/balogh-mark-villany/img/galeria/11-t.jpg" width="640" height="853" alt="Bekötött kapcsolószekrény, Balogh Márk munkája" loading="lazy" decoding="async">
+          </button>
+          <figcaption>Bekötött kapcsolószekrény</figcaption>
+        </figure>
+        <figure class="gal-item" data-cat="kiepites">
+          <button type="button" class="gal-open" aria-label="Vezetékezés régi épületben megnyitása nagyban">
+            <img src="/demok/balogh-mark-villany/img/galeria/12-t.jpg" width="640" height="853" alt="Vezetékezés régi épületben, Balogh Márk munkája" loading="lazy" decoding="async">
+          </button>
+          <figcaption>Vezetékezés régi épületben</figcaption>
+        </figure>
+        <figure class="gal-item" data-cat="vilagitas">
+          <button type="button" class="gal-open" aria-label="Ipari tér világítása megnyitása nagyban">
+            <img src="/demok/balogh-mark-villany/img/galeria/13-t.jpg" width="640" height="853" alt="Ipari tér világítása, Balogh Márk munkája" loading="lazy" decoding="async">
+          </button>
+          <figcaption>Ipari tér világítása</figcaption>
+        </figure>
+        <figure class="gal-item" data-cat="kazan">
+          <button type="button" class="gal-open" aria-label="Bojler belseje tisztítás előtt megnyitása nagyban">
+            <img src="/demok/balogh-mark-villany/img/galeria/14-t.jpg" width="640" height="853" alt="Bojler belseje tisztítás előtt, Balogh Márk munkája" loading="lazy" decoding="async">
+          </button>
+          <figcaption>Bojler belseje tisztítás előtt</figcaption>
+        </figure>
+        <figure class="gal-item" data-cat="kiepites">
+          <button type="button" class="gal-open" aria-label="Kábelköteg az elosztóhoz megnyitása nagyban">
+            <img src="/demok/balogh-mark-villany/img/galeria/15-t.jpg" width="640" height="480" alt="Kábelköteg az elosztóhoz, Balogh Márk munkája" loading="lazy" decoding="async">
+          </button>
+          <figcaption>Kábelköteg az elosztóhoz</figcaption>
+        </figure>
+        <figure class="gal-item" data-cat="vilagitas">
+          <button type="button" class="gal-open" aria-label="Beépített bútor LED-világítása megnyitása nagyban">
+            <img src="/demok/balogh-mark-villany/img/galeria/16-t.jpg" width="640" height="789" alt="Beépített bútor LED-világítása, Balogh Márk munkája" loading="lazy" decoding="async">
+          </button>
+          <figcaption>Beépített bútor LED-világítása</figcaption>
+        </figure>
+        <figure class="gal-item" data-cat="auto">
+          <button type="button" class="gal-open" aria-label="Munkaautó, indulás előtt megnyitása nagyban">
+            <img src="/demok/balogh-mark-villany/img/galeria/17-t.jpg" width="640" height="480" alt="Munkaautó, indulás előtt, Balogh Márk munkája" loading="lazy" decoding="async">
+          </button>
+          <figcaption>Munkaautó, indulás előtt</figcaption>
+        </figure>
+        <figure class="gal-item" data-cat="vilagitas">
+          <button type="button" class="gal-open" aria-label="Konyhapult LED-szalaggal megnyitása nagyban">
+            <img src="/demok/balogh-mark-villany/img/galeria/18-t.jpg" width="640" height="444" alt="Konyhapult LED-szalaggal, Balogh Márk munkája" loading="lazy" decoding="async">
+          </button>
+          <figcaption>Konyhapult LED-szalaggal</figcaption>
+        </figure>
+        <figure class="gal-item" data-cat="kiepites">
+          <button type="button" class="gal-open" aria-label="Régi bekötés kiváltása megnyitása nagyban">
+            <img src="/demok/balogh-mark-villany/img/galeria/19-t.jpg" width="640" height="853" alt="Régi bekötés kiváltása, Balogh Márk munkája" loading="lazy" decoding="async">
+          </button>
+          <figcaption>Régi bekötés kiváltása</figcaption>
+        </figure>
+        <figure class="gal-item" data-cat="vilagitas">
+          <button type="button" class="gal-open" aria-label="Konyha és nappali világítása megnyitása nagyban">
+            <img src="/demok/balogh-mark-villany/img/galeria/20-t.jpg" width="640" height="789" alt="Konyha és nappali világítása, Balogh Márk munkája" loading="lazy" decoding="async">
+          </button>
+          <figcaption>Konyha és nappali világítása</figcaption>
+        </figure>
+        <figure class="gal-item" data-cat="szekreny">
+          <button type="button" class="gal-open" aria-label="Elosztószekrény szerelés közben megnyitása nagyban">
+            <img src="/demok/balogh-mark-villany/img/galeria/21-t.jpg" width="640" height="853" alt="Elosztószekrény szerelés közben, Balogh Márk munkája" loading="lazy" decoding="async">
+          </button>
+          <figcaption>Elosztószekrény szerelés közben</figcaption>
+        </figure>
+        <figure class="gal-item" data-cat="kiepites">
+          <button type="button" class="gal-open" aria-label="Tetőtéri vezetékezés megnyitása nagyban">
+            <img src="/demok/balogh-mark-villany/img/galeria/22-t.jpg" width="640" height="853" alt="Tetőtéri vezetékezés, Balogh Márk munkája" loading="lazy" decoding="async">
+          </button>
+          <figcaption>Tetőtéri vezetékezés</figcaption>
+        </figure>
+        <figure class="gal-item" data-cat="kiepites">
+          <button type="button" class="gal-open" aria-label="Padlóban futó védőcsövek megnyitása nagyban">
+            <img src="/demok/balogh-mark-villany/img/galeria/23-t.jpg" width="640" height="853" alt="Padlóban futó védőcsövek, Balogh Márk munkája" loading="lazy" decoding="async">
+          </button>
+          <figcaption>Padlóban futó védőcsövek</figcaption>
+        </figure>
+        <figure class="gal-item" data-cat="merohely">
+          <button type="button" class="gal-open" aria-label="Külső mérőhely megnyitása nagyban">
+            <img src="/demok/balogh-mark-villany/img/galeria/24-t.jpg" width="640" height="853" alt="Külső mérőhely, Balogh Márk munkája" loading="lazy" decoding="async">
+          </button>
+          <figcaption>Külső mérőhely</figcaption>
+        </figure>
+        <figure class="gal-item" data-cat="kiepites">
+          <button type="button" class="gal-open" aria-label="Falhoronyba fektetett vezetékek megnyitása nagyban">
+            <img src="/demok/balogh-mark-villany/img/galeria/25-t.jpg" width="640" height="480" alt="Falhoronyba fektetett vezetékek, Balogh Márk munkája" loading="lazy" decoding="async">
+          </button>
+          <figcaption>Falhoronyba fektetett vezetékek</figcaption>
+        </figure>
+        <figure class="gal-item" data-cat="kiepites">
+          <button type="button" class="gal-open" aria-label="Tetőtér-beépítés villanyszerelése megnyitása nagyban">
+            <img src="/demok/balogh-mark-villany/img/galeria/26-t.jpg" width="640" height="480" alt="Tetőtér-beépítés villanyszerelése, Balogh Márk munkája" loading="lazy" decoding="async">
+          </button>
+          <figcaption>Tetőtér-beépítés villanyszerelése</figcaption>
+        </figure>
+        <figure class="gal-item" data-cat="szekreny">
+          <button type="button" class="gal-open" aria-label="Több soros kapcsolószekrény megnyitása nagyban">
+            <img src="/demok/balogh-mark-villany/img/galeria/27-t.jpg" width="640" height="853" alt="Több soros kapcsolószekrény, Balogh Márk munkája" loading="lazy" decoding="async">
+          </button>
+          <figcaption>Több soros kapcsolószekrény</figcaption>
+        </figure>
+        <figure class="gal-item" data-cat="vilagitas">
+          <button type="button" class="gal-open" aria-label="Háttérvilágított díszfal megnyitása nagyban">
+            <img src="/demok/balogh-mark-villany/img/galeria/28-t.jpg" width="640" height="853" alt="Háttérvilágított díszfal, Balogh Márk munkája" loading="lazy" decoding="async">
+          </button>
+          <figcaption>Háttérvilágított díszfal</figcaption>
+        </figure>
+        <figure class="gal-item" data-cat="merohely">
+          <button type="button" class="gal-open" aria-label="Kültéri mérő- és vezérlődoboz megnyitása nagyban">
+            <img src="/demok/balogh-mark-villany/img/galeria/29-t.jpg" width="640" height="853" alt="Kültéri mérő- és vezérlődoboz, Balogh Márk munkája" loading="lazy" decoding="async">
+          </button>
+          <figcaption>Kültéri mérő- és vezérlődoboz</figcaption>
+        </figure>
+        <figure class="gal-item" data-cat="kiepites">
+          <button type="button" class="gal-open" aria-label="Kültéri kötődoboz kőfalon megnyitása nagyban">
+            <img src="/demok/balogh-mark-villany/img/galeria/30-t.jpg" width="640" height="853" alt="Kültéri kötődoboz kőfalon, Balogh Márk munkája" loading="lazy" decoding="async">
+          </button>
+          <figcaption>Kültéri kötődoboz kőfalon</figcaption>
+        </figure>
+        <figure class="gal-item" data-cat="kiepites">
+          <button type="button" class="gal-open" aria-label="Védőcsövek aljzatbetonozás előtt megnyitása nagyban">
+            <img src="/demok/balogh-mark-villany/img/galeria/31-t.jpg" width="640" height="853" alt="Védőcsövek aljzatbetonozás előtt, Balogh Márk munkája" loading="lazy" decoding="async">
+          </button>
+          <figcaption>Védőcsövek aljzatbetonozás előtt</figcaption>
+        </figure>
+        <figure class="gal-item" data-cat="kiepites">
+          <button type="button" class="gal-open" aria-label="Falon kívüli szerelés kőfalon megnyitása nagyban">
+            <img src="/demok/balogh-mark-villany/img/galeria/32-t.jpg" width="640" height="853" alt="Falon kívüli szerelés kőfalon, Balogh Márk munkája" loading="lazy" decoding="async">
+          </button>
+          <figcaption>Falon kívüli szerelés kőfalon</figcaption>
+        </figure>
+        <figure class="gal-item" data-cat="kazan">
+          <button type="button" class="gal-open" aria-label="Gázkazán és vezérlés bekötve megnyitása nagyban">
+            <img src="/demok/balogh-mark-villany/img/galeria/33-t.jpg" width="640" height="853" alt="Gázkazán és vezérlés bekötve, Balogh Márk munkája" loading="lazy" decoding="async">
+          </button>
+          <figcaption>Gázkazán és vezérlés bekötve</figcaption>
+        </figure>
+        <figure class="gal-item" data-cat="vilagitas">
+          <button type="button" class="gal-open" aria-label="Fürdőszoba rejtett LED-világítással megnyitása nagyban">
+            <img src="/demok/balogh-mark-villany/img/galeria/34-t.jpg" width="640" height="853" alt="Fürdőszoba rejtett LED-világítással, Balogh Márk munkája" loading="lazy" decoding="async">
+          </button>
+          <figcaption>Fürdőszoba rejtett LED-világítással</figcaption>
+        </figure>
+        <figure class="gal-item" data-cat="kiepites">
+          <button type="button" class="gal-open" aria-label="Védőcsövek az elosztó felé megnyitása nagyban">
+            <img src="/demok/balogh-mark-villany/img/galeria/35-t.jpg" width="640" height="853" alt="Védőcsövek az elosztó felé, Balogh Márk munkája" loading="lazy" decoding="async">
+          </button>
+          <figcaption>Védőcsövek az elosztó felé</figcaption>
+        </figure>
+        <figure class="gal-item" data-cat="kiepites">
+          <button type="button" class="gal-open" aria-label="Fali szerelvény és rejtett világítás megnyitása nagyban">
+            <img src="/demok/balogh-mark-villany/img/galeria/36-t.jpg" width="640" height="853" alt="Fali szerelvény és rejtett világítás, Balogh Márk munkája" loading="lazy" decoding="async">
+          </button>
+          <figcaption>Fali szerelvény és rejtett világítás</figcaption>
+        </figure>
     </div>
   </div>
 </section>
+
+<div class="lightbox" id="lightbox" hidden role="dialog" aria-modal="true" aria-label="Nagyított munkafotó">
+  <button type="button" class="lb-btn lb-close" id="lbClose" aria-label="Bezárás">&times;</button>
+  <button type="button" class="lb-btn lb-prev" id="lbPrev" aria-label="Előző kép">&#8249;</button>
+  <figure class="lb-figure">
+    <img class="lb-img" id="lbImg" src="" alt="">
+    <figcaption class="lb-cap"><span id="lbCap"></span><span class="lb-count" id="lbCount"></span></figcaption>
+  </figure>
+  <button type="button" class="lb-btn lb-next" id="lbNext" aria-label="Következő kép">&#8250;</button>
+</div>
 
 <section class="section-alt">
   <div class="wrap">
@@ -167,7 +394,7 @@
     <div class="cta-band">
       <span class="kicker on-dark">Ajánlatkérés</span>
       <h2>Hívja, vagy írjon emailt, a részleteket egyeztetjük.</h2>
-      <p>Mondja el, mire van szüksége, és Balogh Márk visszajelez az időponttal.</p>
+      <p>Mondja el, mire van szüksége, és visszajelzek az időponttal.</p>
       <div class="hero-cta">
         <a class="btn btn-copper" href="tel:+36704331928">+36 70 433 1928</a>
         <a class="btn btn-outline" href="mailto:balogh.mark83@gmail.com">balogh.mark83@gmail.com</a>
@@ -180,8 +407,14 @@
   <div class="wrap">
     <div class="footer-grid">
       <div class="footer-brand">
-        <img src="/demok/balogh-mark-villany/img/logo-bm.png" alt="Balogh Márk E.V">
-        <span class="name">Balogh Márk E.V</span>
+        <div class="fb-row">
+          <img src="/demok/balogh-mark-villany/img/logo-bm.png" alt="Balogh Márk E.V">
+          <span class="name">Balogh Márk E.V</span>
+        </div>
+        <a class="footer-social" href="https://www.facebook.com/share/19QGBbtybX/" target="_blank" rel="noopener" aria-label="Balogh Márk E.V a Facebookon">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15.1 8.5h-1.6c-.5 0-1 .4-1 1v1.7h2.5l-.4 2.5h-2.1V21h-2.6v-7.3H8v-2.5h1.9V9.2c0-2.1 1.3-3.7 3.4-3.7h1.8v3z"/></svg>
+          <span>Facebook</span>
+        </a>
       </div>
       <div class="footer-col">
         <strong>Oldal</strong>
@@ -211,5 +444,6 @@
 </footer>
 
 <script src="/demok/balogh-mark-villany/js/nav.js"></script>
+<script src="/demok/balogh-mark-villany/js/gallery.js"></script>
 </body>
 </html>
