@@ -1,31 +1,77 @@
 document.addEventListener('DOMContentLoaded', function () {
+  var CLIENT = 'balogh-mark-villany';
+  var ENDPOINT = 'https://www.polarisweb.hu/api/send-client-lead';
+
   var forms = document.querySelectorAll('.contact-form');
 
   forms.forEach(function (form) {
+    var btn = form.querySelector('button[type="submit"]');
+    var btnText = btn ? btn.textContent : '';
+    var note = document.createElement('p');
+    note.className = 'form-note';
+    note.setAttribute('role', 'status');
+    note.hidden = true;
+    if (btn && btn.parentNode) btn.parentNode.appendChild(note);
+
+    function say(text, kind) {
+      note.textContent = text;
+      note.className = 'form-note ' + (kind || '');
+      note.hidden = false;
+    }
+
+    /* Ha a kuldes barmiert nem megy (halozat, lejart API-kulcs, kikapcsolt
+       funkcio), a beirt szoveg NE vesszen el: megnyitjuk a levelezot ugyanazzal
+       a tartalommal. Ez volt az eredeti viselkedes, most tartalek szerepben. */
+    function mailtoFallback(data) {
+      var body = [
+        'Név: ' + (data.name || '-'),
+        'Telefon: ' + (data.phone || '-'),
+        'Szolgáltatás: ' + data.service,
+        '',
+        'Üzenet:',
+        data.message || '-'
+      ].join('\n');
+      window.location.href = 'mailto:balogh.mark83@gmail.com'
+        + '?subject=' + encodeURIComponent('Ajánlatkérés: ' + data.service)
+        + '&body=' + encodeURIComponent(body);
+    }
+
     form.addEventListener('submit', function (e) {
       e.preventDefault();
 
-      var name = form.elements['name'].value.trim();
-      var phone = form.elements['phone'].value.trim();
-      var service = form.elements['service'].value;
-      var message = form.elements['message'].value.trim();
+      var data = {
+        client: CLIENT,
+        name: form.elements['name'].value.trim(),
+        phone: form.elements['phone'].value.trim(),
+        service: form.elements['service'].value,
+        message: form.elements['message'].value.trim()
+      };
 
-      var subject = 'Ajánlatkérés: ' + service;
-      var bodyLines = [
-        'Név: ' + (name || '-'),
-        'Telefon: ' + (phone || '-'),
-        'Szolgáltatás: ' + service,
-        '',
-        'Üzenet:',
-        message || '-'
-      ];
-      var body = bodyLines.join('\n');
+      if (!data.name) { say('Kérem, adja meg a nevét.', 'is-error'); return; }
+      if (!data.phone) { say('Kérem, adjon meg egy telefonszámot, hogy vissza tudjak jelezni.', 'is-error'); return; }
 
-      var mailto = 'mailto:balogh.mark83@gmail.com'
-        + '?subject=' + encodeURIComponent(subject)
-        + '&body=' + encodeURIComponent(body);
+      if (btn) { btn.disabled = true; btn.textContent = 'Küldés...'; }
+      say('Küldés folyamatban...', '');
 
-      window.location.href = mailto;
+      fetch(ENDPOINT, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      })
+        .then(function (res) { return res.json().then(function (j) { return { ok: res.ok, body: j }; }); })
+        .then(function (r) {
+          if (!r.ok) throw new Error((r.body && r.body.error) || 'send failed');
+          form.reset();
+          say('Köszönöm, megkaptam. Hamarosan visszajelzek.', 'is-ok');
+        })
+        .catch(function (err) {
+          console.error('lead submit failed:', err);
+          say('A küldés most nem sikerült, ezért megnyitom a levelezőjét a beírt szöveggel.', 'is-error');
+          mailtoFallback(data);
+        })
+        .finally(function () {
+          if (btn) { btn.disabled = false; btn.textContent = btnText; }
+        });
     });
   });
 });
