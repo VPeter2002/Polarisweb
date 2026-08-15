@@ -15,16 +15,8 @@ const { leadEmail, autoReply } = require('./_lib/client-templates');
  */
 const CLIENTS = {
   'balogh-mark-villany': {
-    // !!! IDEIGLENES ATIRANYITAS, 2026-08-15, Peti kerte !!!
-    // Amig o teszteli az urlapot, Mark NE kapjon leveleket. Ezert a lead
-    // atmenetileg Peti sajat cimere megy. A latogato szamara semmi nem valtozik.
-    //
-    // ELESITES ELOTT VISSZA KELL ALLITANI erre:
-    //   to: 'balogh.mark83@gmail.com',
-    // Ha ez elmarad, Mark oldala el, de EGYETLEN ajanlatkerest sem kap meg,
-    // es ezt semmi nem jelzi. Rajta van a domain-elesites kartyan (8e5aab51).
-    to: 'Peter.veszpremi@polarisweb.hu',
-    label: 'Balogh Márk E.V (TESZT MOD, atiranyitva)',
+    to: 'balogh.mark83@gmail.com',
+    label: 'Balogh Márk E.V',
     brand: {
       name: 'Balogh Márk E.V',
       monogram: 'BM',
