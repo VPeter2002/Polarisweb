@@ -1,4 +1,5 @@
-const { escapeHtml, isValidEmail, sendEmail } = require('./_lib/mailer');
+const { isValidEmail, sendEmail } = require('./_lib/mailer');
+const { leadEmail, autoReply } = require('./_lib/client-templates');
 
 /**
  * Ugyfel-oldalak ajanlatkero urlapja.
@@ -24,6 +25,23 @@ const CLIENTS = {
     // es ezt semmi nem jelzi. Rajta van a domain-elesites kartyan (8e5aab51).
     to: 'Peter.veszpremi@polarisweb.hu',
     label: 'Balogh Márk E.V (TESZT MOD, atiranyitva)',
+    brand: {
+      name: 'Balogh Márk E.V',
+      monogram: 'BM',
+      tagline: 'Villanyszerelés & biztonságtechnika',
+      phone: '+36 70 433 1928',
+      signerName: 'Balogh Márk',
+      contactLine: 'Kemenesmagasi \u00b7 +36 70 433 1928',
+      colors: {
+        headerBg: '#0A0B0D',
+        headerInk: '#EDECE7',
+        accent: '#C9863F',
+        // Vilagos hatteren a rezszin tul halvany a SZOVEGHEZ (kb. 2.6:1),
+        // ezert a linkekhez es cimkekhez sotetebb valtozat kell.
+        accentStrong: '#8A5A18',
+        accentTint: '#FBF3E8',
+      },
+    },
   },
   // Vegpont-teszthez: CSAK a sajat cimunkre kuld, tehat nem lehet vele
   // ugyfelet zaklatni. Deploy utan ezzel ellenorizzuk, hogy a Resend-lanc
@@ -32,6 +50,21 @@ const CLIENTS = {
   '_teszt': {
     to: 'Peter.veszpremi@polarisweb.hu',
     label: 'Polarisweb teszt',
+    brand: {
+      name: 'Balogh Márk E.V',
+      monogram: 'BM',
+      tagline: 'Villanyszerelés & biztonságtechnika',
+      phone: '+36 70 433 1928',
+      signerName: 'Balogh Márk',
+      contactLine: 'Kemenesmagasi \u00b7 +36 70 433 1928',
+      colors: {
+        headerBg: '#0A0B0D',
+        headerInk: '#EDECE7',
+        accent: '#C9863F',
+        accentStrong: '#8A5A18',
+        accentTint: '#FBF3E8',
+      },
+    },
   },
 };
 
@@ -75,28 +108,36 @@ module.exports = async function handler(req, res) {
     return;
   }
 
-  const html = `
-    <h2>Új ajánlatkérés a weboldalról</h2>
-    <p><strong>Név:</strong> ${escapeHtml(name)}</p>
-    <p><strong>Telefon:</strong> ${escapeHtml(hasPhone ? phone : '—')}</p>
-    <p><strong>E-mail:</strong> ${escapeHtml(hasEmail ? email : '—')}</p>
-    <p><strong>Szolgáltatás:</strong> ${escapeHtml(service || '—')}</p>
-    <hr>
-    <p><strong>Üzenet:</strong><br>${escapeHtml(message || '—').replace(/\n/g, '<br>')}</p>
-    <hr>
-    <p style="color:#666;font-size:12px;">
-      Ez az üzenet a ${escapeHtml(cfg.label)} weboldalának ajánlatkérő űrlapjáról érkezett.
-    </p>
-  `;
-
   try {
+    const lead = leadEmail({
+      brand: cfg.brand,
+      name, phone: hasPhone ? phone : '', email: hasEmail ? email : '',
+      service, message,
+    });
     await sendEmail({
       to: [cfg.to],
-      subject: `Ajánlatkérés a weboldalról: ${service || 'egyéb'}`,
-      html,
+      subject: lead.subject,
+      html: lead.html,
       // Csak akkor van ertelme, ha a latogato adott email cimet.
       replyTo: hasEmail ? email : undefined,
     });
+
+    // Visszaigazolas a LATOGATONAK, csak ha adott email cimet. Ha ez elhasal,
+    // az ugyfel ertesitese akkor is megtortent -> ne bukjon el az egesz keres.
+    if (hasEmail) {
+      try {
+        const reply = autoReply({ brand: cfg.brand, name, service });
+        await sendEmail({
+          to: [String(email).trim()],
+          subject: reply.subject,
+          html: reply.html,
+          replyTo: cfg.to,
+        });
+      } catch (autoErr) {
+        console.error('send-client-lead auto-reply error:', autoErr);
+      }
+    }
+
     res.status(200).json({ ok: true });
   } catch (err) {
     console.error('send-client-lead handler error:', err);
