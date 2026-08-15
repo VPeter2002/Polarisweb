@@ -26,6 +26,7 @@ document.addEventListener('DOMContentLoaded', function () {
       var body = [
         'Név: ' + (data.name || '-'),
         'Telefon: ' + (data.phone || '-'),
+        'E-mail: ' + (data.email || '-'),
         'Szolgáltatás: ' + data.service,
         '',
         'Üzenet:',
@@ -47,8 +48,18 @@ document.addEventListener('DOMContentLoaded', function () {
         message: form.elements['message'].value.trim()
       };
 
+      /* Az email opcionalis: csak akkor kuldjuk, ha ki van toltve. Ures stringet
+         nem kuldunk, mert a szerver azt hibas cimnek venne. */
+      var emailEl = form.elements['email'];
+      var emailVal = emailEl ? emailEl.value.trim() : '';
+      if (emailVal) data.email = emailVal;
+
       if (!data.name) { say('Kérem, adja meg a nevét.', 'is-error'); return; }
       if (!data.phone) { say('Kérem, adjon meg egy telefonszámot, hogy vissza tudjak jelezni.', 'is-error'); return; }
+      if (emailVal && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailVal)) {
+        say('Az e-mail cím nem tűnik érvényesnek. Javítsa, vagy hagyja üresen.', 'is-error');
+        return;
+      }
 
       if (btn) { btn.disabled = true; btn.textContent = 'Küldés...'; }
       say('Küldés folyamatban...', '');
