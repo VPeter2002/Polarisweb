@@ -61,6 +61,21 @@ const CLIENTS = {
 };
 
 module.exports = async function handler(req, res) {
+  // CORS: az ugyfel-oldalak a SAJAT domainjukrol (pl. balogh-mark-villany.hu)
+  // hivjak ezt a vegpontot, ami mas origin, mint a www.polarisweb.hu API. A
+  // bongeszo emiatt preflight OPTIONS-t kuld, es CORS-fejlec nelkul blokkolna a
+  // POST-ot -> a lead-urlap a mailto-fallbackra esne. Nyilt origin ('*') itt
+  // biztonsagos: nincs sutille/credential, es a cimzettet KIZAROLAG a
+  // szerveroldali CLIENTS tabla donti el, nem a keres.
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+  res.setHeader('Access-Control-Max-Age', '86400');
+
+  if (req.method === 'OPTIONS') {
+    res.status(204).end();
+    return;
+  }
   if (req.method !== 'POST') {
     res.status(405).json({ error: 'Method not allowed' });
     return;
