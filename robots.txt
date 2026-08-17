@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+
+# A /demok/ oldalak noindex-ek (ugyfel-demok); crawlolhatok maradnak, hogy a noindex ervenyesuljon.
+
+Sitemap: https://www.polarisweb.hu/sitemap.xml
