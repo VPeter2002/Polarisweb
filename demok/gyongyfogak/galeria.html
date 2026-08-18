@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+  <meta name="robots" content="noindex, nofollow">
+<meta charset="UTF-8">
+<title>Galéria – Goodent Fogászat</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Public+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/demok/gyongyfogak/css/style.css">
+<link rel="icon" type="image/png" sizes="32x32" href="/demok/gyongyfogak/img/favicon-32.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/demok/gyongyfogak/img/favicon-180.png">
+<link rel="icon" type="image/png" sizes="512x512" href="/demok/gyongyfogak/img/favicon-512.png">
+<meta name="theme-color" content="#1C3B36">
+<style>
+  .gal-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;margin-top:40px;}
+  .gal-item{border-radius:var(--radius-sm);overflow:hidden;border:1px solid var(--line);background:var(--paper);min-width:0;}
+  .gal-item img{width:100%;height:280px;object-fit:cover;}
+  .gal-item .cap{padding:12px 14px;font-size:13px;color:var(--ink-soft);}
+  .gal-item.wide{grid-column:span 2;}
+  @media (max-width:900px){ .gal-grid{grid-template-columns:repeat(2,minmax(0,1fr));} .gal-item.wide{grid-column:span 2;} }
+  @media (max-width:600px){ .gal-grid{grid-template-columns:1fr;} .gal-item.wide{grid-column:span 1;} .gal-item img{height:230px;} }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="wrap header-row">
+    <a href="/demok/gyongyfogak/" class="brand"><span class="bn-name">Goodent</span><span class="bn-sub">Gyöngyfogak.hu</span></a>
+    <nav class="main-nav">
+      <a href="/demok/gyongyfogak/">Főoldal</a>
+      <a href="/demok/gyongyfogak/bemutatkozas">Bemutatkozás</a>
+      <a href="/demok/gyongyfogak/szolgaltatasok">Szolgáltatások</a>
+      <a href="/demok/gyongyfogak/araink">Áraink</a>
+      <a href="/demok/gyongyfogak/galeria" class="active">Galéria</a>
+      <a href="/demok/gyongyfogak/kapcsolat">Kapcsolat</a>
+    </nav>
+    <div class="nav-right">
+      <a class="btn btn-primary" href="tel:+36209579610"><span class="btn-primary-label">Hívjon:</span> +36 20 957 9610</a>
+      <button class="nav-toggle" id="navToggle" aria-label="Menü megnyitása" aria-expanded="false">
+        <span class="bar"></span><span class="bar"></span><span class="bar"></span>
+      </button>
+    </div>
+  </div>
+  <nav class="mobile-menu" id="mobileMenu">
+    <div class="mobile-menu-inner">
+      <a href="/demok/gyongyfogak/">Főoldal</a>
+      <a href="/demok/gyongyfogak/bemutatkozas">Bemutatkozás</a>
+      <a href="/demok/gyongyfogak/szolgaltatasok">Szolgáltatások</a>
+      <a href="/demok/gyongyfogak/araink">Áraink</a>
+      <a href="/demok/gyongyfogak/galeria" class="active">Galéria</a>
+      <a href="/demok/gyongyfogak/kapcsolat">Kapcsolat</a>
+    </div>
+  </nav>
+</header>
+
+<section class="section reveal">
+  <div class="wrap">
+    <div class="eyebrow">Galéria</div>
+    <h1 style="font-size:clamp(32px,4.6vw,48px);margin-top:10px;">Rendelőnk, közelről</h1>
+    <p class="body-lg" style="margin-top:16px;">Öt fotó a rendelőnkből – a régi oldal
+      galériájából, hűen átvéve. Várjuk szeretettel!</p>
+    <div class="gal-grid">
+      <div class="gal-item wide">
+        <img src="/demok/gyongyfogak/img/kezelo-szoba.jpg" alt="Kezelőszoba, fogorvosi székkel és eszközökkel">
+        <div class="cap">Kezelőszoba</div>
+      </div>
+      <div class="gal-item">
+        <img src="/demok/gyongyfogak/img/varoszoba.jpg" alt="Váróterem üléshellyel">
+        <div class="cap">Váróterem</div>
+      </div>
+      <div class="gal-item">
+        <img src="/demok/gyongyfogak/img/iroda-pult.jpg" alt="Adminisztrációs pult és iratpolc">
+        <div class="cap">Adminisztráció</div>
+      </div>
+      <div class="gal-item">
+        <img src="/demok/gyongyfogak/img/konzultacios-pult.jpg" alt="Konzultációs pult fogászati mintadarabokkal">
+        <div class="cap">Konzultációs sarok</div>
+      </div>
+      <div class="gal-item">
+        <img src="/demok/gyongyfogak/img/intraoralis-kamera-kep.jpg" alt="Intraorális kamera képernyőn megjelenő felvétele">
+        <div class="cap">Interaktív fogászat – intraorális kamera</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <span class="brand"><span class="bn-name">Goodent</span><span class="bn-sub">Gyöngyfogak.hu</span></span>
+        <p style="margin-top:14px;font-size:13.5px;max-width:34ch;">Esztétikai fogászat,
+          fogpótlástan, szájsebészet, implantológia, fogszabályozás, gyermekfogászat és
+          logopédia Budapest VIII. kerületében.</p>
+      </div>
+      <div>
+        <h4>Oldal</h4>
+        <div class="foot-links">
+          <a href="/demok/gyongyfogak/bemutatkozas">Bemutatkozás</a>
+          <a href="/demok/gyongyfogak/szolgaltatasok">Szolgáltatások</a>
+          <a href="/demok/gyongyfogak/araink">Áraink</a>
+          <a href="/demok/gyongyfogak/galeria">Galéria</a>
+        </div>
+      </div>
+      <div>
+        <h4>Elérhetőség</h4>
+        <div class="foot-links">
+          <a href="tel:+36209579610">+36 20 957 9610</a>
+          <a href="mailto:goodent@goodent.hu">goodent@goodent.hu</a>
+          <span>1082 Budapest, Kisfaludy u. 6. IV/1.</span>
+          <a href="https://www.facebook.com/goodentfogaszat/" target="_blank" rel="noopener">Facebook</a>
+        </div>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>&copy; Goodent Fogászat &middot; Gyöngyfogak.hu</span>
+      <span>Weboldal: Polarisweb</span>
+    </div>
+  </div>
+</footer>
+
+<script src="/demok/gyongyfogak/js/nav.js"></script>
+</body>
+</html>
