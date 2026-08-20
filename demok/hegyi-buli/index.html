@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+  <meta name="robots" content="noindex, nofollow">
+<meta charset="UTF-8">
+<title>Hegyi Buli</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Passion+One:wght@700;900&family=Mulish:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/demok/hegyi-buli/css/style.css">
+</head>
+<body>
+
+<nav class="quicknav">
+  <div class="quicknav-inner">
+    <a href="#profilvalaszto">🙋 Profil</a>
+    <a href="#szamlalo">🍺 Számláló</a>
+    <a href="#ranglista">🏆 Ranglista</a>
+    <a href="#uzenofal">✍️ Üzenőfal</a>
+    <a href="#galeria">📷 Galéria</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="stars" aria-hidden="true">
+    <span style="top:12%;left:10%;">⭐</span>
+    <span style="top:20%;left:80%;animation-delay:.5s;">✨</span>
+    <span style="top:8%;left:45%;animation-delay:1s;">⭐</span>
+    <span style="top:30%;left:65%;animation-delay:1.5s;">✨</span>
+    <span style="top:16%;left:25%;animation-delay:.8s;">⭐</span>
+    <span style="top:26%;left:92%;animation-delay:1.2s;">✨</span>
+  </div>
+  <div class="wrap">
+    <div class="eyebrow">⛺ Hegyi buli különkiadás 🔥</div>
+    <h1>Hegyi <span class="accent">Buli</span></h1>
+    <p class="lede">Válaszd ki, ki vagy, számold a köreidet, és nézd meg élőben, ki issza
+      meg a hegyet ma este. Ami a hegyen történik, az a falon is landol.</p>
+    <div class="cta-row">
+      <a href="#profilvalaszto" class="btn btn-campfire">Válassz profilt 🙋</a>
+      <a href="#ranglista" class="btn btn-pine">Ranglista 🏆</a>
+    </div>
+  </div>
+  <div class="mountains" aria-hidden="true"></div>
+</section>
+
+<section class="section" id="profilvalaszto">
+  <div class="wrap">
+    <div class="eyebrow">Ki vagy?</div>
+    <h2 style="font-size:clamp(28px,4.5vw,42px);margin-top:8px;">Profilválasztó</h2>
+    <p style="margin-top:12px;color:var(--ink-soft);max-width:60ch;">Nincs jelszó, nincs
+      belépés – csak kattints a saját neveden, és onnantól a gombok neked számolnak.
+      Bármikor válthatsz.</p>
+    <div class="profile-grid" id="profileGrid"></div>
+    <div class="akos-card">
+      <div class="profile-avatar">Á</div>
+      <div>
+        <div class="an">Ákos</div>
+        <div class="at">nem jött, béna 😴</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="szamlalo" style="background:var(--paper);">
+  <div class="wrap">
+    <div class="eyebrow">Élő számláló</div>
+    <h2 style="font-size:clamp(28px,4.5vw,42px);margin-top:8px;">Sör- és fröccsszámláló</h2>
+    <p style="margin-top:12px;color:var(--ink-soft);max-width:60ch;">A Misi-oldal
+      fröccs-taxonómiája, kiegészítve pálinkával és forralt borral – ahogy egy hegyi
+      bulihoz illik.</p>
+
+    <div class="active-bar" id="activeBar" hidden>
+      <span class="txt"></span>
+      <a href="#profilvalaszto" class="btn btn-ghost btn-sm">Váltás</a>
+    </div>
+    <div class="no-profile-note" id="noProfileNote">Válassz profilt fent, hogy elkezdhesd a
+      számlálást!</div>
+
+    <div id="counterSection">
+      <div class="counter-grid" id="counterGrid"></div>
+      <div class="my-stats" id="myStats"></div>
+    </div>
+  </div>
+</section>
+
+<section class="section section-dark" id="ranglista">
+  <div class="wrap">
+    <div class="eyebrow">A fő látványosság</div>
+    <h2 style="font-size:clamp(28px,4.5vw,42px);margin-top:8px;">Ki issza meg a hegyet?</h2>
+    <p style="margin-top:12px;max-width:60ch;">Élő ranglista mind a 6 fő között, összes
+      elfogyasztott ital alapján.</p>
+    <div class="board-list" id="boardList"></div>
+  </div>
+</section>
+
+<section class="section" id="uzenofal">
+  <div class="wrap">
+    <div class="eyebrow">Közös üzenőfal</div>
+    <h2 style="font-size:clamp(28px,4.5vw,42px);margin-top:8px;">Hagyj üzenetet a hegyen</h2>
+    <p style="margin-top:12px;color:var(--ink-soft);max-width:60ch;">Nem megy e-mailben
+      sehova, csak itt jelenik meg mindenkinek – a névhez a kiválasztott profilod
+      társul.</p>
+    <div class="no-profile-note" id="wallNoProfileNote">Válassz profilt fent ahhoz, hogy
+      írhass a falra!</div>
+    <form class="wall-form" id="wallForm" hidden>
+      <textarea id="wallMsg" placeholder="Üzeneted a többieknek..." required></textarea>
+      <button type="submit" class="btn btn-campfire" style="justify-self:start;">Kiírom a falra 📌</button>
+    </form>
+    <div class="wall-list" id="wallList"></div>
+  </div>
+</section>
+
+<section class="section" id="galeria" style="background:var(--paper);">
+  <div class="wrap">
+    <div class="eyebrow">Válogatás a hegyről</div>
+    <h2 style="font-size:clamp(28px,4.5vw,42px);margin-top:8px;">Galéria</h2>
+    <p style="margin-top:12px;color:var(--ink-soft);max-width:60ch;">Pár kép a korábbi
+      bulikból – ki kicsoda, azt úgyis mindenki tudja.</p>
+    <div class="photo-grid">
+      <div class="photo-tile"><img src="/demok/hegyi-buli/img/buli-2.jpg" alt="Közös emlék a hegyi buliból"></div>
+      <div class="photo-tile"><img src="/demok/hegyi-buli/img/buli-3.jpg" alt="Közös emlék a hegyi buliból"></div>
+      <div class="photo-tile"><img src="/demok/hegyi-buli/img/buli-4.jpg" alt="Közös emlék a hegyi buliból"></div>
+      <div class="photo-tile"><img src="/demok/hegyi-buli/img/buli-5.jpg" alt="Közös emlék a hegyi buliból"></div>
+      <div class="photo-tile"><img src="/demok/hegyi-buli/img/buli-6.jpg" alt="Közös emlék a hegyi buliból"></div>
+      <div class="photo-tile"><img src="/demok/hegyi-buli/img/buli-7.jpg" alt="Közös emlék a hegyi buliból"></div>
+    </div>
+    <div class="stamp-photo">
+      <img src="/demok/hegyi-buli/img/buli-1.jpg" alt="Bónusz közeli">
+      <span class="stamp-label">bónusz close-up</span>
+    </div>
+  </div>
+</section>
+
+<footer>
+  Készült szeretettel a <strong>hegyi buli</strong> társaságnak. ⛺🔥🍻<br>
+  Ha elromlana valami, csak frissítsd az oldalt – a számlálók megmaradnak.
+</footer>
+
+<script src="/demok/hegyi-buli/js/store.js"></script>
+<script src="/demok/hegyi-buli/js/app.js"></script>
+</body>
+</html>
