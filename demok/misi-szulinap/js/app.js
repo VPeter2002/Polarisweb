@@ -25,12 +25,20 @@
     'Legyen ez az év olyan jó, mint a legjobb fröccsöd aránya!',
     'Sör legyen a kezedben, fröccs a szívedben!',
     'Kívánom, hogy annyi boldogság érjen, ahány pohárt ma felhajtasz!',
-    'Egészségedre, Misi -- és a szódavíznek is, hogy bírja a tempót!',
-    'Aki bírja, karja -- aki Misi, az bulizza!',
+    'Egészségedre, Misi – és a szódavíznek is, hogy bírja a tempót!',
+    'Aki bírja, karja – aki Misi, az bulizza!',
     'Igyunk arra, hogy jövőre is legalább ilyen jó társaságban ünnepelj!',
     'Fenékig, de csak azért, mert Misi szülinapja van!',
     'Legyen az élet olyan kerek, mint egy jó nagyfröccs aránya!',
-    'Ürítsük poharunkat a mai hősünkre -- Misi, Isten éltessen!'
+    'Ürítsük poharunkat a mai hősünkre – Misi, Isten éltessen!',
+    'Igyunk arra, hogy Misi, baszd meg, megint egy évvel öregebb lett, de a lelke még mindig egy huszonéves balfaszé!',
+    'Legyen ez az este annyira jó, hogy holnapra kibaszottul semmire se emlékezz, csak arra, hogy állat volt!',
+    'Ha ma este nem leszel seggrészeg, Misi, akkor valamit nagyon elszúrtunk!',
+    'Egészségedre, baszki – ennyi év után is te vagy a legjobb arc, akit ismerünk!',
+    'Igyunk arra, hogy a barátságunk olyan szilárd, mint a másnaposságod lesz holnap reggel nyolckor!',
+    'Fenékig, mert ha valaki megérdemli a jó bulit, az bassza meg, te vagy az, Misi!',
+    'Annyi boldogságot kívánok, amennyi fröccsöt ma még sikeresen el fogsz baszni!',
+    'Igyunk arra, hogy jövőre is ilyen kibaszottul jó társaságban ünnepeljünk!'
   ];
 
   var $ = function(sel){ return document.querySelector(sel); };
@@ -64,17 +72,54 @@
     return { beer:beer, froccs:froccs, wineDl:wineDl, sodaDl:sodaDl, all:all };
   }
 
+  var PROMILLE_TIERS = [
+    {
+      max: 0.5,
+      label: 'Még józan, mint a ma reggeli kávé',
+      fact: 'Tudtad? Magyarországon a vezetési határ 0,0 ‰ (nulla tolerancia), Németországban és Olaszországban 0,5 ‰-ig, az USA nagy részén pedig egészen 0,8 ‰-ig szabad vezetni.'
+    },
+    {
+      max: 1.2,
+      label: 'Becsípve – hirtelen minden szimpatikusabb',
+      fact: 'Ez a híres "sörszemüveg-effektus": az alkohol tompítja az agy aszimmetria-érzékelését, ezért mindenki egy fokkal szimmetrikusabbnak, vagyis vonzóbbnak tűnik.'
+    },
+    {
+      max: 2.0,
+      label: 'Filozofál a világ nagy dolgairól',
+      fact: 'Az egyensúly és a beszéd látványosan romlik (ataxia). Extra tudtad: a szonda nem a nyáladból mér, hanem a kilélegzett levegőből, mert az alkohol 1:2100 arányban pontosan párolog át a véredből a tüdődbe.'
+    },
+    {
+      max: 3.0,
+      label: 'Hazakísérné a villamost',
+      fact: 'Ez a klasszikus filmszakadás: az alkohol blokkolja a hippokampuszt, úgyhogy az agyad ilyenkor nem felejt – eleve le sem menti az estét.'
+    }
+  ];
+  var SERIOUS_LABEL = 'Na jó, ez már nem vicc';
+  var SERIOUS_FACT = 'Igyál egy nagy pohár vizet, ülj le, és lassíts. A haverok jövőre is szeretnének látni.';
+
+  function estimatePromille(t){
+    // Egyszerűsített, JOKE Widmark-becslés – nem orvosi számítás.
+    var alcoholG = (t.wineDl*100*0.11 + t.beer*500*0.05) * 0.8;
+    var promille = alcoholG / (80 * 0.7); // m=80kg, r=0.7 (átlag férfi feltevés)
+    return promille;
+  }
+
   function meterInfo(t){
-    var units = t.beer*1 + t.wineDl*0.35;
-    var pct = Math.max(0, Math.min(100, (units/10)*100));
-    var label;
-    if(units<=0) label='Még józan, mint a ma reggeli kávé';
-    else if(units<=2) label='Még szalonnázik';
-    else if(units<=4) label='Filozofál a világ nagy dolgairól';
-    else if(units<=6.5) label='Mindenkit szeret, tényleg mindenkit';
-    else if(units<=9) label='Hazakísérné a villamost';
-    else label='Legenda lesz belőle a buli végére';
-    return { pct:pct, label:label };
+    var promille = estimatePromille(t);
+    var pct = Math.max(0, Math.min(100, (promille/3.5)*100));
+    var serious = promille > 3.0;
+    var tier = null;
+    for(var i=0;i<PROMILLE_TIERS.length;i++){
+      if(promille <= PROMILLE_TIERS[i].max){ tier = PROMILLE_TIERS[i]; break; }
+    }
+    if(!tier) tier = PROMILLE_TIERS[PROMILLE_TIERS.length-1];
+    return {
+      pct: pct,
+      promille: promille,
+      serious: serious,
+      label: serious ? SERIOUS_LABEL : tier.label,
+      fact: serious ? SERIOUS_FACT : tier.fact
+    };
   }
 
   function render(){
@@ -86,7 +131,10 @@
 
     var m = meterInfo(t);
     $('#meterFill').style.width = m.pct + '%';
-    $('#meterStatus').textContent = m.label;
+    var promilleText = m.promille <= 0 ? '' : ' (kb. ' + m.promille.toFixed(1).replace('.', ',') + ' ‰, JOKE becslés)';
+    $('#meterStatus').textContent = m.label + promilleText;
+    $('#meterFact').textContent = m.fact;
+    $('#meterWrap').classList.toggle('serious', m.serious);
 
     $$('.badge').forEach(function(el){
       var at = parseInt(el.getAttribute('data-at'), 10);
@@ -171,7 +219,7 @@
     var wrap = $('#gbList');
     wrap.innerHTML = '';
     if(!list.length){
-      wrap.innerHTML = '<div class="gb-empty">Még senki nem írt -- legyél te az első!</div>';
+      wrap.innerHTML = '<div class="gb-empty">Még senki nem írt – legyél te az első!</div>';
       return;
     }
     list.slice().reverse().forEach(function(item){

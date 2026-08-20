@@ -52,7 +52,7 @@
     <div class="eyebrow">Válogatás a közösből</div>
     <h2 style="font-size:clamp(28px,4.5vw,42px);margin-top:8px;">Emlékek</h2>
     <p style="margin-top:12px;color:var(--ink-soft);max-width:60ch;">Pár kép a közös
-      bulikból -- a pontos sztorikat úgyis mindenki máshogy meséli.</p>
+      bulikból – a pontos sztorikat úgyis mindenki máshogy meséli.</p>
     <div class="photo-grid">
       <div class="photo-tile p1"><img src="/demok/misi-szulinap/img/misi-1.jpg" alt="Közös emlék a társaságból"></div>
       <div class="photo-tile p2"><img src="/demok/misi-szulinap/img/misi-2.jpg" alt="Közös emlék a társaságból"></div>
@@ -88,16 +88,17 @@
       <button class="btn btn-sm btn-wine" id="resetBtn">🔄 Új meccs (nullázás)</button>
     </div>
 
-    <div class="meter-wrap">
+    <div class="meter-wrap" id="meterWrap">
       <div class="meter-head">
         <span class="meter-label">🌡️ Véralkohol-becslő (JOKE EDITION)</span>
         <span class="meter-status" id="meterStatus">Még józan, mint a ma reggeli kávé</span>
       </div>
       <div class="meter-track"><div class="meter-fill" id="meterFill"></div></div>
+      <div class="meter-fact" id="meterFact"></div>
       <div class="meter-disclaimer">⚠️ Ez a kijelző NEM orvosi vagy tényleges
-        véralkohol-mérés, tisztán vicc a bevitt italok mennyisége alapján. Valós
-        állapotfelmérésre nem alkalmas -- ivás után soha ne vezess, és figyeljetek
-        egymásra a buli alatt.</div>
+        véralkohol-mérés, tisztán vicc a bevitt italok mennyisége alapján (leegyszerűsített
+        Widmark-becslés, fix 80 kg / átlag testalkat feltevéssel). Valós állapotfelmérésre
+        nem alkalmas – ivás után soha ne vezess, és figyeljetek egymásra a buli alatt.</div>
     </div>
 
     <div class="eyebrow" style="margin-top:38px;display:block;">Jelvények</div>
@@ -133,7 +134,7 @@
       </div>
       <div class="fact-card">
         <div class="tag">Hivatalos cím</div>
-        <p>26 évesen hivatalosan is a társaság bölcse -- ő dönti el, mikor jön a következő kör.</p>
+        <p>26 évesen hivatalosan is a társaság bölcse – ő dönti el, mikor jön a következő kör.</p>
       </div>
       <div class="fact-card">
         <div class="tag">Rekord</div>
@@ -161,7 +162,7 @@
 
 <footer>
   Készült szeretettel <strong>Misi</strong> szülinapjára. 🎈🍷🍺<br>
-  Ha elromlana valami, csak frissítsd az oldalt -- a számláló megmarad.
+  Ha elromlana valami, csak frissítsd az oldalt – a számláló megmarad.
 </footer>
 
 <script src="/demok/misi-szulinap/js/app.js"></script>
