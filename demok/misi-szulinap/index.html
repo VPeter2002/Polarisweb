@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+  <meta name="robots" content="noindex, nofollow">
+<meta charset="UTF-8">
+<title>Boldog szülinapot, Misi!</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/demok/misi-szulinap/css/style.css">
+</head>
+<body>
+
+<nav class="quicknav">
+  <div class="quicknav-inner">
+    <a href="#szamlalo">🍺 Számláló</a>
+    <a href="#emlekek">📷 Emlékek</a>
+    <a href="#toszt">🥂 Tószt</a>
+    <a href="#tenyek">📰 Misi-tények</a>
+    <a href="#vendegkonyv">✍️ Vendégkönyv</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="balloons" aria-hidden="true">
+    <span class="balloon b1">🎈</span>
+    <span class="balloon b2">🎈</span>
+    <span class="balloon b3">🎈</span>
+    <span class="balloon b4">🎊</span>
+    <span class="balloon b5">🎉</span>
+    <span class="balloon b6">🍾</span>
+  </div>
+  <div class="wrap">
+    <div class="eyebrow">🎉 Szülinapi különkiadás 🎉</div>
+    <h1>Boldog szülinapot,<br><span class="accent">Misi!</span></h1>
+    <p class="age-line">🎂 26. szülinap – a legendák sorába lépsz!</p>
+    <p class="age-convert">Ez kutyaévben kb. 130+, fröccsévben pontosan nulla – de ma
+      este ez utóbbin gyorsan változtatunk.</p>
+    <p class="lede">Ezen az estén egyetlen dolog számít: ki hány <strong>sört</strong> és
+      <strong>fröccsöt</strong> visz el a rekordig. Nyomd a gombokat, gyűjtsd a jelvényeket,
+      és mondj tósztot, amíg még tudsz.</p>
+    <div class="cta-row">
+      <a href="#szamlalo" class="btn btn-coral">Indul a számláló 🍻</a>
+      <a href="#toszt" class="btn btn-ghost">Adj egy tósztot 🥂</a>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="emlekek">
+  <div class="wrap">
+    <div class="eyebrow">Válogatás a közösből</div>
+    <h2 style="font-size:clamp(28px,4.5vw,42px);margin-top:8px;">Emlékek</h2>
+    <p style="margin-top:12px;color:var(--ink-soft);max-width:60ch;">Pár kép a közös
+      bulikból -- a pontos sztorikat úgyis mindenki máshogy meséli.</p>
+    <div class="photo-grid">
+      <div class="photo-tile p1"><img src="/demok/misi-szulinap/img/misi-1.jpg" alt="Közös emlék a társaságból"></div>
+      <div class="photo-tile p2"><img src="/demok/misi-szulinap/img/misi-2.jpg" alt="Közös emlék a társaságból"></div>
+      <div class="photo-tile p3"><img src="/demok/misi-szulinap/img/misi-3.jpg" alt="Közös emlék a társaságból"></div>
+      <div class="photo-tile p4"><img src="/demok/misi-szulinap/img/misi-4.jpg" alt="Közös emlék a társaságból"></div>
+      <div class="photo-tile p5"><img src="/demok/misi-szulinap/img/misi-5.jpg" alt="Közös emlék a társaságból"></div>
+      <div class="photo-tile p6"><img src="/demok/misi-szulinap/img/misi-7.jpg" alt="Közös emlék a társaságból"></div>
+    </div>
+    <div class="stamp-photo">
+      <img src="/demok/misi-szulinap/img/misi-6.jpg" alt="Bónusz közeli">
+      <span class="stamp-label">bónusz close-up</span>
+    </div>
+  </div>
+</section>
+
+<section class="section section-tilt" id="szamlalo">
+  <div class="wrap">
+    <div class="eyebrow">Élő kimutatás</div>
+    <h2 style="font-size:clamp(28px,4.5vw,42px);margin-top:8px;">Sör- és fröccsszámláló</h2>
+    <p style="margin-top:12px;color:var(--ink-soft);max-width:60ch;">Minden gombnyomás egy
+      újabb kör. A magyar fröccs-taxonómia klasszikus arányaival, bor + szóda deciliterben.</p>
+
+    <div class="counter-grid" id="counterGrid"></div>
+
+    <div class="stat-row">
+      <div class="stat-card"><div class="num" id="statBeer">0</div><div class="lbl">sör</div></div>
+      <div class="stat-card"><div class="num" id="statFroccs">0</div><div class="lbl">fröccs</div></div>
+      <div class="stat-card"><div class="num" id="statWine">0 dl</div><div class="lbl">elfogyott bor</div></div>
+      <div class="stat-card"><div class="num" id="statSoda">0 dl</div><div class="lbl">elfogyott szóda</div></div>
+    </div>
+
+    <div class="reset-row">
+      <button class="btn btn-sm btn-wine" id="resetBtn">🔄 Új meccs (nullázás)</button>
+    </div>
+
+    <div class="meter-wrap">
+      <div class="meter-head">
+        <span class="meter-label">🌡️ Véralkohol-becslő (JOKE EDITION)</span>
+        <span class="meter-status" id="meterStatus">Még józan, mint a ma reggeli kávé</span>
+      </div>
+      <div class="meter-track"><div class="meter-fill" id="meterFill"></div></div>
+      <div class="meter-disclaimer">⚠️ Ez a kijelző NEM orvosi vagy tényleges
+        véralkohol-mérés, tisztán vicc a bevitt italok mennyisége alapján. Valós
+        állapotfelmérésre nem alkalmas -- ivás után soha ne vezess, és figyeljetek
+        egymásra a buli alatt.</div>
+    </div>
+
+    <div class="eyebrow" style="margin-top:38px;display:block;">Jelvények</div>
+    <div class="badge-row" id="badgeRow"></div>
+  </div>
+</section>
+
+<section class="section" id="toszt">
+  <div class="wrap">
+    <div class="eyebrow">Pohárköszöntő-generátor</div>
+    <h2 style="font-size:clamp(28px,4.5vw,42px);margin-top:8px;">Mondj egy tósztot Misire</h2>
+    <div class="toast-card">
+      <div class="toast-text" id="toastText"></div>
+      <button class="btn btn-coral" id="toastBtn">🎲 Új tószt</button>
+    </div>
+  </div>
+</section>
+
+<section class="section section-tilt" id="tenyek">
+  <div class="wrap">
+    <div class="eyebrow">Túltolt valóság</div>
+    <h2 style="font-size:clamp(28px,4.5vw,42px);margin-top:8px;">Misi-tények</h2>
+    <p style="margin-top:12px;color:var(--ink-soft);max-width:60ch;">100%-ban ellenőrizetlen,
+      annál büszkébben vállalt állítások a mai ünnepeltről.</p>
+    <div class="fact-grid" id="factGrid">
+      <div class="fact-card">
+        <div class="tag">Igazolt tény</div>
+        <p>Misi az egyetlen ember a társaságban, aki a kisfröccsöt is stílusból issza.</p>
+      </div>
+      <div class="fact-card">
+        <div class="tag">Sport eredmény</div>
+        <p>Háromszoros amatőr fröccskeverő-bajnok, saját elmondása szerint.</p>
+      </div>
+      <div class="fact-card">
+        <div class="tag">Hivatalos cím</div>
+        <p>26 évesen hivatalosan is a társaság bölcse -- ő dönti el, mikor jön a következő kör.</p>
+      </div>
+      <div class="fact-card">
+        <div class="tag">Rekord</div>
+        <p>Állítólag egyszer végigvitte az egész fröccs-táblázatot egy este alatt. Tanúk nem emlékeznek pontosan.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="vendegkonyv">
+  <div class="wrap">
+    <div class="eyebrow">Hagyj emléket</div>
+    <h2 style="font-size:clamp(28px,4.5vw,42px);margin-top:8px;">Vendégkönyv</h2>
+    <p style="margin-top:12px;color:var(--ink-soft);max-width:60ch;">Írj pár sort Misinek --
+      ez a telefonon marad, a buli emlékeként.</p>
+    <form class="gb-form" id="gbForm">
+      <input type="text" id="gbName" placeholder="A te neved" required>
+      <textarea id="gbMsg" placeholder="Üzeneted Misinek..." required></textarea>
+      <button type="submit" class="btn btn-coral" style="justify-self:start;">Üzenet elküldése 💌</button>
+    </form>
+    <div class="gb-list" id="gbList"></div>
+  </div>
+</section>
+
+<footer>
+  Készült szeretettel <strong>Misi</strong> szülinapjára. 🎈🍷🍺<br>
+  Ha elromlana valami, csak frissítsd az oldalt -- a számláló megmarad.
+</footer>
+
+<script src="/demok/misi-szulinap/js/app.js"></script>
+</body>
+</html>
