@@ -205,6 +205,24 @@
     $('#toastText').textContent = t;
   }
 
+  var easterHideTimer = null;
+  function triggerEasterEgg(){
+    var overlay = $('#easterOverlay');
+    if(!overlay) return;
+    if(easterHideTimer) clearTimeout(easterHideTimer);
+    overlay.classList.add('show');
+    easterHideTimer = setTimeout(function(){
+      overlay.classList.remove('show');
+      easterHideTimer = null;
+    }, 3200);
+  }
+  function dismissEasterEgg(){
+    var overlay = $('#easterOverlay');
+    if(!overlay) return;
+    if(easterHideTimer){ clearTimeout(easterHideTimer); easterHideTimer = null; }
+    overlay.classList.remove('show');
+  }
+
   function loadGuestbook(){
     try{
       var raw = localStorage.getItem('misi-guestbook-2');
@@ -288,5 +306,10 @@
     newToast();
 
     $('#gbForm').addEventListener('submit', handleGuestbookSubmit);
+
+    var easterBtn = $('#easterBtn');
+    if(easterBtn) easterBtn.addEventListener('click', triggerEasterEgg);
+    var easterOverlay = $('#easterOverlay');
+    if(easterOverlay) easterOverlay.addEventListener('click', dismissEasterEgg);
   });
 })();
