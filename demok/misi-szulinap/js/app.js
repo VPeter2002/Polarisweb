@@ -207,12 +207,12 @@
 
   function loadGuestbook(){
     try{
-      var raw = localStorage.getItem('misi-guestbook');
+      var raw = localStorage.getItem('misi-guestbook-2');
       return raw ? JSON.parse(raw) : [];
     }catch(e){ return []; }
   }
   function saveGuestbook(list){
-    try{ localStorage.setItem('misi-guestbook', JSON.stringify(list)); }catch(e){}
+    try{ localStorage.setItem('misi-guestbook-2', JSON.stringify(list)); }catch(e){}
   }
   function renderGuestbook(){
     var list = loadGuestbook();
