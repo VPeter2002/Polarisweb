@@ -147,13 +147,14 @@
   <div class="wrap">
     <div class="eyebrow">Hagyj emléket</div>
     <h2 style="font-size:clamp(28px,4.5vw,42px);margin-top:8px;">Vendégkönyv</h2>
-    <p style="margin-top:12px;color:var(--ink-soft);max-width:60ch;">Írj pár sort Misinek --
-      ez a telefonon marad, a buli emlékeként.</p>
+    <p style="margin-top:12px;color:var(--ink-soft);max-width:60ch;">Írj pár sort Misinek.
+      Megjelenik itt az oldalon, és emailben is elmegy neki, hogy a buli után is meglegyen.</p>
     <form class="gb-form" id="gbForm">
       <input type="text" id="gbName" placeholder="A te neved" required>
       <textarea id="gbMsg" placeholder="Üzeneted Misinek..." required></textarea>
-      <button type="submit" class="btn btn-coral" style="justify-self:start;">Üzenet elküldése 💌</button>
+      <button type="submit" class="btn btn-coral" style="justify-self:start;">Küldd el Misinek 💌</button>
     </form>
+    <p class="gb-status" id="gbStatus" hidden></p>
     <div class="gb-list" id="gbList"></div>
   </div>
 </section>

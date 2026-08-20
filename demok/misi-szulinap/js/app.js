@@ -183,6 +183,14 @@
       wrap.appendChild(div);
     });
   }
+  var GB_ENDPOINT = 'https://www.polarisweb.hu/api/send-guestbook';
+  function gbSay(text, ok){
+    var s = $('#gbStatus');
+    if(!s) return;
+    s.textContent = text;
+    s.className = 'gb-status ' + (ok ? 'ok' : 'err');
+    s.hidden = false;
+  }
   function handleGuestbookSubmit(e){
     e.preventDefault();
     var nameEl = $('#gbName');
@@ -190,12 +198,29 @@
     var name = nameEl.value.trim();
     var msg = msgEl.value.trim();
     if(!name || !msg) return;
+    // Helyben megjelenik es megmarad a telefonon.
     var list = loadGuestbook();
     list.push({ name:name, msg:msg, ts:Date.now() });
     saveGuestbook(list);
+    renderGuestbook();
+    // Es emailben is elmegy Misinek. A cimzettet a szerver donti el (key='misi'),
+    // igy a bongeszobol nem lehet mas cimre kuldeni.
     nameEl.value = '';
     msgEl.value = '';
-    renderGuestbook();
+    gbSay('Küldés Misinek...', true);
+    fetch(GB_ENDPOINT, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ key: 'misi', name: name, message: msg })
+    })
+      .then(function(r){ return r.json().then(function(j){ return { ok: r.ok, body: j }; }); })
+      .then(function(r){
+        if(!r.ok) throw new Error((r.body && r.body.error) || 'hiba');
+        gbSay('Elküldve Misinek! 🎉 (és itt is megmaradt)', true);
+      })
+      .catch(function(){
+        gbSay('Az email most nem ment el, de a bejegyzésed itt megmaradt a telefonon.', false);
+      });
   }
 
   document.addEventListener('DOMContentLoaded', function(){

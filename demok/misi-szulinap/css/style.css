@@ -190,3 +190,7 @@ footer strong{color:var(--cream);}
   .section{padding:48px 0;}
   .meter-wrap,.toast-card{padding:22px 18px;}
 }
+
+.gb-status{margin-top:12px;font-weight:700;font-size:14px;}
+.gb-status.ok{color:var(--zold, #2f7d4f);}
+.gb-status.err{color:#b3452e;}
