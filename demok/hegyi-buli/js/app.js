@@ -266,5 +266,13 @@
 
     var wallForm = $('#wallForm');
     if (wallForm) wallForm.addEventListener('submit', handleWallSubmit);
+
+    // Több-telefonos élő szinkron: a közös ranglistát és üzenőfalat frissen tartjuk,
+    // hogy a többiek telefonjáról érkező italok/üzenetek is megjelenjenek.
+    setInterval(function () {
+      renderLeaderboard();
+      renderWall();
+      renderMyStats();
+    }, 6000);
   });
 })();
