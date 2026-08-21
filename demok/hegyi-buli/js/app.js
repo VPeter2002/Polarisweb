@@ -4,15 +4,15 @@
   var store = window.HegyiStore;
 
   var PROFILES = [
-    { id: 'donat', name: 'Donát', color: '#E8792E', photo: 'img/buli-4.jpg' },
-    { id: 'tamas', name: 'Tamás', color: '#4E7B5C', photo: 'img/buli-3.jpg' },
-    { id: 'misi', name: 'Misi', color: '#C25D1A', photo: 'img/buli-7.jpg' },
-    { id: 'marci', name: 'Marci', color: '#3E6B8A', photo: 'img/buli-5.jpg' },
-    { id: 'botond', name: 'Botond', color: '#8A5A3E', photo: 'img/buli-2.jpg' },
-    { id: 'peti', name: 'Peti', color: '#6B4E8A', photo: 'img/buli-1.jpg' }
+    { id: 'donat', name: 'Donát', color: '#E8792E', photo: 'img/buli-5.jpg' },
+    { id: 'tamas', name: 'Tamás', color: '#4E7B5C', photo: 'img/buli-4.jpg' },
+    { id: 'misi', name: 'Misi', color: '#C25D1A', photo: 'img/buli-1.jpg' },
+    { id: 'marci', name: 'Marci', color: '#3E6B8A', photo: 'img/buli-6.jpg' },
+    { id: 'botond', name: 'Botond', color: '#8A5A3E', photo: 'img/buli-3.jpg' },
+    { id: 'peti', name: 'Peti', color: '#6B4E8A', photo: 'img/buli-2.jpg' }
   ];
   var PROFILE_IDS = PROFILES.map(function (p) { return p.id; });
-  var AKOS_PHOTO = 'img/buli-6.jpg';
+  var AKOS_PHOTO = 'img/buli-7.jpg';
 
   /* wine/soda dl-ben, sör/pálinka darabban -- ugyanaz a leegyszerűsített
      alkohol-becslés, mint a Misi-oldalon: bor dl*100*0.11*0.8 g/dl,
