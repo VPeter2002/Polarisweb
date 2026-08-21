@@ -5,8 +5,8 @@
 window.HegyiStore = (function () {
   'use strict';
 
-  var DRINKS_PREFIX = 'hegyibuli-drinks-';
-  var MESSAGES_KEY = 'hegyibuli-messages';
+  var DRINKS_PREFIX = 'hegyibuli-drinks-2-';
+  var MESSAGES_KEY = 'hegyibuli-messages-2';
 
   function readJSON(key, fallback) {
     try {

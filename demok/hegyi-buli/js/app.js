@@ -4,27 +4,34 @@
   var store = window.HegyiStore;
 
   var PROFILES = [
-    { id: 'donat', name: 'Donát', color: '#E8792E' },
-    { id: 'tamas', name: 'Tamás', color: '#4E7B5C' },
-    { id: 'misi', name: 'Misi', color: '#C25D1A' },
-    { id: 'marci', name: 'Marci', color: '#3E6B8A' },
-    { id: 'botond', name: 'Botond', color: '#8A5A3E' },
-    { id: 'peti', name: 'Peti', color: '#6B4E8A' }
+    { id: 'donat', name: 'Donát', color: '#E8792E', photo: 'img/buli-4.jpg' },
+    { id: 'tamas', name: 'Tamás', color: '#4E7B5C', photo: 'img/buli-3.jpg' },
+    { id: 'misi', name: 'Misi', color: '#C25D1A', photo: 'img/buli-7.jpg' },
+    { id: 'marci', name: 'Marci', color: '#3E6B8A', photo: 'img/buli-5.jpg' },
+    { id: 'botond', name: 'Botond', color: '#8A5A3E', photo: 'img/buli-2.jpg' },
+    { id: 'peti', name: 'Peti', color: '#6B4E8A', photo: 'img/buli-1.jpg' }
   ];
   var PROFILE_IDS = PROFILES.map(function (p) { return p.id; });
+  var AKOS_PHOTO = 'img/buli-6.jpg';
 
+  /* wine/soda dl-ben, sör/pálinka darabban -- ugyanaz a leegyszerűsített
+     alkohol-becslés, mint a Misi-oldalon: bor dl*100*0.11*0.8 g/dl,
+     sör 500ml*0.05*0.8 g/db, pálinka 4cl*0.40*0.8 g/db (~12,8g/adag). */
   var DRINKS = {
-    ser:        { name: 'Sör',          emoji: '🍺', ratio: null },
-    kisfroccs:  { name: 'Kisfröccs',    emoji: '🥂', ratio: '1+1' },
-    nagyfroccs: { name: 'Nagyfröccs',   emoji: '🍷', ratio: '2+1' },
-    hosszulepes:{ name: 'Hosszúlépés',  emoji: '🚶', ratio: '1+2' },
-    hazmester:  { name: 'Házmester',    emoji: '🔑', ratio: '3+2' },
-    vicehaz:    { name: 'Viceházmester',emoji: '🗝️', ratio: '2+3' },
-    sportfroccs:{ name: 'Sportfröccs',  emoji: '🏃', ratio: '1+4' },
-    krudy:      { name: 'Krúdy-fröccs', emoji: '💀', ratio: '9+1' },
-    palinka:    { name: 'Pálinka',      emoji: '🥃', ratio: null },
-    forraltbor: { name: 'Forralt bor',  emoji: '☕', ratio: null }
+    ser:        { name: 'Sör',          emoji: '🍺', wine: 0, soda: 0, ratio: null, isBeer: true },
+    kisfroccs:  { name: 'Kisfröccs',    emoji: '🥂', wine: 1, soda: 1, ratio: '1+1' },
+    nagyfroccs: { name: 'Nagyfröccs',   emoji: '🍷', wine: 2, soda: 1, ratio: '2+1' },
+    hosszulepes:{ name: 'Hosszúlépés',  emoji: '🚶', wine: 1, soda: 2, ratio: '1+2' },
+    hazmester:  { name: 'Házmester',    emoji: '🔑', wine: 3, soda: 2, ratio: '3+2' },
+    vicehaz:    { name: 'Viceházmester',emoji: '🗝️', wine: 2, soda: 3, ratio: '2+3' },
+    sportfroccs:{ name: 'Sportfröccs',  emoji: '🏃', wine: 1, soda: 4, ratio: '1+4' },
+    krudy:      { name: 'Krúdy-fröccs', emoji: '💀', wine: 9, soda: 1, ratio: '9+1' },
+    palinka:    { name: 'Pálinka',      emoji: '🥃', wine: 0, soda: 0, ratio: null, isShot: true }
   };
+
+  var GRAMS_PER_WINE_DL = 100 * 0.11 * 0.8;   // ~8.8 g
+  var GRAMS_PER_BEER = 500 * 0.05 * 0.8;      // 20 g
+  var GRAMS_PER_SHOT = 40 * 0.40 * 0.8;       // ~12.8 g
 
   var CURRENT_KEY = 'hegyibuli-current-profile';
 
@@ -43,10 +50,34 @@
   }
   function initial(name) { return name.charAt(0).toUpperCase(); }
 
-  function totalOf(drinkObj) {
-    var sum = 0;
-    Object.keys(drinkObj || {}).forEach(function (k) { sum += drinkObj[k]; });
-    return sum;
+  function avatarInner(p) {
+    return p.photo
+      ? '<img src="' + p.photo + '" alt="' + p.name + '">'
+      : initial(p.name);
+  }
+
+  function computeTotals(drinkObj) {
+    var d = drinkObj || {};
+    var count = 0, wineDl = 0, beerCount = 0, shotCount = 0;
+    Object.keys(DRINKS).forEach(function (key) {
+      var n = d[key] || 0;
+      if (!n) return;
+      var def = DRINKS[key];
+      count += n;
+      wineDl += n * def.wine;
+      if (def.isBeer) beerCount += n;
+      if (def.isShot) shotCount += n;
+    });
+    var alcoholG = wineDl * GRAMS_PER_WINE_DL + beerCount * GRAMS_PER_BEER + shotCount * GRAMS_PER_SHOT;
+    return { count: count, wineDl: wineDl, beerCount: beerCount, shotCount: shotCount, alcoholG: alcoholG };
+  }
+
+  function categoryLine(t) {
+    var parts = [];
+    if (t.wineDl) parts.push('🍷 ' + (Math.round(t.wineDl * 10) / 10) + ' dl bor');
+    if (t.beerCount) parts.push('🍺 ' + t.beerCount + ' sör');
+    if (t.shotCount) parts.push('🥃 ' + t.shotCount + ' pálinka');
+    return parts.length ? parts.join(' · ') : 'még semmi';
   }
 
   function renderProfilePicker() {
@@ -57,7 +88,7 @@
       var card = document.createElement('div');
       card.className = 'profile-card' + (p.id === current ? ' active' : '');
       card.innerHTML =
-        '<div class="profile-avatar" style="background:' + p.color + '">' + initial(p.name) + '</div>' +
+        '<div class="profile-avatar" style="border-color:' + p.color + '">' + avatarInner(p) + '</div>' +
         '<span class="pname">' + p.name + '</span>' +
         '<span class="ptag">' + (p.id === current ? 'te vagy' : 'választás') + '</span>';
       card.addEventListener('click', function () { selectProfile(p.id); });
@@ -115,43 +146,41 @@
     counterSection.hidden = false;
     store.getDrinks(current).then(function (drinks) {
       wrap.innerHTML = '';
-      var total = totalOf(drinks);
+      var t = computeTotals(drinks);
       var totalChip = document.createElement('span');
       totalChip.className = 'my-stat-chip';
-      totalChip.textContent = 'Összesen: ' + total + ' ital';
+      totalChip.textContent = 'Összesen: ' + t.count + ' ital · ~' + Math.round(t.alcoholG) + ' g alkohol';
       wrap.appendChild(totalChip);
-      Object.keys(DRINKS).forEach(function (key) {
-        var count = drinks[key] || 0;
-        if (!count) return;
-        var chip = document.createElement('span');
-        chip.className = 'my-stat-chip';
-        chip.textContent = DRINKS[key].emoji + ' ' + DRINKS[key].name + ': ' + count;
-        wrap.appendChild(chip);
-      });
+      var catChip = document.createElement('span');
+      catChip.className = 'my-stat-chip';
+      catChip.textContent = categoryLine(t);
+      wrap.appendChild(catChip);
     });
   }
 
   function renderLeaderboard() {
     store.getAllDrinks(PROFILE_IDS).then(function (all) {
       var rows = PROFILES.map(function (p) {
-        return { profile: p, total: totalOf(all[p.id]) };
+        return { profile: p, totals: computeTotals(all[p.id]) };
       });
-      rows.sort(function (a, b) { return b.total - a.total; });
-      var maxTotal = Math.max(1, rows[0].total);
+      rows.sort(function (a, b) { return b.totals.alcoholG - a.totals.alcoholG; });
+      var maxG = Math.max(1, rows[0].totals.alcoholG);
 
       var list = $('#boardList');
       list.innerHTML = '';
       var medals = ['🥇', '🥈', '🥉'];
       rows.forEach(function (row, i) {
         var el = document.createElement('div');
-        el.className = 'board-row' + (i === 0 && row.total > 0 ? ' leader' : '');
-        var pct = Math.round((row.total / maxTotal) * 100);
+        var leading = i === 0 && row.totals.alcoholG > 0;
+        el.className = 'board-row' + (leading ? ' leader' : '');
+        var pct = Math.round((row.totals.alcoholG / maxG) * 100);
         el.innerHTML =
           '<span class="medal">' + (medals[i] || '') + '</span>' +
-          '<span class="b-avatar" style="background:' + row.profile.color + '">' + initial(row.profile.name) + '</span>' +
-          '<span class="b-info"><span class="b-name">' + row.profile.name + (i === 0 && row.total > 0 ? ' – a hegy ura 👑' : '') + '</span>' +
+          '<span class="b-avatar" style="border-color:' + row.profile.color + '">' + avatarInner(row.profile) + '</span>' +
+          '<span class="b-info"><span class="b-name">' + row.profile.name + (leading ? ' – a hegy ura 👑' : '') + '</span>' +
+          '<span class="b-cat">' + categoryLine(row.totals) + '</span>' +
           '<span class="b-bar-wrap"><span class="b-bar" style="width:' + pct + '%"></span></span></span>' +
-          '<span class="b-count">' + row.total + '</span>';
+          '<span class="b-count">~' + Math.round(row.totals.alcoholG) + ' g</span>';
         list.appendChild(el);
       });
     });

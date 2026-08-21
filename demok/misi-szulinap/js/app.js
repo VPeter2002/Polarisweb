@@ -9,7 +9,8 @@
     hazmester:  { name:'Házmester',    emoji:'🔑', wine:3, soda:2, ratio:'3+2' },
     vicehaz:    { name:'Viceházmester',emoji:'🗝️', wine:2, soda:3, ratio:'2+3' },
     sportfroccs:{ name:'Sportfröccs',  emoji:'🏃', wine:1, soda:4, ratio:'1+4' },
-    krudy:      { name:'Krúdy-fröccs', emoji:'💀', wine:9, soda:1, ratio:'9+1' }
+    krudy:      { name:'Krúdy-fröccs', emoji:'💀', wine:9, soda:1, ratio:'9+1' },
+    palinka:    { name:'Pálinka',      emoji:'🥃', wine:0, soda:0, isShot:true }
   };
 
   var BADGES = [
@@ -60,16 +61,18 @@
   var state = loadState();
 
   function totals(){
-    var beer=0, froccs=0, wineDl=0, sodaDl=0, all=0;
+    var beer=0, froccs=0, shots=0, wineDl=0, sodaDl=0, all=0;
     Object.keys(DRINKS).forEach(function(k){
       var count = state[k]||0;
       var d = DRINKS[k];
       all += count;
-      if(d.isBeer) beer += count; else froccs += count;
+      if(d.isBeer) beer += count;
+      else if(d.isShot) shots += count;
+      else froccs += count;
       wineDl += count * d.wine;
       sodaDl += count * d.soda;
     });
-    return { beer:beer, froccs:froccs, wineDl:wineDl, sodaDl:sodaDl, all:all };
+    return { beer:beer, froccs:froccs, shots:shots, wineDl:wineDl, sodaDl:sodaDl, all:all };
   }
 
   var PROMILLE_TIERS = [
@@ -99,7 +102,7 @@
 
   function estimatePromille(t){
     // Egyszerűsített, JOKE Widmark-becslés – nem orvosi számítás.
-    var alcoholG = (t.wineDl*100*0.11 + t.beer*500*0.05) * 0.8;
+    var alcoholG = (t.wineDl*100*0.11 + t.beer*500*0.05 + t.shots*40*0.40) * 0.8;
     var promille = alcoholG / (80 * 0.7); // m=80kg, r=0.7 (átlag férfi feltevés)
     return promille;
   }
@@ -128,6 +131,7 @@
     $('#statFroccs').textContent = t.froccs;
     $('#statWine').textContent = t.wineDl.toFixed(1).replace('.0','') + ' dl';
     $('#statSoda').textContent = t.sodaDl.toFixed(1).replace('.0','') + ' dl';
+    $('#statShots').textContent = t.shots;
 
     var m = meterInfo(t);
     $('#meterFill').style.width = m.pct + '%';
