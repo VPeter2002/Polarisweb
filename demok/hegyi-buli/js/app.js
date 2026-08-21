@@ -80,15 +80,29 @@
     return parts.length ? parts.join(' · ') : 'még semmi';
   }
 
+  // Resolve the img/ base from an <img> already in the HTML (the Ákos avatar),
+  // so JS-injected background-image paths match whatever the deploy transform
+  // rewrote the HTML src to (relative locally, /demok/hegyi-buli/img/ live).
+  function assetBase() {
+    var ref = document.querySelector('.akos-card .profile-avatar img');
+    if (ref) {
+      var raw = ref.getAttribute('src') || '';
+      var base = raw.replace(/[^/]*$/, '');
+      if (base) return base;
+    }
+    return 'img/';
+  }
+
   function renderProfilePicker() {
     var grid = $('#profileGrid');
     grid.innerHTML = '';
     var current = getCurrentProfileId();
+    var base = assetBase();
     PROFILES.forEach(function (p) {
       var card = document.createElement('div');
       card.className = 'profile-card' + (p.id === current ? ' active' : '');
       card.style.setProperty('--pc', p.color);
-      if (p.photo) card.style.backgroundImage = "url('" + p.photo + "')";
+      if (p.photo) card.style.backgroundImage = "url('" + base + p.photo.replace(/^img\//, '') + "')";
       else card.classList.add('no-photo');
       card.innerHTML =
         (p.photo ? '' : '<span class="pc-initial">' + initial(p.name) + '</span>') +
