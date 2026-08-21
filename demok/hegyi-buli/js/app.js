@@ -87,10 +87,15 @@
     PROFILES.forEach(function (p) {
       var card = document.createElement('div');
       card.className = 'profile-card' + (p.id === current ? ' active' : '');
+      card.style.setProperty('--pc', p.color);
+      if (p.photo) card.style.backgroundImage = "url('" + p.photo + "')";
+      else card.classList.add('no-photo');
       card.innerHTML =
-        '<div class="profile-avatar" style="border-color:' + p.color + '">' + avatarInner(p) + '</div>' +
-        '<span class="pname">' + p.name + '</span>' +
-        '<span class="ptag">' + (p.id === current ? 'te vagy' : 'választás') + '</span>';
+        (p.photo ? '' : '<span class="pc-initial">' + initial(p.name) + '</span>') +
+        '<div class="pc-overlay">' +
+          '<span class="pname">' + p.name + '</span>' +
+          '<span class="ptag">' + (p.id === current ? '✓ te vagy' : 'választás') + '</span>' +
+        '</div>';
       card.addEventListener('click', function () { selectProfile(p.id); });
       grid.appendChild(card);
     });
