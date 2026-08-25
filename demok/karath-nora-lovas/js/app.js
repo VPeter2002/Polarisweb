@@ -77,7 +77,7 @@
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          key: FORM_KEY,
+          client: FORM_KEY,
           name: name,
           email: isEmail ? contact : '',
           phone: isEmail ? '' : contact,
