@@ -165,15 +165,47 @@
     });
   }
 
-  /* ---- Egyszeri (buyout) ár toggle: a halvány egyszeri árat elorehozza ---- */
-  var oneshotBtn = document.querySelector('[data-oneshot-toggle]');
-  var pricingTable = document.querySelector('.pricing-table');
-  if (oneshotBtn && pricingTable) {
-    oneshotBtn.addEventListener('click', function () {
-      var on = pricingTable.classList.toggle('show-oneshot');
-      oneshotBtn.setAttribute('aria-pressed', on ? 'true' : 'false');
+  /* ---- Egyszeri (buyout) ár: ugyanolyan kártya jön elő hátulról ---- */
+  (function () {
+    var cards = document.querySelectorAll('.tier[data-buyout], .tier-mini[data-buyout]');
+    Array.prototype.forEach.call(cards, function (card) {
+      var buyout = card.getAttribute('data-buyout');
+      if (!buyout) return;
+      var face = document.createElement('div');
+      face.className = 'buyout-face';
+      var styleStr = (card.getAttribute('style') || '').replace(/\s/g, '');
+      var dark = card.classList.contains('featured') || styleStr.indexOf('background:var(--ink)') >= 0;
+      if (dark) face.classList.add('is-dark');
+      // ugyanaz a kártya-tartalom, klónozva (a havidíj-kártya mása)
+      Array.prototype.forEach.call(card.children, function (ch) {
+        if (ch.classList && ch.classList.contains('buyout-face')) return;
+        face.appendChild(ch.cloneNode(true));
+      });
+      // az árat lecseréljük az egyszeri árra + fölé egy cimke
+      var priceRow = face.querySelector('.price-row');
+      var miniPrice = face.querySelector('.price');
+      var target = priceRow || miniPrice;
+      if (priceRow) priceRow.innerHTML = '<span class="amt">' + buyout + '</span><span class="per">egyszeri</span>';
+      if (miniPrice) miniPrice.innerHTML = buyout + ' <small>egyszeri</small>';
+      if (target) {
+        var label = document.createElement('div');
+        label.className = 'buyout-label';
+        label.textContent = 'Egyszeri megvásárlás';
+        target.parentNode.insertBefore(label, target);
+      }
+      card.appendChild(face);
     });
-  }
+
+    var containers = document.querySelectorAll('.pricing-table, .pricing-preview-grid');
+    var toggles = document.querySelectorAll('[data-oneshot-toggle]');
+    Array.prototype.forEach.call(toggles, function (btn) {
+      btn.addEventListener('click', function () {
+        var on = btn.getAttribute('aria-pressed') !== 'true';
+        Array.prototype.forEach.call(containers, function (c) { c.classList.toggle('show-oneshot', on); });
+        Array.prototype.forEach.call(toggles, function (b) { b.setAttribute('aria-pressed', on ? 'true' : 'false'); });
+      });
+    });
+  })();
 
   var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 

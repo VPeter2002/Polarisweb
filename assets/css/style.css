@@ -1293,45 +1293,52 @@ a, button, span, div, input, [onclick] {
 
 .pf-tile .challenge b { font-style: normal; color: var(--accent-strong); }
 
-/* ===== Egyszeri (buyout) ár – "bomba" toggle a pricing oldalon ===== */
-.oneshot-toggle-wrap { display: flex; justify-content: center; padding: 6px 32px 4px; }
+/* ===== Egyszeri (buyout) ár – "ugyanolyan kártya jön elő hátulról" ===== */
+.oneshot-toggle-wrap { display: flex; justify-content: center; padding: 6px 32px 18px; }
 .oneshot-toggle {
   display: inline-flex; align-items: center; gap: 9px;
   border: 1.5px solid var(--border); background: var(--surface);
-  border-radius: 999px; padding: 11px 20px; cursor: pointer;
+  border-radius: 999px; padding: 11px 22px; cursor: pointer;
   font-family: var(--sans); font-weight: 700; font-size: 14px; color: var(--ink);
   transition: background .35s cubic-bezier(.2,.7,.2,1), color .35s ease,
               border-color .35s ease, box-shadow .35s ease, transform .2s ease;
 }
 .oneshot-toggle:hover { transform: translateY(-1px); border-color: var(--ink-2); }
-.oneshot-toggle .ost-emoji { font-size: 16px; transition: transform .45s cubic-bezier(.2,.7,.2,1); }
 .oneshot-toggle[aria-pressed="true"] {
   background: var(--ink); color: #fff; border-color: var(--ink);
   box-shadow: 0 14px 34px -16px oklch(23% 0.02 50 / .55);
 }
-.oneshot-toggle[aria-pressed="true"] .ost-emoji { transform: rotate(14deg) scale(1.25); }
 
-/* Az egyszeri ár alapból HALVÁNYAN, kicsit hátrébb a havidíj alatt */
-.tier .oneshot {
-  display: flex; flex-direction: column; gap: 2px;
-  margin: -18px 0 26px;
-  opacity: .30;
-  transform: translateY(-6px) scale(.95);
-  transform-origin: left center;
-  transition: opacity .5s cubic-bezier(.2,.7,.2,1),
-              transform .5s cubic-bezier(.2,.7,.2,1), color .4s ease;
+/* A klonozott "egyszeri" kartya: ugyanaz a kartya, de a havidij helyett az
+   egyszeri ar. Alapbol HATUL (kicsit kisebb, atlatszo), a szulokartya folott. */
+.tier, .tier-mini { perspective: 1400px; }
+.buyout-face {
+  position: absolute; inset: 0; z-index: 1;
+  border-radius: inherit; padding: inherit;
+  background: var(--surface); color: var(--ink);
+  display: flex; flex-direction: column; overflow: hidden;
+  opacity: 0; transform: translateY(14px) scale(.9);
+  transform-origin: center 40%;
+  transition: opacity .5s cubic-bezier(.2,.7,.2,1), transform .6s cubic-bezier(.2,.7,.2,1);
   pointer-events: none;
 }
-.tier .oneshot-label { font-size: 11.5px; letter-spacing: .05em; text-transform: uppercase; opacity: .85; }
-.tier .oneshot-amt { font-family: var(--serif); font-size: 23px; line-height: 1.05; }
+.tier.featured .buyout-face { background: var(--ink); color: var(--on-dark); }
+.buyout-face.is-dark { background: var(--ink); color: var(--on-dark); }
+.buyout-label { font-size: 11.5px; letter-spacing: .05em; text-transform: uppercase; opacity: .7; margin-bottom: 4px; }
+.buyout-face .price-row { flex-wrap: wrap; }
+.buyout-face .price-row .amt { font-size: 31px; color: var(--accent-strong); }
+.buyout-face.is-dark .price-row .amt { color: var(--warm); }
+.buyout-face .price-row .per { font-size: 14px; }
+.buyout-face .price { font-size: 26px; color: var(--accent-strong); }
+.buyout-face.is-dark .price { color: var(--warm); }
+.buyout-face .price small { font-size: 13px; }
 
-/* Bekapcsolva: az egyszeri ár ELŐREJÖN és felerősödik, a havidíj halkul */
-.pricing-table.show-oneshot .tier .oneshot { opacity: 1; transform: translateY(0) scale(1); }
-.pricing-table.show-oneshot .tier .oneshot-amt { color: var(--accent-strong); }
-.pricing-table.show-oneshot .tier.featured .oneshot-amt { color: var(--warm); }
-.tier .price-row { transition: opacity .5s ease; }
-.pricing-table.show-oneshot .tier .price-row { opacity: .4; }
+/* Bekapcsolva: az egyszeri kartya ELOREJON hatulrol, a havidij-kartya hattérbe húzódik */
+.show-oneshot .buyout-face { opacity: 1; transform: translateY(0) scale(1); z-index: 4; pointer-events: auto; }
+.tier > *, .tier-mini > * { transition: opacity .4s ease, transform .5s cubic-bezier(.2,.7,.2,1); }
+.show-oneshot .tier > *:not(.buyout-face),
+.show-oneshot .tier-mini > *:not(.buyout-face) { opacity: 0; transform: scale(.96); }
 
 @media (prefers-reduced-motion: reduce) {
-  .tier .oneshot, .oneshot-toggle, .oneshot-toggle .ost-emoji, .tier .price-row { transition: none; }
+  .buyout-face, .oneshot-toggle, .tier > *, .tier-mini > * { transition: none; }
 }
