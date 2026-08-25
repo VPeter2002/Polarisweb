@@ -188,7 +188,9 @@ nav.main-nav a:hover{color:var(--chestnut-deep);}
   background:var(--sand-soft);
 }
 .form-field textarea{resize:vertical;min-height:110px;}
-.form-note{margin-top:14px;font-size:12.5px;color:rgba(62,42,31,0.85);}
+/* Nagyobb specificitas kell, kulonben a .section-dark p (vilagos homokszin)
+   felulirja es a feher form-cardon lathatatlan lesz. */
+.form-card .form-note{margin-top:14px;font-size:12.5px;color:rgba(62,42,31,0.85);}
 .form-status{margin-top:14px;font-size:13px;font-weight:700;}
 .form-status.ok{color:var(--hunter);}
 .form-status.err{color:var(--chestnut-deep);}
