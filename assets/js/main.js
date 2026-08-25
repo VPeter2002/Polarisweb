@@ -165,6 +165,16 @@
     });
   }
 
+  /* ---- Egyszeri (buyout) ár toggle: a halvány egyszeri árat elorehozza ---- */
+  var oneshotBtn = document.querySelector('[data-oneshot-toggle]');
+  var pricingTable = document.querySelector('.pricing-table');
+  if (oneshotBtn && pricingTable) {
+    oneshotBtn.addEventListener('click', function () {
+      var on = pricingTable.classList.toggle('show-oneshot');
+      oneshotBtn.setAttribute('aria-pressed', on ? 'true' : 'false');
+    });
+  }
+
   var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   /* ---- Sticky header shadow on scroll ---- */

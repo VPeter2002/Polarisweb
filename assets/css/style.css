@@ -1292,3 +1292,46 @@ a, button, span, div, input, [onclick] {
 }
 
 .pf-tile .challenge b { font-style: normal; color: var(--accent-strong); }
+
+/* ===== Egyszeri (buyout) ár – "bomba" toggle a pricing oldalon ===== */
+.oneshot-toggle-wrap { display: flex; justify-content: center; padding: 6px 32px 4px; }
+.oneshot-toggle {
+  display: inline-flex; align-items: center; gap: 9px;
+  border: 1.5px solid var(--border); background: var(--surface);
+  border-radius: 999px; padding: 11px 20px; cursor: pointer;
+  font-family: var(--sans); font-weight: 700; font-size: 14px; color: var(--ink);
+  transition: background .35s cubic-bezier(.2,.7,.2,1), color .35s ease,
+              border-color .35s ease, box-shadow .35s ease, transform .2s ease;
+}
+.oneshot-toggle:hover { transform: translateY(-1px); border-color: var(--ink-2); }
+.oneshot-toggle .ost-emoji { font-size: 16px; transition: transform .45s cubic-bezier(.2,.7,.2,1); }
+.oneshot-toggle[aria-pressed="true"] {
+  background: var(--ink); color: #fff; border-color: var(--ink);
+  box-shadow: 0 14px 34px -16px oklch(23% 0.02 50 / .55);
+}
+.oneshot-toggle[aria-pressed="true"] .ost-emoji { transform: rotate(14deg) scale(1.25); }
+
+/* Az egyszeri ár alapból HALVÁNYAN, kicsit hátrébb a havidíj alatt */
+.tier .oneshot {
+  display: flex; flex-direction: column; gap: 2px;
+  margin: -18px 0 26px;
+  opacity: .30;
+  transform: translateY(-6px) scale(.95);
+  transform-origin: left center;
+  transition: opacity .5s cubic-bezier(.2,.7,.2,1),
+              transform .5s cubic-bezier(.2,.7,.2,1), color .4s ease;
+  pointer-events: none;
+}
+.tier .oneshot-label { font-size: 11.5px; letter-spacing: .05em; text-transform: uppercase; opacity: .85; }
+.tier .oneshot-amt { font-family: var(--serif); font-size: 23px; line-height: 1.05; }
+
+/* Bekapcsolva: az egyszeri ár ELŐREJÖN és felerősödik, a havidíj halkul */
+.pricing-table.show-oneshot .tier .oneshot { opacity: 1; transform: translateY(0) scale(1); }
+.pricing-table.show-oneshot .tier .oneshot-amt { color: var(--accent-strong); }
+.pricing-table.show-oneshot .tier.featured .oneshot-amt { color: var(--warm); }
+.tier .price-row { transition: opacity .5s ease; }
+.pricing-table.show-oneshot .tier .price-row { opacity: .4; }
+
+@media (prefers-reduced-motion: reduce) {
+  .tier .oneshot, .oneshot-toggle, .oneshot-toggle .ost-emoji, .tier .price-row { transition: none; }
+}
