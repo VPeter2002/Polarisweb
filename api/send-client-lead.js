@@ -35,6 +35,29 @@ const CLIENTS = {
       },
     },
   },
+  // Karáth Nóra – lovasoktatás, Celldömölk (demo, 2026-08-25).
+  // FIGYELEM: Nórának meg NINCS publikus email cime, ezert a cimzett
+  // IDEIGLENESEN Peti teszt-cime. Amint Nóra megadja a sajat cimet,
+  // a `to` mezot at kell allitani az overe (ez az egyetlen valtoztatas).
+  'karath-nora': {
+    to: 'Peter.veszpremi@polarisweb.hu',
+    label: 'Karáth Nóra – Lovasoktatás',
+    brand: {
+      name: 'Karáth Nóra – Lovasoktatás',
+      monogram: 'KN',
+      tagline: 'Lovasoktatás Celldömölkön',
+      phone: '+36 30 255 6676',
+      signerName: 'Karáth Nóra',
+      contactLine: 'Celldömölk · +36 30 255 6676',
+      colors: {
+        headerBg: '#2A211A',
+        headerInk: '#F3ECE1',
+        accent: '#B06B3A',
+        accentStrong: '#8A4F26',
+        accentTint: '#F7EFE6',
+      },
+    },
+  },
   // Vegpont-teszthez: CSAK a sajat cimunkre kuld, tehat nem lehet vele
   // ugyfelet zaklatni. Deploy utan ezzel ellenorizzuk, hogy a Resend-lanc
   // vegig mukodik, anelkul hogy egy valodi ugyfel postafiokjaba kuldenenk
