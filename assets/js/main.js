@@ -181,18 +181,12 @@
         if (ch.classList && ch.classList.contains('buyout-face')) return;
         face.appendChild(ch.cloneNode(true));
       });
-      // az árat lecseréljük az egyszeri árra + fölé egy cimke
+      // az árat lecseréljük az egyszeri árra (egy sorban, hogy a klón-kártya
+      // ne legyen magasabb az eredetinél -> ne loghasson ki az utolso feature)
       var priceRow = face.querySelector('.price-row');
       var miniPrice = face.querySelector('.price');
-      var target = priceRow || miniPrice;
-      if (priceRow) priceRow.innerHTML = '<span class="amt">' + buyout + '</span><span class="per">egyszeri</span>';
-      if (miniPrice) miniPrice.innerHTML = buyout + ' <small>egyszeri</small>';
-      if (target) {
-        var label = document.createElement('div');
-        label.className = 'buyout-label';
-        label.textContent = 'Egyszeri megvásárlás';
-        target.parentNode.insertBefore(label, target);
-      }
+      if (priceRow) priceRow.innerHTML = '<span class="amt">' + buyout + '</span>';
+      if (miniPrice) miniPrice.innerHTML = buyout;
       card.appendChild(face);
     });
 

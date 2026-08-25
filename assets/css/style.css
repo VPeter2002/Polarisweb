@@ -1325,11 +1325,11 @@ a, button, span, div, input, [onclick] {
 .tier.featured .buyout-face { background: var(--ink); color: var(--on-dark); }
 .buyout-face.is-dark { background: var(--ink); color: var(--on-dark); }
 .buyout-label { font-size: 11.5px; letter-spacing: .05em; text-transform: uppercase; opacity: .7; margin-bottom: 4px; }
-.buyout-face .price-row { flex-wrap: wrap; }
-.buyout-face .price-row .amt { font-size: 31px; color: var(--accent-strong); }
+.buyout-face .price-row { flex-wrap: nowrap; }
+.buyout-face .price-row .amt { font-size: 25px; white-space: nowrap; color: var(--accent-strong); }
 .buyout-face.is-dark .price-row .amt { color: var(--warm); }
 .buyout-face .price-row .per { font-size: 14px; }
-.buyout-face .price { font-size: 26px; color: var(--accent-strong); }
+.buyout-face .price { font-size: 24px; white-space: nowrap; color: var(--accent-strong); }
 .buyout-face.is-dark .price { color: var(--warm); }
 .buyout-face .price small { font-size: 13px; }
 
