@@ -58,6 +58,29 @@ const CLIENTS = {
       },
     },
   },
+  // Matchy35° Budapest -- matcha kávézó (demo, 2026-08-26).
+  // FIGYELEM: a kávézónak nincs ismert email cime (kontakt: tel/IG), ezert a
+  // cimzett IDEIGLENESEN Peti teszt-cime. Amint megvan a kávézó email cime,
+  // a `to` mezot at kell allitani (ez az egyetlen valtoztatas).
+  'matchy35': {
+    to: 'Peter.veszpremi@polarisweb.hu',
+    label: 'Matchy35° Budapest',
+    brand: {
+      name: 'Matchy35° Budapest',
+      monogram: 'M',
+      tagline: 'Matcha kávézó',
+      phone: '+36 30 074 4902',
+      signerName: 'Matchy35°',
+      contactLine: 'Budapest, Nagy Templom u. 17-33 \u00b7 +36 30 074 4902',
+      colors: {
+        headerBg: '#33412C',
+        headerInk: '#F5F1E8',
+        accent: '#7A9B5E',
+        accentStrong: '#4E6B3A',
+        accentTint: '#EEF3E6',
+      },
+    },
+  },
   // Vegpont-teszthez: CSAK a sajat cimunkre kuld, tehat nem lehet vele
   // ugyfelet zaklatni. Deploy utan ezzel ellenorizzuk, hogy a Resend-lanc
   // vegig mukodik, anelkul hogy egy valodi ugyfel postafiokjaba kuldenenk
