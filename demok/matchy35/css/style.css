@@ -7,6 +7,7 @@
   --sakura:#F4C2D1;
   --sakura-deep:#E58BA4;
   --sakura-ink:#C05C7C;
+  --star:#E8A93C;
   --cream:#FBF3E7;
   --cream-soft:#FDF9F2;
   --paper:#FFFFFF;
@@ -150,7 +151,8 @@ nav.main-nav a:hover{color:var(--sakura-ink);}
   box-shadow:0 10px 26px rgba(43,42,36,0.08);
 }
 .rating-chip .rc-num{font-family:'Playfair Display',serif;font-weight:600;font-size:22px;color:var(--matcha-deep);}
-.rating-chip .rc-stars svg{width:13px;height:13px;fill:var(--sakura-ink);}
+.rating-chip .rc-stars{display:inline-flex;gap:1px;}
+.rating-chip .rc-stars svg{width:15px;height:15px;fill:var(--star);}
 .rating-chip .rc-label{font-size:11.5px;color:var(--ink-soft);letter-spacing:0.03em;}
 @media (max-width:900px){
   .hero .wrap{grid-template-columns:1fr;gap:36px;}
@@ -170,7 +172,8 @@ nav.main-nav a:hover{color:var(--sakura-ink);}
 /* reviews (Balogh-minta) */
 .rev-agg{display:inline-flex;align-items:center;gap:14px;margin-top:18px;padding:14px 20px;border:1px solid var(--line);border-radius:14px;background:var(--paper);}
 .rev-agg .rv-num{font-family:'Playfair Display',serif;font-size:1.7rem;font-weight:600;color:var(--matcha-deep);}
-.rev-agg .rv-stars svg{width:13px;height:13px;fill:var(--sakura-ink);}
+.rev-agg .rv-stars{display:inline-flex;gap:1px;}
+.rev-agg .rv-stars svg{width:15px;height:15px;fill:var(--star);}
 .rev-agg .rv-label{font-size:0.78rem;color:var(--ink-soft);font-weight:600;letter-spacing:0.02em;}
 
 .rev-track-wrap{overflow:hidden;margin-top:32px;-webkit-mask-image:linear-gradient(90deg, transparent, black 6%, black 94%, transparent);mask-image:linear-gradient(90deg, transparent, black 6%, black 94%, transparent);}
@@ -179,7 +182,7 @@ nav.main-nav a:hover{color:var(--sakura-ink);}
 @keyframes revScroll{from{transform:translateX(0);}to{transform:translateX(-50%);}}
 .rev-card{flex:0 0 300px;background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:22px;}
 .rev-card .rc-stars{display:flex;gap:2px;}
-.rev-card .rc-stars svg{width:13px;height:13px;fill:var(--sakura-ink);}
+.rev-card .rc-stars svg{width:15px;height:15px;fill:var(--star);}
 .rev-card .rc-quote{margin-top:12px;font-size:0.92rem;color:var(--ink);line-height:1.55;}
 .rev-card .rc-name{margin-top:14px;font-size:0.8rem;font-weight:700;color:var(--matcha-deep);}
 .rev-card .rc-meta{font-size:0.72rem;color:var(--ink-soft);opacity:0.85;margin-top:1px;}
@@ -256,3 +259,9 @@ footer strong{color:var(--cream-soft);}
 .video-band{background:var(--matcha-deep);padding:clamp(40px,6vw,76px) 0;}
 .video-band .vb-wrap{max-width:600px;margin:0 auto;padding:0 24px;}
 .video-band .vb-video{width:100%;height:auto;display:block;border-radius:20px;background:#000;box-shadow:0 34px 64px -34px rgba(0,0,0,.55);}
+
+
+/* Terkep a kapcsolat szekcioban (a form helyett, Peti kerese 2026-08-26) */
+.map-card{border-radius:var(--radius);overflow:hidden;box-shadow:0 24px 50px rgba(0,0,0,0.28);min-height:360px;background:#20281c;}
+.map-card iframe{width:100%;height:100%;min-height:360px;border:0;display:block;filter:saturate(1.02);}
+@media (max-width:900px){ .map-card{min-height:300px;} .map-card iframe{min-height:300px;} }
