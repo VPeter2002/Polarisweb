@@ -252,6 +252,7 @@ footer strong{color:var(--cream-soft);}
   .section{padding:56px 0;}
 }
 
-/* Brand matcha-bemutató videó sáv (Peti kérése, 2026-08-26) */
-.video-band{position:relative;width:100%;height:clamp(300px,54vw,600px);overflow:hidden;background:var(--matcha-deep);}
-.video-band .vb-video{width:100%;height:100%;object-fit:cover;display:block;}
+/* Brand matcha-bemutató videó (Peti kérése, 2026-08-26) -- keretben, natúr 4:3 arány, nincs levágás */
+.video-band{background:var(--matcha-deep);padding:clamp(40px,6vw,76px) 0;}
+.video-band .vb-wrap{max-width:600px;margin:0 auto;padding:0 24px;}
+.video-band .vb-video{width:100%;height:auto;display:block;border-radius:20px;background:#000;box-shadow:0 34px 64px -34px rgba(0,0,0,.55);}
