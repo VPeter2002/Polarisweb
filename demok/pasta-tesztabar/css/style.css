@@ -161,17 +161,31 @@ nav.main-nav a:hover{color:var(--brand);}
 .napi-menu-head .nm-badge{display:inline-flex;align-items:center;gap:8px;padding:8px 16px;border-radius:999px;background:var(--gold);color:var(--ink);font-weight:700;font-size:12.5px;text-transform:uppercase;letter-spacing:0.06em;}
 #napi-menu-content{margin-top:22px;position:relative;z-index:1;}
 .nm-empty{color:rgba(251,243,230,0.68);font-size:15px;}
-/* napi menu -- dinamikus tartalom (Supabase-bol, napi-menu.js renderel ide, sotet kartya) */
+/* napi menu -- dinamikus tartalom (Supabase, telephely-tabok, sotet kartya) */
+#napi-menu-content .nm-topline{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px;margin-bottom:16px;}
 #napi-menu-content .nm-date{font-family:'Sora',sans-serif;font-weight:600;font-size:13.5px;letter-spacing:0.02em;color:var(--gold);}
-#napi-menu-content .nm-subtitle{font-family:'Unbounded',sans-serif;font-weight:700;font-size:16px;color:var(--cream-soft);margin-top:6px;}
-#napi-menu-content .nm-list{list-style:none;margin:18px 0 0;padding:0;display:flex;flex-direction:column;}
-#napi-menu-content .nm-item{display:flex;align-items:baseline;gap:12px;padding:13px 0;border-bottom:1px solid rgba(251,243,230,0.14);}
+#napi-menu-content .nm-price-badge{font-weight:700;font-size:12.5px;color:var(--cream-soft);border:1px solid rgba(251,243,230,0.28);padding:5px 12px;border-radius:999px;}
+#napi-menu-content .nm-tabs{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:20px;}
+#napi-menu-content .nm-tab{font-family:'Sora',sans-serif;font-weight:600;font-size:13px;color:rgba(251,243,230,0.75);background:rgba(251,243,230,0.08);border:1px solid rgba(251,243,230,0.16);border-radius:999px;padding:8px 15px;cursor:pointer;transition:background .15s ease,color .15s ease;}
+#napi-menu-content .nm-tab:hover{background:rgba(251,243,230,0.14);color:var(--cream-soft);}
+#napi-menu-content .nm-tab.is-active{background:var(--gold);color:var(--ink);border-color:var(--gold);}
+#napi-menu-content .nm-panel{display:none;}
+#napi-menu-content .nm-panel.is-active{display:block;}
+#napi-menu-content .nm-loc-hours{font-size:12.5px;font-weight:700;color:var(--gold);margin-bottom:10px;letter-spacing:.02em;}
+#napi-menu-content .nm-list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;}
+#napi-menu-content .nm-item{padding:13px 0;border-bottom:1px solid rgba(251,243,230,0.14);}
 #napi-menu-content .nm-item:last-child{border-bottom:none;}
-#napi-menu-content .nm-name{font-weight:600;font-size:15.5px;color:var(--cream-soft);}
-#napi-menu-content .nm-dots{flex:1;border-bottom:1px dotted rgba(251,243,230,0.28);transform:translateY(-4px);}
-#napi-menu-content .nm-price{font-family:'Sora',sans-serif;font-weight:700;font-size:15px;color:var(--gold);white-space:nowrap;}
-#napi-menu-content .nm-note{margin-top:16px;font-size:13px;color:rgba(251,243,230,0.72);}
+#napi-menu-content .nm-name{display:block;font-family:'Unbounded',sans-serif;font-weight:700;font-size:15px;color:var(--cream-soft);letter-spacing:.01em;}
+#napi-menu-content .nm-desc{display:block;margin-top:5px;font-size:13px;line-height:1.5;color:rgba(251,243,230,0.66);}
+#napi-menu-content .nm-note{margin-top:18px;padding-top:14px;border-top:1px solid rgba(251,243,230,0.14);font-size:12.5px;color:rgba(251,243,230,0.6);}
 @media (max-width:600px){ .napi-menu-card{padding:28px 22px;} }
+
+/* allando etlap = etel-katalogus (vilagos szekcio) */
+#etlap-content .cat-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:2px 36px;}
+#etlap-content .cat-row{padding:16px 0;border-bottom:1px solid var(--line);}
+#etlap-content .cat-name{font-family:'Unbounded',sans-serif;font-weight:700;font-size:16px;color:var(--brand);}
+#etlap-content .cat-desc{margin-top:6px;font-size:13px;line-height:1.55;color:var(--ink-soft);}
+@media (max-width:640px){ #etlap-content .cat-grid{grid-template-columns:1fr;} }
 
 /* menu (allando etlap) */
 .menu-cat{margin-top:40px;}

@@ -9,63 +9,45 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@600;700;800&family=Sora:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --brand: #D8432A;
-    --brand-deep: #A62E1A;
-    --accent: #4C7A3D;
-    --gold: #F2A93B;
-    --cream: #FBF3E6;
-    --cream-soft: #FEFAF3;
-    --ink: #221D1A;
-    --muted: rgba(34,29,26,0.64);
-    --line: rgba(34,29,26,0.14);
-    --radius: 18px;
-  }
-  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-  body {
-    margin: 0; background: var(--cream-soft); color: var(--ink);
-    font-family: 'Sora', system-ui, -apple-system, Arial, sans-serif; line-height: 1.55;
-  }
-  .wrap { max-width: 780px; margin: 0 auto; padding: 24px 18px 64px; }
-  header.top { display: flex; align-items: center; gap: 10px; margin-bottom: 6px; }
-  .brand { font-family: 'Unbounded', sans-serif; font-weight: 800; font-size: 30px; color: var(--ink); }
-  .brand .dot { color: var(--brand); }
-  header.top .sub { color: var(--muted); font-size: 14px; font-weight: 600; }
-  h1 { font-family: 'Unbounded', sans-serif; font-size: 20px; margin: 18px 0 4px; }
-  .hint { color: var(--muted); font-size: 14px; margin: 0 0 20px; }
-
-  .card { background: var(--paper, #fff); border: 1px solid var(--line); border-radius: var(--radius); padding: 18px; margin-bottom: 18px; }
-  label { display: block; font-weight: 600; font-size: 13.5px; margin: 12px 0 6px; }
-  input[type=text], input[type=date], input[type=password], textarea {
-    width: 100%; padding: 11px 13px; border: 1px solid var(--line); border-radius: 10px;
-    font: inherit; color: var(--ink); background: #fff;
-  }
-  textarea { min-height: 64px; resize: vertical; }
-  input:focus, textarea:focus { outline: 2px solid var(--brand); outline-offset: 1px; border-color: var(--brand); }
-
-  .rows { margin-top: 8px; }
-  .row { display: grid; grid-template-columns: 1fr 130px 40px; gap: 8px; align-items: center; margin-bottom: 8px; }
-  .row .del { border: 1px solid var(--line); background: #fff; border-radius: 10px; height: 42px; cursor: pointer; color: var(--brand); font-size: 20px; line-height: 1; }
-  .row .del:hover { background: #fdecea; }
-  .addbtn { margin-top: 4px; border: 1px dashed var(--brand); background: #fff; color: var(--brand); border-radius: 10px; padding: 10px 14px; cursor: pointer; font: inherit; font-weight: 600; }
-  .addbtn:hover { background: #fdecea; }
-
-  .actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 8px; }
-  button.primary, button.ghost { border-radius: 999px; padding: 13px 22px; font: inherit; font-weight: 700; cursor: pointer; border: 1.5px solid var(--brand); }
-  button.primary { background: var(--brand); color: #fff; }
-  button.primary:hover { background: var(--brand-deep); border-color: var(--brand-deep); }
-  button.ghost { background: #fff; color: var(--brand); }
-  button.ghost:hover { background: #fdecea; }
-  button:disabled { opacity: .5; cursor: default; }
-
-  .status { font-size: 14px; margin-top: 10px; min-height: 20px; font-weight: 600; }
-  .status.ok { color: var(--accent); }
-  .status.err { color: var(--brand); }
-
-  .preview-card { text-align: center; }
-  .preview-card h2 { font-family: 'Unbounded', sans-serif; font-size: 16px; margin: 0 0 12px; }
-  #preview { width: 100%; max-width: 360px; height: auto; border-radius: 12px; border: 1px solid var(--line); box-shadow: 0 12px 30px rgba(34,29,26,.14); }
-  .pw-note { color: var(--muted); font-size: 13px; margin-top: 14px; }
+  :root{--brand:#D8432A;--brand-deep:#A62E1A;--accent:#4C7A3D;--gold:#F2A93B;--cream:#FBF3E6;--cream-soft:#FEFAF3;--ink:#221D1A;--muted:rgba(34,29,26,0.64);--line:rgba(34,29,26,0.14);--radius:18px;}
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+  body{margin:0;background:var(--cream-soft);color:var(--ink);font-family:'Sora',system-ui,Arial,sans-serif;line-height:1.55;}
+  .wrap{max-width:820px;margin:0 auto;padding:24px 18px 72px;}
+  header.top{display:flex;align-items:center;gap:10px;margin-bottom:4px;}
+  .brand{font-family:'Unbounded',sans-serif;font-weight:800;font-size:30px;color:var(--ink);}
+  .brand .dot{color:var(--brand);}
+  header.top .sub{color:var(--muted);font-size:14px;font-weight:600;}
+  .hint{color:var(--muted);font-size:14px;margin:8px 0 20px;}
+  .card{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:18px;margin-bottom:16px;}
+  .card h2{font-family:'Unbounded',sans-serif;font-size:15px;margin:0 0 12px;}
+  label{display:block;font-weight:600;font-size:13px;margin:10px 0 6px;}
+  input[type=text],input[type=date],input[type=password],textarea,select{width:100%;padding:11px 13px;border:1px solid var(--line);border-radius:10px;font:inherit;color:var(--ink);background:#fff;}
+  textarea{min-height:60px;resize:vertical;}
+  select{appearance:none;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23221D1A' stroke-width='2'><path d='M6 9l6 6 6-6'/></svg>");background-repeat:no-repeat;background-position:right 12px center;padding-right:34px;}
+  input:focus,textarea:focus,select:focus{outline:2px solid var(--brand);outline-offset:1px;border-color:var(--brand);}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+  .tabs{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:6px;}
+  .tab{font-weight:700;font-size:13px;color:var(--ink);background:#fff;border:1.5px solid var(--line);border-radius:999px;padding:9px 16px;cursor:pointer;}
+  .tab.is-active{background:var(--brand);color:#fff;border-color:var(--brand);}
+  .drow{display:grid;grid-template-columns:1fr 40px;gap:8px;align-items:center;margin-bottom:8px;}
+  .drow .del{border:1px solid var(--line);background:#fff;border-radius:10px;height:44px;cursor:pointer;color:var(--brand);font-size:20px;}
+  .drow .del:hover{background:#fdecea;}
+  .addbtn{margin-top:2px;border:1px dashed var(--brand);background:#fff;color:var(--brand);border-radius:10px;padding:10px 14px;cursor:pointer;font:inherit;font-weight:600;}
+  .addbtn:hover{background:#fdecea;}
+  .actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px;}
+  button.primary,button.ghost{border-radius:999px;padding:13px 22px;font:inherit;font-weight:700;cursor:pointer;border:1.5px solid var(--brand);}
+  button.primary{background:var(--brand);color:#fff;}
+  button.primary:hover{background:var(--brand-deep);border-color:var(--brand-deep);}
+  button.ghost{background:#fff;color:var(--brand);}
+  button.ghost:hover{background:#fdecea;}
+  button:disabled{opacity:.5;cursor:default;}
+  .status{font-size:14px;margin-top:10px;min-height:20px;font-weight:600;}
+  .status.ok{color:var(--accent);} .status.err{color:var(--brand);}
+  .loc-hours{font-size:12.5px;color:var(--muted);margin:-2px 0 12px;}
+  #posttext{min-height:150px;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:12.5px;}
+  .preview-wrap{text-align:center;margin-top:12px;}
+  #preview{width:100%;max-width:320px;height:auto;border-radius:12px;border:1px solid var(--line);box-shadow:0 10px 26px rgba(34,29,26,.12);}
+  .small{font-size:12.5px;color:var(--muted);}
 </style>
 </head>
 <body>
@@ -74,43 +56,58 @@
     <span class="brand">PASTA<span class="dot">.</span></span>
     <span class="sub">Napi menü szerkesztő</span>
   </header>
-  <h1>Mai menü</h1>
-  <p class="hint">Írd be a mai napi menüt, mentsd el (megjelenik a weboldalon), majd tölts le róla egy kész képet, amit felraksz a Facebookra. Egy helyen szerkeszted, két helyen jelenik meg.</p>
+  <p class="hint">Válaszd ki a telephelyet, add hozzá a mai tésztákat a katalógusból, mentsd el. A weboldalon telephelyenként jelenik meg. A poszt szövegét vagy a képet egy gombbal viszed a Facebookra.</p>
 
   <div class="card">
-    <div class="row" style="grid-template-columns: 1fr 1fr;">
-      <div>
-        <label for="f-date">Dátum</label>
-        <input type="date" id="f-date">
-      </div>
-      <div>
-        <label for="f-title">Cím</label>
-        <input type="text" id="f-title" value="Napi menü" placeholder="Napi menü">
-      </div>
+    <div class="grid2">
+      <div><label for="f-date">Dátum</label><input type="date" id="f-date"></div>
+      <div><label for="f-price">Napi ár (minden tészta)</label><input type="text" id="f-price" value="2500 Ft"></div>
     </div>
-
-    <label>Tételek (név + ár)</label>
-    <div class="rows" id="rows"></div>
-    <button class="addbtn" id="add-row" type="button">+ Új sor</button>
-
-    <label for="f-note" style="margin-top:16px;">Megjegyzés (opcionális)</label>
-    <textarea id="f-note" placeholder="Pl. Minden menü mellé választható üdítő. Elvitelre is."></textarea>
+    <label for="f-note">Infó / fizetés (a menü alján)</label>
+    <textarea id="f-note"></textarea>
   </div>
 
   <div class="card">
-    <label for="f-pass">Jelszó (mentéshez)</label>
-    <input type="password" id="f-pass" placeholder="A szerkesztő jelszava" autocomplete="current-password">
+    <h2>Telephely</h2>
+    <div class="tabs" id="loc-tabs"></div>
+    <div class="loc-hours" id="loc-hours"></div>
+    <label>Mai tészták ezen a telephelyen (katalógusból)</label>
+    <div id="drows"></div>
+    <button class="addbtn" id="add-dish" type="button">+ Tészta hozzáadása</button>
     <div class="actions">
-      <button class="primary" id="save" type="button">Mentés a weboldalra</button>
-      <button class="ghost" id="download" type="button">Facebook-kép letöltése</button>
+      <button class="primary" id="save" type="button">Telephely mentése</button>
     </div>
     <div class="status" id="status"></div>
   </div>
 
-  <div class="card preview-card">
-    <h2>Facebook-kép előnézet</h2>
-    <canvas id="preview" width="1080" height="1350"></canvas>
-    <p class="pw-note">A kép frissül, ahogy szerkeszted. A "Facebook-kép letöltése" gomb menti PNG-ként, azt töltöd fel a Facebookra.</p>
+  <div class="card">
+    <h2>Új tészta a katalógusba</h2>
+    <p class="small">Ha olyan tésztát akarsz felvenni, ami még nincs a listában. Utána megjelenik a legördülőben.</p>
+    <label for="nd-name">Név</label>
+    <input type="text" id="nd-name" placeholder="Pl. ARRABBIATA">
+    <label for="nd-desc">Leírás</label>
+    <textarea id="nd-desc" placeholder="szósz · feltét · összetevők"></textarea>
+    <div class="actions"><button class="ghost" id="add-catalog" type="button">Hozzáadás a katalógushoz</button></div>
+    <div class="status" id="cat-status"></div>
+  </div>
+
+  <div class="card">
+    <h2>Jelszó</h2>
+    <input type="password" id="f-pass" placeholder="A szerkesztő jelszava" autocomplete="current-password">
+    <p class="small">A mentéshez és az új tésztához kell. A Supabase SQL-ben állítod.</p>
+  </div>
+
+  <div class="card">
+    <h2>Facebookra</h2>
+    <div class="actions">
+      <button class="ghost" id="gen-text" type="button">Poszt szöveg készítése</button>
+      <button class="ghost" id="copy-text" type="button">Szöveg másolása</button>
+      <button class="primary" id="download" type="button">Kép letöltése (aktuális telephely)</button>
+    </div>
+    <label for="posttext" style="margin-top:12px;">Poszt szöveg (az összes telephely, másolható)</label>
+    <textarea id="posttext" placeholder="Nyomd meg a Poszt szöveg készítése gombot."></textarea>
+    <div class="preview-wrap"><canvas id="preview" width="1080" height="1350"></canvas></div>
+    <p class="small">A kép a kiválasztott telephely mai menüjét mutatja.</p>
   </div>
 </div>
 <script src="/demok/pasta-tesztabar/js/admin.js"></script>
