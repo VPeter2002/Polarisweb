@@ -141,6 +141,8 @@ nav.main-nav a:hover{color:var(--brand);}
 .locations-note svg{width:16px;height:16px;color:var(--brand);}
 @media (max-width:900px){
   .hero .wrap{grid-template-columns:1fr;gap:32px;}
+  .hero .wrap>*{min-width:0;}
+  .hero .eyebrow,.hero .lede{max-width:100%;overflow-wrap:break-word;}
   .hero-visual{order:-1;max-width:320px;margin:0 auto;}
 }
 
