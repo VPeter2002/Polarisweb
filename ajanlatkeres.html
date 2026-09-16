@@ -3,15 +3,25 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <!-- Google tag (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-N7MQB91XQM"></script>
+  <!-- Google tag (gtag.js) + Consent Mode v2: merés csak elfogadas utan -->
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
+    (function () {
+      var saved = null;
+      try { saved = localStorage.getItem('pw-consent'); } catch (e) {}
+      gtag('consent', 'default', {
+        'ad_storage': 'denied',
+        'ad_user_data': 'denied',
+        'ad_personalization': 'denied',
+        'analytics_storage': saved === 'granted' ? 'granted' : 'denied',
+        'wait_for_update': 500
+      });
+    })();
     gtag('js', new Date());
-
     gtag('config', 'G-N7MQB91XQM');
   </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-N7MQB91XQM"></script>
   <link rel="icon" type="image/svg+xml" href="assets/img/favicon.svg">
   <title>Ajánlatkérés | Weboldal bérlés ajánlat | Polarisweb</title>
   <meta name="description" content="Néhány kérdés, és összeállítjuk személyre szabott ajánlatát. Öt rövid lépés, kb. 2 perc.">
@@ -220,5 +230,6 @@
   </div>
 
   <script src="assets/js/quote.js"></script>
+  <script src="assets/js/consent.js"></script>
 </body>
 </html>

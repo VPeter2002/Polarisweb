@@ -3,15 +3,25 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <!-- Google tag (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-N7MQB91XQM"></script>
+  <!-- Google tag (gtag.js) + Consent Mode v2: merés csak elfogadas utan -->
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
+    (function () {
+      var saved = null;
+      try { saved = localStorage.getItem('pw-consent'); } catch (e) {}
+      gtag('consent', 'default', {
+        'ad_storage': 'denied',
+        'ad_user_data': 'denied',
+        'ad_personalization': 'denied',
+        'analytics_storage': saved === 'granted' ? 'granted' : 'denied',
+        'wait_for_update': 500
+      });
+    })();
     gtag('js', new Date());
-
     gtag('config', 'G-N7MQB91XQM');
   </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-N7MQB91XQM"></script>
   <link rel="icon" type="image/svg+xml" href="assets/img/favicon.svg">
   <title>Adatkezelési tájékoztató | Polarisweb</title>
   <meta name="description" content="A Polarisweb (Veszprémi Péter E.V.) adatkezelési tájékoztatója az ügyféladatok kezeléséről, a GDPR és az Infotv. előírásai szerint.">
@@ -54,7 +64,7 @@
 
   <!-- CONTENT -->
   <section class="legal-wrap legal">
-    <div class="legal-meta">Hatályos: 2026. 07. 01.-től</div>
+    <div class="legal-meta">Hatályos: 2026. 09. 16.-tól</div>
 
     <h2>1. Bevezetés és az Adatkezelő adatai</h2>
     <p>Jelen tájékoztató célja, hogy rögzítse Veszprémi Péter E.V. (a továbbiakban: Adatkezelő) által alkalmazott adatvédelmi és adatkezelési irányelveket, amelyeket az Adatkezelő magára nézve kötelezőnek ismer el. Az Adatkezelő kötelezettséget vállal arra, hogy tevékenységével kapcsolatos minden adatkezelés megfelel az Európai Parlament és a Tanács (EU) 2016/679 rendeletének (GDPR), valamint a 2011. évi CXII. törvénynek (Infotv.).</p>
@@ -88,14 +98,26 @@
       <li><strong>Az adatkezelés időtartama:</strong> A számviteli bizonylatokat a Számviteli törvény 169. § (2) bekezdése alapján 8 évig kell megőrizni. Az egyéb szerződéses adatokat a Polgári Törvénykönyv szerinti elévülési idő (5 év) leteltéig kezeljük.</li>
     </ul>
 
-    <h2>3. Adatfeldolgozók köre</h2>
+    <h2>3. Sütik (cookie-k) és a látogatói statisztika</h2>
+    <p>A weboldal sütiket, azaz a látogató eszközén elhelyezett kis adatfájlokat használ. Két csoportot különböztetünk meg:</p>
+    <ul>
+      <li><strong>A működéshez szükséges (technikai) sütik:</strong> ezek nélkül az oldal alapvető funkciói nem érhetők el, illetve nem tudjuk megjegyezni a sütikre adott válaszodat. Kezelt adat: a hozzájárulás ténye, a böngésződ helyi tárolójában. Jogalap: az Adatkezelő jogos érdeke (GDPR 6. cikk (1) bekezdés f) pont), hozzájárulást nem igényel.</li>
+      <li><strong>Statisztikai (analitikai) sütik:</strong> a Google Analytics 4 szolgáltatás sütijei, amelyekkel az Adatkezelő összesített, a látogató személyéhez nem köthető formában látja, hogy mely oldalakat, milyen eszközről és milyen forrásból nyitják meg. Célja a weboldal tartalmának és működésének fejlesztése. Jogalap: kizárólag az érintett önkéntes hozzájárulása (GDPR 6. cikk (1) bekezdés a) pont).</li>
+    </ul>
+    <p>A statisztikai mérés <strong>alapértelmezés szerint nem indul el.</strong> Az oldal megnyitásakor megjelenő sávon te döntöd el, hogy engedélyezed-e. Az Adatkezelő a Google Consent Mode v2 megoldását használja, így a hozzájárulás megadásáig a Google szolgáltatásai nem helyeznek el analitikai sütit, a hirdetési célú adattárolás pedig minden esetben tiltott.</p>
+    <p>A hozzájárulás bármikor, következmény nélkül visszavonható, illetve utólag megadható:</p>
+    <p><button type="button" class="btn btn-dark" data-pw-consent-open>Sütibeállítások módosítása</button></p>
+    <p>A visszavonás nem érinti a visszavonás előtti adatkezelés jogszerűségét. A már elhelyezett sütiket a böngésződ beállításaiban bármikor törölheted. A Google adatkezeléséről a <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Google adatvédelmi irányelvei</a> adnak részletes tájékoztatást. A mérési adatok megőrzési idejét a Google Analytics felületén beállított érték határozza meg.</p>
+
+    <h2>4. Adatfeldolgozók köre</h2>
     <p>Az Adatkezelő a feladatai ellátásához, valamint a szerződések zökkenőmentes teljesítéséhez az alábbi adatfeldolgozókat veszi igénybe:</p>
     <ol>
       <li><strong>Számlázási rendszer szolgáltatója:</strong> Billingo.hu – Feladata: Elektronikus számlák kiállítása és kiküldése.</li>
       <li><strong>Tárhely- és szerverszolgáltató:</strong> Resend.com, Vercel.com, Supabase.com, Cloudflare.com – Feladata: Az Adatkezelő weboldalának és levelezőrendszerének biztonságos tárolása és üzemeltetése.</li>
+      <li><strong>Látogatói statisztika szolgáltatója:</strong> Google Ireland Limited (Google Analytics 4) – Feladata: A weboldal összesített látogatói statisztikájának készítése, kizárólag a látogató előzetes hozzájárulása esetén.</li>
     </ol>
 
-    <h2>4. Az Érintettek jogai és érvényesítésük</h2>
+    <h2>5. Az Érintettek jogai és érvényesítésük</h2>
     <p>A személyes adatok tulajdonosaként (Érintettként) téged az alábbi jogok illetnek meg a GDPR szerint:</p>
     <ul>
       <li><strong>Hozzáférés joga (Art. 15):</strong> Jogod van tájékoztatást kérni arról, hogy kezeljük-e a személyes adataidat, és ha igen, hozzáférést kaphatsz ezekhez az adatokhoz.</li>
@@ -107,7 +129,7 @@
     </ul>
     <p>Ezen jogaidat a <a href="mailto:peter.veszpremi@polarisweb.hu">peter.veszpremi@polarisweb.hu</a> e-mail címre küldött írásbeli kérelemmel bármikor ingyenesen gyakorolhatod. Az Adatkezelő a kérelem beérkezésétől számított legfeljebb 30 napon belül köteles válaszolni.</p>
 
-    <h2>5. Jogorvoslati lehetőségek</h2>
+    <h2>6. Jogorvoslati lehetőségek</h2>
     <p>Amennyiben úgy ítéled meg, hogy személyes adataid kezelése során jogsérelem ért, az alábbi lépéseket teheted meg:</p>
     <ol>
       <li><strong>Vedd fel velünk a kapcsolatot:</strong> Kérjük, elsőként jelezd felénk a problémát az elérhetőségeinken, hogy azonnal orvosolni tudjuk azt.</li>
@@ -123,7 +145,7 @@
       <li><strong>Bírósági jogorvoslat:</strong> Jogosult vagy bírósághoz fordulni. A per elbírálása a lakóhelyed vagy tartózkodási helyed szerinti törvényszék hatáskörébe tartozik.</li>
     </ol>
 
-    <h2>6. Adatbiztonság</h2>
+    <h2>7. Adatbiztonság</h2>
     <p>Az Adatkezelő kijelenti, hogy az adatbiztonság és az adatok integritásának megőrzése érdekében végrehajtotta a szükséges technikai és szervezési intézkedéseket. Az adatokhoz kizárólag az Adatkezelő férhet hozzá, az elektronikus rendszereket erős jelszóval, kétlépcsős azonosítással (2FA) és SSL titkosítással védi.</p>
   </section>
 
@@ -172,5 +194,6 @@
   </footer>
 
   <script src="assets/js/main.js"></script>
+  <script src="assets/js/consent.js"></script>
 </body>
 </html>
