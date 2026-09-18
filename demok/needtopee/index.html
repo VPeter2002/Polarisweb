@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5">
+<title>Need To Pee | Public toilets in Budapest</title>
+<meta name="description" content="Every public toilet in Budapest on one map. Free or paid, open now, wheelchair accessible, baby changing. Works offline.">
+<meta name="theme-color" content="#0d9488">
+<meta name="robots" content="noindex">
+<link rel="manifest" href="/demok/needtopee/manifest.webmanifest">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<style>
+  :root{
+    --bg:#f6f7f6; --card:#fff; --ink:#15211f; --ink-2:#3c4a47; --muted:#6b7a77;
+    --line:#e2e7e5; --brand:#0d9488; --brand-dark:#0f766e; --free:#15803d; --paid:#b45309; --nodata:#6b7a77;
+    --shadow:0 10px 30px -18px rgba(14,30,28,.45);
+    --sans:system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{font-family:var(--sans);background:var(--bg);color:var(--ink);-webkit-tap-highlight-color:transparent}
+  header{position:sticky;top:0;z-index:600;background:var(--card);border-bottom:1px solid var(--line)}
+  .bar{display:flex;align-items:center;gap:10px;padding:10px 14px;max-width:1100px;margin:0 auto}
+  .logo{display:flex;align-items:center;gap:8px;font-weight:800;font-size:17px;letter-spacing:-.02em}
+  .logo span.dot{width:26px;height:26px;border-radius:8px;background:var(--brand);display:grid;place-items:center;color:#fff;font-size:15px}
+  .spacer{flex:1}
+  .lang{display:flex;border:1px solid var(--line);border-radius:999px;overflow:hidden}
+  .lang button{border:0;background:var(--card);color:var(--muted);font:600 12.5px var(--sans);padding:7px 11px;cursor:pointer}
+  .lang button.on{background:var(--ink);color:#fff}
+  .filters{display:flex;gap:8px;overflow-x:auto;padding:10px 14px;max-width:1100px;margin:0 auto;scrollbar-width:none}
+  .filters::-webkit-scrollbar{display:none}
+  .chip{flex:0 0 auto;border:1px solid var(--line);background:var(--card);border-radius:999px;padding:8px 14px;font:600 13px var(--sans);color:var(--ink-2);cursor:pointer}
+  .chip.on{background:var(--brand);border-color:var(--brand);color:#fff}
+  main{max-width:1100px;margin:0 auto;padding:0 14px 90px}
+  #map{height:44vh;min-height:260px;border-radius:14px;margin:4px 0 14px;border:1px solid var(--line);box-shadow:var(--shadow)}
+  .meta{display:flex;align-items:baseline;gap:8px;margin:0 0 10px;font-size:13px;color:var(--muted)}
+  .meta strong{color:var(--ink);font-size:15px}
+  .list{display:grid;gap:10px}
+  .item{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px;box-shadow:var(--shadow)}
+  .item h3{margin:0 0 4px;font-size:16px;font-weight:700;line-height:1.3}
+  .item .where{font-size:13px;color:var(--muted);margin:0 0 10px}
+  .tags{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px}
+  .t{font:600 12px var(--sans);padding:4px 9px;border-radius:999px;background:#eef2f1;color:var(--ink-2)}
+  .t.free{background:#dcfce7;color:var(--free)}
+  .t.paid{background:#fef3c7;color:var(--paid)}
+  .t.nodata{background:#eef2f1;color:var(--nodata);font-style:italic}
+  .t.warn{background:#fee2e2;color:#b91c1c}
+  .t.ok{background:#e0f2fe;color:#0369a1}
+  .row{display:flex;gap:8px;flex-wrap:wrap}
+  .btn{flex:1 1 auto;text-align:center;text-decoration:none;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:10px;padding:10px 12px;font:600 13.5px var(--sans);cursor:pointer}
+  .btn.primary{background:var(--brand);border-color:var(--brand);color:#fff}
+  .btn:active{transform:scale(.98)}
+  .report{margin-top:10px;padding-top:10px;border-top:1px dashed var(--line)}
+  .report .lbl{font-size:12px;color:var(--muted);margin-bottom:6px}
+  .report .row .btn{flex:1;font-size:12.5px;padding:8px 6px}
+  .said{font-size:12px;color:var(--brand-dark);margin-top:8px;font-weight:600}
+  .empty{background:var(--card);border:1px dashed var(--line);border-radius:14px;padding:28px 18px;text-align:center;color:var(--muted)}
+  footer{max-width:1100px;margin:0 auto;padding:22px 14px 40px;font-size:12px;color:var(--muted);line-height:1.6}
+  footer a{color:var(--brand-dark)}
+  .locbar{position:fixed;left:0;right:0;bottom:0;z-index:700;background:var(--card);border-top:1px solid var(--line);padding:10px 14px;display:flex;gap:8px;max-width:1100px;margin:0 auto}
+  .locbar .btn{flex:1}
+  @media (min-width:820px){
+    #map{height:48vh}
+    .list{grid-template-columns:repeat(2,1fr)}
+    .locbar{position:static;border:0;background:none;padding:0 0 16px}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="bar">
+    <div class="logo"><span class="dot">💧</span> Need To Pee</div>
+    <div class="spacer"></div>
+    <div class="lang">
+      <button id="langEn" class="on">EN</button>
+      <button id="langHu">HU</button>
+    </div>
+  </div>
+  <div class="filters" id="filters"></div>
+</header>
+
+<main>
+  <div id="map"></div>
+  <div class="meta" id="meta"></div>
+  <div class="list" id="list"></div>
+  <div class="empty" id="empty" hidden></div>
+</main>
+
+<div class="locbar">
+  <button class="btn primary" id="locBtn"></button>
+</div>
+
+<footer id="footer"></footer>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+(function(){
+  'use strict';
+  var BASE = location.pathname.indexOf('/demok/needtopee') === 0 ? '/demok/needtopee' : '';
+
+  var T = {
+    en: {
+      near: 'Use my location', locating: 'Locating…', denied: 'Location denied, showing all',
+      count: function(n, t){ return n + ' of ' + t + ' toilets'; },
+      sortedNear: 'closest first', sortedAll: 'no location yet',
+      f_open: 'Open now', f_free: 'Free', f_step: 'No purchase needed', f_wc: 'Wheelchair', f_baby: 'Baby changing',
+      free: 'Free', paid: 'Paid', fee_unknown: 'Price unknown', customers: 'Customers only',
+      wc_yes: 'Wheelchair accessible', wc_no: 'Not accessible', wc_lim: 'Partly accessible', wc_unknown: 'Accessibility unknown',
+      baby: 'Baby changing', unisex: 'Unisex', open247: 'Open 24/7', hours_unknown: 'Opening hours unknown',
+      nav: 'Walk here', unnamed: 'Public toilet', near_word: 'near', inside_word: 'at',
+      rep_q: 'Been here? One tap helps everyone.', rep_ok: 'It works', rep_closed: 'Closed', rep_bad: 'Filthy',
+      thanks: 'Thanks, saved on this device.',
+      empty: 'No toilet matches these filters. Try turning one off.',
+      foot: 'Toilet locations come from OpenStreetMap contributors, available under the ODbL licence. Where a field says unknown, it really is unknown: we do not guess. Opening hours are only recorded for a minority of locations, so always treat them as a hint, not a promise.'
+    },
+    hu: {
+      near: 'Mutasd a közelieket', locating: 'Helymeghatározás…', denied: 'Helymeghatározás letiltva, mind látszik',
+      count: function(n, t){ return n + ' / ' + t + ' mosdó'; },
+      sortedNear: 'legközelebbi elöl', sortedAll: 'még nincs helyadat',
+      f_open: 'Most nyitva', f_free: 'Ingyenes', f_step: 'Vásárlás nélkül', f_wc: 'Akadálymentes', f_baby: 'Pelenkázó',
+      free: 'Ingyenes', paid: 'Fizetős', fee_unknown: 'Díj nem ismert', customers: 'Csak vásárlóknak',
+      wc_yes: 'Akadálymentes', wc_no: 'Nem akadálymentes', wc_lim: 'Részben akadálymentes', wc_unknown: 'Akadálymentesség nem ismert',
+      baby: 'Pelenkázó', unisex: 'Nem szerint nem elválasztott', open247: 'Non-stop', hours_unknown: 'Nyitvatartás nem ismert',
+      nav: 'Útvonal', unnamed: 'Nyilvános mosdó', near_word: 'közelében', inside_word: 'itt:',
+      rep_q: 'Jártál itt? Egy koppintás másoknak is segít.', rep_ok: 'Működik', rep_closed: 'Zárva', rep_bad: 'Szörnyű',
+      thanks: 'Kösz, elmentve ezen az eszközön.',
+      empty: 'Ezekkel a szűrőkkel nincs találat. Próbálj kikapcsolni egyet.',
+      foot: 'A mosdók helye az OpenStreetMap közösségétől származik, ODbL licenc alatt. Ahol azt írjuk, hogy nem ismert, az tényleg nem ismert: nem tippelünk. Nyitvatartás csak a helyek kisebb részénél van rögzítve, ezért azt mindig jelzésnek vegyétek, ne ígéretnek.'
+    }
+  };
+
+  var lang = (navigator.language || 'en').slice(0,2) === 'hu' ? 'hu' : 'en';
+  var items = [], me = null, map, layer;
+  var filters = { open:false, free:false, step:false, wc:false, baby:false };
+  var reports = {};
+  try { reports = JSON.parse(localStorage.getItem('ntp-reports') || '{}'); } catch(e){}
+
+  function tr(){ return T[lang]; }
+
+  // --- nyitvatartas ertelmezes: csak a ket gyakori forma, a tobbit nem talaljuk ki ---
+  function isOpenNow(oh){
+    if (!oh) return null;
+    if (/^24\/7$/.test(oh.trim())) return true;
+    var m = oh.match(/^Mo-Su\s+(\d{2}):(\d{2})-(\d{2}):(\d{2})$/);
+    if (m){
+      var now = new Date(), mins = now.getHours()*60 + now.getMinutes();
+      var a = +m[1]*60 + +m[2], b = +m[3]*60 + +m[4];
+      return b > a ? (mins >= a && mins < b) : (mins >= a || mins < b);
+    }
+    return null;
+  }
+
+  function dist(a, b){
+    var R = 6371000, dLa = (b.lat-a.lat)*Math.PI/180, dLo = (b.lon-a.lon)*Math.PI/180;
+    var la1 = a.lat*Math.PI/180, la2 = b.lat*Math.PI/180;
+    var h = Math.sin(dLa/2)*Math.sin(dLa/2) + Math.cos(la1)*Math.cos(la2)*Math.sin(dLo/2)*Math.sin(dLo/2);
+    return 2*R*Math.asin(Math.sqrt(h));
+  }
+  function fmtDist(m){ return m < 1000 ? Math.round(m/10)*10 + ' m' : (m/1000).toFixed(1) + ' km'; }
+
+  function title(it){
+    var t = tr();
+    if (!it.place) return t.unnamed;
+    if (it.inside) return it.place;
+    return lang === 'hu' ? (it.place + ' ' + t.near_word) : (t.near_word + ' ' + it.place);
+  }
+  function where(it){
+    // a helyszin neve a cimben van, itt NEM ismeteljuk meg
+    var bits = [];
+    if (it.kind) bits.push(it.kind);
+    if (it.operator) bits.push(it.operator);
+    if (it.dist != null) bits.push(fmtDist(it.dist));
+    return bits.join(' · ');
+  }
+
+  function tags(it){
+    var t = tr(), out = [];
+    if (it.fee === 'free') out.push(['free', t.free]);
+    else if (it.fee === 'paid') out.push(['paid', t.paid + (it.charge ? ' · ' + it.charge : '')]);
+    else out.push(['nodata', t.fee_unknown]);
+    if (it.customers_only) out.push(['warn', t.customers]);
+    var o = isOpenNow(it.hours);
+    if (it.hours === '24/7') out.push(['ok', t.open247]);
+    else if (it.hours) out.push([o === true ? 'ok' : (o === false ? 'warn' : ''), it.hours]);
+    else out.push(['nodata', t.hours_unknown]);
+    if (it.wheelchair === 'yes' || it.wheelchair === 'designated') out.push(['ok', t.wc_yes]);
+    else if (it.wheelchair === 'limited') out.push(['', t.wc_lim]);
+    else if (it.wheelchair === 'no') out.push(['warn', t.wc_no]);
+    else out.push(['nodata', t.wc_unknown]);
+    if (it.changing_table === 'yes') out.push(['', t.baby]);
+    if (it.unisex === 'yes') out.push(['', t.unisex]);
+    return out;
+  }
+
+  function pass(it){
+    if (filters.open && isOpenNow(it.hours) !== true) return false;
+    if (filters.free && it.fee !== 'free') return false;
+    if (filters.step && it.customers_only) return false;
+    if (filters.wc && !(it.wheelchair === 'yes' || it.wheelchair === 'designated')) return false;
+    if (filters.baby && it.changing_table !== 'yes') return false;
+    return true;
+  }
+
+  function esc(s){ return String(s).replace(/[&<>"]/g, function(c){ return ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'})[c]; }); }
+
+  function render(){
+    var t = tr(), shown = items.filter(pass);
+    if (me) shown.sort(function(a,b){ return a.dist - b.dist; });
+    document.getElementById('meta').innerHTML =
+      '<strong>' + t.count(shown.length, items.length) + '</strong> · ' + (me ? t.sortedNear : t.sortedAll);
+
+    var list = document.getElementById('list'), empty = document.getElementById('empty');
+    list.innerHTML = '';
+    empty.hidden = shown.length > 0;
+    empty.textContent = t.empty;
+
+    shown.slice(0, 60).forEach(function(it){
+      var el = document.createElement('div');
+      el.className = 'item';
+      var said = reports[it.id];
+      el.innerHTML =
+        '<h3>' + esc(title(it)) + '</h3>' +
+        '<p class="where">' + esc(where(it)) + '</p>' +
+        '<div class="tags">' + tags(it).map(function(p){ return '<span class="t ' + p[0] + '">' + esc(p[1]) + '</span>'; }).join('') + '</div>' +
+        '<div class="row"><a class="btn primary" target="_blank" rel="noopener" href="https://www.google.com/maps/dir/?api=1&destination=' + it.lat + ',' + it.lon + '&travelmode=walking">' + esc(t.nav) + '</a></div>' +
+        '<div class="report"><div class="lbl">' + esc(t.rep_q) + '</div><div class="row">' +
+          '<button class="btn" data-rep="ok" data-id="' + it.id + '">' + esc(t.rep_ok) + '</button>' +
+          '<button class="btn" data-rep="closed" data-id="' + it.id + '">' + esc(t.rep_closed) + '</button>' +
+          '<button class="btn" data-rep="bad" data-id="' + it.id + '">' + esc(t.rep_bad) + '</button>' +
+        '</div>' + (said ? '<div class="said">' + esc(t.thanks) + '</div>' : '') + '</div>';
+      list.appendChild(el);
+    });
+
+    if (layer){
+      layer.clearLayers();
+      shown.forEach(function(it){
+        var color = it.fee === 'free' ? '#15803d' : (it.fee === 'paid' ? '#b45309' : '#6b7a77');
+        L.circleMarker([it.lat, it.lon], { radius:7, weight:2, color:'#fff', fillColor:color, fillOpacity:1 })
+          .bindPopup('<strong>' + esc(title(it)) + '</strong><br>' + esc(where(it)))
+          .addTo(layer);
+      });
+    }
+  }
+
+  function buildFilters(){
+    var t = tr(), wrap = document.getElementById('filters');
+    var defs = [['open', t.f_open], ['free', t.f_free], ['step', t.f_step], ['wc', t.f_wc], ['baby', t.f_baby]];
+    wrap.innerHTML = defs.map(function(d){
+      return '<button class="chip ' + (filters[d[0]] ? 'on' : '') + '" data-f="' + d[0] + '">' + esc(d[1]) + '</button>';
+    }).join('');
+  }
+
+  function setLang(l){
+    lang = l;
+    document.documentElement.lang = l;
+    document.getElementById('langEn').className = l === 'en' ? 'on' : '';
+    document.getElementById('langHu').className = l === 'hu' ? 'on' : '';
+    document.getElementById('locBtn').textContent = tr().near;
+    document.getElementById('footer').innerHTML = esc(tr().foot) +
+      ' <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">© OpenStreetMap</a>';
+    buildFilters();
+    render();
+  }
+
+  document.addEventListener('click', function(e){
+    var chip = e.target.closest('[data-f]');
+    if (chip){ filters[chip.dataset.f] = !filters[chip.dataset.f]; buildFilters(); render(); return; }
+    var rep = e.target.closest('[data-rep]');
+    if (rep){
+      reports[rep.dataset.id] = { v: rep.dataset.rep, at: Date.now() };
+      try { localStorage.setItem('ntp-reports', JSON.stringify(reports)); } catch(err){}
+      render(); return;
+    }
+  });
+  document.getElementById('langEn').addEventListener('click', function(){ setLang('en'); });
+  document.getElementById('langHu').addEventListener('click', function(){ setLang('hu'); });
+
+  document.getElementById('locBtn').addEventListener('click', function(){
+    var btn = this;
+    if (!navigator.geolocation) return;
+    btn.textContent = tr().locating;
+    navigator.geolocation.getCurrentPosition(function(pos){
+      me = { lat: pos.coords.latitude, lon: pos.coords.longitude };
+      items.forEach(function(it){ it.dist = dist(me, it); });
+      btn.textContent = tr().near;
+      if (map){ map.setView([me.lat, me.lon], 15); L.circleMarker([me.lat, me.lon], { radius:8, weight:3, color:'#0d9488', fillColor:'#fff', fillOpacity:1 }).addTo(layer); }
+      render();
+    }, function(){
+      btn.textContent = tr().denied;
+      setTimeout(function(){ btn.textContent = tr().near; }, 2500);
+    }, { enableHighAccuracy:true, timeout:8000 });
+  });
+
+  fetch(BASE + '/data/toilets.json').then(function(r){ return r.json(); }).then(function(d){
+    items = d.items;
+    map = L.map('map', { zoomControl:true }).setView([47.4979, 19.0402], 13);
+    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 19, attribution: '© OpenStreetMap'
+    }).addTo(map);
+    layer = L.layerGroup().addTo(map);
+    setLang(lang);
+  });
+
+  if ('serviceWorker' in navigator){
+    navigator.serviceWorker.register(BASE + '/sw.js', { scope: BASE + '/' }).catch(function(){});
+  }
+})();
+</script>
+</body>
+</html>

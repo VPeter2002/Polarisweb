@@ -1,0 +1,10 @@
+{
+  "name": "Need To Pee - Budapest",
+  "short_name": "Need To Pee",
+  "start_url": "/demok/needtopee/",
+  "scope": "/demok/needtopee/",
+  "display": "standalone",
+  "background_color": "#f6f7f6",
+  "theme_color": "#0d9488",
+  "description": "Every public toilet in Budapest on one map. Works offline."
+}
