@@ -64,6 +64,74 @@
     .list{grid-template-columns:repeat(2,1fr)}
     .locbar{position:static;border:0;background:none;padding:0 0 16px}
   }
+
+  /* ================= ELEVATION PASS ================= */
+  /* Additive interactivity & motion layer. Colors/type/layout language unchanged. */
+  :root{
+    --ease-out: cubic-bezier(.2,.7,.2,1);
+  }
+
+  .tagline{max-width:1100px;margin:0 auto;padding:0 14px 8px;font-size:12px;color:var(--muted);font-style:italic}
+
+  .searchbar{max-width:1100px;margin:0 auto;padding:0 14px 10px}
+  .searchField{position:relative;display:flex;align-items:center}
+  .searchField .searchIcon{position:absolute;left:13px;font-size:14px;opacity:.55;pointer-events:none}
+  .searchField input{width:100%;height:44px;border:1px solid var(--line);border-radius:12px;padding:0 44px 0 36px;font:600 14px var(--sans);color:var(--ink);background:#fff;transition:border-color .18s var(--ease-out),box-shadow .18s var(--ease-out)}
+  .searchField input:focus{outline:none;border-color:var(--brand);box-shadow:0 0 0 3px rgba(13,148,136,.15)}
+  .searchField input::placeholder{color:var(--muted)}
+  .searchField input:disabled{opacity:.55}
+  .searchField input::-webkit-search-cancel-button{display:none}
+  .searchClearBtn{position:absolute;right:0;top:0;width:44px;height:44px;border:0;background:transparent;display:grid;place-items:center;cursor:pointer;padding:0}
+  .searchClearBtn .x{width:24px;height:24px;border-radius:50%;background:var(--line);display:grid;place-items:center;font-size:15px;line-height:1;color:var(--ink-2);transition:background .15s var(--ease-out),transform .15s var(--ease-out)}
+  .searchClearBtn:hover .x{background:#d7dedb}
+  .searchClearBtn:active .x{transform:scale(.85)}
+
+  .chip{position:relative;transition:transform .15s var(--ease-out),box-shadow .18s var(--ease-out)}
+  .chip:hover{transform:translateY(-1px);box-shadow:0 6px 14px -8px rgba(14,30,28,.35)}
+  .chip:active{transform:translateY(0) scale(.97)}
+  .chip .cnt{margin-left:5px;font-weight:800;opacity:.7;font-variant-numeric:tabular-nums}
+  .chip.on .cnt{opacity:.9}
+  .chip.zero{opacity:.5}
+
+  .toolbar{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;margin:0 0 10px}
+  .toolbar .meta{margin:0}
+  #countNum{font-variant-numeric:tabular-nums;display:inline-block;min-width:1ch}
+  .sortbar{display:flex;gap:6px;flex-wrap:wrap}
+  .sortbtn{border:1px solid var(--line);background:var(--card);color:var(--ink-2);border-radius:999px;padding:6px 12px;font:600 12px var(--sans);cursor:pointer;min-height:44px;display:inline-flex;align-items:center;gap:4px;transition:transform .15s var(--ease-out),background .15s var(--ease-out),color .15s var(--ease-out),border-color .15s var(--ease-out)}
+  .sortbtn.on{background:var(--ink);border-color:var(--ink);color:#fff}
+  .sortbtn:hover{transform:translateY(-1px)}
+  .sortbtn:active{transform:translateY(0) scale(.96)}
+
+  @keyframes cardIn{from{opacity:0;transform:translateY(16px) scale(.98)}to{opacity:1;transform:none}}
+  .item{transition:transform .2s var(--ease-out),box-shadow .2s var(--ease-out);animation:cardIn .38s var(--ease-out) both;animation-delay:var(--reveal-delay,0ms);cursor:pointer}
+  .item:hover{transform:translateY(-4px);box-shadow:0 20px 34px -18px rgba(14,30,28,.4)}
+  .item:active{transform:translateY(-1px) scale(.995)}
+  .item.item-focus{outline:2px solid var(--brand);outline-offset:2px;animation:focusPulse 1.4s var(--ease-out)}
+  @keyframes focusPulse{0%{box-shadow:0 0 0 0 rgba(13,148,136,.45)}70%{box-shadow:0 0 0 14px rgba(13,148,136,0)}100%{box-shadow:0 0 0 0 rgba(13,148,136,0)}}
+
+  .report .btn{transition:transform .15s var(--ease-out),background .15s var(--ease-out),color .15s var(--ease-out),border-color .15s var(--ease-out)}
+  .report .btn.picked{animation:pop .32s var(--ease-out)}
+  .report .btn.picked[data-rep="ok"]{background:#dcfce7;border-color:#bbf0cd;color:var(--free)}
+  .report .btn.picked[data-rep="closed"]{background:#fef3c7;border-color:#fde7a8;color:var(--paid)}
+  .report .btn.picked[data-rep="bad"]{background:#fee2e2;border-color:#fbd0d0;color:#b91c1c}
+  @keyframes pop{0%{transform:scale(1)}45%{transform:scale(1.08)}100%{transform:scale(1)}}
+
+  .btn.primary:hover{box-shadow:0 10px 20px -10px rgba(13,148,136,.55)}
+
+  .empty{animation:cardIn .4s var(--ease-out) both}
+  .emptyIcon{font-size:34px;margin-bottom:6px}
+  .empty p{margin:0 0 4px}
+  .resetBtn{margin:14px auto 0;display:inline-block;max-width:240px}
+
+  .skeleton{background:linear-gradient(100deg,var(--card) 30%,#eef2f1 50%,var(--card) 70%);background-size:200% 100%;animation:shimmer 1.3s ease-in-out infinite;border:1px solid var(--line);border-radius:14px;height:132px}
+  @keyframes shimmer{0%{background-position:0 0}100%{background-position:-200% 0}}
+
+  @media (prefers-reduced-motion: reduce){
+    *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important;scroll-behavior:auto!important}
+    .item{animation:none!important;opacity:1!important;transform:none!important}
+    .item:hover{transform:none!important}
+    .skeleton{animation:none!important}
+  }
 </style>
 </head>
 <body>
@@ -77,12 +145,23 @@
       <button id="langHu">HU</button>
     </div>
   </div>
+  <div class="tagline" id="tagline"></div>
+  <div class="searchbar">
+    <div class="searchField">
+      <span class="searchIcon" aria-hidden="true">🔎</span>
+      <input type="search" id="search" autocomplete="off" spellcheck="false" disabled>
+      <button class="searchClearBtn" id="searchClear" type="button" hidden><span class="x">×</span></button>
+    </div>
+  </div>
   <div class="filters" id="filters"></div>
 </header>
 
 <main>
   <div id="map"></div>
-  <div class="meta" id="meta"></div>
+  <div class="toolbar">
+    <div class="meta" id="meta"></div>
+    <div class="sortbar" id="sortbar"></div>
+  </div>
   <div class="list" id="list"></div>
   <div class="empty" id="empty" hidden></div>
 </main>
@@ -111,7 +190,17 @@
       nav: 'Walk here', unnamed: 'Public toilet', near_word: 'near', inside_word: 'at',
       rep_q: 'Been here? One tap helps everyone.', rep_ok: 'It works', rep_closed: 'Closed', rep_bad: 'Filthy',
       thanks: 'Thanks, saved on this device.',
-      empty: 'No toilet matches these filters. Try turning one off.',
+      empty_filters: 'No toilet survives this many filters at once. Turn one off and try again.',
+      empty_search: function(q){ return 'Nothing matches "' + q + '". Even Budapest’s toilets have their limits. Try a shorter word.'; },
+      reset_btn: 'Reset filters',
+      tagline: 'Every public toilet in Budapest, mapped so nature never has to wait.',
+      loading: 'Scouting Budapest for facilities…',
+      search_ph: 'Search toilets, cafés, parks…',
+      search_label: 'Search toilets',
+      search_clear: 'Clear search',
+      sort_near: 'Closest', sort_free: 'Free first', sort_open: 'Open first',
+      kind_vendeglatohely: 'restaurant/bar', kind_epulet: 'building', kind_park: 'park', kind_plaza: 'mall',
+      kind_allomas: 'station', kind_intezmeny: 'institution', kind_benzinkut: 'gas station',
       foot: 'Toilet locations come from OpenStreetMap contributors, available under the ODbL licence. Where a field says unknown, it really is unknown: we do not guess. Opening hours are only recorded for a minority of locations, so always treat them as a hint, not a promise.'
     },
     hu: {
@@ -125,18 +214,51 @@
       nav: 'Útvonal', unnamed: 'Nyilvános mosdó', near_word: 'közelében', inside_word: 'itt:',
       rep_q: 'Jártál itt? Egy koppintás másoknak is segít.', rep_ok: 'Működik', rep_closed: 'Zárva', rep_bad: 'Szörnyű',
       thanks: 'Kösz, elmentve ezen az eszközön.',
-      empty: 'Ezekkel a szűrőkkel nincs találat. Próbálj kikapcsolni egyet.',
+      empty_filters: 'Ennyi szűrővel egyszerre egyetlen mosdó sem marad talpon. Kapcsolj ki egyet, és nézzük újra.',
+      empty_search: function(q){ return 'Erre semmi nem illik: "' + q + '". Még Budapest mosdóinak is vannak határai. Próbálj rövidebb szót.'; },
+      reset_btn: 'Szűrők törlése',
+      tagline: 'Budapest összes nyilvános mosdója egy térképen, hogy a természet ne várakoztasson.',
+      loading: 'Épp felderítjük Budapest mosdóit…',
+      search_ph: 'Keress mosdót, kávézót, parkot…',
+      search_label: 'Mosdók keresése',
+      search_clear: 'Keresés törlése',
+      sort_near: 'Legközelebbi', sort_free: 'Ingyenes elöl', sort_open: 'Non-stop elöl',
+      kind_vendeglatohely: 'vendéglátóhely', kind_epulet: 'épület', kind_park: 'park', kind_plaza: 'pláza',
+      kind_allomas: 'állomás', kind_intezmeny: 'intézmény', kind_benzinkut: 'benzinkút',
       foot: 'A mosdók helye az OpenStreetMap közösségétől származik, ODbL licenc alatt. Ahol azt írjuk, hogy nem ismert, az tényleg nem ismert: nem tippelünk. Nyitvatartás csak a helyek kisebb részénél van rögzítve, ezért azt mindig jelzésnek vegyétek, ne ígéretnek.'
     }
   };
 
+  // maps OSM `kind` values to the two translation keys above
+  var KIND_KEY = {
+    'vendeglatohely': 'kind_vendeglatohely', 'épület': 'kind_epulet', 'park': 'kind_park',
+    'pláza': 'kind_plaza', 'állomás': 'kind_allomas', 'intézmény': 'kind_intezmeny', 'benzinkút': 'kind_benzinkut'
+  };
+
   var lang = (navigator.language || 'en').slice(0,2) === 'hu' ? 'hu' : 'en';
-  var items = [], me = null, map, layer;
+  var items = [], me = null, map, layer, markersById = {};
   var filters = { open:false, free:false, step:false, wc:false, baby:false };
+  var searchQuery = ''; // normalized (lowercase, no diacritics)
+  var sortMode = 'near'; // near | free | open
+  var countAnim = { token: 0, current: null, didFirst:false };
   var reports = {};
   try { reports = JSON.parse(localStorage.getItem('ntp-reports') || '{}'); } catch(e){}
 
   function tr(){ return T[lang]; }
+
+  function prefersReducedMotion(){
+    try { return window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches; } catch(e){ return false; }
+  }
+
+  // accent/case-insensitive normalize: "kávézó" and "KAVEZO" both -> "kavezo"
+  function normalize(s){
+    return String(s || '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '');
+  }
+
+  function kindLabel(kind){
+    var key = KIND_KEY[kind];
+    return key ? tr()[key] : '';
+  }
 
   // --- nyitvatartas ertelmezes: csak a ket gyakori forma, a tobbit nem talaljuk ki ---
   function isOpenNow(oh){
@@ -168,7 +290,8 @@
   function where(it){
     // a helyszin neve a cimben van, itt NEM ismeteljuk meg
     var bits = [];
-    if (it.kind) bits.push(it.kind);
+    var kl = kindLabel(it.kind);
+    if (kl) bits.push(kl);
     if (it.operator) bits.push(it.operator);
     if (it.dist != null) bits.push(fmtDist(it.dist));
     return bits.join(' · ');
@@ -193,7 +316,13 @@
     return out;
   }
 
+  function searchMatch(it){
+    if (!searchQuery) return true;
+    return it._search && it._search.indexOf(searchQuery) !== -1;
+  }
+
   function pass(it){
+    if (!searchMatch(it)) return false;
     if (filters.open && isOpenNow(it.hours) !== true) return false;
     if (filters.free && it.fee !== 'free') return false;
     if (filters.step && it.customers_only) return false;
@@ -202,22 +331,148 @@
     return true;
   }
 
+  // facet counts for the filter chips: "how many results if I also turn this one on"
+  var FILTER_PRED = {
+    open: function(it){ return isOpenNow(it.hours) === true; },
+    free: function(it){ return it.fee === 'free'; },
+    step: function(it){ return !it.customers_only; },
+    wc: function(it){ return it.wheelchair === 'yes' || it.wheelchair === 'designated'; },
+    baby: function(it){ return it.changing_table === 'yes'; }
+  };
+  function facetCounts(){
+    var keys = Object.keys(FILTER_PRED);
+    var base = items.filter(searchMatch);
+    var counts = {};
+    keys.forEach(function(key){
+      counts[key] = base.filter(function(it){
+        return keys.every(function(k){
+          if (k === key) return FILTER_PRED[k](it);
+          return !filters[k] || FILTER_PRED[k](it);
+        });
+      }).length;
+    });
+    return counts;
+  }
+
+  function sortComparator(a, b){
+    if (sortMode === 'free'){
+      var af = a.fee === 'free' ? 0 : (a.fee == null ? 1 : 2);
+      var bf = b.fee === 'free' ? 0 : (b.fee == null ? 1 : 2);
+      if (af !== bf) return af - bf;
+    } else if (sortMode === 'open'){
+      var ao = isOpenNow(a.hours), bo = isOpenNow(b.hours);
+      var av = ao === true ? 0 : (ao === null ? 1 : 2);
+      var bv = bo === true ? 0 : (bo === null ? 1 : 2);
+      if (av !== bv) return av - bv;
+    }
+    if (me) return a.dist - b.dist;
+    return 0;
+  }
+
   function esc(s){ return String(s).replace(/[&<>"]/g, function(c){ return ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'})[c]; }); }
+
+  // Token-guarded: if a new count animation starts before an older one finished
+  // (e.g. rapid filter/search taps), the older loop's frames self-cancel instead
+  // of racing the DOM node and possibly leaving a WRONG final number on screen.
+  // The shown count is factual data, so it must always converge on the true value.
+  function animateCount(from, to){
+    var myToken = ++countAnim.token;
+    if (from === to || prefersReducedMotion()){
+      var el0 = document.getElementById('countNum');
+      if (el0) el0.textContent = to;
+      countAnim.current = to;
+      return;
+    }
+    var start = null, dur = 420;
+    function step(ts){
+      if (myToken !== countAnim.token) return; // superseded, stop updating
+      if (start === null) start = ts;
+      var p = Math.min(1, (ts - start) / dur);
+      var ease = 1 - Math.pow(1 - p, 3);
+      var val = Math.round(from + (to - from) * ease);
+      var el = document.getElementById('countNum');
+      if (el) el.textContent = val;
+      countAnim.current = (p < 1) ? val : to;
+      if (p < 1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+    // safety net: if rAF ever stalls (throttled/background tab, odd embedding),
+    // force the correct final number once the tween should clearly be over.
+    // The count is factual data, it must never end up stuck on a wrong value.
+    setTimeout(function(){
+      if (myToken !== countAnim.token) return;
+      var el = document.getElementById('countNum');
+      if (el) el.textContent = to;
+      countAnim.current = to;
+    }, dur + 80);
+  }
+
+  var lastMetaRenderAt = 0;
+  function renderMeta(shownCount){
+    var t = tr();
+    var full = t.count(shownCount, items.length);
+    var withSpan = full.replace(/\d+/, '<span id="countNum">$&</span>');
+    document.getElementById('meta').innerHTML = '<strong>' + withSpan + '</strong> · ' + (me ? t.sortedNear : t.sortedAll);
+    var now = Date.now();
+    var burst = (now - lastMetaRenderAt) < 250; // rapid successive changes (fast typing, quick taps)
+    lastMetaRenderAt = now;
+    // A szamlalo TENYADAT. Ezert csak az ELSO betoltesnel animalunk (0 -> osszes),
+    // ott jatekos es nem tud rossz erteket mutatni, mert felfele szamol egy ures allapotbol.
+    // Minden kesobbi valtozasnal (szuro, kereses, rendezes) AZONNAL a helyes szam all a DOM-ban.
+    // Indok: a tween elso frame-je a KORABBI erteket irja ki, es ha a rAF akadozik
+    // (hatterbe kerult ful, throttling, beagyazas), a rossz szam maradhat kint.
+    countAnim.token++;
+    countAnim.current = shownCount;
+    if (!countAnim.didFirst){
+      countAnim.didFirst = true;
+      animateCount(0, shownCount);
+    }
+  }
+
+  function focusItem(id){
+    var it = null;
+    for (var i = 0; i < items.length; i++){ if (items[i].id === id){ it = items[i]; break; } }
+    if (!it || !map) return;
+    map.setView([it.lat, it.lon], 17, { animate: true });
+    var m = markersById[id];
+    if (m) m.openPopup();
+    highlightCard(id);
+  }
+
+  function highlightCard(id){
+    var list = document.getElementById('list');
+    var card = null;
+    for (var i = 0; i < list.children.length; i++){
+      if (list.children[i].dataset && list.children[i].dataset.id === id){ card = list.children[i]; break; }
+    }
+    if (!card) return;
+    card.scrollIntoView({ behavior: prefersReducedMotion() ? 'auto' : 'smooth', block: 'center' });
+    card.classList.add('item-focus');
+    setTimeout(function(){ card.classList.remove('item-focus'); }, 1500);
+  }
 
   function render(){
     var t = tr(), shown = items.filter(pass);
-    if (me) shown.sort(function(a,b){ return a.dist - b.dist; });
-    document.getElementById('meta').innerHTML =
-      '<strong>' + t.count(shown.length, items.length) + '</strong> · ' + (me ? t.sortedNear : t.sortedAll);
+    shown.sort(sortComparator);
+
+    renderMeta(shown.length);
 
     var list = document.getElementById('list'), empty = document.getElementById('empty');
     list.innerHTML = '';
     empty.hidden = shown.length > 0;
-    empty.textContent = t.empty;
 
-    shown.slice(0, 60).forEach(function(it){
+    if (!empty.hidden){
+      var rawQ = (document.getElementById('search') || {}).value || '';
+      var msg = searchQuery ? t.empty_search(rawQ) : t.empty_filters;
+      empty.innerHTML = '<div class="emptyIcon" aria-hidden="true">🧭</div><p>' + esc(msg) + '</p>' +
+        '<button class="btn resetBtn" id="resetBtn">' + esc(t.reset_btn) + '</button>';
+    }
+
+    shown.slice(0, 60).forEach(function(it, idx){
       var el = document.createElement('div');
       el.className = 'item';
+      el.dataset.id = it.id;
+      el.style.setProperty('--reveal-delay', Math.min(idx, 10) * 18 + 'ms');
       var said = reports[it.id];
       el.innerHTML =
         '<h3>' + esc(title(it)) + '</h3>' +
@@ -225,59 +480,59 @@
         '<div class="tags">' + tags(it).map(function(p){ return '<span class="t ' + p[0] + '">' + esc(p[1]) + '</span>'; }).join('') + '</div>' +
         '<div class="row"><a class="btn primary" target="_blank" rel="noopener" href="https://www.google.com/maps/dir/?api=1&destination=' + it.lat + ',' + it.lon + '&travelmode=walking">' + esc(t.nav) + '</a></div>' +
         '<div class="report"><div class="lbl">' + esc(t.rep_q) + '</div><div class="row">' +
-          '<button class="btn" data-rep="ok" data-id="' + it.id + '">' + esc(t.rep_ok) + '</button>' +
-          '<button class="btn" data-rep="closed" data-id="' + it.id + '">' + esc(t.rep_closed) + '</button>' +
-          '<button class="btn" data-rep="bad" data-id="' + it.id + '">' + esc(t.rep_bad) + '</button>' +
+          '<button class="btn' + (said && said.v === 'ok' ? ' picked' : '') + '" data-rep="ok" data-id="' + it.id + '">' + esc(t.rep_ok) + '</button>' +
+          '<button class="btn' + (said && said.v === 'closed' ? ' picked' : '') + '" data-rep="closed" data-id="' + it.id + '">' + esc(t.rep_closed) + '</button>' +
+          '<button class="btn' + (said && said.v === 'bad' ? ' picked' : '') + '" data-rep="bad" data-id="' + it.id + '">' + esc(t.rep_bad) + '</button>' +
         '</div>' + (said ? '<div class="said">' + esc(t.thanks) + '</div>' : '') + '</div>';
       list.appendChild(el);
     });
 
     if (layer){
       layer.clearLayers();
+      markersById = {};
       shown.forEach(function(it){
         var color = it.fee === 'free' ? '#15803d' : (it.fee === 'paid' ? '#b45309' : '#6b7a77');
-        L.circleMarker([it.lat, it.lon], { radius:7, weight:2, color:'#fff', fillColor:color, fillOpacity:1 })
+        var marker = L.circleMarker([it.lat, it.lon], { radius:7, weight:2, color:'#fff', fillColor:color, fillOpacity:1 })
           .bindPopup('<strong>' + esc(title(it)) + '</strong><br>' + esc(where(it)))
           .addTo(layer);
+        marker.on('click', function(id){ return function(){ highlightCard(id); }; }(it.id));
+        markersById[it.id] = marker;
       });
     }
   }
 
   function buildFilters(){
     var t = tr(), wrap = document.getElementById('filters');
+    var counts = facetCounts();
     var defs = [['open', t.f_open], ['free', t.f_free], ['step', t.f_step], ['wc', t.f_wc], ['baby', t.f_baby]];
     wrap.innerHTML = defs.map(function(d){
-      return '<button class="chip ' + (filters[d[0]] ? 'on' : '') + '" data-f="' + d[0] + '">' + esc(d[1]) + '</button>';
+      var c = counts[d[0]];
+      return '<button class="chip ' + (filters[d[0]] ? 'on' : '') + (c === 0 ? ' zero' : '') + '" data-f="' + d[0] + '">' +
+        esc(d[1]) + ' <span class="cnt">' + c + '</span></button>';
     }).join('');
   }
 
-  function setLang(l){
-    lang = l;
-    document.documentElement.lang = l;
-    document.getElementById('langEn').className = l === 'en' ? 'on' : '';
-    document.getElementById('langHu').className = l === 'hu' ? 'on' : '';
-    document.getElementById('locBtn').textContent = tr().near;
-    document.getElementById('footer').innerHTML = esc(tr().foot) +
-      ' <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">© OpenStreetMap</a>';
-    buildFilters();
-    render();
+  function buildSortbar(){
+    var t = tr(), wrap = document.getElementById('sortbar');
+    var defs = [['near', t.sort_near], ['free', t.sort_free], ['open', t.sort_open]];
+    wrap.innerHTML = defs.map(function(d){
+      return '<button class="sortbtn ' + (sortMode === d[0] ? 'on' : '') + '" data-sort="' + d[0] + '">' + esc(d[1]) + '</button>';
+    }).join('');
   }
 
-  document.addEventListener('click', function(e){
-    var chip = e.target.closest('[data-f]');
-    if (chip){ filters[chip.dataset.f] = !filters[chip.dataset.f]; buildFilters(); render(); return; }
-    var rep = e.target.closest('[data-rep]');
-    if (rep){
-      reports[rep.dataset.id] = { v: rep.dataset.rep, at: Date.now() };
-      try { localStorage.setItem('ntp-reports', JSON.stringify(reports)); } catch(err){}
-      render(); return;
-    }
-  });
-  document.getElementById('langEn').addEventListener('click', function(){ setLang('en'); });
-  document.getElementById('langHu').addEventListener('click', function(){ setLang('hu'); });
+  function refresh(){ buildFilters(); buildSortbar(); render(); }
 
-  document.getElementById('locBtn').addEventListener('click', function(){
-    var btn = this;
+  function resetAll(){
+    filters = { open:false, free:false, step:false, wc:false, baby:false };
+    searchQuery = '';
+    var input = document.getElementById('search');
+    input.value = '';
+    document.getElementById('searchClear').hidden = true;
+    refresh();
+  }
+
+  function requestLocation(){
+    var btn = document.getElementById('locBtn');
     if (!navigator.geolocation) return;
     btn.textContent = tr().locating;
     navigator.geolocation.getCurrentPosition(function(pos){
@@ -290,15 +545,89 @@
       btn.textContent = tr().denied;
       setTimeout(function(){ btn.textContent = tr().near; }, 2500);
     }, { enableHighAccuracy:true, timeout:8000 });
+  }
+
+  function setLang(l){
+    lang = l;
+    document.documentElement.lang = l;
+    document.getElementById('langEn').className = l === 'en' ? 'on' : '';
+    document.getElementById('langHu').className = l === 'hu' ? 'on' : '';
+    document.getElementById('locBtn').textContent = tr().near;
+    document.getElementById('tagline').textContent = tr().tagline;
+    var search = document.getElementById('search');
+    search.placeholder = tr().search_ph;
+    search.setAttribute('aria-label', tr().search_label);
+    document.getElementById('searchClear').setAttribute('aria-label', tr().search_clear);
+    document.getElementById('footer').innerHTML = esc(tr().foot) +
+      ' <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">© OpenStreetMap</a>';
+    refresh();
+  }
+
+  document.addEventListener('click', function(e){
+    var chip = e.target.closest('[data-f]');
+    if (chip){ filters[chip.dataset.f] = !filters[chip.dataset.f]; refresh(); return; }
+
+    var sortBtn = e.target.closest('[data-sort]');
+    if (sortBtn){
+      sortMode = sortBtn.dataset.sort;
+      if (sortMode === 'near' && !me) requestLocation();
+      refresh();
+      return;
+    }
+
+    var rep = e.target.closest('[data-rep]');
+    if (rep){
+      reports[rep.dataset.id] = { v: rep.dataset.rep, at: Date.now() };
+      try { localStorage.setItem('ntp-reports', JSON.stringify(reports)); } catch(err){}
+      render();
+      return;
+    }
+
+    var resetBtn = e.target.closest('#resetBtn');
+    if (resetBtn){ resetAll(); return; }
+
+    if (e.target.closest('a,button')) return;
+
+    var card = e.target.closest('.item');
+    if (card && card.dataset.id) focusItem(card.dataset.id);
   });
+  document.getElementById('langEn').addEventListener('click', function(){ setLang('en'); });
+  document.getElementById('langHu').addEventListener('click', function(){ setLang('hu'); });
+  document.getElementById('locBtn').addEventListener('click', requestLocation);
+
+  var searchTimer = null;
+  document.getElementById('search').addEventListener('input', function(e){
+    var val = e.target.value;
+    document.getElementById('searchClear').hidden = !val;
+    clearTimeout(searchTimer);
+    searchTimer = setTimeout(function(){
+      searchQuery = normalize(val.trim());
+      refresh();
+    }, 150);
+  });
+  document.getElementById('searchClear').addEventListener('click', function(){
+    var input = document.getElementById('search');
+    input.value = '';
+    this.hidden = true;
+    searchQuery = '';
+    refresh();
+    input.focus();
+  });
+
+  document.getElementById('meta').textContent = tr().loading;
+  document.getElementById('list').innerHTML = '<div class="skeleton"></div><div class="skeleton"></div><div class="skeleton"></div>';
 
   fetch(BASE + '/data/toilets.json').then(function(r){ return r.json(); }).then(function(d){
     items = d.items;
+    items.forEach(function(it){
+      it._search = normalize([it.place, it.kind, T.en[KIND_KEY[it.kind]], T.hu[KIND_KEY[it.kind]], it.operator].filter(Boolean).join(' '));
+    });
     map = L.map('map', { zoomControl:true }).setView([47.4979, 19.0402], 13);
     L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
       maxZoom: 19, attribution: '© OpenStreetMap'
     }).addTo(map);
     layer = L.layerGroup().addTo(map);
+    document.getElementById('search').disabled = false;
     setLang(lang);
   });
 
