@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Google tag (gtag.js) + Consent Mode v2: merés csak elfogadas utan -->
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    (function () {
+      var saved = null;
+      try { saved = localStorage.getItem('pw-consent'); } catch (e) {}
+      gtag('consent', 'default', {
+        'ad_storage': 'denied',
+        'ad_user_data': 'denied',
+        'ad_personalization': 'denied',
+        'analytics_storage': saved === 'granted' ? 'granted' : 'denied',
+        'wait_for_update': 500
+      });
+    })();
+    gtag('js', new Date());
+    gtag('config', 'G-N7MQB91XQM');
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-N7MQB91XQM"></script>
+  <link rel="icon" type="image/svg+xml" href="assets/img/favicon.svg">
+  <title>Ingyenes weboldal-ellenőrzés | Polarisweb</title>
+  <meta name="description" content="Írja be a cége domainjét, és megmérjük: él-e az oldal, mobilbarát-e, hívható-e a telefonszám egy koppintással, van-e mérés és sütibanner. Ingyenes, regisztráció nélkül.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+  <!-- NAV -->
+  <header class="site-header">
+    <div class="nav-inner">
+      <a href="/" class="brand">
+        <span class="brand-mark">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="white" aria-hidden="true"><path d="M12 1 C13 8 16 11 23 12 C16 13 13 16 12 23 C11 16 8 13 1 12 C8 11 11 8 12 1 Z"/></svg>
+        </span>
+        <span class="brand-name">Polarisweb</span>
+      </a>
+      <nav class="nav-links" id="navLinks">
+        <a href="/">Kezdőlap</a>
+        <a href="/portfolio">Portfólió</a>
+        <a href="/pricing">Árak</a>
+        <a href="/elemzes">Elemzés</a>
+        <a href="/ajanlatkeres">Ajánlatkérés</a>
+        <a href="/#faq">GYIK</a>
+        <a href="/#contact" class="btn btn-accent nav-cta">Ingyenes demo kérése</a>
+      </nav>
+      <button class="nav-toggle" id="navToggle" aria-label="Menü" aria-expanded="false">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <!-- PAGE HEAD -->
+  <section class="page-head">
+    <div class="eyebrow" style="justify-content:center;">Ingyenes ellenőrzés</div>
+    <h1>Él még a weboldala? Nézzük meg együtt</h1>
+    <p>Írja be a domainjét, és lefuttatjuk rá ugyanazt a mérést, amit 206 budapesti cégnél is elvégeztünk. Nincs regisztráció, nincs e-mail-kérés, az eredmény azonnal itt jelenik meg.</p>
+  </section>
+
+  <!-- CHECK FORM -->
+  <section class="section">
+    <div class="container-narrow" style="max-width:720px;">
+      <form id="checkForm" novalidate style="display:flex; gap:10px; flex-wrap:wrap;">
+        <input id="domainInput" type="text" inputmode="url" autocomplete="off" spellcheck="false"
+               placeholder="pelda.hu" aria-label="A cége domainje"
+               style="flex:1 1 240px; min-width:0; border:1.5px solid var(--border-input); border-radius:var(--radius-pill); padding:16px 22px; font:600 16px var(--sans); background:var(--surface); color:var(--ink);">
+        <button type="submit" id="checkBtn" class="btn btn-dark" style="flex:0 0 auto;">Ellenőrzés</button>
+      </form>
+      <p id="checkNote" style="font-size:13px; color:var(--muted); margin:12px 0 0;">Csak a nyilvánosan elérhető weboldalt nézzük meg, és nem mentünk el belőle semmit.</p>
+
+      <div id="result" hidden style="margin-top:32px;"></div>
+    </div>
+  </section>
+
+  <!-- MAGYARAZAT -->
+  <section class="band">
+    <div class="legal-wrap legal" style="padding-bottom:60px;">
+      <h2>Mit nézünk meg, és miért pont azt</h2>
+      <p>Tizenhárom dolgot vizsgálunk, és mindegyik olyan, aminek közvetlen köze van ahhoz, hogy egy érdeklődőből vendég lesz-e.</p>
+      <ul>
+        <li><strong>Él-e egyáltalán a domain.</strong> A 206 megvizsgált budapesti cég közül tizennégynél a weboldal domainje már nem működött, miközben a kereső és a katalógusok még hirdették a címet.</li>
+        <li><strong>Hívható-e a telefonszám egy koppintással.</strong> A vendéglátásban a működő oldalak 61 százalékán nem volt az. Mobilon ez hívásokat jelent, amik nem érkeznek be.</li>
+        <li><strong>Mobilra felkészült-e az oldal, és mennyi idő alatt jelenik meg.</strong></li>
+        <li><strong>Van-e űrlap, foglalás, időpontkérés.</strong> Ha az oldalról nem lehet elindulni Ön felé, akkor az oldal csak névjegy.</li>
+        <li><strong>Van-e mérés, sütibanner és adatkezelési tájékoztató.</strong> A mérés nélkül a hirdetés fekete doboz, a másik kettő pedig 2026-ban már nem elnézett hiány.</li>
+        <li><strong>Van-e oldalcím és leírás a Google találatához.</strong></li>
+      </ul>
+
+      <h2>Amit nem tudunk, azt megmondjuk</h2>
+      <p>A mérés a szerver által kiszolgált HTML-t vizsgálja. Ha egy oldal tartalma a böngészőben töltődik be, akkor ezt jelezzük, és nem pontozunk: inkább nem állítunk semmit, mint hogy tévedjünk.</p>
+      <p>Ha egy oldal elutasítja a kérésünket, azt sem mondjuk rá, hogy megszűnt. Ilyenkor külön ellenőrizzük a domaint, és böngésző-azonosítóval újra próbáljuk, mert egy élő oldalt halottnak nevezni a legrosszabb hiba, amit egy ilyen eszköz elkövethet.</p>
+
+      <h2>Mi történik az eredménnyel</h2>
+      <p>Nem mentjük adatbázisba, nem küldünk róla levelet, és nem kérünk érte e-mail-címet. A kiszolgálónk üzemeltetője a kéréseket a szokásos módon naplózza, ahogy minden weboldal esetében, de mi magunk semmit nem tárolunk el az eredményből. Ha az eredmény alapján szeretne továbblépni, az <a href="/ajanlatkeres">ajánlatkérő</a> oldalon tud jelentkezni, de ehhez a méréshez semmi köze.</p>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="section">
+    <div class="cta-center">
+      <h2>Ha az eredmény nem tetszik, azon lehet segíteni</h2>
+      <p>Az ingyenes konzultáción átnézzük a mérést, és elmondjuk, mi az a két-három lépés, ami a legtöbbet hozza. Nem kötelez semmire.</p>
+      <a href="/ajanlatkeres" class="btn btn-dark">Ingyenes konzultáció kérése</a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="footer-grid">
+      <div class="footer-cols">
+        <div class="footer-brand">
+          <div class="brand" style="margin-bottom:14px;">
+            <span class="brand-mark" style="width:30px;height:30px;border-radius:8px;">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="white" aria-hidden="true"><path d="M12 1 C13 8 16 11 23 12 C16 13 13 16 12 23 C11 16 8 13 1 12 C8 11 11 8 12 1 Z"/></svg>
+            </span>
+            <span class="brand-name" style="color:oklch(94% 0.01 90);font-size:19px;">Polarisweb</span>
+          </div>
+          <p>Weboldal-tervezési és bérleti szolgáltatás kisvállalkozásoknak, akik inkább a vállalkozásukkal, mint a weboldalukkal foglalkoznának.</p>
+        </div>
+        <div>
+          <div class="footer-heading">Stúdió</div>
+          <div class="footer-list">
+            <a href="/">Kezdőlap</a>
+            <a href="/portfolio">Portfólió</a>
+            <a href="/pricing">Árak</a>
+            <a href="/elemzes">Elemzés</a>
+            <a href="/ellenorzes">Ingyenes ellenőrzés</a>
+            <a href="/ajanlatkeres">Ajánlatkérés</a>
+          </div>
+        </div>
+        <div>
+          <div class="footer-heading">Kapcsolat</div>
+          <div class="footer-list">
+            <span>peter.veszpremi@polarisweb.hu</span>
+            <a href="tel:+36706713002">+36 70 671 3002</a>
+            <span>Veszprémi Péter, alapító</span>
+          </div>
+        </div>
+        <div>
+          <div class="footer-heading">Máshol</div>
+          <div class="footer-list">
+            <a href="https://www.linkedin.com/in/p%C3%A9ter-veszpr%C3%A9mi-32aa2b3b4/" target="_blank" rel="noopener">LinkedIn</a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© 2026 Polarisweb. Minden jog fenntartva.</span>
+        <span><a href="/adatkezeles">Adatkezelési tájékoztató</a> · <a href="/aszf">ÁSZF</a> · Magyarországon készült</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="assets/js/main.js"></script>
+  <script src="assets/js/consent.js"></script>
+  <script>
+  (function () {
+    var form = document.getElementById('checkForm');
+    var input = document.getElementById('domainInput');
+    var btn = document.getElementById('checkBtn');
+    var out = document.getElementById('result');
+
+    function esc(s) {
+      return String(s).replace(/[&<>"]/g, function (c) {
+        return ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c];
+      });
+    }
+
+    function card(inner) {
+      return '<div style="background:var(--surface); border:1px solid var(--border); border-radius:18px; padding:28px; box-shadow:0 18px 40px -28px oklch(23% 0.02 50 / 0.4);">' + inner + '</div>';
+    }
+
+    function render(d) {
+      if (d.error) {
+        out.innerHTML = card('<p style="margin:0; font-size:15.5px; color:var(--ink-2);">' + esc(d.error) + '</p>');
+        return;
+      }
+      var scoreBlock = '';
+      if (d.score !== null && d.score !== undefined) {
+        var color = d.score >= 85 ? 'var(--accent-strong)' : (d.score >= 70 ? 'var(--warm-2)' : '#b91c1c');
+        scoreBlock =
+          '<div style="display:flex; align-items:baseline; gap:10px; margin-bottom:6px;">' +
+            '<span style="font-family:var(--serif); font-size:52px; line-height:1; color:' + color + ';">' + d.score + '</span>' +
+            '<span style="font-size:15px; color:var(--muted);">/ 100 pont</span>' +
+          '</div>';
+      }
+      var gaps = (d.gaps || []).length
+        ? '<h3 style="font-size:15px; font-weight:700; margin:22px 0 10px;">Amit érdemes megjavítani</h3><ul style="margin:0; padding-left:0; list-style:none;">' +
+          d.gaps.map(function (g) {
+            return '<li style="font-size:14.5px; line-height:1.55; color:var(--ink-2); padding-left:22px; position:relative; margin-bottom:8px;">' +
+              '<span style="position:absolute; left:0; color:#b91c1c; font-weight:800;">!</span>' + esc(g) + '</li>';
+          }).join('') + '</ul>'
+        : '';
+      var oks = (d.oks || []).length
+        ? '<h3 style="font-size:15px; font-weight:700; margin:22px 0 10px;">Ami rendben van</h3><div style="display:flex; flex-wrap:wrap; gap:6px;">' +
+          d.oks.map(function (o) {
+            return '<span style="font:600 12.5px var(--sans); background:var(--accent-tint); color:var(--accent-strong); padding:5px 11px; border-radius:100px;">' + esc(o) + '</span>';
+          }).join('') + '</div>'
+        : '';
+      var limits = (d.limits || []).length
+        ? '<p style="font-size:12.5px; color:var(--muted); margin:22px 0 0; line-height:1.55;">' +
+          d.limits.map(esc).join(' ') + '</p>'
+        : '';
+      out.innerHTML = card(
+        '<div style="font:700 13px var(--sans); letter-spacing:.08em; text-transform:uppercase; color:var(--muted); margin-bottom:14px;">' + esc(d.domain) + '</div>' +
+        scoreBlock +
+        '<h2 style="font-family:var(--serif); font-weight:400; font-size:26px; margin:10px 0 8px;">' + esc(d.headline) + '</h2>' +
+        '<p style="font-size:15px; line-height:1.6; color:var(--ink-2); margin:0;">' + esc(d.detail) + '</p>' +
+        (d.title ? '<p style="font-size:13.5px; color:var(--muted); margin:12px 0 0;">Oldalcím: ' + esc(d.title) + '</p>' : '') +
+        gaps + oks + limits
+      );
+    }
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var v = (input.value || '').trim();
+      if (!v) { input.focus(); return; }
+      btn.disabled = true;
+      var old = btn.textContent;
+      btn.textContent = 'Mérés folyamatban';
+      out.hidden = false;
+      out.innerHTML = card('<p style="margin:0; font-size:15px; color:var(--muted);">Letöltjük az oldalt és megvizsgáljuk. Ez pár másodperc.</p>');
+      fetch('/api/site-check?domain=' + encodeURIComponent(v))
+        .then(function (r) { return r.json(); })
+        .then(render)
+        .catch(function () {
+          out.innerHTML = card('<p style="margin:0; font-size:15px; color:var(--ink-2);">A mérés most nem futott le. Próbálja újra pár másodperc múlva.</p>');
+        })
+        .then(function () { btn.disabled = false; btn.textContent = old; });
+    });
+  })();
+  </script>
+</body>
+</html>
