@@ -111,9 +111,24 @@
 
   .report .btn{transition:transform .15s var(--ease-out),background .15s var(--ease-out),color .15s var(--ease-out),border-color .15s var(--ease-out)}
   .report .btn.picked{animation:pop .32s var(--ease-out)}
-  .report .btn.picked[data-rep="ok"]{background:#dcfce7;border-color:#bbf0cd;color:var(--free)}
-  .report .btn.picked[data-rep="closed"]{background:#fef3c7;border-color:#fde7a8;color:var(--paid)}
-  .report .btn.picked[data-rep="bad"]{background:#fee2e2;border-color:#fbd0d0;color:#b91c1c}
+  .report .btn.picked[data-rate$=":clean"],
+  .report .btn.picked[data-rate$=":works"]{background:#dcfce7;border-color:#bbf0cd;color:var(--free)}
+  .report .btn.picked[data-rate$=":ok"]{background:#fef3c7;border-color:#fde7a8;color:var(--paid)}
+  .report .btn.picked[data-rate$=":bad"],
+  .report .btn.picked[data-rate$=":closed"]{background:#fee2e2;border-color:#fbd0d0;color:#b91c1c}
+  .report .lbl{display:flex;align-items:baseline;gap:6px;flex-wrap:wrap}
+  .report .lbl .when{font-weight:600;color:var(--brand-dark);font-size:11.5px}
+  .report .row{margin-bottom:10px}
+  .report .row:last-child{margin-bottom:0}
+  .btn-sm{flex:0 0 auto;padding:8px 12px;font-size:12.5px}
+  .codebox{display:flex;align-items:center;gap:10px;flex-wrap:wrap;background:#f2f6f5;border:1px solid var(--line);border-radius:10px;padding:10px 12px;margin:2px 0 8px}
+  .codeval{font-size:14px;color:var(--ink)}
+  .codeval strong{font-size:16px;letter-spacing:.06em}
+  .codemeta{font-size:12px;color:var(--muted);flex:1 1 auto}
+  .codeform{margin:0 0 8px}
+  .codeform input{width:100%;box-sizing:border-box;border:1px solid var(--line-strong,#cfd8d5);border-radius:10px;padding:11px 12px;font:600 15px var(--sans);letter-spacing:.06em;margin-bottom:8px;background:#fff;color:var(--ink)}
+  .codeform input:focus{outline:2px solid var(--brand);outline-offset:1px}
+  .local{font-size:11.5px;color:var(--muted);margin-top:8px;font-style:italic}
   @keyframes pop{0%{transform:scale(1)}45%{transform:scale(1.08)}100%{transform:scale(1)}}
 
   .btn.primary:hover{box-shadow:0 10px 20px -10px rgba(13,148,136,.55)}
@@ -188,8 +203,14 @@
       wc_yes: 'Wheelchair accessible', wc_no: 'Not accessible', wc_lim: 'Partly accessible', wc_unknown: 'Accessibility unknown',
       baby: 'Baby changing', unisex: 'Unisex', open247: 'Open 24/7', hours_unknown: 'Opening hours unknown',
       nav: 'Walk here', unnamed: 'Public toilet', near_word: 'near', inside_word: 'at',
-      rep_q: 'Been here? One tap helps everyone.', rep_ok: 'It works', rep_closed: 'Closed', rep_bad: 'Filthy',
-      thanks: 'Thanks, saved on this device.',
+      rep_q: 'Been here? One tap helps everyone.',
+      rate_q: 'How clean was it?', rate_clean: 'Clean', rate_ok: 'Passable', rate_bad: 'Grim',
+      state_q: 'Is it working?', state_works: 'Works', state_closed: 'Closed',
+      code_label: 'Door code', code_add: 'Add door code', code_edit: 'Changed? Update it',
+      code_save: 'Save', code_cancel: 'Cancel', code_ph: 'e.g. 1234 or 12C45',
+      code_none: 'No code reported yet', code_upd: 'updated',
+      local_only: 'Saved on this device only, for now',
+      ago_now: 'just now', ago_min: 'min ago', ago_hour: 'hours ago', ago_day: 'days ago',
       empty_filters: 'No toilet survives this many filters at once. Turn one off and try again.',
       empty_search: function(q){ return 'Nothing matches "' + q + '". Even Budapest’s toilets have their limits. Try a shorter word.'; },
       reset_btn: 'Reset filters',
@@ -212,8 +233,14 @@
       wc_yes: 'Akadálymentes', wc_no: 'Nem akadálymentes', wc_lim: 'Részben akadálymentes', wc_unknown: 'Akadálymentesség nem ismert',
       baby: 'Pelenkázó', unisex: 'Nem szerint nem elválasztott', open247: 'Non-stop', hours_unknown: 'Nyitvatartás nem ismert',
       nav: 'Útvonal', unnamed: 'Nyilvános mosdó', near_word: 'közelében', inside_word: 'itt:',
-      rep_q: 'Jártál itt? Egy koppintás másoknak is segít.', rep_ok: 'Működik', rep_closed: 'Zárva', rep_bad: 'Szörnyű',
-      thanks: 'Kösz, elmentve ezen az eszközön.',
+      rep_q: 'Jártál itt? Egy koppintás másoknak is segít.',
+      rate_q: 'Milyen volt a tisztaság?', rate_clean: 'Tiszta', rate_ok: 'Elmegy', rate_bad: 'Szörnyű',
+      state_q: 'Működik?', state_works: 'Működik', state_closed: 'Zárva',
+      code_label: 'Ajtókód', code_add: 'Ajtókód megadása', code_edit: 'Megváltozott? Írd be az újat',
+      code_save: 'Mentés', code_cancel: 'Mégsem', code_ph: 'pl. 1234 vagy 12C45',
+      code_none: 'Még nincs bejelentett kód', code_upd: 'frissítve',
+      local_only: 'Egyelőre csak ezen az eszközön mentve',
+      ago_now: 'épp most', ago_min: 'perccel ezelőtt', ago_hour: 'órával ezelőtt', ago_day: 'nappal ezelőtt',
       empty_filters: 'Ennyi szűrővel egyszerre egyetlen mosdó sem marad talpon. Kapcsolj ki egyet, és nézzük újra.',
       empty_search: function(q){ return 'Erre semmi nem illik: "' + q + '". Még Budapest mosdóinak is vannak határai. Próbálj rövidebb szót.'; },
       reset_btn: 'Szűrők törlése',
@@ -243,6 +270,52 @@
   var countAnim = { token: 0, current: null, didFirst:false };
   var reports = {};
   try { reports = JSON.parse(localStorage.getItem('ntp-reports') || '{}'); } catch(e){}
+  // migracio a regi { v, at } alakrol az uj, tobb-mezos alakra
+  Object.keys(reports).forEach(function(k){
+    var r = reports[k];
+    if (r && r.v){
+      var m = { };
+      if (r.v === 'bad') { m.clean = 'bad'; m.clean_at = r.at; }
+      else if (r.v === 'closed') { m.state = 'closed'; m.state_at = r.at; }
+      else if (r.v === 'ok') { m.state = 'works'; m.state_at = r.at; }
+      reports[k] = m;
+    }
+  });
+
+  // Megosztott tar. Amig ures, minden jelzes CSAK ezen az eszkozon van.
+  // Ha kap url + anon kulcsot, ugyanaz a UI mindenkinek szolo adatot ir es olvas.
+  var SHARED = { url: '', key: '' };
+  function isShared(){ return !!(SHARED.url && SHARED.key); }
+  function pushShared(id, patch){
+    if (!isShared()) return;
+    try {
+      fetch(SHARED.url + '/rest/v1/reports', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'apikey': SHARED.key, 'Authorization': 'Bearer ' + SHARED.key, 'Prefer': 'return=minimal' },
+        body: JSON.stringify({ toilet_id: id, payload: patch, created_at: new Date().toISOString() })
+      }).catch(function(){});
+    } catch(e){}
+  }
+
+  function saveReport(id, patch){
+    var r = reports[id] || {};
+    Object.keys(patch).forEach(function(k){ r[k] = patch[k]; });
+    reports[id] = r;
+    try { localStorage.setItem('ntp-reports', JSON.stringify(reports)); } catch(e){}
+    pushShared(id, patch);
+  }
+
+  // relativ ido, mindket nyelven
+  function ago(ts){
+    if (!ts) return '';
+    var t = tr(), s = Math.max(0, Math.round((Date.now() - ts) / 1000));
+    if (s < 90) return t.ago_now;
+    var mi = Math.round(s / 60);
+    if (mi < 60) return mi + ' ' + t.ago_min;
+    var h = Math.round(mi / 60);
+    if (h < 36) return h + ' ' + t.ago_hour;
+    return Math.round(h / 24) + ' ' + t.ago_day;
+  }
 
   function tr(){ return T[lang]; }
 
@@ -407,6 +480,38 @@
     }, dur + 80);
   }
 
+  function reportBlock(it, r, t){
+    r = r || {};
+    function grp(kind, opts){
+      return opts.map(function(o){
+        var on = r[kind] === o[0];
+        return '<button class="btn' + (on ? ' picked' : '') + '" data-rate="' + kind + ':' + o[0] +
+               '" data-id="' + it.id + '">' + esc(o[1]) + '</button>';
+      }).join('');
+    }
+    var clean = '<div class="lbl">' + esc(t.rate_q) + (r.clean_at ? ' <span class="when">' + esc(ago(r.clean_at)) + '</span>' : '') + '</div>' +
+      '<div class="row">' + grp('clean', [['clean', t.rate_clean], ['ok', t.rate_ok], ['bad', t.rate_bad]]) + '</div>';
+    var state = '<div class="lbl">' + esc(t.state_q) + (r.state_at ? ' <span class="when">' + esc(ago(r.state_at)) + '</span>' : '') + '</div>' +
+      '<div class="row">' + grp('state', [['works', t.state_works], ['closed', t.state_closed]]) + '</div>';
+
+    var code;
+    if (r.code){
+      code = '<div class="codebox"><div class="codeval">' + esc(t.code_label) + ': <strong>' + esc(r.code) + '</strong></div>' +
+        '<div class="codemeta">' + esc(t.code_upd) + ' ' + esc(ago(r.code_at)) + '</div>' +
+        '<button class="btn btn-sm" data-codeopen="' + it.id + '">' + esc(t.code_edit) + '</button></div>';
+    } else {
+      code = '<div class="codebox"><div class="codemeta">' + esc(t.code_none) + '</div>' +
+        '<button class="btn btn-sm" data-codeopen="' + it.id + '">' + esc(t.code_add) + '</button></div>';
+    }
+    var form = '<div class="codeform" data-codeform="' + it.id + '" hidden>' +
+      '<input type="text" inputmode="text" autocomplete="off" maxlength="16" data-codeinput="' + it.id + '" placeholder="' + esc(t.code_ph) + '" value="' + esc(r.code || '') + '">' +
+      '<div class="row"><button class="btn primary btn-sm" data-codesave="' + it.id + '">' + esc(t.code_save) + '</button>' +
+      '<button class="btn btn-sm" data-codecancel="' + it.id + '">' + esc(t.code_cancel) + '</button></div></div>';
+
+    var note = isShared() ? '' : '<div class="local">' + esc(t.local_only) + '</div>';
+    return '<div class="report">' + clean + state + code + form + note + '</div>';
+  }
+
   var lastMetaRenderAt = 0;
   function renderMeta(shownCount){
     var t = tr();
@@ -479,11 +584,7 @@
         '<p class="where">' + esc(where(it)) + '</p>' +
         '<div class="tags">' + tags(it).map(function(p){ return '<span class="t ' + p[0] + '">' + esc(p[1]) + '</span>'; }).join('') + '</div>' +
         '<div class="row"><a class="btn primary" target="_blank" rel="noopener" href="https://www.google.com/maps/dir/?api=1&destination=' + it.lat + ',' + it.lon + '&travelmode=walking">' + esc(t.nav) + '</a></div>' +
-        '<div class="report"><div class="lbl">' + esc(t.rep_q) + '</div><div class="row">' +
-          '<button class="btn' + (said && said.v === 'ok' ? ' picked' : '') + '" data-rep="ok" data-id="' + it.id + '">' + esc(t.rep_ok) + '</button>' +
-          '<button class="btn' + (said && said.v === 'closed' ? ' picked' : '') + '" data-rep="closed" data-id="' + it.id + '">' + esc(t.rep_closed) + '</button>' +
-          '<button class="btn' + (said && said.v === 'bad' ? ' picked' : '') + '" data-rep="bad" data-id="' + it.id + '">' + esc(t.rep_bad) + '</button>' +
-        '</div>' + (said ? '<div class="said">' + esc(t.thanks) + '</div>' : '') + '</div>';
+        reportBlock(it, said, t);
       list.appendChild(el);
     });
 
@@ -575,10 +676,47 @@
       return;
     }
 
-    var rep = e.target.closest('[data-rep]');
-    if (rep){
-      reports[rep.dataset.id] = { v: rep.dataset.rep, at: Date.now() };
-      try { localStorage.setItem('ntp-reports', JSON.stringify(reports)); } catch(err){}
+    var rate = e.target.closest('[data-rate]');
+    if (rate){
+      var parts = rate.dataset.rate.split(':'), patch = {};
+      patch[parts[0]] = parts[1];
+      patch[parts[0] + '_at'] = Date.now();
+      saveReport(rate.dataset.id, patch);
+      render();
+      return;
+    }
+
+    var codeOpen = e.target.closest('[data-codeopen]');
+    if (codeOpen){
+      var id = codeOpen.dataset.codeopen;
+      var fm = document.querySelector('[data-codeform="' + id + '"]');
+      if (fm){
+        fm.hidden = false;
+        var inp = fm.querySelector('[data-codeinput]');
+        if (inp) inp.focus();
+      }
+      return;
+    }
+    var codeCancel = e.target.closest('[data-codecancel]');
+    if (codeCancel){
+      var fm2 = document.querySelector('[data-codeform="' + codeCancel.dataset.codecancel + '"]');
+      if (fm2) fm2.hidden = true;
+      return;
+    }
+    var codeSave = e.target.closest('[data-codesave]');
+    if (codeSave){
+      var sid = codeSave.dataset.codesave;
+      var input = document.querySelector('[data-codeinput="' + sid + '"]');
+      var val = input ? input.value.trim().slice(0, 16) : '';
+      if (val){
+        saveReport(sid, { code: val, code_at: Date.now() });
+      } else {
+        // ures mentes = a kod torlese, mert lehet hogy mar nincs kod
+        var r0 = reports[sid] || {};
+        delete r0.code; delete r0.code_at;
+        reports[sid] = r0;
+        try { localStorage.setItem('ntp-reports', JSON.stringify(reports)); } catch(err){}
+      }
       render();
       return;
     }
