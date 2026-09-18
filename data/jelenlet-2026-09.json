@@ -272,9 +272,9 @@
    }
   },
   "XIV": {
-   "n": 16,
+   "n": 17,
    "nosite": 2,
-   "gone": 2,
+   "gone": 3,
    "scored": 11,
    "avg": 86.7,
    "gaps": {
@@ -302,9 +302,9 @@
    }
   },
   "XVI": {
-   "n": 20,
+   "n": 19,
    "nosite": 0,
-   "gone": 2,
+   "gone": 1,
    "scored": 17,
    "avg": 81.6,
    "gaps": {
