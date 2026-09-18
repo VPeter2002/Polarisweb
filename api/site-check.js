@@ -20,7 +20,7 @@ const dns = require('node:dns').promises;
 const UA = 'PolariswebSiteCheck/1.0 (+https://www.polarisweb.hu/ellenorzes)';
 const BROWSER_UA =
   'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36';
-const TIMEOUT_MS = 8000;
+const TIMEOUT_MS = 12000;
 const MAX_BYTES = 400_000;
 
 const WEIGHTS = {
@@ -157,25 +157,45 @@ module.exports = async (req, res) => {
     return;
   }
 
-  // 2) Letoltes. Eloszor sajat azonositoval, aztan bongeszo-azonositoval.
-  let page = await fetchPage('https://' + host + '/', UA);
-  let httpsOk = page.status !== null;
-  if (!httpsOk) page = await fetchPage('http://' + host + '/', UA);
-  let blocksRobots = false;
-  if (!(page.status && page.status < 400 && page.html)) {
-    const retry = await fetchPage((httpsOk ? 'https://' : 'http://') + host + '/', BROWSER_UA);
-    if (retry.status && retry.status < 400 && retry.html) {
-      blocksRobots = true;
-      page = retry;
-    } else {
-      res.status(200).json({
-        domain: host, state: 'unreachable', score: null,
-        headline: 'A domain létezik, de az oldal nem válaszol',
-        detail: 'A szerver nem adott ki tartalmat' + (retry.status ? ' (' + retry.status + '-es hibakód)' : '') + '. Aki most keresi Önt, hibaüzenetet lát a weboldala helyén.',
-        gaps: [], oks: [], limits: [],
-      });
-      return;
+  // 2) Letoltes. Vegigprobaljuk az ertelmes valtozatokat, mert egy oldal gyakran
+  // csak www-vel szolgal ki, es sok szerver az automatikus kereseket szuri.
+  // FONTOS: ha DNS feloldodik, de mi nem jutunk be, azt NEM allitjuk halottnak.
+  // Egy elo oldalrol azt mondani hogy nem mukodik, a legrosszabb hiba, amit ez
+  // az eszkoz elkovethet. Ilyenkor azt mondjuk: mi nem tudtuk lemerni.
+  const bare = host.replace(/^www\./, '');
+  const candidates = [
+    ['https://' + host + '/', UA],
+    ['https://' + host + '/', BROWSER_UA],
+    ['http://' + host + '/', BROWSER_UA],
+  ];
+  if (!host.startsWith('www.')) {
+    candidates.push(['https://www.' + bare + '/', BROWSER_UA]);
+  }
+  let page = null;
+  let lastStatus = null;
+  let usedBrowserUa = false;
+  for (const [url, ua] of candidates) {
+    const r = await fetchPage(url, ua);
+    if (r.status) lastStatus = r.status;
+    if (r.status && r.status < 400 && r.html) {
+      page = r;
+      usedBrowserUa = ua === BROWSER_UA;
+      break;
     }
+  }
+  const blocksRobots = usedBrowserUa;
+  if (!page) {
+    const httpErr = lastStatus && lastStatus >= 400;
+    res.status(200).json({
+      domain: host, state: httpErr ? 'http_error' : 'fetch_failed', score: null,
+      headline: httpErr ? 'A szerver hibát ad az oldal helyett' : 'Ezt az oldalt nem tudtuk lemérni',
+      detail: httpErr
+        ? 'A domain működik, de a kiszolgáló ' + lastStatus + '-es hibakóddal válaszolt. Érdemes böngészőben is megnyitni: ha ott is hibát lát, akkor az érdeklődői is azt látják.'
+        : 'A domain létezik, tehát nem szűnt meg, de a mérésünk nem jutott be. Ennek több oka lehet: a szerver szűri az automatikus kéréseket, vagy épp nem válaszolt időben. Nyissa meg böngészőben, és ha ott működik, akkor az oldallal nincs baj, csak mi nem láttuk.',
+      gaps: [], oks: [],
+      limits: ['Erről az oldalról szándékosan nem állítunk semmit, mert nem tudtuk megvizsgálni.'],
+    });
+    return;
   }
 
   const f = inspect(page.html);
