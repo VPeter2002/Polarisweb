@@ -2,7 +2,7 @@
 var CACHE = 'ntp-v1';
 var BASE = self.registration.scope.replace(location.origin, '').replace(/\/$/, '');
 var ASSETS = [
-  BASE + '/', BASE + '/index.html', BASE + '/data/toilets.json', BASE + '/manifest.webmanifest',
+  BASE + '/', BASE + '/index.html', BASE + '/data/toilets.json', BASE + '/data/water.json', BASE + '/manifest.webmanifest',
   'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css',
   'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js'
 ];
@@ -23,7 +23,7 @@ self.addEventListener('fetch', function(e){
     caches.match(e.request).then(function(hit){
       if (hit) return hit;
       return fetch(e.request).then(function(res){
-        if (res && res.ok && /toilets\.json$/.test(e.request.url)){
+        if (res && res.ok && /(toilets|water)\.json$/.test(e.request.url)){
           var copy = res.clone();
           caches.open(CACHE).then(function(c){ c.put(e.request, copy); });
         }

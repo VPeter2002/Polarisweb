@@ -155,6 +155,10 @@
   <div class="bar">
     <div class="logo"><span class="dot">💧</span> Need To Pee</div>
     <div class="spacer"></div>
+    <div class="lang" id="layerSwitch" style="margin-right:8px;">
+      <button id="layerToilets" class="on" data-layer="toilets">WC</button>
+      <button id="layerWater" data-layer="water">H2O</button>
+    </div>
     <div class="lang">
       <button id="langEn" class="on">EN</button>
       <button id="langHu">HU</button>
@@ -191,6 +195,25 @@
 <script>
 (function(){
   'use strict';
+
+  // Ha az inditas elhasal, NE maradjon ures oldal: irjuk ki, hogy baj van.
+  // Egy csendes feher lap a legrosszabb hibaallapot, mert senki nem jelzi.
+  window.addEventListener('unhandledrejection', function (e) {
+    var box = document.getElementById('empty');
+    if (!box) return;
+    box.hidden = false;
+    box.textContent = 'Valami elromlott a betöltés közben. Töltsd újra az oldalt.';
+    var r = e && e.reason;
+    box.dataset.err = 'promise: ' + String((r && (r.stack || r.message)) || r).slice(0, 300);
+  });
+  window.addEventListener('error', function (e) {
+    var box = document.getElementById('empty');
+    if (!box) return;
+    box.hidden = false;
+    box.textContent = 'Valami elromlott a betöltés közben. Töltsd újra az oldalt.';
+    box.dataset.err = (e && e.message) ? String(e.message).slice(0, 160) : 'unknown';
+  });
+
   var BASE = location.pathname.indexOf('/demok/needtopee') === 0 ? '/demok/needtopee' : '';
 
   var T = {
@@ -210,6 +233,12 @@
       code_save: 'Save', code_cancel: 'Cancel', code_ph: 'e.g. 1234 or 12C45',
       code_none: 'No code reported yet', code_upd: 'updated',
       local_only: 'Saved on this device only, for now',
+      layer_toilets: 'Toilets', layer_water: 'Drinking water',
+      w_bottle: 'Bottle can be filled', w_wheelchair: 'Wheelchair accessible',
+      w_seasonal: 'Seasonal, not always on', w_dog: 'Dog bowl', w_covered: 'Covered',
+      w_title: 'Drinking fountain', w_free: 'Free', w_count: function(n, t){ return n + ' of ' + t + ' fountains'; },
+      w_empty: 'No fountain matches these filters.',
+      w_note: 'Public drinking fountains. Many of them are switched off in winter, so treat the list as a hint.',
       ago_now: 'just now', ago_min: 'min ago', ago_hour: 'hours ago', ago_day: 'days ago',
       empty_filters: 'No toilet survives this many filters at once. Turn one off and try again.',
       empty_search: function(q){ return 'Nothing matches "' + q + '". Even Budapest’s toilets have their limits. Try a shorter word.'; },
@@ -240,6 +269,12 @@
       code_save: 'Mentés', code_cancel: 'Mégsem', code_ph: 'pl. 1234 vagy 12C45',
       code_none: 'Még nincs bejelentett kód', code_upd: 'frissítve',
       local_only: 'Egyelőre csak ezen az eszközön mentve',
+      layer_toilets: 'Mosdók', layer_water: 'Ivóvíz',
+      w_bottle: 'Kulacs megtölthető', w_wheelchair: 'Akadálymentes',
+      w_seasonal: 'Szezonális, nem mindig megy', w_dog: 'Kutyaitató', w_covered: 'Fedett',
+      w_title: 'Ivókút', w_free: 'Ingyenes', w_count: function(n, t){ return n + ' / ' + t + ' ivókút'; },
+      w_empty: 'Ezekkel a szűrőkkel nincs ivókút.',
+      w_note: 'Nyilvános ivókutak. Sokat télen elzárnak, ezért a listát jelzésnek vedd, ne ígéretnek.',
       ago_now: 'épp most', ago_min: 'perccel ezelőtt', ago_hour: 'órával ezelőtt', ago_day: 'nappal ezelőtt',
       empty_filters: 'Ennyi szűrővel egyszerre egyetlen mosdó sem marad talpon. Kapcsolj ki egyet, és nézzük újra.',
       empty_search: function(q){ return 'Erre semmi nem illik: "' + q + '". Még Budapest mosdóinak is vannak határai. Próbálj rövidebb szót.'; },
@@ -263,7 +298,7 @@
   };
 
   var lang = (navigator.language || 'en').slice(0,2) === 'hu' ? 'hu' : 'en';
-  var items = [], me = null, map, layer, markersById = {};
+  var items = [], water = [], layer_mode = 'toilets', me = null, map, layer, markersById = {};
   var filters = { open:false, free:false, step:false, wc:false, baby:false };
   var searchQuery = ''; // normalized (lowercase, no diacritics)
   var sortMode = 'near'; // near | free | open
@@ -354,8 +389,19 @@
   }
   function fmtDist(m){ return m < 1000 ? Math.round(m/10)*10 + ' m' : (m/1000).toFixed(1) + ' km'; }
 
+  function waterTags(it){
+    var t = tr(), out = [['free', t.w_free]];
+    if (it.bottle === 'yes') out.push(['ok', t.w_bottle]);
+    if (it.wheelchair === 'yes') out.push(['ok', t.w_wheelchair]);
+    if (it.seasonal) out.push(['warn', t.w_seasonal]);
+    if (it.dog === 'yes') out.push(['', t.w_dog]);
+    if (it.covered === 'yes') out.push(['', t.w_covered]);
+    return out;
+  }
+
   function title(it){
     var t = tr();
+    if (it.isWater) return t.w_title;
     if (!it.place) return t.unnamed;
     if (it.inside) return it.place;
     return lang === 'hu' ? (it.place + ' ' + t.near_word) : (t.near_word + ' ' + it.place);
@@ -363,6 +409,7 @@
   function where(it){
     // a helyszin neve a cimben van, itt NEM ismeteljuk meg
     var bits = [];
+    if (it.isWater && it.operator) bits.push(it.operator);
     var kl = kindLabel(it.kind);
     if (kl) bits.push(kl);
     if (it.operator) bits.push(it.operator);
@@ -372,6 +419,7 @@
 
   function tags(it){
     var t = tr(), out = [];
+    if (it.isWater) return waterTags(it);
     if (it.fee === 'free') out.push(['free', t.free]);
     else if (it.fee === 'paid') out.push(['paid', t.paid + (it.charge ? ' · ' + it.charge : '')]);
     else out.push(['nodata', t.fee_unknown]);
@@ -395,6 +443,12 @@
   }
 
   function pass(it){
+    if (it.isWater){
+      // az ivokutnal csak a ket ertelmes szuro el: akadalymentes es (kulacs helyett) foglalas nincs
+      if (filters.wc && it.wheelchair !== 'yes') return false;
+      if (filters.open || filters.free || filters.step || filters.baby) return true;
+      return true;
+    }
     if (!searchMatch(it)) return false;
     if (filters.open && isOpenNow(it.hours) !== true) return false;
     if (filters.free && it.fee !== 'free') return false;
@@ -515,7 +569,7 @@
   var lastMetaRenderAt = 0;
   function renderMeta(shownCount){
     var t = tr();
-    var full = t.count(shownCount, items.length);
+    var full = layer_mode === 'water' ? t.w_count(shownCount, water.length) : t.count(shownCount, items.length);
     var withSpan = full.replace(/\d+/, '<span id="countNum">$&</span>');
     document.getElementById('meta').innerHTML = '<strong>' + withSpan + '</strong> · ' + (me ? t.sortedNear : t.sortedAll);
     var now = Date.now();
@@ -556,8 +610,10 @@
     setTimeout(function(){ card.classList.remove('item-focus'); }, 1500);
   }
 
+  function activeSet(){ return layer_mode === 'water' ? water : items; }
+
   function render(){
-    var t = tr(), shown = items.filter(pass);
+    var t = tr(), shown = activeSet().filter(pass);
     shown.sort(sortComparator);
 
     renderMeta(shown.length);
@@ -592,7 +648,8 @@
       layer.clearLayers();
       markersById = {};
       shown.forEach(function(it){
-        var color = it.fee === 'free' ? '#15803d' : (it.fee === 'paid' ? '#b45309' : '#6b7a77');
+        var color = it.isWater ? '#0369a1'
+          : it.fee === 'free' ? '#15803d' : (it.fee === 'paid' ? '#b45309' : '#6b7a77');
         var marker = L.circleMarker([it.lat, it.lon], { radius:7, weight:2, color:'#fff', fillColor:color, fillOpacity:1 })
           .bindPopup('<strong>' + esc(title(it)) + '</strong><br>' + esc(where(it)))
           .addTo(layer);
@@ -639,6 +696,7 @@
     navigator.geolocation.getCurrentPosition(function(pos){
       me = { lat: pos.coords.latitude, lon: pos.coords.longitude };
       items.forEach(function(it){ it.dist = dist(me, it); });
+      water.forEach(function(it){ it.dist = dist(me, it); });
       btn.textContent = tr().near;
       if (map){ map.setView([me.lat, me.lon], 15); L.circleMarker([me.lat, me.lon], { radius:8, weight:3, color:'#0d9488', fillColor:'#fff', fillOpacity:1 }).addTo(layer); }
       render();
@@ -659,7 +717,7 @@
     search.placeholder = tr().search_ph;
     search.setAttribute('aria-label', tr().search_label);
     document.getElementById('searchClear').setAttribute('aria-label', tr().search_clear);
-    document.getElementById('footer').innerHTML = esc(tr().foot) +
+    document.getElementById('footer').innerHTML = esc(tr().foot) + ' ' + esc(tr().w_note) +
       ' <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">© OpenStreetMap</a>';
     refresh();
   }
@@ -729,6 +787,23 @@
     var card = e.target.closest('.item');
     if (card && card.dataset.id) focusItem(card.dataset.id);
   });
+  function setLayer(mode){
+    layer_mode = mode;
+    document.getElementById('layerToilets').className = mode === 'toilets' ? 'on' : '';
+    document.getElementById('layerWater').className = mode === 'water' ? 'on' : '';
+    // ivokutnal a mosdo-szurok tobbsege ertelmetlen, ezert csak az akadalymentes marad
+    var chips = document.getElementById('filters');
+    Array.prototype.forEach.call(chips.querySelectorAll('[data-f]'), function (c) {
+      var keep = mode === 'toilets' || c.dataset.f === 'wc';
+      c.style.display = keep ? '' : 'none';
+    });
+    var s2 = document.getElementById('searchWrap') || document.getElementById('domainSearch');
+    if (me) activeSet().forEach(function (it) { it.dist = dist(me, it); });
+    render();
+  }
+  document.getElementById('layerToilets').addEventListener('click', function(){ setLayer('toilets'); });
+  document.getElementById('layerWater').addEventListener('click', function(){ setLayer('water'); });
+
   document.getElementById('langEn').addEventListener('click', function(){ setLang('en'); });
   document.getElementById('langHu').addEventListener('click', function(){ setLang('hu'); });
   document.getElementById('locBtn').addEventListener('click', requestLocation);
@@ -754,6 +829,10 @@
 
   document.getElementById('meta').textContent = tr().loading;
   document.getElementById('list').innerHTML = '<div class="skeleton"></div><div class="skeleton"></div><div class="skeleton"></div>';
+
+  fetch(BASE + '/data/water.json').then(function(r){ return r.json(); }).then(function(d){
+    water = d.items.map(function (w) { w.isWater = true; return w; });
+  }).catch(function(){});
 
   fetch(BASE + '/data/toilets.json').then(function(r){ return r.json(); }).then(function(d){
     items = d.items;
