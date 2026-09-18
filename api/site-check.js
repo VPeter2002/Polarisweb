@@ -185,13 +185,31 @@ module.exports = async (req, res) => {
   }
   const blocksRobots = usedBrowserUa;
   if (!page) {
-    const httpErr = lastStatus && lastStatus >= 400;
+    // A hibakodot ERTELMEZZUK, mert nem mindegyik jelent hibas oldalt.
+    // 403 / 406 / 429 / 451: a szerver a MI kereset utasitotta el, az oldal
+    // bongeszobol jo eseggel hibatlanul mukodik. Ezt nem szabad ugy irni,
+    // mintha a cég oldala lenne rossz.
+    const blocked = [401, 403, 406, 409, 429, 451].includes(lastStatus);
+    const missing = [404, 410].includes(lastStatus);
+    const serverErr = lastStatus >= 500;
+    let state = 'fetch_failed';
+    let headline = 'Ezt az oldalt nem tudtuk lemérni';
+    let detail = 'A domain létezik, tehát nem szűnt meg, de a mérésünk nem jutott be. Nyissa meg böngészőben: ha ott működik, akkor az oldallal nincs baj, csak mi nem láttuk.';
+    if (blocked) {
+      state = 'blocked';
+      headline = 'Az oldal a mérésünket elutasította';
+      detail = 'A szerver ' + lastStatus + '-es kóddal visszautasította a kérésünket. Ez jellemzően védelem az automatikus látogatók ellen, tehát az oldal böngészőből nagy valószínűséggel hibátlanul működik. Erről az oldalról ezért nem állítunk semmit.';
+    } else if (missing) {
+      state = 'http_error';
+      headline = 'A megadott címen nincs oldal';
+      detail = 'A domain működik, de a kiszolgáló ' + lastStatus + '-es kóddal válaszolt, vagyis ezen a címen nem talált tartalmat. Aki ide jut a keresőből, hibaüzenetet lát a weboldal helyett.';
+    } else if (serverErr) {
+      state = 'http_error';
+      headline = 'A kiszolgáló hibát ad';
+      detail = 'A domain működik, de a szerver ' + lastStatus + '-es hibával válaszolt. Ha ez nem pillanatnyi zavar, akkor az érdeklődői is hibaüzenetet látnak.';
+    }
     res.status(200).json({
-      domain: host, state: httpErr ? 'http_error' : 'fetch_failed', score: null,
-      headline: httpErr ? 'A szerver hibát ad az oldal helyett' : 'Ezt az oldalt nem tudtuk lemérni',
-      detail: httpErr
-        ? 'A domain működik, de a kiszolgáló ' + lastStatus + '-es hibakóddal válaszolt. Érdemes böngészőben is megnyitni: ha ott is hibát lát, akkor az érdeklődői is azt látják.'
-        : 'A domain létezik, tehát nem szűnt meg, de a mérésünk nem jutott be. Ennek több oka lehet: a szerver szűri az automatikus kéréseket, vagy épp nem válaszolt időben. Nyissa meg böngészőben, és ha ott működik, akkor az oldallal nincs baj, csak mi nem láttuk.',
+      domain: host, state, score: null, headline, detail,
       gaps: [], oks: [],
       limits: ['Erről az oldalról szándékosan nem állítunk semmit, mert nem tudtuk megvizsgálni.'],
     });
