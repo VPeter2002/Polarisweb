@@ -1,0 +1,415 @@
+{
+ "generated": "2026-09-18",
+ "total": 206,
+ "prof": {
+  "Szakipar": {
+   "n": 40,
+   "nosite": 13,
+   "gone": 2,
+   "scored": 24,
+   "avg": 81.0,
+   "gaps": {
+    "consent": 71,
+    "contact_form": 58,
+    "booking": 58,
+    "social": 54,
+    "measurement": 50,
+    "privacy": 29
+   }
+  },
+  "Vendéglátás": {
+   "n": 34,
+   "nosite": 14,
+   "gone": 1,
+   "scored": 18,
+   "avg": 74.6,
+   "gaps": {
+    "phone": 61,
+    "consent": 61,
+    "privacy": 61,
+    "contact_form": 56,
+    "measurement": 56,
+    "booking": 44
+   }
+  },
+  "Fodrászat és szépségszalon": {
+   "n": 39,
+   "nosite": 16,
+   "gone": 3,
+   "scored": 20,
+   "avg": 80.7,
+   "gaps": {
+    "contact_form": 80,
+    "consent": 60,
+    "privacy": 50,
+    "booking": 40,
+    "phone": 40,
+    "h1": 30
+   }
+  },
+  "Fitnesz és EMS": {
+   "n": 28,
+   "nosite": 3,
+   "gone": 5,
+   "scored": 16,
+   "avg": 85.1,
+   "gaps": {
+    "contact_form": 69,
+    "h1": 38,
+    "phone": 38,
+    "consent": 31,
+    "measurement": 25,
+    "privacy": 25
+   }
+  },
+  "Autószerviz és gumis": {
+   "n": 28,
+   "nosite": 5,
+   "gone": 3,
+   "scored": 20,
+   "avg": 82.0,
+   "gaps": {
+    "contact_form": 65,
+    "consent": 60,
+    "social": 55,
+    "booking": 45,
+    "privacy": 40,
+    "measurement": 30
+   }
+  },
+  "Fogászat": {
+   "n": 37,
+   "nosite": 0,
+   "gone": 0,
+   "scored": 32,
+   "avg": 83.6,
+   "gaps": {
+    "contact_form": 50,
+    "consent": 47,
+    "social": 41,
+    "h1": 31,
+    "phone": 31,
+    "privacy": 31
+   }
+  }
+ },
+ "ker": {
+  "II": {
+   "n": 14,
+   "nosite": 4,
+   "gone": 0,
+   "scored": 10,
+   "avg": 81.6,
+   "gaps": {
+    "contact_form": 60,
+    "social": 60,
+    "booking": 40,
+    "phone": 30,
+    "measurement": 30,
+    "h1": 20
+   }
+  },
+  "III": {
+   "n": 14,
+   "nosite": 1,
+   "gone": 0,
+   "scored": 12,
+   "avg": 77.1,
+   "gaps": {
+    "consent": 75,
+    "contact_form": 67,
+    "phone": 50,
+    "h1": 42,
+    "privacy": 42,
+    "description": 33
+   }
+  },
+  "IV": {
+   "n": 16,
+   "nosite": 3,
+   "gone": 0,
+   "scored": 10,
+   "avg": 83.9,
+   "gaps": {
+    "phone": 50,
+    "contact_form": 50,
+    "consent": 50,
+    "privacy": 50,
+    "social": 40,
+    "description": 30
+   }
+  },
+  "V": {
+   "n": 1,
+   "nosite": 0,
+   "gone": 0,
+   "scored": 1,
+   "avg": 87.0,
+   "gaps": {
+    "contact_form": 100,
+    "consent": 100,
+    "privacy": 100
+   }
+  },
+  "VI": {
+   "n": 2,
+   "nosite": 0,
+   "gone": 0,
+   "scored": 2,
+   "avg": 83.0,
+   "gaps": {
+    "contact_form": 100,
+    "social": 100,
+    "measurement": 50,
+    "consent": 50,
+    "privacy": 50,
+    "h1": 50
+   }
+  },
+  "VII": {
+   "n": 7,
+   "nosite": 2,
+   "gone": 1,
+   "scored": 3,
+   "avg": 80.7,
+   "gaps": {
+    "social": 100,
+    "consent": 67,
+    "privacy": 67,
+    "contact_form": 67,
+    "h1": 33,
+    "phone": 33
+   }
+  },
+  "VIII": {
+   "n": 10,
+   "nosite": 4,
+   "gone": 0,
+   "scored": 6,
+   "avg": 75.5,
+   "gaps": {
+    "contact_form": 67,
+    "measurement": 67,
+    "phone": 50,
+    "booking": 50,
+    "consent": 50,
+    "privacy": 50
+   }
+  },
+  "IX": {
+   "n": 10,
+   "nosite": 4,
+   "gone": 1,
+   "scored": 4,
+   "avg": 87.8,
+   "gaps": {
+    "privacy": 50,
+    "contact_form": 50,
+    "mobile": 25,
+    "h1": 25,
+    "phone": 25,
+    "booking": 25
+   }
+  },
+  "X": {
+   "n": 11,
+   "nosite": 1,
+   "gone": 1,
+   "scored": 9,
+   "avg": 82.8,
+   "gaps": {
+    "contact_form": 89,
+    "consent": 67,
+    "social": 56,
+    "privacy": 44,
+    "h1": 33,
+    "booking": 33
+   }
+  },
+  "XI": {
+   "n": 12,
+   "nosite": 2,
+   "gone": 0,
+   "scored": 9,
+   "avg": 82.8,
+   "gaps": {
+    "consent": 56,
+    "contact_form": 44,
+    "measurement": 44,
+    "privacy": 44,
+    "booking": 33,
+    "social": 33
+   }
+  },
+  "XII": {
+   "n": 5,
+   "nosite": 0,
+   "gone": 0,
+   "scored": 4,
+   "avg": 80.2,
+   "gaps": {
+    "contact_form": 100,
+    "consent": 75,
+    "h1": 50,
+    "phone": 50,
+    "privacy": 50,
+    "description": 25
+   }
+  },
+  "XIII": {
+   "n": 19,
+   "nosite": 5,
+   "gone": 4,
+   "scored": 9,
+   "avg": 85.4,
+   "gaps": {
+    "phone": 44,
+    "contact_form": 44,
+    "consent": 33,
+    "booking": 33,
+    "h1": 22,
+    "measurement": 22
+   }
+  },
+  "XIV": {
+   "n": 16,
+   "nosite": 2,
+   "gone": 2,
+   "scored": 11,
+   "avg": 86.7,
+   "gaps": {
+    "contact_form": 55,
+    "privacy": 45,
+    "consent": 45,
+    "social": 36,
+    "h1": 27,
+    "booking": 27
+   }
+  },
+  "XV": {
+   "n": 3,
+   "nosite": 0,
+   "gone": 0,
+   "scored": 3,
+   "avg": 71.3,
+   "gaps": {
+    "booking": 100,
+    "consent": 100,
+    "phone": 67,
+    "measurement": 67,
+    "privacy": 67,
+    "contact_form": 33
+   }
+  },
+  "XVI": {
+   "n": 20,
+   "nosite": 0,
+   "gone": 2,
+   "scored": 17,
+   "avg": 81.6,
+   "gaps": {
+    "consent": 76,
+    "booking": 47,
+    "contact_form": 47,
+    "social": 35,
+    "privacy": 35,
+    "phone": 29
+   }
+  },
+  "XVII": {
+   "n": 6,
+   "nosite": 4,
+   "gone": 0,
+   "scored": 2,
+   "avg": 72.0,
+   "gaps": {
+    "contact_form": 100,
+    "booking": 100,
+    "social": 100,
+    "title": 50,
+    "description": 50,
+    "h1": 50
+   }
+  },
+  "XVIII": {
+   "n": 7,
+   "nosite": 4,
+   "gone": 0,
+   "scored": 3,
+   "avg": 91.3,
+   "gaps": {
+    "contact_form": 67,
+    "measurement": 33,
+    "h1": 33
+   }
+  },
+  "XIX": {
+   "n": 1,
+   "nosite": 1,
+   "gone": 0,
+   "scored": 0,
+   "avg": null,
+   "gaps": {}
+  },
+  "XX": {
+   "n": 9,
+   "nosite": 5,
+   "gone": 1,
+   "scored": 3,
+   "avg": 86.3,
+   "gaps": {
+    "consent": 67,
+    "description": 33,
+    "phone": 33,
+    "booking": 33,
+    "measurement": 33,
+    "social": 33
+   }
+  },
+  "XXI": {
+   "n": 11,
+   "nosite": 2,
+   "gone": 2,
+   "scored": 7,
+   "avg": 80.0,
+   "gaps": {
+    "contact_form": 71,
+    "consent": 57,
+    "booking": 57,
+    "measurement": 43,
+    "phone": 29,
+    "social": 29
+   }
+  },
+  "XXII": {
+   "n": 9,
+   "nosite": 5,
+   "gone": 0,
+   "scored": 4,
+   "avg": 64.5,
+   "gaps": {
+    "contact_form": 100,
+    "consent": 100,
+    "phone": 75,
+    "booking": 75,
+    "measurement": 75,
+    "privacy": 75
+   }
+  },
+  "XXIII": {
+   "n": 3,
+   "nosite": 2,
+   "gone": 0,
+   "scored": 1,
+   "avg": 69.0,
+   "gaps": {
+    "description": 100,
+    "h1": 100,
+    "phone": 100,
+    "contact_form": 100,
+    "booking": 100,
+    "consent": 100
+   }
+  }
+ }
+}
