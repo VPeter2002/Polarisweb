@@ -66,6 +66,16 @@ header p{margin:6px 0 0;font-size:14px;color:#c9bdb0}
 .stars span{color:var(--muted);font-weight:500}
 .btn{font:600 13px var(--sans);text-decoration:none;padding:7px 12px;border-radius:9px;border:1px solid var(--line);color:var(--ink2)}
 .btn.main{background:var(--accent);border-color:var(--accent);color:#fff}
+.menu-panel{border-top:1px dashed var(--line);padding:12px 13px 14px;font-size:13.5px;color:var(--ink2);
+  background:#fffdfa}
+.menu-panel p{margin:0 0 7px}
+.menu-panel ul,.menu-panel ol{margin:0 0 8px;padding-left:20px}
+.menu-panel li{margin:0 0 3px}
+.menu-panel strong{color:var(--ink)}
+.menu-panel .orig{display:inline-block;margin-top:6px;font-size:12.5px;color:var(--accent);text-decoration:none;
+  border-bottom:1px solid currentColor}
+.menu-panel .note{color:var(--muted);font-style:italic}
+.btn.open{background:var(--ink);border-color:var(--ink);color:#fff}
 .empty{padding:50px 10px;text-align:center;color:var(--muted)}
 .empty button{margin-top:12px;font:inherit;padding:8px 16px;border-radius:999px;border:1px solid var(--line);
   background:var(--card);cursor:pointer;color:var(--ink)}
@@ -197,9 +207,10 @@ footer{border-top:1px solid var(--line);padding:16px 0 30px;font-size:12.5px;col
       (b ? '<div class="badges">' + b + '</div>' : '') +
       '<div class="foot">' +
         '<div class="pr"><span class="price">' + ft(r.ar) + '</span>' + st + '</div>' +
-        (r.menu_url ? '<a class="btn" href="' + esc(r.menu_url) + '" target="_blank" rel="noopener">Menü</a>' : '') +
+        (r.menu_url ? '<button class="btn menu-btn" type="button" data-slug="' + esc(r.slug) + '">Menü</button>' : '') +
         (r.foglalas_url ? '<a class="btn main" href="' + esc(r.foglalas_url) + '" target="_blank" rel="noopener">Foglalás</a>' : '') +
       '</div>' +
+      '<div class="menu-panel" id="mp_' + esc(r.slug) + '" hidden></div>' +
     '</article>';
   }
 
@@ -267,6 +278,15 @@ footer{border-top:1px solid var(--line);padding:16px 0 30px;font-size:12.5px;col
     });
   }
 
+  // #menu=<slug> esetén megnyitjuk azt a menüt. Igy egy konkret etterem menuje
+  // linkelheto, es a rendereles is ellenorizheto kattintas nelkul.
+  function openFromHash(){
+    var m = /^#menu=(.+)$/.exec(location.hash || '');
+    if (!m) return;
+    var b = document.querySelector('.menu-btn[data-slug="' + m[1].replace(/"/g,'') + '"]');
+    if (b) { b.click(); b.scrollIntoView({block:'center'}); }
+  }
+
   function render(){
     view = DATA.filter(pass);
     sortView();
@@ -282,6 +302,42 @@ footer{border-top:1px solid var(--line);padding:16px 0 30px;font-size:12.5px;col
     } else { e.hidden = true; }
     drawChips();
   }
+
+  // --- menuk: lustan toltunk, csak az elso megnyitaskor ---
+  var MENUS = null, menusLoading = null;
+  function loadMenus(){
+    if (MENUS) return Promise.resolve(MENUS);
+    if (menusLoading) return menusLoading;
+    menusLoading = fetch('/etteremhet/data/menus.json')
+      .then(function(r){ if(!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
+      .then(function(d){ MENUS = d.menuk || {}; return MENUS; });
+    return menusLoading;
+  }
+
+  document.getElementById('grid').addEventListener('click', function(ev){
+    var b = ev.target.closest('.menu-btn'); if (!b) return;
+    var slug = b.dataset.slug, panel = document.getElementById('mp_' + slug);
+    if (!panel) return;
+    if (!panel.hidden){ panel.hidden = true; b.classList.remove('open'); b.textContent = 'Menü'; return; }
+    panel.hidden = false; b.classList.add('open'); b.textContent = 'Menü elrejtése';
+    if (panel.dataset.done) return;
+    panel.innerHTML = '<p class="note">Menü betöltése...</p>';
+    var rec = null;
+    for (var i=0;i<DATA.length;i++){ if (DATA[i].slug === slug){ rec = DATA[i]; break; } }
+    loadMenus().then(function(m){
+      panel.dataset.done = '1';
+      var body = m[slug];
+      var orig = rec && rec.menu_url
+        ? '<a class="orig" href="' + esc(rec.menu_url) + '" target="_blank" rel="noopener">Megnyitás az eredeti oldalon</a>'
+        : '';
+      panel.innerHTML = body
+        ? body + orig
+        : '<p class="note">Ehhez az étteremhez nem sikerült lehozni a menüt.</p>' + orig;
+    }).catch(function(e){
+      panel.dataset.done = '';
+      panel.innerHTML = '<p class="note">A menük most nem érhetők el (' + esc(e.message) + ').</p>';
+    });
+  });
 
   document.getElementById('chips').addEventListener('click', function(ev){
     var b = ev.target.closest('[data-i]'); if (!b) return;
@@ -322,6 +378,7 @@ footer{border-top:1px solid var(--line);padding:16px 0 30px;font-size:12.5px;col
     document.getElementById('src').textContent =
       'Forrás: ' + d.forras + '. Letöltve: ' + d.letoltve + '. Az árak és a kínálat a szervezőnél változhatnak.';
     render();
+    openFromHash();
   }).catch(function(e){
     document.getElementById('sub').textContent = 'Az adatok nem töltődtek be.';
     document.getElementById('emptytxt').textContent = 'Hiba: ' + e.message;
