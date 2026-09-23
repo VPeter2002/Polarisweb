@@ -129,21 +129,21 @@ nav.main-nav a:hover{color:var(--brand);}
 }
 
 /* hero */
-.hero{position:relative;padding:52px 0 70px;overflow:hidden;}
-.hero .wrap{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,0.95fr);gap:48px;align-items:center;}
+.hero{position:relative;padding:52px 0 40px;overflow:hidden;}
+/* A hero-rajz 2026-09-23-an kikerult (Peti kerese), ezert a hero EGY hasabos.
+   A szoveg max-szelessege kell, kulonben szeles kepernyon a sor tul hosszu lesz. */
+.hero .wrap{display:grid;grid-template-columns:minmax(0,1fr);gap:0;align-items:center;}
+.hero .wrap>div{max-width:720px;}
 .hero h1{font-size:clamp(40px,6vw,68px);}
 .hero h1 .dot{color:var(--brand);}
 .hero .lede{margin-top:18px;font-size:clamp(16px,2vw,18px);max-width:42ch;color:var(--ink-soft);}
 .hero .cta-row{display:flex;flex-wrap:wrap;gap:12px;margin-top:28px;}
-.hero-visual{position:relative;aspect-ratio:1/1;}
-.hero-visual svg{width:100%;height:100%;}
 .locations-note{margin-top:26px;display:inline-flex;align-items:center;gap:10px;font-size:13.5px;font-weight:600;color:var(--ink-soft);}
 .locations-note svg{width:16px;height:16px;color:var(--brand);}
 @media (max-width:900px){
   .hero .wrap{grid-template-columns:1fr;gap:32px;}
   .hero .wrap>*{min-width:0;}
   .hero .eyebrow,.hero .lede{max-width:100%;overflow-wrap:break-word;}
-  .hero-visual{order:-1;max-width:320px;margin:0 auto;}
 }
 
 /* napi menu -- KIEMELT BLOKK, integracios szerzodes szerint */
