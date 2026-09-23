@@ -5,123 +5,166 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="robots" content="noindex, nofollow">
 <title>Éttermek Hete, kereshető lista</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
+/* Nyomtatott varos-kalauz, nem dashboard. Ezert: papir-tonus, hajszalvonalak,
+   ritkitott kiskapitalis cimkek, egyetlen akcens, es szeriffes nevek. */
 :root{
-  --bg:#faf7f2; --card:#fff; --line:#e6ded2; --ink:#241f1a; --ink2:#5a5047; --muted:#8a7f73;
-  --accent:#8c2f27; --accent-soft:#f3e3e1; --good:#2f6b4f; --good-soft:#e3f0e8;
-  --star:#c8901a; --radius:14px;
-  --sans:'Segoe UI',system-ui,-apple-system,Roboto,Helvetica,Arial,sans-serif;
+  --papir:#f4efe6; --lap:#fbf8f3; --tinta:#1f1b16; --tinta2:#4a4139; --halvany:#8b7f70;
+  --vonal:#ddd2c2; --vonal2:#c9bba6;
+  --piros:#8a2b20;            /* egyetlen akcens: etlap-piros */
+  --arany:#a8801f;
+  --zold:#3f6b4a;
+  --serif:'Instrument Serif',Georgia,'Times New Roman',serif;
+  --sans:'Work Sans',system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
 }
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html{overflow-x:hidden}
-body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);line-height:1.5}
-.wrap{max-width:1180px;margin:0 auto;padding:0 16px}
-header{background:var(--ink);color:#f6f1ea;padding:22px 0 18px}
-header h1{margin:0;font-size:clamp(20px,3.4vw,28px);font-weight:700;letter-spacing:-.01em}
-header p{margin:6px 0 0;font-size:14px;color:#c9bdb0}
-.bar{position:sticky;top:0;z-index:20;background:var(--bg);border-bottom:1px solid var(--line);padding:12px 0 10px}
-.search{display:flex;gap:8px;align-items:center;background:var(--card);border:1px solid var(--line);
-  border-radius:999px;padding:9px 14px}
-.search input{border:0;outline:0;font:inherit;flex:1;background:transparent;color:var(--ink);min-width:0}
-.search .ico{color:var(--muted);flex:none}
-.search button{border:0;background:transparent;color:var(--muted);font:inherit;cursor:pointer;padding:2px 4px}
-.rowscroll{display:flex;gap:7px;overflow-x:auto;padding:10px 0 2px;scrollbar-width:none}
+body{margin:0;background:var(--papir);color:var(--tinta);font-family:var(--sans);
+  font-size:15px;line-height:1.55;
+  background-image:radial-gradient(circle at 1px 1px, rgba(0,0,0,.022) 1px, transparent 0);
+  background-size:22px 22px}
+.wrap{max-width:1140px;margin:0 auto;padding:0 20px}
+
+/* ---- fejlec: cimlap-jelleg ---- */
+header{padding:34px 0 22px;border-bottom:2px solid var(--tinta)}
+header .wrap{display:flex;align-items:flex-end;justify-content:space-between;gap:18px;flex-wrap:wrap}
+header h1{margin:0;font-family:var(--serif);font-weight:400;font-size:clamp(34px,6vw,58px);
+  line-height:.95;letter-spacing:-.015em}
+header h1 em{font-style:italic;color:var(--piros)}
+header p{margin:0 0 4px;font-size:12px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--halvany);max-width:34ch;text-align:right}
+
+/* ---- kereso sav ---- */
+.bar{position:sticky;top:0;z-index:20;background:var(--papir);border-bottom:1px solid var(--vonal);
+  padding:14px 0 11px}
+.search{display:flex;gap:10px;align-items:center;border:0;border-bottom:2px solid var(--tinta);
+  padding:5px 2px 7px;background:transparent}
+.search input{border:0;outline:0;font:400 19px/1.3 var(--serif);flex:1;background:transparent;
+  color:var(--tinta);min-width:0}
+.search input::placeholder{color:var(--halvany);font-style:italic}
+.search .ico{color:var(--tinta);flex:none;font-size:15px}
+.search button{border:0;background:transparent;color:var(--halvany);font:inherit;cursor:pointer;
+  font-size:20px;line-height:1;padding:0 2px}
+.rowscroll{display:flex;gap:6px;overflow-x:auto;padding:11px 0 2px;scrollbar-width:none}
 .rowscroll::-webkit-scrollbar{display:none}
-.chip{flex:0 0 auto;border:1px solid var(--line);background:var(--card);border-radius:999px;
-  padding:7px 13px;font:600 13px var(--sans);color:var(--ink2);cursor:pointer;white-space:nowrap}
-.chip.on{background:var(--accent);border-color:var(--accent);color:#fff}
-.chip .n{opacity:.65;font-weight:700;margin-left:5px;font-variant-numeric:tabular-nums}
-.chip.zero{opacity:.4}
-.meta{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;
-  padding:12px 0 4px;font-size:14px;color:var(--ink2)}
-.meta b{color:var(--ink);font-variant-numeric:tabular-nums}
-.meta select{font:inherit;padding:6px 10px;border-radius:9px;border:1px solid var(--line);background:var(--card);color:var(--ink)}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,320px),1fr));gap:14px;padding:8px 0 40px}
-.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;
-  display:flex;flex-direction:column;
-  /* Grid-blowout vedelem: rács-elem alapbol min-width:auto, tehat a kartya
-     min-content szelessege (a lablec ar + ertekeles + ket gomb) kitolja a savot
-     a kepernyorol. Enelkul mobilon a Foglalas gomb levagodik. */
-  min-width:0}
+.chip{flex:0 0 auto;border:1px solid var(--vonal2);background:transparent;border-radius:2px;
+  padding:5px 11px;font:500 12px var(--sans);letter-spacing:.03em;color:var(--tinta2);cursor:pointer}
+.chip:hover{border-color:var(--tinta);color:var(--tinta)}
+.chip.on{background:var(--tinta);border-color:var(--tinta);color:var(--papir)}
+.chip .n{opacity:.6;margin-left:6px;font-variant-numeric:tabular-nums}
+.chip.zero{opacity:.35}
+.chip.food{border-style:dashed;border-color:var(--arany);color:#7a5f18}
+.chip.food.on{background:var(--arany);border-color:var(--arany);border-style:solid;color:#231c08}
+
+/* ---- meta sor ---- */
+.meta{display:flex;flex-wrap:wrap;gap:10px;align-items:baseline;justify-content:space-between;
+  padding:16px 0 10px;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--halvany)}
+.meta b{font-family:var(--serif);font-size:22px;letter-spacing:0;color:var(--tinta);
+  font-weight:400;font-variant-numeric:tabular-nums}
+.meta select{font:500 12px var(--sans);letter-spacing:.04em;padding:5px 8px;border-radius:2px;
+  border:1px solid var(--vonal2);background:var(--lap);color:var(--tinta2);text-transform:none}
+
+/* ---- lista ---- */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,320px),1fr));
+  gap:0;padding:0 0 50px}
+.card{background:transparent;border:0;border-top:1px solid var(--vonal);min-width:0;
+  display:flex;flex-direction:column}
+.card:first-child{border-top:0}
 .card .body{display:none}
-.card .top{display:flex;gap:12px;padding:13px;min-width:0}
+.card .top{display:flex;gap:14px;padding:16px 0 10px;min-width:0}
 .card .top > div{min-width:0}
-.card img{width:92px;height:92px;object-fit:cover;border-radius:10px;flex:none;background:var(--accent-soft)}
-.card h2{margin:0 0 3px;font-size:16.5px;line-height:1.25;overflow-wrap:anywhere}
+.card img{width:82px;height:82px;object-fit:cover;flex:none;background:var(--vonal);
+  filter:saturate(.82) contrast(1.04)}
+.card h2{margin:0 0 3px;font-family:var(--serif);font-weight:400;font-size:21px;line-height:1.1;
+  letter-spacing:-.01em;overflow-wrap:anywhere}
 .card h2 a{color:inherit;text-decoration:none}
-.card h2 a:hover{color:var(--accent)}
-.tag{font-size:13px;color:var(--ink2);margin:0 0 5px;overflow-wrap:anywhere}
-.addr{font-size:12.5px;color:var(--muted);margin:0;overflow-wrap:anywhere}
-.badges{display:flex;flex-wrap:wrap;gap:5px;padding:0 13px 10px}
-.b{font-size:11.5px;font-weight:700;padding:3px 8px;border-radius:999px;background:var(--accent-soft);color:var(--accent)}
-.b.veg{background:var(--good-soft);color:var(--good)}
-.b.mich{background:#241f1a;color:#f0c674}
-.b.new{background:#e8eef7;color:#2c4f86}
-.foot{margin-top:auto;display:flex;align-items:center;gap:8px;padding:11px 13px;border-top:1px solid var(--line);
-  flex-wrap:wrap}
-/* Az ar es az ertekeles egy blokk: igy szuk kartyanal a ket gomb egyben tor at
-   a kovetkezo sorba, nem egyesevel, es nem log ki a kartyabol. */
-.foot .pr{display:flex;align-items:baseline;gap:8px;flex:1 1 auto;min-width:0}
-.price{font-weight:800;font-size:15px;font-variant-numeric:tabular-nums}
-.stars{font-size:12.5px;color:var(--star);font-weight:700;white-space:nowrap}
-.stars span{color:var(--muted);font-weight:500}
-.btn{font:600 13px var(--sans);text-decoration:none;padding:7px 12px;border-radius:9px;border:1px solid var(--line);color:var(--ink2)}
-.btn.main{background:var(--accent);border-color:var(--accent);color:#fff}
-/* Etel-talalat jelolese. Szandekosan MAS, mint a jelvenyek: nem pirula, hanem
-   egy alahuzott sor tanyer-jellel, hogy ranezesre latszodjon, ez a menuben van. */
-.hit{display:flex;gap:7px;align-items:flex-start;margin:7px 0 0;padding:7px 9px;
-  background:#fdf6e6;border-left:3px solid var(--star);border-radius:0 8px 8px 0;
-  font-size:12.5px;color:#6b5320}
-.hit b{color:#3d2f0f;background:#f6e2a8;border-radius:3px;padding:0 2px}
-.hit .lbl{flex:none;font-weight:700}
-.chip.food{border-style:dashed;border-color:var(--star);color:#7a5f18}
-.chip.food.on{background:var(--star);border-color:var(--star);border-style:solid;color:#241f1a}
-.menu-panel{border-top:1px dashed var(--line);padding:12px 13px 14px;font-size:13.5px;color:var(--ink2);
-  background:#fffdfa}
-.menu-panel p{margin:0 0 7px}
-.menu-panel ul,.menu-panel ol{margin:0 0 8px;padding-left:20px}
-.menu-panel li{margin:0 0 3px}
-.menu-panel strong{color:var(--ink)}
-.menu-panel .orig{display:block;width:fit-content;margin-top:12px;font-size:12.5px;color:var(--accent);text-decoration:none;
+.card h2 a:hover{color:var(--piros)}
+.tag{font-size:13.5px;color:var(--tinta2);margin:0 0 4px;overflow-wrap:anywhere}
+.addr{font-size:11.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--halvany);
+  margin:0;overflow-wrap:anywhere}
+.badges{display:flex;flex-wrap:wrap;gap:6px 12px;padding:0 0 10px}
+.b{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--tinta2);
+  padding:0;background:none;border-radius:0}
+.b::before{content:"";display:inline-block;width:5px;height:5px;background:var(--vonal2);
+  border-radius:50%;margin-right:6px;vertical-align:2px}
+.b.veg::before{background:var(--zold)}
+.b.mich{color:var(--piros)}
+.b.mich::before{background:var(--piros)}
+.b.new::before{background:var(--arany)}
+
+.foot{margin-top:auto;display:flex;align-items:center;gap:10px;padding:0 0 18px;flex-wrap:wrap}
+.foot .pr{display:flex;align-items:baseline;gap:12px;flex:1 1 auto;min-width:0}
+.price{font-family:var(--serif);font-size:21px;font-variant-numeric:tabular-nums;color:var(--tinta)}
+.stars{font-size:12px;color:var(--arany);letter-spacing:.04em;white-space:nowrap}
+.stars span{color:var(--halvany)}
+.btn{font:500 12px var(--sans);letter-spacing:.09em;text-transform:uppercase;text-decoration:none;
+  padding:8px 15px;border-radius:2px;border:1px solid var(--vonal2);color:var(--tinta2);
+  background:transparent;cursor:pointer}
+.btn:hover{border-color:var(--tinta);color:var(--tinta)}
+.btn.main{background:var(--piros);border-color:var(--piros);color:var(--lap)}
+.btn.main:hover{background:#71221a;border-color:#71221a;color:var(--lap)}
+.btn.open{background:var(--tinta);border-color:var(--tinta);color:var(--papir)}
+
+/* ---- etel-talalat: idezet az etlapbol, nem cimke ---- */
+.hit{margin:0 0 12px;padding:2px 0 2px 13px;border-left:2px solid var(--arany);
+  font-size:13px;color:var(--tinta2);font-style:italic}
+.hit .lbl{display:block;font-style:normal;font-size:10.5px;letter-spacing:.13em;
+  text-transform:uppercase;color:var(--arany);margin-bottom:2px}
+
+/* ---- menu panel: etlap ---- */
+.menu-panel{border-top:1px dotted var(--vonal2);padding:16px 0 22px;font-size:13.5px;
+  color:var(--tinta2)}
+.menu-panel p{margin:0 0 9px}
+.menu-panel strong{font-weight:600;color:var(--tinta)}
+.menu-panel em{color:var(--halvany)}
+.menu-panel .orig{display:block;width:fit-content;margin-top:14px;font-size:11px;
+  letter-spacing:.1em;text-transform:uppercase;color:var(--piros);text-decoration:none;
   border-bottom:1px solid currentColor}
-.menu-panel .note{color:var(--muted);font-style:italic}
-.btn.open{background:var(--ink);border-color:var(--ink);color:#fff}
-.empty{padding:50px 10px;text-align:center;color:var(--muted)}
-.empty button{margin-top:12px;font:inherit;padding:8px 16px;border-radius:999px;border:1px solid var(--line);
-  background:var(--card);cursor:pointer;color:var(--ink)}
-footer{border-top:1px solid var(--line);padding:16px 0 30px;font-size:12.5px;color:var(--muted)}
-/* ---- SZELES KEPERNYO: sor-elrendezes, nem telefonos kartya-racs ----
-   Peti 2026-09-23: telefonon maradjon a kartya, gepen ne. Szeles kepernyon a
-   harom hasabos kartya-racs csak magas, keskeny oszlopokat csinal, es a kinyitott
-   menu egy 320 px-es hasabban olvashatatlan. Ezert 900 px felett EGY oszlop,
-   vizszintes sorokkal, es a menu teljes szelessegben nyilik. */
+.menu-panel .note{color:var(--halvany);font-style:italic}
+
+.empty{padding:60px 10px;text-align:center;color:var(--halvany)}
+.empty button{margin-top:14px;font:500 12px var(--sans);letter-spacing:.09em;text-transform:uppercase;
+  padding:9px 18px;border-radius:2px;border:1px solid var(--vonal2);background:transparent;
+  cursor:pointer;color:var(--tinta2)}
+footer{border-top:2px solid var(--tinta);padding:20px 0 40px;font-size:11.5px;color:var(--halvany);
+  letter-spacing:.03em}
+
+/* ---- SZELES KEPERNYO ---- */
 @media (min-width:900px){
-  .grid{grid-template-columns:1fr;gap:10px}
-  .card{display:grid;grid-template-columns:120px minmax(0,1fr) auto;
+  /* A szurok NE vizszintesen gorduljenek: gepen van hely, torjenek tobb sorba,
+     kulonben a kerulet-chipek egyszeruen lelognak a kepernyorol. */
+  .rowscroll{flex-wrap:wrap;overflow:visible;gap:6px 7px}
+  .grid{grid-template-columns:1fr}
+  .card{display:grid;grid-template-columns:96px minmax(0,1fr) auto;
         grid-template-areas:"kep torzs oldal" "menu menu menu";
-        align-items:center;column-gap:16px}
-  .card .top{grid-area:kep;padding:12px 0 12px 12px;display:block}
-  .card img{width:120px;height:104px}
+        align-items:center;column-gap:20px;padding:0}
+  .card .top{grid-area:kep;padding:18px 0;display:block}
+  .card img{width:96px;height:96px}
   .card .top > div{display:none}
-  .card .body{grid-area:torzs;padding:12px 0;min-width:0;display:block}
+  .card .body{grid-area:torzs;padding:18px 0;min-width:0;display:block}
   .card .badges.narrow-only,.card .hit.narrow-only{display:none}
-  .card .body h2{font-size:18px;margin-bottom:2px}
-  .card .badges{padding:7px 0 0}
-  .card .foot{grid-area:oldal;margin:0;border-top:0;padding:12px 14px 12px 0;
-        display:grid;grid-template-columns:auto auto;gap:6px 10px;align-items:center;justify-items:end}
-  .card .foot .pr{flex:0 0 auto;grid-column:1 / -1;justify-self:end;gap:10px}
-  .card .foot .btn{min-width:112px;text-align:center}
-  .menu-panel{grid-area:menu;columns:2;column-gap:34px;padding:14px 16px 18px}
-  .menu-panel p,.menu-panel ul{break-inside:avoid}
+  .card .body h2{font-size:25px;margin-bottom:3px}
+  .card .badges{padding:8px 0 0}
+  .card .hit{margin:9px 0 0}
+  .card .foot{grid-area:oldal;margin:0;padding:18px 0;
+        display:grid;grid-template-columns:auto auto;gap:9px 12px;align-items:center;justify-items:end}
+  .card .foot .pr{flex:0 0 auto;grid-column:1 / -1;justify-self:end;gap:14px}
+  .card .foot .btn{min-width:118px;text-align:center}
+  .menu-panel{grid-area:menu;columns:2;column-gap:38px;padding:16px 0 26px}
+  .menu-panel p{break-inside:avoid}
   .menu-panel .orig{column-span:all}
 }
 @media (min-width:1280px){ .menu-panel{columns:3} }
 
 @media (max-width:560px){
-  .card img{width:74px;height:74px}
-  /* Szuk kepernyon az ar-blokk sajat sort kap, a gombok ala kerulnek. */
+  .card img{width:70px;height:70px}
   .foot .pr{flex:1 0 100%}
   .foot .btn{flex:1 1 auto;text-align:center}
+  header .wrap{flex-direction:column;align-items:flex-start}
+  header p{text-align:left}
   .meta{gap:6px}
   .meta select{max-width:56vw}
 }
@@ -131,8 +174,8 @@ footer{border-top:1px solid var(--line);padding:16px 0 30px;font-size:12.5px;col
 
 <header>
   <div class="wrap">
-    <h1>Éttermek Hete</h1>
-    <p id="sub">Betöltés...</p>
+    <h1>Éttermek <em>Hete</em></h1>
+    <p id="sub">Betöltés</p>
   </div>
 </header>
 
@@ -486,7 +529,7 @@ footer{border-top:1px solid var(--line);padding:16px 0 30px;font-size:12.5px;col
     });
     var ker = {}; DATA.forEach(function(r){ if (r.kerulet) ker[r.kerulet]=1; });
     document.getElementById('sub').textContent =
-      d.db + ' étterem, ' + Object.keys(ker).length + ' budapesti kerületben és az agglomerációban';
+      d.db + ' étterem, ' + Object.keys(ker).length + ' kerület és az agglomeráció';
     document.getElementById('src').textContent =
       'Forrás: ' + d.forras + '. Letöltve: ' + d.letoltve + '. Az árak és a kínálat a szervezőnél változhatnak.';
     render();
