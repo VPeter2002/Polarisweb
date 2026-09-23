@@ -1,0 +1,441 @@
+{
+ "db": 87,
+ "osszes": 168,
+ "koordinatak": {
+  "101_tigris": {
+   "lat": 47.519898,
+   "lon": 19.057205,
+   "forras": "osm-nev-utca"
+  },
+  "36_bisztro": {
+   "lat": 47.549016,
+   "lon": 19.043093,
+   "forras": "osm-nev-utca"
+  },
+  "a_la_maison": {
+   "lat": 47.495364,
+   "lon": 19.052683,
+   "forras": "osm-nev-utca"
+  },
+  "alessio_etterem_es_kavezo": {
+   "lat": 47.516951,
+   "lon": 19.004112,
+   "forras": "osm-nev-utca"
+  },
+  "anna_bistro": {
+   "lat": 47.500331,
+   "lon": 19.052426,
+   "forras": "osm-nev-utca"
+  },
+  "aranybastya": {
+   "lat": 47.4999,
+   "lon": 19.036693,
+   "forras": "osm-nev-utca"
+  },
+  "araz_restaurant": {
+   "lat": 47.4968,
+   "lon": 19.066734,
+   "forras": "osm-nev-utca"
+  },
+  "aszu_etterem": {
+   "lat": 47.499531,
+   "lon": 19.052186,
+   "forras": "osm-nev-utca"
+  },
+  "baalbek_libanoni_etterem": {
+   "lat": 47.489872,
+   "lon": 19.052989,
+   "forras": "osm-nev-utca"
+  },
+  "bartfai_vendeglo": {
+   "lat": 47.467487,
+   "lon": 19.042969,
+   "forras": "osm-nev-utca"
+  },
+  "bombay_budapest": {
+   "lat": 47.501554,
+   "lon": 19.050949,
+   "forras": "osm-nev-utca"
+  },
+  "buda_gourmet_bistro": {
+   "lat": 47.528184,
+   "lon": 19.037485,
+   "forras": "osm-nev-utca"
+  },
+  "busulo_juhasz_etterem": {
+   "lat": 47.485351,
+   "lon": 19.040212,
+   "forras": "osm-nev-utca"
+  },
+  "byblos": {
+   "lat": 47.494377,
+   "lon": 19.058774,
+   "forras": "osm-nev-utca"
+  },
+  "calavera_budapest": {
+   "lat": 47.56139,
+   "lon": 19.08897,
+   "forras": "osm-nev-utca"
+  },
+  "central_kavehaz_es_etterem": {
+   "lat": 47.492011,
+   "lon": 19.056747,
+   "forras": "osm-nev-utca"
+  },
+  "corvin_gastropub": {
+   "lat": 47.503048,
+   "lon": 19.038726,
+   "forras": "osm-nev-utca"
+  },
+  "costes_downtown_restaurant": {
+   "lat": 47.501022,
+   "lon": 19.048323,
+   "forras": "osm-nev-utca"
+  },
+  "costes_restaurant": {
+   "lat": 47.488805,
+   "lon": 19.062285,
+   "forras": "osm-nev-utca"
+  },
+  "duna_garden_hotel_es_etterem": {
+   "lat": 47.433406,
+   "lon": 19.090386,
+   "forras": "osm-nev-utca"
+  },
+  "elso_pesti_reteshaz_kavehaz_es_etterem_budapest": {
+   "lat": 47.501782,
+   "lon": 19.050618,
+   "forras": "osm-nev-utca"
+  },
+  "emile": {
+   "lat": 47.51831,
+   "lon": 19.007152,
+   "forras": "osm-nev-utca"
+  },
+  "explore_restaurant_sky_bar": {
+   "lat": 47.493491,
+   "lon": 19.121826,
+   "forras": "osm-nev-utca"
+  },
+  "felisa_tapas_bar": {
+   "lat": 47.500644,
+   "lon": 19.051473,
+   "forras": "osm-nev-utca"
+  },
+  "felix_kitchen_bar": {
+   "lat": 47.493901,
+   "lon": 19.043553,
+   "forras": "osm-nev-utca"
+  },
+  "fioka_etterem": {
+   "lat": 47.509563,
+   "lon": 19.009161,
+   "forras": "osm-nev-utca"
+  },
+  "flyby_steakhouse_budaors": {
+   "lat": 47.458145,
+   "lon": 18.958913,
+   "forras": "osm-nev-utca"
+  },
+  "foorseg_kavehaz": {
+   "lat": 47.496018,
+   "lon": 19.038695,
+   "forras": "osm-nev-utca"
+  },
+  "furia_restobar": {
+   "lat": 47.491085,
+   "lon": 19.052853,
+   "forras": "osm-nev-utca"
+  },
+  "gerloczy_kavehaz": {
+   "lat": 47.494914,
+   "lon": 19.056183,
+   "forras": "osm-nev-utca"
+  },
+  "gundel_restaurant": {
+   "lat": 47.517434,
+   "lon": 19.077105,
+   "forras": "osm-nev-utca"
+  },
+  "hachapuri_gruz_etterem": {
+   "lat": 47.501172,
+   "lon": 19.055171,
+   "forras": "osm-nev-utca"
+  },
+  "hard_rock_cafe_budapest": {
+   "lat": 47.495966,
+   "lon": 19.050867,
+   "forras": "osm-nev-utca"
+  },
+  "hemingway_etterem": {
+   "lat": 47.476647,
+   "lon": 19.040961,
+   "forras": "osm-nev-utca"
+  },
+  "hitchki_indian_restaurant": {
+   "lat": 47.501143,
+   "lon": 19.047942,
+   "forras": "osm-nev-utca"
+  },
+  "hoppa_bistro": {
+   "lat": 47.501426,
+   "lon": 19.050977,
+   "forras": "osm-nev-utca"
+  },
+  "hugos_mexican_bar_kitchen": {
+   "lat": 47.48888,
+   "lon": 19.055609,
+   "forras": "osm-nev-utca"
+  },
+  "il_pastaio_ristorante_and_bar": {
+   "lat": 47.496169,
+   "lon": 19.051328,
+   "forras": "osm-nev-utca"
+  },
+  "il_treno_bartok_udvar": {
+   "lat": 47.472348,
+   "lon": 19.031678,
+   "forras": "osm-nev-utca"
+  },
+  "japanika_sushi_bar_budapest": {
+   "lat": 47.500903,
+   "lon": 19.052311,
+   "forras": "osm-nev-utca"
+  },
+  "jardinette_restaurant": {
+   "lat": 47.482887,
+   "lon": 19.005492,
+   "forras": "osm-nev-utca"
+  },
+  "kadar_etkezde": {
+   "lat": 47.499669,
+   "lon": 19.064733,
+   "forras": "osm-nev-utca"
+  },
+  "kozpont_bisztro_budapest": {
+   "lat": 47.5613,
+   "lon": 19.08975,
+   "forras": "osm-nev-utca"
+  },
+  "la_fabbrica_kitchen_bar": {
+   "lat": 47.500357,
+   "lon": 19.052008,
+   "forras": "osm-nev-utca"
+  },
+  "larus_etterem": {
+   "lat": 47.489936,
+   "lon": 19.019067,
+   "forras": "osm-nev-utca"
+  },
+  "leilas_authentic_lebanese_cuisine": {
+   "lat": 47.491102,
+   "lon": 19.054557,
+   "forras": "osm-nev-utca"
+  },
+  "mak_restaurant": {
+   "lat": 47.50115,
+   "lon": 19.048027,
+   "forras": "osm-nev-utca"
+  },
+  "mandragora": {
+   "lat": 47.509751,
+   "lon": 19.035073,
+   "forras": "osm-nev-utca"
+  },
+  "marischka_etterem": {
+   "lat": 47.50078,
+   "lon": 19.029153,
+   "forras": "osm-nev-utca"
+  },
+  "marumba": {
+   "lat": 47.498189,
+   "lon": 19.06108,
+   "forras": "osm-nev-utca"
+  },
+  "mozata_libanoni_etterem": {
+   "lat": 47.493952,
+   "lon": 19.053659,
+   "forras": "osm-nev-utca"
+  },
+  "normafa_sihaz_etterem": {
+   "lat": 47.502798,
+   "lon": 18.966471,
+   "forras": "osm-nev-utca"
+  },
+  "ono_poke_bowl_bar_2_kerulet": {
+   "lat": 47.508896,
+   "lon": 19.02999,
+   "forras": "osm-nev-utca"
+  },
+  "ono_poke_bowl_bar_5_kerulet": {
+   "lat": 47.503676,
+   "lon": 19.053869,
+   "forras": "osm-nev-utca"
+  },
+  "pastamore_budapest": {
+   "lat": 47.497842,
+   "lon": 19.06071,
+   "forras": "osm-nev-utca"
+  },
+  "pavillon_de_paris": {
+   "lat": 47.501077,
+   "lon": 19.039245,
+   "forras": "osm-nev-utca"
+  },
+  "pearl_harbor_etterem_es_bowling": {
+   "lat": 47.544382,
+   "lon": 19.02819,
+   "forras": "osm-nev-utca"
+  },
+  "pintxo_tapas_bar": {
+   "lat": 47.491273,
+   "lon": 19.058973,
+   "forras": "osm-nev-utca"
+  },
+  "platz": {
+   "lat": 47.500317,
+   "lon": 19.053084,
+   "forras": "osm-nev-utca"
+  },
+  "pompas_bistro": {
+   "lat": 47.481751,
+   "lon": 19.077676,
+   "forras": "osm-nev-utca"
+  },
+  "porcellino_grasso_ristorante": {
+   "lat": 47.515517,
+   "lon": 19.027161,
+   "forras": "osm-nev-utca"
+  },
+  "promontor_kertvendeglo": {
+   "lat": 47.426121,
+   "lon": 19.038335,
+   "forras": "osm-nev-utca"
+  },
+  "ramazuri_bistronomy": {
+   "lat": 47.500937,
+   "lon": 19.032562,
+   "forras": "osm-nev-utca"
+  },
+  "rezkakas_finebistro": {
+   "lat": 47.499631,
+   "lon": 19.052436,
+   "forras": "osm-nev-utca"
+  },
+  "ropogos_bistro_garden": {
+   "lat": 47.514796,
+   "lon": 19.153604,
+   "forras": "osm-nev-utca"
+  },
+  "salaam_bombay_indiai_etterem": {
+   "lat": 47.505032,
+   "lon": 19.04719,
+   "forras": "osm-nev-utca"
+  },
+  "shibuya_budapest": {
+   "lat": 47.51092,
+   "lon": 19.07945,
+   "forras": "osm-nev-utca"
+  },
+  "solier_cafe_godollo": {
+   "lat": 47.5997,
+   "lon": 19.345693,
+   "forras": "osm-nev-utca"
+  },
+  "spago_budapest_by_wolfgang_puck": {
+   "lat": 47.492189,
+   "lon": 19.054011,
+   "forras": "osm-nev-utca"
+  },
+  "szaletly_vendeglo_kert": {
+   "lat": 47.508857,
+   "lon": 19.094827,
+   "forras": "osm-nev-utca"
+  },
+  "tapas_fino": {
+   "lat": 47.490163,
+   "lon": 19.052692,
+   "forras": "osm-nev-utca"
+  },
+  "tapassio": {
+   "lat": 47.501885,
+   "lon": 19.052953,
+   "forras": "osm-nev-utca"
+  },
+  "textura_etterem": {
+   "lat": 47.499973,
+   "lon": 19.052093,
+   "forras": "osm-nev-utca"
+  },
+  "kaeng_som_tom_yum_thai_etterem_andrassy": {
+   "lat": 47.500298,
+   "lon": 19.05562,
+   "forras": "osm-nev-utca"
+  },
+  "tom_yum_thai_etterem_soroksari_ut": {
+   "lat": 47.479572,
+   "lon": 19.068313,
+   "forras": "osm-nev-utca"
+  },
+  "ultraibolya_espresso_restaurant": {
+   "lat": 47.492497,
+   "lon": 19.056228,
+   "forras": "osm-nev-utca"
+  },
+  "urban_betyar_etterem_es_elmenykozpont": {
+   "lat": 47.50134,
+   "lon": 19.050715,
+   "forras": "osm-nev-utca"
+  },
+  "vadrozsa_etterem_budapest": {
+   "lat": 47.52169,
+   "lon": 19.021512,
+   "forras": "osm-nev-utca"
+  },
+  "vakvarju_csonakhaz_budapest": {
+   "lat": 47.43206,
+   "lon": 19.090761,
+   "forras": "osm-nev-utca"
+  },
+  "vakvarju_varjuvar": {
+   "lat": 47.495523,
+   "lon": 19.041555,
+   "forras": "osm-nev-utca"
+  },
+  "varosliget_cafe_restaurant": {
+   "lat": 47.514489,
+   "lon": 19.080182,
+   "forras": "osm-nev-utca"
+  },
+  "vasmacska_terasz_etterem": {
+   "lat": 47.413785,
+   "lon": 19.040803,
+   "forras": "osm-nev-utca"
+  },
+  "veranda_grill_wine": {
+   "lat": 47.479371,
+   "lon": 19.079668,
+   "forras": "osm-nev-utca"
+  },
+  "veranda_pasta_pizza": {
+   "lat": 47.464776,
+   "lon": 19.062778,
+   "forras": "osm-nev-utca"
+  },
+  "villa_bagatelle_bistro": {
+   "lat": 47.496376,
+   "lon": 19.01789,
+   "forras": "osm-nev-utca"
+  },
+  "yu_grill_budapest_gastro_bar": {
+   "lat": 47.532024,
+   "lon": 19.037766,
+   "forras": "osm-nev-utca"
+  },
+  "zsolnay_kavehaz": {
+   "lat": 47.508156,
+   "lon": 19.059601,
+   "forras": "osm-nev-utca"
+  }
+ }
+}
