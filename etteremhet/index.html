@@ -301,7 +301,10 @@ footer{border-top:1px solid var(--line);padding:16px 0 30px;font-size:12.5px;col
     qi.value=''; q=''; clr.hidden=true; render();
   });
 
-  fetch('data/restaurants.json').then(function(r){ return r.json(); }).then(function(d){
+  // ABSZOLUT ut, szandekosan. A /etteremhet cim zaro perjel NELKUL erkezik
+  // (vercel.json trailingSlash:false), ezert a relativ 'data/...' a GYOKERHEZ
+  // kepest oldodna fel (/data/restaurants.json), ami mas mappa es 404.
+  fetch('/etteremhet/data/restaurants.json').then(function(r){ return r.json(); }).then(function(d){
     DATA = d.ettermek.map(function(r){
       r._veg  = hasBadge(r, 'vegetarianus');
       r._all  = hasBadge(r, 'allergen');
