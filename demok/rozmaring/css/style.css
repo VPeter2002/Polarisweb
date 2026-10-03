@@ -72,8 +72,14 @@ p{margin:0 0 15px;}
 .fejlec.tapad{border-color:var(--vonal);box-shadow:0 1px 14px rgba(74,60,51,.05);}
 .fejlec-belso{display:flex;align-items:center;justify-content:space-between;gap:18px;
   padding-top:10px;padding-bottom:10px;}
-.marka img{width:76px;height:auto;transition:transform .4s var(--lassu);}
-.marka:hover img{transform:scale(1.04);}
+.marka{display:flex;align-items:center;gap:11px;text-decoration:none;color:var(--barna);}
+.marka-ag{width:42px;height:auto;transition:transform .4s var(--lassu);}
+.marka:hover .marka-ag{transform:rotate(-6deg) scale(1.05);}
+.marka-szoveg{display:flex;flex-direction:column;line-height:1.05;}
+.marka-szoveg strong{font-family:'Cormorant Garamond',Georgia,serif;font-weight:500;
+  font-size:26px;letter-spacing:.005em;}
+.marka-szoveg em{font-style:normal;font-family:'Karla',sans-serif;font-size:10.5px;
+  letter-spacing:.21em;text-transform:uppercase;color:var(--zold);margin-top:3px;}
 
 .menu-asztali{display:flex;gap:30px;}
 .menu-asztali a{text-decoration:none;color:var(--barna);font-weight:600;font-size:15.5px;
@@ -199,7 +205,7 @@ input:focus,select:focus,textarea:focus{border-color:var(--zold);}
 .lablec{background:var(--barna);color:#E8E2DA;padding:40px 0 34px;}
 .lablec-belso{display:flex;align-items:center;justify-content:space-between;gap:26px;flex-wrap:wrap;}
 .lablec-marka{display:flex;align-items:center;gap:14px;}
-.lablec-marka img{width:52px;height:auto;filter:brightness(0) invert(1);opacity:.9;}
+.lablec-marka img{width:40px;height:auto;filter:brightness(0) invert(1);opacity:.85;}
 .lablec-marka p{margin:0;font-family:'Cormorant Garamond',serif;font-size:19px;}
 .lablec-menu{display:flex;gap:24px;flex-wrap:wrap;}
 .lablec-menu a{color:#E8E2DA;text-decoration:none;font-size:15px;opacity:.85;}
@@ -234,4 +240,6 @@ input:focus,select:focus,textarea:focus{border-color:var(--zold);}
 }
 @media (max-width:430px){
   .hero-gombok .gomb{width:100%;}
+  .marka-szoveg strong{font-size:22px;}
+  .marka-ag{width:34px;}
 }

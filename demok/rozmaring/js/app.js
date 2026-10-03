@@ -168,18 +168,23 @@
   });
 
   /* ---------- űrlap ---------- */
+  /* A rendelesnel KATEGORIAT valasztunk, nem konkret darabot: a galeriaban levo
+     darabok mar elkeszultek, es pontosan ugyanolyat ugysem lehet ujra kotni. */
   var elTermek = document.getElementById('termek');
   var ures = document.createElement('option');
   ures.value = '';
   ures.textContent = 'Még nem tudom, segíts választani';
   elTermek.appendChild(ures);
-  A.tetelek.forEach(function (t, i) {
+  Object.keys(A.cimkek).forEach(function (k) {
     var o = document.createElement('option');
-    o.value = String(i);
-    o.textContent = A.cimkek[t.k] + ' (' + t.f.replace('termek-', '') + '. kép)';
+    o.value = k;
+    o.textContent = A.cimkek[k];
     elTermek.appendChild(o);
   });
-  function valasztTermek(i) { elTermek.value = String(i); }
+  function valasztTermek(i) {
+    var t = A.tetelek[i];
+    if (t) elTermek.value = t.k;
+  }
 
   var urlap = document.getElementById('rendelesUrlap');
   var allapot = document.getElementById('urlapAllapot');
@@ -206,7 +211,7 @@
     }
 
     var valasztott = elTermek.value === ''
-      ? 'Nem választott konkrét darabot'
+      ? 'Nem választott kategóriát, segítséget kér'
       : elTermek.options[elTermek.selectedIndex].textContent;
 
     kuldGomb.disabled = true;
@@ -221,7 +226,7 @@
           name: nev,
           email: email,
           phone: urlap.telefon.value.trim(),
-          message: 'Kiválasztott darab: ' + valasztott + '\n\n' + uzenet,
+          message: 'Érdekli: ' + valasztott + '\n\n' + uzenet,
           website: urlap.website.value
         })
       });
@@ -242,7 +247,7 @@
   });
 
   function mailtoTartalek(nev, email, termek, uzenet) {
-    var torzs = 'Nev: ' + nev + '\nE-mail: ' + email + '\nKivalasztott darab: ' + termek + '\n\n' + uzenet;
+    var torzs = 'Nev: ' + nev + '\nE-mail: ' + email + '\nErdekli: ' + termek + '\n\n' + uzenet;
     return 'mailto:?subject=' + encodeURIComponent('Rendelesi szandek a weboldalrol')
          + '&body=' + encodeURIComponent(torzs);
   }
