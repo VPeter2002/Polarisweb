@@ -12,7 +12,7 @@
   --cream-2:#EDE5D6;
   --ember:#E2622A;
   --ember-dk:#C5491A;
-  --gold:#F0B429;
+  --gold:#F6DC1A;        /* a sajat logojuk sargaja, kimerve */
   --muted:#9D8B78;
   --line:rgba(246,241,231,.14);
   --radius:14px;
@@ -104,15 +104,10 @@ p{margin:0 0 16px;}
   padding-top:14px;padding-bottom:14px;transition:padding .3s var(--ease);}
 .site-head.is-stuck .head-inner{padding-top:9px;padding-bottom:9px;}
 
-.brand{display:flex;align-items:center;gap:11px;text-decoration:none;}
-.brand-mark{color:var(--gold);display:block;width:46px;height:46px;flex:0 0 auto;
-  transition:transform .4s var(--ease);}
-.brand-mark img{width:100%;height:100%;}
-.brand:hover .brand-mark{transform:rotate(-8deg);}
-.brand-txt{display:flex;flex-direction:column;line-height:1;}
-.brand-txt strong{font-family:'Archivo Black',sans-serif;font-size:17px;letter-spacing:-.01em;}
-.brand-txt em{font-family:'Barlow Condensed',sans-serif;font-style:normal;font-weight:700;
-  font-size:11.5px;letter-spacing:.34em;color:var(--ember);margin-top:3px;}
+.brand{display:flex;align-items:center;text-decoration:none;}
+.brand img{height:74px;width:auto;display:block;transition:transform .4s var(--ease);}
+.brand:hover img{transform:scale(1.04);}
+.site-head.is-stuck .brand img{height:62px;}
 
 .nav-desk{display:flex;gap:30px;}
 .nav-desk a{
@@ -393,7 +388,7 @@ p{margin:0 0 16px;}
 .site-foot{background:#0F0C0A;padding-top:56px;}
 .foot-grid{display:grid;grid-template-columns:minmax(0,1.3fr) repeat(3,minmax(0,1fr));gap:34px;
   padding-bottom:40px;}
-.foot-brand img{color:var(--gold);width:72px;height:72px;margin-bottom:14px;}
+.foot-brand img{height:84px;width:auto;margin-bottom:14px;}
 .foot-brand p{font-family:'Archivo Black',sans-serif;font-size:14px;color:var(--gold);
   letter-spacing:-.01em;max-width:22ch;}
 .foot-col h3{font-family:'Barlow Condensed',sans-serif;font-size:13.5px;letter-spacing:.17em;
@@ -428,6 +423,8 @@ p{margin:0 0 16px;}
   .burger{display:block;}
   .nav-mob{display:flex;}
   .site-head{background:rgba(22,18,15,.92);backdrop-filter:blur(12px);}
+  .brand img{height:56px;}
+  .site-head.is-stuck .brand img{height:50px;}
   .hero{padding-top:104px;padding-bottom:64px;}
   .hero-facts li{flex:1 1 auto;}
   .gal{grid-template-columns:repeat(2,minmax(0,1fr));grid-auto-rows:132px;}
