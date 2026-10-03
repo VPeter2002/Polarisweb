@@ -14,6 +14,30 @@ const { leadEmail, autoReply } = require('./_lib/client-templates');
  * bovoiteni, nem a frontendet.
  */
 const CLIENTS = {
+  // Rozmaring Ajtodiszek & Dekor (demo, 2026-10-03).
+  // FIGYELEM, IDEIGLENES CIMZETT: a vallalkozas email cime meg NEM ismert, ezert a
+  // rendelesi szandek egyelore Peti cimere erkezik. Amint megvan a sajat cim, EZT
+  // AZ EGY SORT kell atirni. Amig nem tortenik meg, a weboldalon leadott rendelest
+  // az ugyfel NEM kapja meg, es errol semmi nem figyelmeztet.
+  rozmaring: {
+    to: 'peter.veszpremi2002@gmail.com',
+    label: 'Rozmaring Ajtodiszek & Dekor',
+    brand: {
+      name: 'Rozmaring Ajtodiszek & Dekor',
+      monogram: 'R',
+      tagline: 'Kezzel kotott szarazvirag diszek',
+      phone: '',
+      signerName: 'Rozmaring',
+      contactLine: 'Rozmaring Ajtodiszek & Dekor',
+      colors: {
+        headerBg: '#4A3C33',
+        headerInk: '#F0EFEB',
+        accent: '#789060',
+        accentStrong: '#546B42',
+        accentTint: '#F0EFEB',
+      },
+    },
+  },
   'balogh-mark-villany': {
     to: 'balogh.mark83@gmail.com',
     label: 'Balogh Márk E.V',
