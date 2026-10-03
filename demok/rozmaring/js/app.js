@@ -49,13 +49,13 @@
     ajandek: 'Kis csomagok, díszdobozok, ajándékkísérők'
   };
   var elKat = document.getElementById('kategoriak');
-  Object.keys(A.cimkek).forEach(function (k) {
+  if (elKat) Object.keys(A.cimkek).forEach(function (k) {
     var elsoKep = (A.tetelek.filter(function (t) { return t.k === k; })[0] || {}).f;
     if (!elsoKep) return;
     var db = A.tetelek.filter(function (t) { return t.k === k; }).length;
     var a = document.createElement('a');
     a.className = 'kat';
-    a.href = '#galeria';
+    a.href = elSzurok ? '#galeria' : 'galeria.html#' + k;
     a.setAttribute('data-kat', k);
     var im = document.createElement('img');
     im.src = kep(elsoKep);
@@ -68,7 +68,7 @@
     var s = document.createElement('span'); s.textContent = (LEIRAS[k] || '') + ' · ' + db + ' darab';
     sz.appendChild(h); sz.appendChild(s);
     a.appendChild(im); a.appendChild(sz);
-    a.addEventListener('click', function () { szur(k); });
+    if (elSzurok) a.addEventListener('click', function () { szur(k); });
     elKat.appendChild(a);
   });
 
@@ -76,6 +76,9 @@
   var elSzurok = document.getElementById('szurok');
   var elRacs = document.getElementById('galeriaRacs');
   var aktivSzuro = 'mind';
+  /* A fooldalon csak valogatas van (data-mennyi), szuro nelkul. A galeria-aloldalon
+     nincs korlat, es ott vannak a szurok. */
+  var korlat = elRacs ? parseInt(elRacs.getAttribute('data-mennyi') || '0', 10) : 0;
 
   function szuroGomb(kulcs, felirat) {
     var b = document.createElement('button');
@@ -86,12 +89,34 @@
     b.addEventListener('click', function () { szur(kulcs); });
     return b;
   }
-  elSzurok.appendChild(szuroGomb('mind', 'Mind'));
-  Object.keys(A.cimkek).forEach(function (k) {
-    elSzurok.appendChild(szuroGomb(k, A.cimkek[k]));
-  });
+  if (elSzurok) {
+    elSzurok.appendChild(szuroGomb('mind', 'Mind'));
+    Object.keys(A.cimkek).forEach(function (k) {
+      elSzurok.appendChild(szuroGomb(k, A.cimkek[k]));
+    });
+  }
 
-  A.tetelek.forEach(function (t, i) {
+  /* A fooldali valogatas kategoriankent korbejar, igy mind az ot fajta megjelenik,
+     nem csak az elso kategoria elso 12 darabja. */
+  var megjelenik = A.tetelek.map(function (t, i) { return i; });
+  if (korlat > 0) {
+    var kosarak = {};
+    A.tetelek.forEach(function (t, i) { (kosarak[t.k] = kosarak[t.k] || []).push(i); });
+    var kulcsok = Object.keys(kosarak), valogatas = [], kor = 0;
+    while (valogatas.length < korlat) {
+      var volt = false;
+      for (var ki = 0; ki < kulcsok.length && valogatas.length < korlat; ki++) {
+        var lista = kosarak[kulcsok[ki]];
+        if (kor < lista.length) { valogatas.push(lista[kor]); volt = true; }
+      }
+      if (!volt) break;
+      kor++;
+    }
+    megjelenik = valogatas;
+  }
+
+  megjelenik.forEach(function (i) {
+    var t = A.tetelek[i];
     var b = document.createElement('button');
     b.type = 'button';
     b.className = 'darab';
@@ -112,6 +137,7 @@
 
   function szur(kulcs) {
     aktivSzuro = kulcs;
+    if (!elSzurok) return;
     Array.prototype.forEach.call(elSzurok.children, function (b) {
       b.classList.toggle('aktiv', b.getAttribute('data-szuro') === kulcs);
     });
@@ -126,14 +152,16 @@
   var nagyitoKep = document.getElementById('nagyitoKep');
   var nagyitoRendel = document.getElementById('nagyitoRendel');
   var aktualisIndex = 0;
+  var vanNagyito = !!(nagyito && nagyitoKep);
 
   function lathatoIndexek() {
-    return A.tetelek.map(function (t, i) { return i; }).filter(function (i) {
+    return megjelenik.filter(function (i) {
       return aktivSzuro === 'mind' || A.tetelek[i].k === aktivSzuro;
     });
   }
 
   function nagyitoNyit(i) {
+    if (!vanNagyito) return;
     aktualisIndex = i;
     var t = A.tetelek[i];
     nagyitoKep.src = kep(t.f);
@@ -143,6 +171,7 @@
     nagyitoRendel.focus();
   }
   function nagyitoZar() {
+    if (!vanNagyito) return;
     nagyito.hidden = true;
     document.body.style.overflow = '';
   }
@@ -152,6 +181,7 @@
     if (hol === -1) return;
     nagyitoNyit(lista[(hol + irany + lista.length) % lista.length]);
   }
+  if (vanNagyito) {
   document.getElementById('nagyitoBezar').addEventListener('click', nagyitoZar);
   document.getElementById('nagyitoElozo').addEventListener('click', function () { lep(-1); });
   document.getElementById('nagyitoKovetkezo').addEventListener('click', function () { lep(1); });
@@ -166,11 +196,13 @@
     valasztTermek(aktualisIndex);
     nagyitoZar();
   });
+  }
 
   /* ---------- űrlap ---------- */
   /* A rendelesnel KATEGORIAT valasztunk, nem konkret darabot: a galeriaban levo
      darabok mar elkeszultek, es pontosan ugyanolyat ugysem lehet ujra kotni. */
   var elTermek = document.getElementById('termek');
+  if (elTermek) {
   var ures = document.createElement('option');
   ures.value = '';
   ures.textContent = 'Még nem tudom, segíts választani';
@@ -181,16 +213,17 @@
     o.textContent = A.cimkek[k];
     elTermek.appendChild(o);
   });
+  }
   function valasztTermek(i) {
     var t = A.tetelek[i];
-    if (t) elTermek.value = t.k;
+    if (elTermek && t) elTermek.value = t.k;
   }
 
   var urlap = document.getElementById('rendelesUrlap');
   var allapot = document.getElementById('urlapAllapot');
   var kuldGomb = document.getElementById('kuldGomb');
 
-  urlap.addEventListener('submit', async function (e) {
+  if (urlap) urlap.addEventListener('submit', async function (e) {
     e.preventDefault();
     allapot.className = 'urlap-allapot';
     allapot.textContent = '';
@@ -250,6 +283,12 @@
     var torzs = 'Nev: ' + nev + '\nE-mail: ' + email + '\nErdekli: ' + termek + '\n\n' + uzenet;
     return 'mailto:?subject=' + encodeURIComponent('Rendelesi szandek a weboldalrol')
          + '&body=' + encodeURIComponent(torzs);
+  }
+
+  /* A galeria-aloldalra a kategoria-kartyarol horgonnyal erkezunk. */
+  if (elSzurok) {
+    var horgony = (location.hash || '').replace('#', '');
+    if (horgony && A.cimkek[horgony]) szur(horgony);
   }
 
   /* ---------- feltűnés görgetésre ---------- */

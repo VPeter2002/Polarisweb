@@ -243,3 +243,14 @@ input:focus,select:focus,textarea:focus{border-color:var(--zold);}
   .marka-szoveg strong{font-size:22px;}
   .marka-ag{width:34px;}
 }
+
+/* galeria: atvezeto a fooldalrol, es a kulon aloldal */
+.galeria-tovabb{display:flex;justify-content:center;margin-top:30px;}
+.galeria-lap{padding-top:44px;}
+.galeria-lap h1{font-size:clamp(29px,4.4vw,44px);margin-bottom:0;}
+.morzsa{font-size:14px;color:var(--barna-halk);margin-bottom:22px;}
+.morzsa a{color:var(--zold);text-decoration:none;}
+.morzsa a:hover{text-decoration:underline;}
+.morzsa span{opacity:.5;margin:0 4px;}
+.menu-asztali a.aktiv-lap{color:var(--zold-sot);}
+.menu-asztali a.aktiv-lap::after{right:0;}
