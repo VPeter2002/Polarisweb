@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+  <meta name="robots" content="noindex, nofollow">
+<meta charset="UTF-8">
+<title>Közös kassza | Albérlet elszámolás</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Havi albérlet és rezsi elszámolás kettőnek. Albérleti díj, gáz, áram, víz, net és bármi egyéb, a végén egy mondatban, hogy ki tartozik kinek.">
+<meta name="theme-color" content="#1E4034">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='15' fill='%231E4034'/%3E%3Cpath d='M32 52V30' stroke='%23A8D5BA' stroke-width='3' stroke-linecap='round'/%3E%3Cpath d='M32 32c0-11 7-19 17-20 1 11-5 19-17 20z' fill='%236FBF8B'/%3E%3Cpath d='M32 32c0-11-7-19-17-20-1 11 5 19 17 20z' fill='%238FD1A6'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;600;700&family=Nunito:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/demok/rezsi/style.css">
+</head>
+<body>
+
+<div class="levelek" aria-hidden="true">
+  <svg class="level level-1" viewBox="0 0 200 200"><path d="M100 190V95" stroke="currentColor" stroke-width="5" stroke-linecap="round" fill="none"/><path d="M100 100c0-48 30-83 74-87 4 48-22 83-74 87z" fill="currentColor"/><path d="M100 100c0-48-30-83-74-87-4 48 22 83 74 87z" fill="currentColor" opacity=".75"/></svg>
+  <svg class="level level-2" viewBox="0 0 200 200"><path d="M100 190V95" stroke="currentColor" stroke-width="5" stroke-linecap="round" fill="none"/><path d="M100 100c0-48 30-83 74-87 4 48-22 83-74 87z" fill="currentColor"/><path d="M100 100c0-48-30-83-74-87-4 48 22 83 74 87z" fill="currentColor" opacity=".75"/></svg>
+  <svg class="level level-3" viewBox="0 0 200 200"><path d="M100 190V95" stroke="currentColor" stroke-width="5" stroke-linecap="round" fill="none"/><path d="M100 100c0-48 30-83 74-87 4 48-22 83-74 87z" fill="currentColor"/><path d="M100 100c0-48-30-83-74-87-4 48 22 83 74 87z" fill="currentColor" opacity=".75"/></svg>
+</div>
+
+<header class="top">
+  <div class="wrap top-in">
+    <div class="brand">
+      <span class="brand-mark" aria-hidden="true">
+        <svg viewBox="0 0 64 64"><path d="M32 54V30" stroke="#A8D5BA" stroke-width="3.4" stroke-linecap="round" fill="none"/><path d="M32 32c0-11 7-19 17-20 1 11-5 19-17 20z" fill="#6FBF8B"/><path d="M32 32c0-11-7-19-17-20-1 11 5 19 17 20z" fill="#8FD1A6"/></svg>
+      </span>
+      <span>Közös kassza</span>
+    </div>
+    <div class="honap-valaszto">
+      <button class="nyil" id="elozoHonap" type="button" aria-label="Előző hónap">&#8249;</button>
+      <input type="month" id="honap" aria-label="Hónap">
+      <button class="nyil" id="kovetkezoHonap" type="button" aria-label="Következő hónap">&#8250;</button>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <section class="nevek card">
+    <h2>Ki és ki</h2>
+    <div class="nev-sor">
+      <div class="nev-mezo">
+        <label for="nevA">Egyik</label>
+        <input type="text" id="nevA" maxlength="24" placeholder="Peti">
+      </div>
+      <span class="es" aria-hidden="true">&amp;</span>
+      <div class="nev-mezo">
+        <label for="nevB">Másik</label>
+        <input type="text" id="nevB" maxlength="24" placeholder="Vera">
+      </div>
+    </div>
+    <div class="arany">
+      <label for="aranyA">Hogyan osztjátok?</label>
+      <div class="arany-sor">
+        <input type="range" id="aranyA" min="0" max="100" step="5" value="50">
+        <output id="aranyKiiras">50 / 50</output>
+      </div>
+      <p class="halvany apro">Ez az alapértelmezés. Egy-egy tételnél külön is beállíthatod.</p>
+    </div>
+  </section>
+
+  <section class="card">
+    <div class="card-fej">
+      <h2>A hónap tételei</h2>
+      <button class="btn-halk" id="ujTetel" type="button">+ Új tétel</button>
+    </div>
+    <div class="tetel-fejlec" aria-hidden="true">
+      <span>Mi</span><span>Mennyi</span><span>Ki fizette</span><span></span>
+    </div>
+    <div id="tetelek"></div>
+    <p class="ures-tetel" id="uresTetel" hidden>Még nincs tétel ebben a hónapban. Nyomd meg az Új tétel gombot.</p>
+  </section>
+
+  <section id="osszegzes" aria-live="polite"></section>
+
+  <section class="card card-halk">
+    <h2>Pár szó róla</h2>
+    <p>
+      Minden a böngésződben marad, szerver nincs mögötte. Ha a másik gépén is látni akarjátok,
+      egyszerűbb képernyőképet küldeni, mint közös fiókot csinálni hozzá.
+    </p>
+    <p class="halvany apro">
+      A hónapok külön mentődnek, szóval a nyilakkal vissza tudtok nézni, mi volt tavaly télen.
+    </p>
+  </section>
+
+</main>
+
+<footer class="lab">
+  <div class="wrap"><p>Legyen békés a hónap vége.</p></div>
+</footer>
+
+<script src="/demok/rezsi/app.js"></script>
+</body>
+</html>
