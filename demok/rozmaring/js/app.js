@@ -2,7 +2,14 @@
 (function () {
   'use strict';
 
-  var A = window.ROZMARING || { cimkek: {}, tetelek: [] };
+  var NYERS = window.ROZMARING || { cimkek: {}, tetelek: [] };
+  /* A termekkezelo felulet (admin.html) elrejthet egy darabot: az ilyen tetel ki sem
+     kerul a listaba, igy a sorszamozas es a nagyito lapozasa is helyes marad. */
+  var A = {
+    cimkek: NYERS.cimkek || {},
+    leirasok: NYERS.leirasok || {},
+    tetelek: (NYERS.tetelek || []).filter(function (t) { return !t.rejtve; })
+  };
   var mozgasCsokkentve = window.matchMedia &&
     window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -41,6 +48,7 @@
   });
 
   /* ---------- kategóriák ---------- */
+  /* Tartalek leirasok: amig a katalogusban nincs sajat leiras, ezek allnak. */
   var LEIRAS = {
     koszoru: 'Teljes körkoszorú az ajtóra vagy a falra',
     karika: 'Kötélkarikára kötött, könnyedebb félkoszorú',
@@ -65,7 +73,7 @@
     var sz = document.createElement('div');
     sz.className = 'kat-szoveg';
     var h = document.createElement('h3'); h.textContent = A.cimkek[k];
-    var s = document.createElement('span'); s.textContent = (LEIRAS[k] || '') + ' · ' + db + ' darab';
+    var s = document.createElement('span'); s.textContent = (A.leirasok[k] || LEIRAS[k] || '') + ' · ' + db + ' darab';
     sz.appendChild(h); sz.appendChild(s);
     a.appendChild(im); a.appendChild(sz);
     if (elSzurok) a.addEventListener('click', function () { szur(k); });
@@ -129,7 +137,7 @@
     im.decoding = 'async';
     var fed = document.createElement('span');
     fed.className = 'darab-fedo';
-    fed.textContent = A.cimkek[t.k];
+    fed.textContent = t.n || A.cimkek[t.k];
     b.appendChild(im); b.appendChild(fed);
     b.addEventListener('click', function () { nagyitoNyit(i); });
     elRacs.appendChild(b);
@@ -150,6 +158,15 @@
   /* ---------- nagyító ---------- */
   var nagyito = document.getElementById('nagyito');
   var nagyitoKep = document.getElementById('nagyitoKep');
+  /* A feliratot itt hozzuk letre, hogy a meglevo lapok markupjat ne kelljen bolygatni.
+     Ha egy darabnak nincs neve es ara, a felirat rejtve marad. */
+  var nagyitoFelirat = null;
+  if (nagyito && nagyitoKep) {
+    nagyitoFelirat = document.createElement('p');
+    nagyitoFelirat.className = 'nagyito-felirat';
+    nagyitoFelirat.hidden = true;
+    nagyitoKep.insertAdjacentElement('afterend', nagyitoFelirat);
+  }
   var nagyitoRendel = document.getElementById('nagyitoRendel');
   var aktualisIndex = 0;
   var vanNagyito = !!(nagyito && nagyitoKep);
@@ -165,7 +182,14 @@
     aktualisIndex = i;
     var t = A.tetelek[i];
     nagyitoKep.src = kep(t.f);
-    nagyitoKep.alt = A.cimkek[t.k] + ' szárazvirágból';
+    nagyitoKep.alt = (t.n ? t.n + ', ' : '') + A.cimkek[t.k] + ' szárazvirágból';
+    if (nagyitoFelirat) {
+      var reszek = [];
+      if (t.n) reszek.push(t.n);
+      if (t.ar) reszek.push(Number(t.ar).toLocaleString('hu-HU') + ' Ft');
+      nagyitoFelirat.textContent = reszek.join(' · ');
+      nagyitoFelirat.hidden = reszek.length === 0;
+    }
     nagyito.hidden = false;
     document.body.style.overflow = 'hidden';
     nagyitoRendel.focus();

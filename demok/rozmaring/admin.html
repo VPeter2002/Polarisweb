@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="hu" class="nincs-js">
+<head>
+<meta charset="UTF-8">
+<title>Rozmaring | Termékek kezelése</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#F0EFEB">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23F0EFEB'/%3E%3Cpath d='M32 54c0-16 2-26 8-34' stroke='%23789060' stroke-width='3' stroke-linecap='round' fill='none'/%3E%3Cpath d='M38 22c-5 3-8 8-9 14 6-1 10-5 12-11zM34 34c-6 2-9 7-10 13 6-1 10-5 12-11z' fill='%23A8C090'/%3E%3Cpath d='M41 25c2 5 1 11-2 15-3-5-3-11 0-16zM36 37c2 5 1 11-2 15-3-5-3-11 0-16z' fill='%23789060'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Karla:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script>document.documentElement.className=document.documentElement.className.replace("nincs-js","js");</script>
+<link rel="stylesheet" href="/demok/rozmaring/css/style.css">
+<link rel="stylesheet" href="/demok/rozmaring/css/admin.css">
+</head>
+<body class="admin">
+
+<!-- A kepek utvonalat ebbol az IGAZI img elembol vezetjuk le, nem hardcode-oljuk:
+     a demo-deploy csak a HTML-attributumot irja at, a JS-ben epitett utat nem. -->
+<img id="alapKep" src="/demok/rozmaring/img/termek-01-kicsi.jpg" alt="" hidden>
+
+<header class="admin-fejlec">
+  <div class="admin-wrap admin-fejlec-belso">
+    <div class="admin-marka">
+      <img src="/demok/rozmaring/img/ag.png" srcset="/demok/rozmaring/img/ag.png 1x, /demok/rozmaring/img/ag@2x.png 2x" alt="" width="54" height="41">
+      <div>
+        <strong>Rozmaring</strong>
+        <span>Termékek kezelése</span>
+      </div>
+    </div>
+    <div class="admin-fejlec-gombok">
+      <a class="agomb agomb-halk" href="/demok/rozmaring/" target="_blank" rel="noopener">Weboldal megnyitása</a>
+      <button class="agomb agomb-fo" type="button" id="mentesGomb">Mentés és letöltés</button>
+    </div>
+  </div>
+</header>
+
+<div class="admin-wrap">
+
+  <p class="admin-savszoveg" id="piszkozatSav" hidden>
+    <span id="piszkozatSzoveg"></span>
+    <button class="agomb agomb-apro" type="button" id="piszkozatElvet">Vissza az élesben lévő állapotra</button>
+  </p>
+
+  <section class="admin-blokk" aria-labelledby="osszefoglaloCim">
+    <h1 id="osszefoglaloCim">Mi van most az oldalon</h1>
+    <div class="admin-szamok" id="szamok"></div>
+    <p class="admin-sugo">
+      Itt a weboldalon megjelenő termékeket rendezheted: sorrend, kategória, név, ár, elrejtés.
+      A módosítás a böngésződben készül el, és a <strong>Mentés és letöltés</strong> gombbal
+      adja oda a kész fájlt. Azt a fájlt kell feltölteni az oldalra, és attól kezdve az látszik.
+    </p>
+  </section>
+
+  <section class="admin-blokk" aria-labelledby="kategoriakCim">
+    <h2 id="kategoriakCim">Kategóriák</h2>
+    <p class="admin-sugo">
+      A kategória neve a szűrőkön és a kártyákon jelenik meg, a leírása a kezdőlap
+      kategória-dobozában. Kategóriát csak akkor lehet törölni, ha nincs benne termék.
+    </p>
+    <div id="kategoriaLista" class="admin-kategoriak"></div>
+    <div class="admin-ujkat">
+      <label for="ujKatNev">Új kategória neve</label>
+      <input type="text" id="ujKatNev" placeholder="például Adventi koszorú" maxlength="40">
+      <button class="agomb" type="button" id="ujKatGomb">Hozzáadás</button>
+    </div>
+  </section>
+
+  <section class="admin-blokk" aria-labelledby="termekekCim">
+    <h2 id="termekekCim">Termékek</h2>
+
+    <div class="admin-eszkozsor">
+      <div class="admin-szurok" id="adminSzurok" role="group" aria-label="Szűrés kategóriára"></div>
+      <label class="admin-kapcsolo">
+        <input type="checkbox" id="rejtettekIs" checked>
+        Az elrejtett termékek is látszanak
+      </label>
+    </div>
+
+    <div id="termekLista" class="admin-termekek"></div>
+
+    <div class="admin-ujtermek">
+      <h3>Új termék hozzáadása</h3>
+      <p class="admin-sugo">
+        Válaszd ki a képet a gépedről. A kép fájlja nem kerül fel automatikusan: a mentés után
+        a letöltött lista megmondja, melyik képet kell feltölteni, és milyen néven.
+      </p>
+      <input type="file" id="ujKepek" accept="image/jpeg,image/png,image/webp" multiple>
+      <div id="feltoltendok" class="admin-feltoltendo" hidden></div>
+    </div>
+  </section>
+
+  <section class="admin-blokk" aria-labelledby="mentesCim">
+    <h2 id="mentesCim">Mentés</h2>
+    <p class="admin-sugo">
+      A gomb letölt egy <code>termekek.js</code> nevű fájlt. Ezt kell feltölteni az oldal
+      <code>js</code> mappájába, a régi helyére. Amíg ez nem történik meg, az oldalon a régi
+      állapot látszik.
+    </p>
+    <div class="admin-mentes-gombok">
+      <button class="agomb agomb-fo" type="button" id="mentesGomb2">Mentés és letöltés</button>
+      <button class="agomb" type="button" id="masolGomb">Másolás vágólapra</button>
+    </div>
+    <p class="admin-allapot" id="mentesAllapot" role="status"></p>
+    <details class="admin-elonezet">
+      <summary>Megnézem, mi kerül a fájlba</summary>
+      <pre id="elonezet"></pre>
+    </details>
+  </section>
+
+</div>
+
+<script src="/demok/rozmaring/js/termekek.js"></script>
+<script src="/demok/rozmaring/js/admin.js"></script>
+</body>
+</html>

@@ -254,3 +254,9 @@ input:focus,select:focus,textarea:focus{border-color:var(--zold);}
 .morzsa span{opacity:.5;margin:0 4px;}
 .menu-asztali a.aktiv-lap{color:var(--zold-sot);}
 .menu-asztali a.aktiv-lap::after{right:0;}
+
+/* A nagyítóban megjelenő név és ár. Csak akkor látszik, ha a katalógusban meg van adva. */
+.nagyito-felirat{
+  margin:10px 0 0;color:var(--papir);font-size:1rem;letter-spacing:.02em;
+  text-align:center;text-shadow:0 1px 10px rgba(0,0,0,.45);
+}
