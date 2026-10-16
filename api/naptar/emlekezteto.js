@@ -8,7 +8,7 @@ const { sendEmail, escapeHtml } = require('../_lib/mailer');
 const MAX_LEVEL_FUTASONKENT = 80;
 const DEMO_URL = 'https://www.polarisweb.hu/demok/naptar';
 
-const CIMKE_SZOVEG = { only_bocs: 'Only bocs', bocs_and_girls: 'Bocs and girls' };
+const CIMKE_SZOVEG = { only_boys: 'Only boys', boys_and_girls: 'Boys and girls' };
 
 function jogosult(req) {
   const titok = process.env.CRON_SECRET;

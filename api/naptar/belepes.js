@@ -1,7 +1,8 @@
 // POST { email, kod } -> { token, tag }
 const { sb, randomToken, normalizeEmail, isValidEmail, json, fail } = require('../_lib/naptar');
 
-const SESSION_NAP = 60;
+// Half a year: the point of the e-mail code is that you type it once per device.
+const SESSION_NAP = 180;
 const MAX_PROBALKOZAS = 5;
 
 module.exports = async function handler(req, res) {

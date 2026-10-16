@@ -7,7 +7,7 @@
   var TOKEN_KEY = 'naptar-token';
   var HONAPOK = ['január', 'február', 'március', 'április', 'május', 'június', 'július', 'augusztus', 'szeptember', 'október', 'november', 'december'];
   var NAPOK = ['vasárnap', 'hétfő', 'kedd', 'szerda', 'csütörtök', 'péntek', 'szombat'];
-  var CIMKE_NEV = { only_bocs: 'Only bocs', bocs_and_girls: 'Bocs and girls' };
+  var CIMKE_NEV = { only_boys: 'Only boys', boys_and_girls: 'Boys and girls' };
   var SZINEK = ['#e0a458', '#7c83ff', '#6cc5a1', '#e8736a', '#c5a3db', '#5aa9e6', '#d9b04d', '#8fbf6a'];
 
   var state = {
@@ -186,7 +186,7 @@
 
   function szurt() {
     var f = state.szurok;
-    var aktivCimkek = ['only_bocs', 'bocs_and_girls'].filter(function (c) { return f[c]; });
+    var aktivCimkek = ['only_boys', 'boys_and_girls'].filter(function (c) { return f[c]; });
     return state.esemenyek.filter(function (e) {
       if (f.mine) {
         var benne = e.letrehozo_id === state.me.id
@@ -328,6 +328,10 @@
 
   /* ---------- modal keret ---------- */
 
+  // A modal pushol egy history-bejegyzest, hogy az Android vissza gomb (es a
+  // bongeszo vissza nyila) bezarja, ne az elozo oldalra vigyen.
+  var modalNyitva = false;
+
   function modal(tartalom) {
     var root = $('#modalRoot');
     root.innerHTML = '';
@@ -338,13 +342,26 @@
     bd.addEventListener('click', function (e) { if (e.target === bd) zar(); });
     document.addEventListener('keydown', escZar);
     root.appendChild(bd);
+    if (!modalNyitva) {
+      modalNyitva = true;
+      try { history.pushState({ naptarModal: true }, ''); } catch (e) { /* no history */ }
+    }
     return m;
   }
   function escZar(e) { if (e.key === 'Escape') zar(); }
-  function zar() {
+  function zar(visszaGombbol) {
     $('#modalRoot').innerHTML = '';
     document.removeEventListener('keydown', escZar);
+    if (modalNyitva) {
+      modalNyitva = false;
+      // Ha gombbal zartunk, a sajat history-bejegyzest is le kell venni,
+      // kulonben a kovetkezo vissza-nyomas nem csinal semmit.
+      if (!visszaGombbol) { try { history.back(); } catch (e) {} }
+    }
   }
+  window.addEventListener('popstate', function () {
+    if (modalNyitva) zar(true);
+  });
 
   /* ---------- esemeny reszletek ---------- */
 
@@ -567,7 +584,7 @@
     var cpick = el('div', 'pick');
     var cimke = e && e.cimke ? e.cimke : null;
     var gombok = {};
-    [['only_bocs', 'Only bocs'], ['bocs_and_girls', 'Bocs and girls'], [null, 'Nincs címke']].forEach(function (p) {
+    [['only_boys', 'Only boys'], ['boys_and_girls', 'Boys and girls'], [null, 'Nincs címke']].forEach(function (p) {
       var b = el('button', cimke === p[0] ? 'on' : '', p[1]);
       gombok[String(p[0])] = b;
       b.addEventListener('click', function () {
@@ -584,17 +601,29 @@
     fe.appendChild(el('label', null, 'Mennyire lesz erős?'));
     var wrap = el('div', 'strength-pick');
     var erosseg = e ? e.erosseg : 3;
-    var bars = barok(erosseg);
     var cimkeSzoveg = ['', 'Csendes', 'Lazulás', 'Normál', 'Erős', 'Legendás'];
     var lbl = el('span', 'strength-label', cimkeSzoveg[erosseg]);
-    Array.prototype.forEach.call(bars.children, function (b, i) {
-      b.addEventListener('click', function () {
-        erosseg = i + 1;
-        Array.prototype.forEach.call(bars.children, function (x, k) { x.classList.toggle('on', k < erosseg); });
-        lbl.textContent = cimkeSzoveg[erosseg];
-      });
-    });
-    wrap.appendChild(bars); wrap.appendChild(lbl);
+    // Ot kulon gomb, mindegyik ujjbarat meretu: a korabbi 7 pixeles savokat
+    // telefonon nem lehetett eltalalni.
+    var sor = el('div', 'strength-row');
+    var gombok = [];
+    for (var sz = 1; sz <= 5; sz++) {
+      (function (ertek) {
+        var g = el('button', 'strength-btn' + (ertek <= erosseg ? ' on' : ''));
+        g.setAttribute('aria-label', ertek + ' - ' + cimkeSzoveg[ertek]);
+        var rud = el('span', 'rud');
+        rud.style.height = (20 + ertek * 14) + '%';
+        g.appendChild(rud);
+        g.addEventListener('click', function () {
+          erosseg = ertek;
+          gombok.forEach(function (x, k) { x.classList.toggle('on', k < erosseg); });
+          lbl.textContent = cimkeSzoveg[erosseg];
+        });
+        gombok.push(g);
+        sor.appendChild(g);
+      })(sz);
+    }
+    wrap.appendChild(sor); wrap.appendChild(lbl);
     fe.appendChild(wrap);
     form.appendChild(fe);
 
@@ -665,7 +694,7 @@
     $('#backToEmail').addEventListener('click', function () {
       $('#stepCode').hidden = true;
       $('#stepEmail').hidden = false;
-      $('#authSub').textContent = 'Add meg az e-mail címed, és küldünk egy belépési kódot. Jelszó nincs.';
+      $('#authSub').textContent = 'Add meg az e-mail címed, és küldünk egy belépési kódot. Jelszó nincs, és elég egyszer belépned.';
       authHiba('');
     });
     kodMezok();

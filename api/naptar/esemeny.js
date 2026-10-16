@@ -2,7 +2,7 @@
 // Only the creator may change or delete an event.
 const { sb, tagFromToken, json, fail } = require('../_lib/naptar');
 
-const CIMKEK = ['only_bocs', 'bocs_and_girls'];
+const CIMKEK = ['only_boys', 'boys_and_girls'];
 
 function tisztitErosseg(value) {
   const n = parseInt(value, 10);

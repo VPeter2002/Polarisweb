@@ -188,7 +188,7 @@ button { cursor: pointer; border: none; background: none; }
 }
 .chip:hover { transform: translateY(-1px); color: var(--text); }
 .chip.on { color: var(--text); border-color: var(--muted-2); background: var(--ink-2); }
-.chip.on.tag-bocs { border-color: #3d4a2e; background: #1c2318; color: #c5dba3; }
+.chip.on.tag-boys { border-color: #3d4a2e; background: #1c2318; color: #c5dba3; }
 .chip.on.tag-girls { border-color: #4a2e42; background: #241a22; color: #e8b3d4; }
 
 /* ---------- honap racs ---------- */
@@ -270,8 +270,8 @@ button { cursor: pointer; border: none; background: none; }
   font-size: 10.5px; letter-spacing: .1em; text-transform: uppercase; font-weight: 600;
   padding: 3px 8px; border-radius: 6px;
 }
-.tag.only_bocs { background: #1c2318; color: #c5dba3; }
-.tag.bocs_and_girls { background: #241a22; color: #e8b3d4; }
+.tag.only_boys { background: #1c2318; color: #c5dba3; }
+.tag.boys_and_girls { background: #241a22; color: #e8b3d4; }
 .dot-privat { color: var(--privat); font-size: 12px; }
 
 .empty { text-align: center; padding: 70px 20px; color: var(--muted-2); animation: rise .6s var(--ease) both; }
@@ -341,15 +341,23 @@ button { cursor: pointer; border: none; background: none; }
 .person .ini { width: 22px; height: 22px; border-radius: 50%; display: grid; place-items: center; font-size: 11px; font-weight: 700; color: #11131a; }
 .person.on { border-color: var(--muted-2); color: var(--text); background: var(--ink-3); }
 
-.strength-pick { display: flex; align-items: center; gap: 12px; }
-.strength-pick .bars { height: 26px; cursor: pointer; }
-.strength-pick .bars i { width: 7px; border-radius: 3px; }
-.strength-pick .bars i:nth-child(1) { height: 10px; }
-.strength-pick .bars i:nth-child(2) { height: 14px; }
-.strength-pick .bars i:nth-child(3) { height: 18px; }
-.strength-pick .bars i:nth-child(4) { height: 22px; }
-.strength-pick .bars i:nth-child(5) { height: 26px; }
-.strength-label { font-size: 13.5px; color: var(--muted); }
+.strength-pick { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+/* Finger-sized targets: the old 7px bars were not hittable on a phone. */
+.strength-row { display: flex; gap: 6px; }
+.strength-btn {
+  width: 46px; height: 52px;
+  border: 1px solid var(--line); border-radius: 12px;
+  background: var(--ink-2);
+  display: flex; align-items: flex-end; justify-content: center;
+  padding-bottom: 9px;
+  transition: border-color .2s, background .2s, transform .18s var(--ease);
+}
+.strength-btn:hover { transform: translateY(-2px); border-color: var(--muted-2); }
+.strength-btn .rud { width: 8px; border-radius: 4px; background: var(--line); transition: background .25s, transform .25s var(--ease); display: block; }
+.strength-btn.on { border-color: var(--accent-soft); background: #221a10; }
+.strength-btn.on .rud { background: var(--accent); }
+.strength-label { font-size: 14.5px; color: var(--text); font-weight: 600; }
+
 
 .detail-meta { display: flex; flex-direction: column; gap: 11px; margin-bottom: 20px; }
 .detail-meta .line { display: flex; gap: 11px; font-size: 14.5px; align-items: flex-start; }
@@ -404,6 +412,7 @@ button { cursor: pointer; border: none; background: none; }
   .modal { padding: 20px; border-radius: 18px; }
   .two { grid-template-columns: 1fr; }
   .fab { right: 18px; bottom: 18px; }
+  .strength-btn { width: 42px; height: 48px; }
 }
 
 @media (prefers-reduced-motion: reduce) {

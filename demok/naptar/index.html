@@ -22,7 +22,7 @@
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#17120a" stroke-width="2" stroke-linecap="round"><rect x="3.5" y="5.5" width="17" height="15" rx="2.5"/><path d="M3.5 10h17M8.5 3v4M15.5 3v4"/></svg>
     </div>
     <h1 id="authTitle">Társasági naptár</h1>
-    <p class="sub" id="authSub">Add meg az e-mail címed, és küldünk egy belépési kódot. Jelszó nincs.</p>
+    <p class="sub" id="authSub">Add meg az e-mail címed, és küldünk egy belépési kódot. Jelszó nincs, és elég egyszer belépned.</p>
 
     <div id="authError" class="err" hidden></div>
 
@@ -41,7 +41,7 @@
         <input class="input" id="meghivo" type="text" autocomplete="off" placeholder="Amit a társaságtól kaptál">
       </div>
       <button class="btn btn-full" id="sendCode">Kódot kérek</button>
-      <p class="note">A kód 15 percig él, és csak erre az egy belépésre jó.</p>
+      <p class="note">A kód 15 percig él. Ha egyszer beléptél, ezen az eszközön bejelentkezve maradsz, nem kell újra kódot kérned.</p>
     </div>
 
     <!-- 2. lepes -->
@@ -96,8 +96,8 @@
 
     <div class="filters" id="filters">
       <button class="chip" data-filter="mine">Amiben benne vagyok</button>
-      <button class="chip tag-bocs" data-filter="only_bocs">Only bocs</button>
-      <button class="chip tag-girls" data-filter="bocs_and_girls">Bocs and girls</button>
+      <button class="chip tag-boys" data-filter="only_boys">Only boys</button>
+      <button class="chip tag-girls" data-filter="boys_and_girls">Boys and girls</button>
       <button class="chip" data-filter="privat">Privát</button>
     </div>
 
