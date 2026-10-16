@@ -38,6 +38,11 @@
     var t = state.tagok.filter(function (x) { return x.id === id; })[0];
     return t ? t.nev : 'valaki';
   }
+  function rovidit(szoveg, max) {
+    var t = String(szoveg || '');
+    return t.length > max ? t.slice(0, max - 1).trim() + '…' : t;
+  }
+
   function initials(nev) {
     return String(nev || '?').trim().split(/\s+/).slice(0, 2).map(function (w) { return w[0]; }).join('').toUpperCase();
   }
@@ -265,30 +270,39 @@
 
       var napi = (map[k] || []).sort(function (a, b) { return new Date(a.kezdet) - new Date(b.kezdet); });
       if (k === state.kijeloltNap) cell.classList.add('kijelolt');
-      napi.slice(0, 3).forEach(function (e) {
+      // Telefonon ket esemeny fer el olvashatoan egy cellaban, szelesebb
+      // kepernyon harom; a tobbit a "+N meg" sor jelzi, es a nap-ablak mutatja.
+      var maxEv = window.innerWidth <= 760 ? 2 : 3;
+      napi.slice(0, maxEv).forEach(function (e) {
         var box = el('div', 'ev' + (e.lathatosag === 'privat' ? ' privat' : '') + (e.letrehozo_id === state.me.id ? ' mine' : ''));
         if (!e.egesz_napos) {
           var t = el('span', 't', ora(new Date(e.kezdet)));
           box.appendChild(t);
         }
-        box.appendChild(document.createTextNode(e.cim));
+        // Telefonon a cella kb. 70 pixel szeles: ket sor fer ki, ezert a cimet
+        // karakterszam szerint rovidítjuk. (A -webkit-line-clamp itt nem vagott,
+        // mert a doboz tartalma anonim szoveg-box, nem gyermek elem.)
+        box.appendChild(document.createTextNode(maxEv === 2 ? rovidit(e.cim, 26) : e.cim));
         // Szeles kepernyon a doboz maga nyitja az esemenyt; telefonon a dobozok
         // csak szines csikok, ott a CSS kikapcsolja rajtuk a koppintast.
         box.addEventListener('click', function (evt) { evt.stopPropagation(); reszletek(e); });
         cell.appendChild(box);
       });
-      if (napi.length > 3) cell.appendChild(el('div', 'more', '+' + (napi.length - 3) + ' még'));
+      if (napi.length > maxEv) cell.appendChild(el('div', 'more', '+' + (napi.length - maxEv) + ' még'));
 
       // Ket lepcso: az elso koppintas kijeloli a napot, a masodik nyitja meg.
       // Igy telefonon nem ugrik fel veletlenul egy ablak gorgetes kozben.
-      (function (nap, kulcs, esemenyek) {
-        cell.addEventListener('click', function () {
+      // A `cell` a for ciklusban `var`-ral all, tehat a closure a ciklus VEGEN
+      // ervenyes (utolso) cellat latna: a kijeloles rossz napra kerult. Ezert a
+      // cellat is parameterkent adjuk at.
+      (function (cellaElem, nap, kulcs, esemenyek) {
+        cellaElem.addEventListener('click', function () {
           if (state.kijeloltNap === kulcs) { napAblak(nap, esemenyek); return; }
           state.kijeloltNap = kulcs;
           Array.prototype.forEach.call(grid.children, function (c) { c.classList.remove('kijelolt'); });
-          cell.classList.add('kijelolt');
+          cellaElem.classList.add('kijelolt');
         });
-      })(d, k, napi);
+      })(cell, d, k, napi);
       grid.appendChild(cell);
     }
   }
@@ -782,7 +796,11 @@
     });
 
     modal(form);
-    setTimeout(function () { cim.focus(); }, 80);
+    // Telefonon a mezo automatikus fokuszalasa felhozza a billentyuzetet, ami
+    // azonnal eltakarja az ablak felet. Csak szeles kepernyon fokuszalunk.
+    if (window.matchMedia && window.matchMedia('(min-width: 761px)').matches) {
+      setTimeout(function () { cim.focus(); }, 80);
+    }
   }
 
   /* ---------- rajzolas ---------- */
@@ -869,6 +887,12 @@
   });
   window.addEventListener('unhandledrejection', function (e) {
     console.error('[naptar] promise', e.reason && e.reason.message);
+  });
+
+  var atmeretezesIdozito = null;
+  window.addEventListener('resize', function () {
+    if (atmeretezesIdozito) clearTimeout(atmeretezesIdozito);
+    atmeretezesIdozito = setTimeout(function () { if (state.me) rajzol(); }, 220);
   });
 
   kotes();
