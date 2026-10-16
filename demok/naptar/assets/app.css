@@ -22,7 +22,12 @@
 
 [hidden] { display: none !important; }
 
-html, body { margin: 0; padding: 0; }
+html, body {
+  margin: 0; padding: 0;
+  /* Androidon a gyors lehuzas kulonben ujratolti a lapot: a naptar visszaugrott
+     a tetejere es ujrarajzolodott. */
+  overscroll-behavior-y: contain;
+}
 
 body {
   background:
@@ -206,7 +211,6 @@ button { cursor: pointer; border: none; background: none; }
   background: var(--ink); min-height: 118px; overflow: hidden; padding: 9px 9px 7px;
   display: flex; flex-direction: column; gap: 5px;
   transition: background .2s;
-  animation: cell-in .45s var(--ease) both;
   cursor: pointer;
 }
 @media (hover: hover) {

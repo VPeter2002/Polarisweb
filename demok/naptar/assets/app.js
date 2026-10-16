@@ -230,6 +230,13 @@
         if (!benne) return false;
       }
       if (f.privat && e.lathatosag !== 'privat') return false;
+      if (f.nem_megyek || f.nincs_valasz) {
+        var sajatValasz = (e.resztvevok || []).filter(function (r) { return r.tag_id === state.me.id; })[0];
+        var statusz = sajatValasz ? sajatValasz.statusz : null;
+        if (f.nem_megyek && statusz !== 'nem_jon') return false;
+        // "Nem jeleztem vissza": nincs sorom, vagy csak meghivottkent allok rajta.
+        if (f.nincs_valasz && statusz !== null && statusz !== 'meghivott') return false;
+      }
       if (aktivCimkek.length && aktivCimkek.indexOf(e.cimke) < 0) return false;
       return true;
     });
@@ -263,7 +270,6 @@
       var d = new Date(kezd.getFullYear(), kezd.getMonth(), kezd.getDate() + i);
       var k = napKulcs(d);
       var cell = el('div', 'cell');
-      cell.style.animationDelay = (i * 7) + 'ms';
       if (d.getMonth() !== ho) cell.classList.add('other');
       if (k === ma) cell.classList.add('today');
       cell.appendChild(el('div', 'daynum', String(d.getDate())));
@@ -533,22 +539,46 @@
       box.appendChild(who);
     }
 
-    var sajat = (reszt.filter(function (r) { return r.tag_id === state.me.id; })[0] || {}).statusz;
+    var eredeti = (reszt.filter(function (r) { return r.tag_id === state.me.id; })[0] || {}).statusz || null;
+    var valasztott = eredeti;
     var rsvp = el('div', 'rsvp');
     rsvp.style.marginTop = '18px';
+    var rsvpGombok = [];
+    // A valasztas magatol nem ment: eddig egy veletlen koppintas azonnal
+    // atirta a valaszt. Mostantol a Mentes gomb kuldi el.
     [['jon', 'Jövök'], ['talan', 'Talán'], ['nem_jon', 'Nem megy']].forEach(function (p) {
-      var b = el('button', sajat === p[0] ? 'on' : '', p[1]);
-      b.addEventListener('click', async function () {
-        try {
-          await api('/reszvetel', { method: 'POST', body: { token: state.token, esemeny_id: e.id, statusz: p[0] } });
-          zar();
-          await betolt();
-          toast(p[0] === 'jon' ? 'Ott vagy.' : p[0] === 'talan' ? 'Talán. Így is jó.' : 'Rendben, kimaradsz.');
-        } catch (err) { toast(err.message); }
+      var b = el('button', valasztott === p[0] ? 'on' : '', p[1]);
+      b.addEventListener('click', function () {
+        valasztott = p[0];
+        rsvpGombok.forEach(function (x) { x.classList.toggle('on', x.getAttribute('data-ertek') === valasztott); });
+        mentGomb.disabled = (valasztott === eredeti);
+        mentGomb.textContent = 'Válasz mentése';
       });
+      b.setAttribute('data-ertek', p[0]);
+      rsvpGombok.push(b);
       rsvp.appendChild(b);
     });
     box.appendChild(rsvp);
+
+    var mentGomb = el('button', 'btn btn-full', eredeti ? 'Válasz mentése' : 'Válasz mentése');
+    mentGomb.style.marginTop = '10px';
+    mentGomb.disabled = true;
+    mentGomb.addEventListener('click', async function () {
+      if (!valasztott) { toast('Előbb válassz.'); return; }
+      mentGomb.disabled = true;
+      mentGomb.textContent = 'Mentem…';
+      try {
+        await api('/reszvetel', { method: 'POST', body: { token: state.token, esemeny_id: e.id, statusz: valasztott } });
+        zar();
+        await betolt();
+        toast(valasztott === 'jon' ? 'Ott vagy.' : valasztott === 'talan' ? 'Talán. Így is jó.' : 'Rendben, kimaradsz.');
+      } catch (err) {
+        toast(err.message);
+        mentGomb.disabled = false;
+        mentGomb.textContent = 'Válasz mentése';
+      }
+    });
+    box.appendChild(mentGomb);
 
     var act = el('div', 'modal-actions');
     if (e.letrehozo_id === state.me.id) {
