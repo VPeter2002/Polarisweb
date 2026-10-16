@@ -14,6 +14,7 @@
     token: null, me: null, tagok: [], esemenyek: [],
     kurzor: new Date(), nezet: 'month', szurok: {}, email: '',
     kijeloltNap: null, multIs: false,
+    regMod: false,
   };
 
   /* ---------- apro segedek ---------- */
@@ -79,6 +80,27 @@
     box.style.animation = '';
   }
 
+  // Ket mod egy kepernyon: belepes (csak e-mail) es regisztracio (nev + meghivo
+  // kod is). Korabban a regisztracios mezok csak a szerver 403-as valasza utan
+  // bukkantak elo, amibol nem derult ki, hogy egyaltalan lehet regisztralni.
+  function modValt(reg) {
+    state.regMod = !!reg;
+    $('#newFields').hidden = !state.regMod;
+    $('#inviteField').hidden = !state.regMod;
+    $('#sendCode').textContent = state.regMod ? 'Regisztrálok' : 'Kódot kérek';
+    $('#authTitle').textContent = state.regMod ? 'Csatlakozás' : (state.tarsasagNev || 'Társasági naptár');
+    $('#authSub').textContent = state.regMod
+      ? 'Add meg a neved és a meghívó kódot, amit a társaságtól kaptál. Utána e-mailben küldünk egy belépési kódot.'
+      : 'Add meg az e-mail címed, és küldünk egy belépési kódot. Jelszó nincs, és elég egyszer belépned.';
+    $('#modeSwitch').innerHTML = state.regMod
+      ? 'Már regisztráltál? <button class="link-btn" id="toLogin">Lépj be itt</button>'
+      : 'Még nem regisztráltál? <button class="link-btn" id="toRegister">Kattints ide</button>';
+    var reg2 = $('#toRegister');
+    if (reg2) reg2.addEventListener('click', function () { authHiba(''); modValt(true); });
+    var log = $('#toLogin');
+    if (log) log.addEventListener('click', function () { authHiba(''); modValt(false); });
+  }
+
   function mutatAuth() {
     $('#authView').hidden = false;
     $('#appView').hidden = true;
@@ -101,12 +123,16 @@
       state.email = email;
       $('#stepEmail').hidden = true;
       $('#stepCode').hidden = false;
+      $('#modeSwitch').hidden = true;
       $('#authSub').textContent = 'Elküldtük a kódot ide: ' + email;
       $('#codeRow').firstElementChild.focus();
     } catch (err) {
-      if (err.data && err.data.kod_kell) { $('#inviteField').hidden = false; $('#newFields').hidden = false; }
-      if (err.data && err.data.nev_kell) { $('#newFields').hidden = false; }
-      authHiba(err.message);
+      if (err.data && (err.data.kod_kell || err.data.nev_kell)) {
+        modValt(true);
+        authHiba('Ezzel a címmel még nem regisztráltál. Add meg a neved és a meghívó kódot.');
+      } else {
+        authHiba(err.message);
+      }
     } finally {
       btn.disabled = false;
       btn.textContent = 'Kódot kérek';
@@ -779,12 +805,14 @@
 
   function kotes() {
     $('#sendCode').addEventListener('click', kodotKer);
+    $('#toRegister').addEventListener('click', function () { authHiba(''); modValt(true); });
     $('#email').addEventListener('keydown', function (e) { if (e.key === 'Enter') kodotKer(); });
     $('#verifyCode').addEventListener('click', belep);
     $('#backToEmail').addEventListener('click', function () {
       $('#stepCode').hidden = true;
       $('#stepEmail').hidden = false;
-      $('#authSub').textContent = 'Add meg az e-mail címed, és küldünk egy belépési kódot. Jelszó nincs, és elég egyszer belépned.';
+      $('#modeSwitch').hidden = false;
+      modValt(state.regMod);
       authHiba('');
     });
     kodMezok();
