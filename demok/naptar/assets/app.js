@@ -919,8 +919,16 @@
     console.error('[naptar] promise', e.reason && e.reason.message);
   });
 
+  // EZ OKOZTA a "hirtelen ugrast a lap tetejere": Androidon gorgeteskor a
+  // bongeszo cimsava el- es ujra megjelenik, ami `resize` esemenyt valt ki. A
+  // korabbi valtozat ilyenkor UJRARAJZOLTA a racsot, a dokumentum magassaga egy
+  // pillanatra lecsokkent, es a gorgetes visszaallt a tetejere. Csak akkor
+  // rajzolunk ujra, ha a SZELESSEG valtozott (forgatas, ablak-atmeretezes).
+  var utolsoSzelesseg = window.innerWidth;
   var atmeretezesIdozito = null;
   window.addEventListener('resize', function () {
+    if (window.innerWidth === utolsoSzelesseg) return;
+    utolsoSzelesseg = window.innerWidth;
     if (atmeretezesIdozito) clearTimeout(atmeretezesIdozito);
     atmeretezesIdozito = setTimeout(function () { if (state.me) rajzol(); }, 220);
   });

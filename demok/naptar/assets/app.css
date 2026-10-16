@@ -22,12 +22,7 @@
 
 [hidden] { display: none !important; }
 
-html, body {
-  margin: 0; padding: 0;
-  /* Androidon a gyors lehuzas kulonben ujratolti a lapot: a naptar visszaugrott
-     a tetejere es ujrarajzolodott. */
-  overscroll-behavior-y: contain;
-}
+html, body { margin: 0; padding: 0; }
 
 body {
   background:
