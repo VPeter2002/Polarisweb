@@ -13,6 +13,7 @@
   var state = {
     token: null, me: null, tagok: [], esemenyek: [],
     kurzor: new Date(), nezet: 'month', szurok: {}, email: '',
+    kijeloltNap: null, multIs: false,
   };
 
   /* ---------- apro segedek ---------- */
@@ -237,6 +238,7 @@
       cell.appendChild(el('div', 'daynum', String(d.getDate())));
 
       var napi = (map[k] || []).sort(function (a, b) { return new Date(a.kezdet) - new Date(b.kezdet); });
+      if (k === state.kijeloltNap) cell.classList.add('kijelolt');
       napi.slice(0, 3).forEach(function (e) {
         var box = el('div', 'ev' + (e.lathatosag === 'privat' ? ' privat' : '') + (e.letrehozo_id === state.me.id ? ' mine' : ''));
         if (!e.egesz_napos) {
@@ -244,16 +246,65 @@
           box.appendChild(t);
         }
         box.appendChild(document.createTextNode(e.cim));
+        // Szeles kepernyon a doboz maga nyitja az esemenyt; telefonon a dobozok
+        // csak szines csikok, ott a CSS kikapcsolja rajtuk a koppintast.
         box.addEventListener('click', function (evt) { evt.stopPropagation(); reszletek(e); });
         cell.appendChild(box);
       });
       if (napi.length > 3) cell.appendChild(el('div', 'more', '+' + (napi.length - 3) + ' még'));
 
-      (function (nap) {
-        cell.addEventListener('click', function () { szerkeszto(null, nap); });
-      })(d);
+      // Ket lepcso: az elso koppintas kijeloli a napot, a masodik nyitja meg.
+      // Igy telefonon nem ugrik fel veletlenul egy ablak gorgetes kozben.
+      (function (nap, kulcs, esemenyek) {
+        cell.addEventListener('click', function () {
+          if (state.kijeloltNap === kulcs) { napAblak(nap, esemenyek); return; }
+          state.kijeloltNap = kulcs;
+          Array.prototype.forEach.call(grid.children, function (c) { c.classList.remove('kijelolt'); });
+          cell.classList.add('kijelolt');
+        });
+      })(d, k, napi);
       grid.appendChild(cell);
     }
+  }
+
+  /* ---------- nap-ablak: egy nap esemenyei ---------- */
+
+  function napAblak(d, esemenyek) {
+    var box = el('div');
+    var fej = el('div', 'modal-head');
+    var h = el('h2', null, d.getDate() + '. ' + HONAPOK[d.getMonth()] + ', ' + NAPOK[d.getDay()]);
+    fej.appendChild(h);
+    fej.appendChild(zaroX());
+    box.appendChild(fej);
+
+    if (!esemenyek || !esemenyek.length) {
+      box.appendChild(el('p', 'ures-nap', 'Ezen a napon nincs program.'));
+    } else {
+      var lista = el('div', 'nap-lista');
+      esemenyek.forEach(function (e) {
+        var row = el('button', 'nap-sor');
+        var bal = el('div', 'nap-sor-bal');
+        bal.appendChild(el('div', 'nap-sor-cim', e.cim));
+        var meta = el('div', 'nap-sor-meta');
+        meta.appendChild(el('span', null, e.egesz_napos ? 'egész nap' : ora(new Date(e.kezdet))));
+        if (e.helyszin) meta.appendChild(el('span', null, e.helyszin));
+        if (e.lathatosag === 'privat') meta.appendChild(el('span', 'dot-privat', '● privát'));
+        bal.appendChild(meta);
+        row.appendChild(bal);
+        if (e.cimke) row.appendChild(el('span', 'tag ' + e.cimke, CIMKE_NEV[e.cimke]));
+        row.appendChild(barok(e.erosseg));
+        row.addEventListener('click', function () { zar(); setTimeout(function () { reszletek(e); }, 30); });
+        lista.appendChild(row);
+      });
+      box.appendChild(lista);
+    }
+
+    var act = el('div', 'modal-actions');
+    var uj = el('button', 'btn', 'Új program erre a napra');
+    uj.addEventListener('click', function () { zar(); setTimeout(function () { szerkeszto(null, d); }, 30); });
+    act.appendChild(uj);
+    box.appendChild(act);
+    modal(box);
   }
 
   /* ---------- lista nezet ---------- */
@@ -266,16 +317,40 @@
       .filter(function (e) { return new Date(e.kezdet) >= most; })
       .sort(function (a, b) { return new Date(a.kezdet) - new Date(b.kezdet); });
 
+    var korabbi = szurt()
+      .filter(function (e) { return new Date(e.kezdet) < most; })
+      .sort(function (a, b) { return new Date(b.kezdet) - new Date(a.kezdet); });
+
     if (!lista.length) {
       var ures = el('div', 'empty');
       ures.appendChild(el('div', 'big', 'Nincs előttünk semmi.'));
       ures.appendChild(el('div', null, 'Ez vagy nyugalom, vagy szervezési hiba. Tegyél fel egy programot.'));
+      if (korabbi.length && !state.multIs) {
+        // Korabban ez a nezet nemán ures volt, ha csak mult esemenyek voltak:
+        // ugy nezett ki, mintha a lista elromlott volna.
+        var gomb = el('button', 'btn btn-ghost', 'Korábbi programok (' + korabbi.length + ')');
+        gomb.style.marginTop = '18px';
+        gomb.addEventListener('click', function () { state.multIs = true; rajzolLista(); });
+        ures.appendChild(gomb);
+      }
       box.appendChild(ures);
-      return;
+      if (!state.multIs) return;
+    }
+
+    if (state.multIs && korabbi.length) {
+      lista = lista.concat(korabbi);
     }
 
     var map = napokSzerint(lista);
+    var maK = maKulcs();
+    var multFejlecKell = state.multIs && korabbi.length > 0;
     Object.keys(map).sort().forEach(function (k, idx) {
+      if (multFejlecKell && k < maK) {
+        multFejlecKell = false;
+        var fejlec = el('div', 'mult-fejlec');
+        fejlec.appendChild(el('span', 'micro', 'Korábban'));
+        box.appendChild(fejlec);
+      }
       var d = new Date(k + 'T12:00:00');
       var sor = el('div', 'list-day');
       sor.style.animationDelay = Math.min(idx * 45, 400) + 'ms';
@@ -328,6 +403,17 @@
 
   /* ---------- modal keret ---------- */
 
+  // Minden ablak jobb felso sarkaban egy X. Korabban egy szoveges "Bezár" gomb
+  // allt a gombsorban, ami telefonon harmadikkent mar uj sorba tort.
+  function zaroX() {
+    var b = el('button', 'modal-x');
+    b.setAttribute('aria-label', 'Bezár');
+    b.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>';
+    b.addEventListener('click', function () { zar(); });
+    return b;
+  }
+
+
   // A modal pushol egy history-bejegyzest, hogy az Android vissza gomb (es a
   // bongeszo vissza nyila) bezarja, ne az elozo oldalra vigyen.
   var modalNyitva = false;
@@ -371,6 +457,7 @@
     var cim = el('h2', null, e.cim);
     fej.appendChild(cim);
     if (e.cimke) fej.appendChild(el('span', 'tag ' + e.cimke, CIMKE_NEV[e.cimke]));
+    fej.appendChild(zaroX());
     box.appendChild(fej);
 
     var meta = el('div', 'detail-meta');
@@ -438,10 +525,7 @@
       });
       act.appendChild(torol);
     }
-    var be = el('button', 'btn btn-ghost spacer', 'Bezár');
-    be.addEventListener('click', zar);
-    act.appendChild(be);
-    box.appendChild(act);
+    if (act.children.length) box.appendChild(act);
 
     modal(box);
   }
@@ -469,7 +553,10 @@
     var vegD = e && e.veg ? new Date(e.veg) : null;
 
     var form = el('div');
-    form.appendChild(el('h2', null, uj ? 'Új program' : 'Program szerkesztése'));
+    var szfej = el('div', 'modal-head');
+    szfej.appendChild(el('h2', null, uj ? 'Új program' : 'Program szerkesztése'));
+    szfej.appendChild(zaroX());
+    form.appendChild(szfej);
 
     var f1 = el('div', 'field');
     f1.appendChild(el('label', null, 'Mi lesz?'));
@@ -598,11 +685,14 @@
 
     // erosseg
     var fe = el('div', 'field');
-    fe.appendChild(el('label', null, 'Mennyire lesz erős?'));
+    var feFej = el('div', 'label-sor');
+    feFej.appendChild(el('label', null, 'Mennyire lesz erős?'));
     var wrap = el('div', 'strength-pick');
     var erosseg = e ? e.erosseg : 3;
     var cimkeSzoveg = ['', 'Csendes', 'Lazulás', 'Normál', 'Erős', 'Legendás'];
     var lbl = el('span', 'strength-label', cimkeSzoveg[erosseg]);
+    feFej.appendChild(lbl);
+    fe.appendChild(feFej);
     // Ot kulon gomb, mindegyik ujjbarat meretu: a korabbi 7 pixeles savokat
     // telefonon nem lehetett eltalalni.
     var sor = el('div', 'strength-row');
@@ -623,7 +713,7 @@
         sor.appendChild(g);
       })(sz);
     }
-    wrap.appendChild(sor); wrap.appendChild(lbl);
+    wrap.appendChild(sor);
     fe.appendChild(wrap);
     form.appendChild(fe);
 
