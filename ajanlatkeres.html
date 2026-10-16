@@ -100,6 +100,16 @@
         <div class="step-panel" data-step="4" hidden>
           <h2>Néhány gyakorlati kérdés</h2>
           <div class="field" style="margin-bottom:28px;">
+            <label for="wz-interest">Miben segíthetünk?</label>
+            <select class="select" id="wz-interest" data-interest>
+              <option value="weboldal" selected>Weboldal</option>
+              <option value="weboldal-hirdetes">Weboldal és hirdetés</option>
+              <option value="weboldal-social">Weboldal és közösségi média</option>
+              <option value="csak-marketing">Csak hirdetés vagy közösségi média kezelés</option>
+              <option value="nemtudom">Még nem tudom</option>
+            </select>
+          </div>
+          <div class="field" style="margin-bottom:28px;">
             <label for="wz-hassite">Van már weboldala?</label>
             <select class="select" id="wz-hassite" data-hassite>
               <option value="nincs">Nincs még weboldalam</option>
@@ -186,6 +196,7 @@
           <div class="summary">
             <div class="h">Összegzés</div>
             <div class="body">
+              <div><strong>Miben segíthetünk:</strong> <span data-sum-interest>Weboldal</span></div>
               <div><strong>Vállalkozás típusa:</strong> <span data-sum-business>–</span></div>
               <div><strong>Kért oldalak:</strong> <span data-sum-pages>–</span></div>
               <div><strong>Funkciók:</strong> <span data-sum-features>–</span></div>

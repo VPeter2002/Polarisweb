@@ -51,6 +51,7 @@
     businessType: null,
     pages: {},
     features: {},
+    interest: 'weboldal',
     hasSite: 'nincs',
     budget: 'nemtudom',
     name: '', company: '', email: '', phone: '', message: '',
@@ -87,6 +88,7 @@
     sumBusiness: root.querySelector('[data-sum-business]'),
     sumPages: root.querySelector('[data-sum-pages]'),
     sumFeatures: root.querySelector('[data-sum-features]'),
+    sumInterest: root.querySelector('[data-sum-interest]'),
     sumHasSite: root.querySelector('[data-sum-hassite]'),
     sumBudget: root.querySelector('[data-sum-budget]'),
     success: document.getElementById('wizardSuccess'),
@@ -173,6 +175,11 @@
   buildChecks(el.style, styleOptions, 'style', true, 'styleOther');
 
   /* ---- Selects & text inputs ---- */
+  var interestSel = root.querySelector('[data-interest]');
+  if (interestSel) {
+    interestSel.addEventListener('change', function (e) { state.interest = e.target.value; });
+  }
+
   var hassiteSel = root.querySelector('[data-hassite]');
   hassiteSel.addEventListener('change', function (e) {
     state.hasSite = e.target.value;
@@ -240,6 +247,13 @@
     '80+': '80 000 Ft felett / hó',
     'nemtudom': 'Még nem tudom'
   };
+  var interestLabels = {
+    'weboldal': 'Weboldal',
+    'weboldal-hirdetes': 'Weboldal és hirdetés',
+    'weboldal-social': 'Weboldal és közösségi média',
+    'csak-marketing': 'Csak hirdetés vagy közösségi média kezelés',
+    'nemtudom': 'Még nem tudom'
+  };
   var hasSiteLabels = {
     'nincs': 'Nincs még weboldala',
     'van': 'Van már weboldala',
@@ -251,6 +265,9 @@
     }
     var bt = businessTypes.filter(function (o) { return o.value === state.businessType; })[0];
     return bt ? bt.label : '—';
+  }
+  function interestText() {
+    return interestLabels[state.interest] || '—';
   }
   function hasSiteText() {
     if (state.hasSite === 'egyeb') {
@@ -268,6 +285,7 @@
     el.sumBusiness.textContent = businessText();
     el.sumPages.textContent = labelsFor(pages, state.pages, state.pagesOther);
     el.sumFeatures.textContent = labelsFor(features, state.features, state.featuresOther);
+    if (el.sumInterest) el.sumInterest.textContent = interestText();
     el.sumHasSite.textContent = hasSiteText();
     el.sumBudget.textContent = budgetText();
   }
@@ -318,6 +336,7 @@
       businessType: businessText(),
       pages: chosenArray(pages, state.pages, state.pagesOther),
       features: chosenArray(features, state.features, state.featuresOther),
+      interest: interestText(),
       hasSite: hasSiteText(),
       budget: budgetText(),
       style: chosenArray(styleOptions, state.style, state.styleOther),

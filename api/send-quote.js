@@ -10,7 +10,7 @@ module.exports = async function handler(req, res) {
   const body = req.body || {};
   const {
     name, company, email, phone, message,
-    businessType, pages, features, hasSite, budget,
+    businessType, pages, features, hasSite, budget, interest,
     style, audience, brandColor, reference, // optional visual preferences
     website, // honeypot — real users never fill this
   } = body;
@@ -41,6 +41,7 @@ module.exports = async function handler(req, res) {
     <p><strong>E-mail:</strong> ${escapeHtml(email)}</p>
     <p><strong>Telefon:</strong> ${escapeHtml(phone || '—')}</p>
     <hr>
+    <p><strong>Miben segíthetünk:</strong> ${escapeHtml(interest || 'Weboldal')}</p>
     <p><strong>Vállalkozás típusa:</strong> ${escapeHtml(businessType || '—')}</p>
     <p><strong>Kért oldalak:</strong> ${escapeHtml(pagesText)}</p>
     <p><strong>Funkciók:</strong> ${escapeHtml(featuresText)}</p>
