@@ -93,7 +93,7 @@
     $('#newFields').hidden = !state.regMod;
     $('#inviteField').hidden = !state.regMod;
     $('#sendCode').textContent = state.regMod ? 'Regisztrálok' : 'Kódot kérek';
-    $('#authTitle').textContent = state.regMod ? 'Csatlakozás' : (state.tarsasagNev || 'Társasági naptár');
+    $('#authTitle').textContent = state.regMod ? 'Csatlakozás' : (state.tarsasagNev || 'Bobr naptár');
     $('#authSub').textContent = state.regMod
       ? 'Add meg a neved és a meghívó kódot, amit a társaságtól kaptál. Utána e-mailben küldünk egy belépési kódot.'
       : 'Add meg az e-mail címed, és küldünk egy belépési kódot. Jelszó nincs, és elég egyszer belépned.';

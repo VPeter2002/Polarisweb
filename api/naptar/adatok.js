@@ -30,7 +30,7 @@ module.exports = async function handler(req, res) {
       tag,
       tagok: tagok || [],
       esemenyek: lathato,
-      tarsasag_nev: (beall && beall[0] && beall[0].tarsasag_nev) || 'Társasági naptár',
+      tarsasag_nev: (beall && beall[0] && beall[0].tarsasag_nev) || 'Bobr naptár',
     });
   } catch (err) {
     return fail(res, err);
