@@ -58,6 +58,10 @@ button { cursor: pointer; border: none; background: none; }
 .auth {
   min-height: 100vh;
   display: grid;
+  /* A sav SZELESSEGE legyen hatarozott: egy auto-oszlop a max-content-bol meretezodik,
+     es a hat kod-mezo max-content szelessege 1953px, amitol a lap 1207px-re nyilt
+     telefonon (asztali nezet hatasa). A minmax(0, 1fr) ezt levagja. */
+  grid-template-columns: minmax(0, 1fr);
   place-items: center;
   padding: 28px 20px;
 }
