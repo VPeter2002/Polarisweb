@@ -24,6 +24,7 @@
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-N7MQB91XQM"></script>
   <link rel="icon" type="image/svg+xml" href="assets/img/favicon.svg">
   <title>Ajánlatkérés | Weboldal bérlés ajánlat | Polarisweb</title>
+  <link rel="canonical" href="https://www.polarisweb.hu/ajanlatkeres">
   <meta name="description" content="Néhány kérdés, és összeállítjuk személyre szabott ajánlatát. Öt rövid lépés, kb. 2 perc.">
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="Polarisweb">
@@ -137,19 +138,19 @@
           <div style="display:flex; flex-direction:column; gap:16px; margin-bottom:28px;">
             <div class="field">
               <label for="wz-name">Név</label>
-              <input class="input" id="wz-name" type="text" data-name placeholder="Kiss Anna">
+              <input class="input" id="wz-name" type="text" autocomplete="name" data-name placeholder="Kiss Anna">
             </div>
             <div class="field">
               <label for="wz-company">Vállalkozás neve</label>
-              <input class="input" id="wz-company" type="text" data-company placeholder="Kiss Anna Foto-studio">
+              <input class="input" id="wz-company" type="text" autocomplete="organization" data-company placeholder="Kiss Anna Foto-studio">
             </div>
             <div class="field">
               <label for="wz-email">E-mail</label>
-              <input class="input" id="wz-email" type="email" data-email placeholder="anna@kiss-foto.hu">
+              <input class="input" id="wz-email" type="email" autocomplete="email" data-email placeholder="anna@kiss-foto.hu">
             </div>
             <div class="field">
               <label for="wz-phone">Telefonszám (nem kötelező)</label>
-              <input class="input" id="wz-phone" type="tel" data-phone placeholder="+36 30 123 4567">
+              <input class="input" id="wz-phone" type="tel" autocomplete="tel" data-phone placeholder="+36 30 123 4567">
             </div>
             <div class="field">
               <label for="wz-message">Egyéb megjegyzés (nem kötelező)</label>
@@ -243,7 +244,7 @@
         <div class="badge">
           <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
         </div>
-        <h1>Köszönjük, <span data-success-name>Vendég</span>!</h1>
+        <h2>Köszönjük, <span data-success-name>Vendég</span>!</h2>
         <p>Megkaptuk ajánlatkérését. Péter és csapata 1 munkanapon belül jelentkezik egy személyre szabott javaslattal.</p>
         <a href="/" class="btn btn-dark">Vissza a főoldalra</a>
       </div>

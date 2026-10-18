@@ -1096,7 +1096,7 @@ a, button, span, div, input, [onclick] {
   display: flex; align-items: center; justify-content: center;
   margin: 0 auto 28px;
 }
-.wizard-success h1 {
+.wizard-success h2 {
   font-family: var(--serif);
   font-weight: 400;
   font-size: clamp(28px, 4vw, 40px);
