@@ -42,6 +42,88 @@
   <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="assets/css/style.css">
   <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "Organization",
+          "@id": "https://www.polarisweb.hu/#organization",
+          "name": "Polarisweb",
+          "legalName": "Veszprémi Péter E.V.",
+          "url": "https://www.polarisweb.hu/",
+          "logo": "https://www.polarisweb.hu/assets/img/favicon.svg",
+          "image": "https://www.polarisweb.hu/assets/img/og-polarisweb.jpg",
+          "email": "peter.veszpremi@polarisweb.hu",
+          "telephone": "+36706713002",
+          "description": "Weboldal bérlés, hirdetés és közösségi média kezelés kisvállalkozásoknak, egyetlen havidíjért.",
+          "sameAs": [
+            "https://www.linkedin.com/in/p%C3%A9ter-veszpr%C3%A9mi-32aa2b3b4/"
+          ],
+          "contactPoint": [
+            {
+              "@type": "ContactPoint",
+              "contactType": "customer support",
+              "telephone": "+36706713002",
+              "email": "peter.veszpremi@polarisweb.hu",
+              "availableLanguage": [
+                "hu"
+              ]
+            }
+          ]
+        },
+        {
+          "@type": "Service",
+          "@id": "https://www.polarisweb.hu/pricing#weboldal-berles",
+          "name": "Weboldal bérlés és üzemeltetés",
+          "serviceType": "Weboldal bérlés",
+          "provider": {
+            "@id": "https://www.polarisweb.hu/#organization"
+          },
+          "url": "https://www.polarisweb.hu/pricing",
+          "description": "Weboldal tervezése, üzemeltetése és folyamatos fejlesztése egyetlen havidíjért.",
+          "offers": [
+            {
+              "@type": "Offer",
+              "name": "Kezdő",
+              "description": "Letisztult, egyoldalas weboldal, hogy online is jelen legyen.",
+              "priceSpecification": {
+                "@type": "UnitPriceSpecification",
+                "price": 19900,
+                "priceCurrency": "HUF",
+                "billingDuration": "P1M",
+                "unitText": "hó"
+              }
+            },
+            {
+              "@type": "Offer",
+              "name": "Növekedés",
+              "description": "Több oldalas weboldal foglalással, ami vásárlókat hoz.",
+              "priceSpecification": {
+                "@type": "UnitPriceSpecification",
+                "price": 42900,
+                "priceCurrency": "HUF",
+                "billingDuration": "P1M",
+                "unitText": "hó"
+              }
+            },
+            {
+              "@type": "Offer",
+              "name": "Prémium",
+              "description": "Egyedi funkciók és személyes támogatás a növekedéshez.",
+              "priceSpecification": {
+                "@type": "UnitPriceSpecification",
+                "price": 79900,
+                "priceCurrency": "HUF",
+                "billingDuration": "P1M",
+                "unitText": "hó"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  </script>
+  <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "FAQPage",
