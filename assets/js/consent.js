@@ -75,7 +75,7 @@
     banner.setAttribute('aria-label', 'Sütikre vonatkozó beállítások');
     banner.innerHTML =
       '<div class="cookie-bar-inner">' +
-        '<p class="cookie-bar-text">Sütiket használunk. Az oldal működéséhez szükségeseken túl kettőhöz kérünk engedélyt: összesített látogatói statisztika (Google Analytics), valamint a Facebook- és Instagram-hirdetéseink eredményének mérése és hirdetési célközönségek képzése (Meta Pixel). Egyik sem indul el, amíg nem fogadod el. <a href="/adatkezeles">Részletek</a></p>' +
+        '<p class="cookie-bar-text">A Polarisweb és partnerei sütiket és más technológiákat használnak látogatói statisztikához és személyre szabott hirdetésekhez. Csak az elfogadás után indulnak el. <a href="/adatkezeles">Süti-tájékoztató</a></p>' +
         '<div class="cookie-bar-actions">' +
           '<button type="button" class="btn btn-ghost-dark cookie-decline">Csak a szükségesek</button>' +
           '<button type="button" class="btn btn-white cookie-accept">Elfogadom</button>' +
