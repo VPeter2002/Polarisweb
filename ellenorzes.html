@@ -209,6 +209,13 @@
               '<span style="position:absolute; left:0; color:#b91c1c; font-weight:800;">!</span>' + esc(g) + '</li>';
           }).join('') + '</ul>'
         : '';
+      var unknowns = (d.unknowns || []).length
+        ? '<h3 style="font-size:15px; font-weight:700; margin:22px 0 10px;">Amit gépileg nem lehetett eldönteni</h3><ul style="margin:0; padding-left:0; list-style:none;">' +
+          d.unknowns.map(function (u) {
+            return '<li style="font-size:14.5px; line-height:1.55; color:var(--ink-2); padding-left:22px; position:relative; margin-bottom:8px;">' +
+              '<span style="position:absolute; left:0; color:var(--muted); font-weight:800;">?</span>' + esc(u) + '</li>';
+          }).join('') + '</ul>'
+        : '';
       var oks = (d.oks || []).length
         ? '<h3 style="font-size:15px; font-weight:700; margin:22px 0 10px;">Ami rendben van</h3><div style="display:flex; flex-wrap:wrap; gap:6px;">' +
           d.oks.map(function (o) {
@@ -225,7 +232,7 @@
         '<h2 style="font-family:var(--serif); font-weight:400; font-size:26px; margin:10px 0 8px;">' + esc(d.headline) + '</h2>' +
         '<p style="font-size:15px; line-height:1.6; color:var(--ink-2); margin:0;">' + esc(d.detail) + '</p>' +
         (d.title ? '<p style="font-size:13.5px; color:var(--muted); margin:12px 0 0;">Oldalcím: ' + esc(d.title) + '</p>' : '') +
-        gaps + oks + limits
+        gaps + unknowns + oks + limits
       );
     }
 

@@ -35,14 +35,22 @@ const LABELS = {
   title: 'Nincs oldalcím, a Google találatban üresen látszik',
   description: 'Nincs leírás, a Google maga vág ki egy mondatot',
   h1: 'Nincs főcím az oldalon',
-  phone: 'A telefonszám nem hívható egy koppintással',
-  contact_form: 'Nincs kapcsolati űrlap',
-  booking: 'Nem lehet foglalni vagy időpontot kérni',
+  phone: 'A megnyitott oldalon nincs egy koppintással hívható telefonszám',
+  contact_form: 'A megnyitott oldalon nincs kapcsolati űrlap',
+  booking: 'A megnyitott oldalon nem lehet foglalni vagy időpontot kérni',
   measurement: 'Nincs mérés, nem derül ki honnan jönnek a látogatók',
-  consent: 'Nincs sütibanner',
+  consent: 'A kiszolgált HTML-ben nincs sütibanner',
   privacy: 'Nincs adatkezelési tájékoztató',
-  social: 'Nincs kikötve közösségi oldal',
+  social: 'A megnyitott oldalon nincs kikötve közösségi oldal',
   slow: 'Lassan jelenik meg',
+};
+
+/* Amit NEM tudunk eldonteni a kiszolgalt HTML-bol. Ezek NEM hianyok: egy hamis
+   "nincs sutibannere" mondat egy olyan cegnek, akinek van, elveszi a tobbi, igaz
+   allitas hitelet is. Inkabb mondjuk meg, hogy kezzel kell megnezni. */
+const UNKNOWN_LABELS = {
+  consent: 'Sütibanner: ezt nem tudtuk eldönteni. A kiszolgált HTML-ben nincs, de az oldal futásidőben tölt be szkripteket (például Tag Managert), és a legtöbb sütibanner pontosan így jelenik meg. Böngészőben érdemes megnézni.',
+  contact_form: 'Kapcsolati űrlap: ezt nem tudtuk eldönteni. Nincs form elem a HTML-ben, de vannak kitölthető mezők, tehát az űrlapot JavaScript is építheti.',
 };
 
 const OK_LABELS = {
@@ -98,6 +106,23 @@ async function fetchPage(url, ua) {
   }
 }
 
+/* A <title> gyakran HTML-entitast tartalmaz (&#8211;, &amp;, &nbsp;). A lap a
+   kiirasnal escapeli az &-t, ezert az entitas NYERSEN latszana a felhasznalonak
+   ("MayFly Fitness fooldal &#8211; Mayfly Fitness"). Itt oldjuk fel, egyszer. */
+function decodeEntities(str) {
+  return str
+    .replace(/&#(\d+);/g, (_, n) => String.fromCodePoint(Number(n)))
+    .replace(/&#x([0-9a-f]+);/gi, (_, n) => String.fromCodePoint(parseInt(n, 16)))
+    .replace(/&nbsp;/gi, ' ')
+    .replace(/&ndash;/gi, '\u2013')
+    .replace(/&mdash;/gi, '\u2014')
+    .replace(/&quot;/gi, '"')
+    .replace(/&apos;/gi, "'")
+    .replace(/&lt;/gi, '<')
+    .replace(/&gt;/gi, '>')
+    .replace(/&amp;/gi, '&');
+}
+
 function inspect(html) {
   const low = html.toLowerCase();
   const headEnd = low.indexOf('</head>');
@@ -111,14 +136,25 @@ function inspect(html) {
     .trim();
   return {
     mobile: /<meta[^>]+name=["']?viewport/.test(head),
-    title: titleMatch ? titleMatch[1].replace(/\s+/g, ' ').trim().slice(0, 120) : '',
+    title: titleMatch ? decodeEntities(titleMatch[1]).replace(/\s+/g, ' ').trim().slice(0, 120) : '',
     description: /<meta[^>]+name=["']?description["']?[^>]+content=["'][^"']{10,}/i.test(html),
     h1: /<h1[\s>]/.test(low),
     phone: has('href=["\']tel:'),
     contact_form: has('<form[\\s>]'),
+    form_fields: (low.match(/<(input|textarea|select)[\s>]/g) || []).length,
     booking: has('foglal', 'booking', 'reserv', 'idopontker', 'időpontkér', 'calendly\\.com', 'simplybook', 'booksy', 'salonic'),
     measurement: has('googletagmanager\\.com', 'google-analytics\\.com', 'gtag\\(', 'connect\\.facebook\\.net', 'fbq\\(', 'matomo', 'plausible\\.io', 'hotjar', 'clarity\\.ms'),
-    consent: has('cookie[- ]?consent', 'cookiebot', 'cookieyes', 'sütiket', 'sutiket', 'cookie-?bar', "'consent'", '"consent"'),
+    /* Ismert sutibanner-megoldasok nyomai a kiszolgalt HTML-ben. A lista bovitese
+       a hamis negativot szukiti, de nem szunteti meg: lasd consent_injector. */
+    consent: has('cookie[- ]?consent', 'cookiebot', 'cookieyes', 'cookie-?law-?info', 'cky-',
+      'complianz', 'cmplz', 'borlabs', 'moove_gdpr', 'iubenda', 'onetrust', 'termly',
+      'usercentrics', 'cookiefirst', 'klaro', 'osano', 'cookie-?notice', 'gdpr-?cookie',
+      'sütiket', 'sutiket', 'cookie-?bar', "'consent'", '"consent"'),
+    /* Ami futasidoben BARMIT betolthet, tehat a bannert is. A wp-consent-api maga
+       csak egy hid a pluginok kozott, nem mutat savot, de a jelenlete azt jelzi,
+       hogy az oldal foglalkozik a hozzajarulassal. */
+    consent_injector: has('googletagmanager\\.com', 'gtm\\.js', 'gtag\\(',
+      'wp-consent-api', 'consent_api', 'cdn\\.segment\\.com'),
     privacy: has('adatkezel', 'adatvédelm', 'privacy', 'gdpr'),
     social: has('facebook\\.com/(?!tr|plugins)', 'instagram\\.com/', 'linkedin\\.com/(in|company)/', 'tiktok\\.com/@'),
     visibleChars: text.length,
@@ -148,7 +184,7 @@ module.exports = async (req, res) => {
       domain: host, state: 'dns_gone', score: null,
       headline: 'Ez a domain már nem működik',
       detail: 'A böngésző nem is talál szervert ezen a címen, tehát aki rákeres a cégre és erre a címre jut, üres kézzel távozik. A katalógusok és a kereső viszont gyakran még évekig hirdetik a régi címet.',
-      gaps: [], oks: [], limits: [],
+      gaps: [], oks: [], unknowns: [], limits: [],
     });
     return;
   }
@@ -210,7 +246,7 @@ module.exports = async (req, res) => {
     }
     res.status(200).json({
       domain: host, state, score: null, headline, detail,
-      gaps: [], oks: [],
+      gaps: [], oks: [], unknowns: [],
       limits: ['Erről az oldalról szándékosan nem állítunk semmit, mert nem tudtuk megvizsgálni.'],
     });
     return;
@@ -223,7 +259,7 @@ module.exports = async (req, res) => {
       domain: host, state: 'js_rendered', score: null,
       headline: 'Ezt az oldalt gépileg nem tudtuk kiértékelni',
       detail: 'A tartalom a böngészőben töltődik be, ezért a szerver alig ad ki szöveget. Nem állítunk róla semmit: ezt kézzel kell megnézni.',
-      gaps: [], oks: [], limits: ['A mérés a szerver által kiszolgált HTML-t vizsgálja.'],
+      gaps: [], oks: [], unknowns: [], limits: ['A mérés a szerver által kiszolgált HTML-t vizsgálja.'],
     });
     return;
   }
@@ -232,11 +268,25 @@ module.exports = async (req, res) => {
   let score = WEIGHTS.reachable;
   const gaps = [];
   const oks = [];
+  const unknowns = [];
+
+  /* HAROM allapot, nem ketto. A 'null' azt jelenti: nem tudtuk eldonteni.
+     Ilyenkor NEM irunk hianyt (az lenne a draga hiba, mert ez a szoveg idegen
+     ceghez is eljut), es a tetelt KIVESSZUK A PONTOZASBOL is: sem levonas, sem
+     jovairas. A sulyok osszege pontosan 100, ezert eleg a nevezobol kivonni az
+     eldonthetetlen tetelek sulyat, es a vegen visszaskalazni 100-ra. Igy a pont
+     azt meri, amit tenylegesen megneztunk. A tenyallas az unknowns listaba kerul. */
+  const formOk = f.contact_form || f.form_fields >= 3;
   const checks = { https, mobile: f.mobile, title: !!f.title, description: f.description, h1: f.h1,
-    phone: f.phone, contact_form: f.contact_form, booking: f.booking, measurement: f.measurement,
-    consent: f.consent, privacy: f.privacy, social: f.social };
+    phone: f.phone,
+    contact_form: formOk ? true : (f.form_fields > 0 || f.consent_injector ? null : false),
+    booking: f.booking, measurement: f.measurement,
+    consent: f.consent ? true : (f.consent_injector ? null : false),
+    privacy: f.privacy, social: f.social };
+  let maxScore = 100;
   for (const [key, ok] of Object.entries(checks)) {
-    if (ok) { score += WEIGHTS[key]; oks.push(OK_LABELS[key]); }
+    if (ok === true) { score += WEIGHTS[key]; oks.push(OK_LABELS[key]); }
+    else if (ok === null) { maxScore -= WEIGHTS[key]; unknowns.push(UNKNOWN_LABELS[key]); }
     else gaps.push(LABELS[key]);
   }
   const sec = page.elapsed;
@@ -244,16 +294,19 @@ module.exports = async (req, res) => {
   else if (sec <= 3) score += Math.round(WEIGHTS.speed * 0.6);
   else if (sec <= 5) score += Math.round(WEIGHTS.speed * 0.25);
   else gaps.push(LABELS.slow + ' (' + sec.toFixed(1).replace('.', ',') + ' másodperc)');
-  score = Math.min(100, score);
+  score = Math.min(100, Math.round((score / maxScore) * 100));
 
   const limits = ['A mérés a szerver által kiszolgált HTML-t vizsgálja, a JavaScriptből betöltő tartalmat nem látja.'];
+  if (unknowns.length) limits.push('A pontszám csak abból számol, amit géppel el lehetett dönteni; az eldönthetetlen tételek sem pontot nem adnak, sem nem vonnak le.');
   if (blocksRobots) limits.push('Az oldal a mérésünket tiltja, ezért böngésző-azonosítóval kértük le. Egyes eredmények ezért pontatlanok lehetnek.');
 
   res.status(200).json({
     domain: host, state: 'measured', score,
     headline: score >= 85 ? 'Ez az oldal alapvetően rendben van' : score >= 70 ? 'Működik, de van mit behozni' : 'Több fontos dolog hiányzik',
-    detail: 'A mérés ' + sec.toFixed(1).replace('.', ',') + ' másodperc alatt futott le, és ' + (gaps.length ? gaps.length + ' hiányt talált.' : 'nem talált hiányt.'),
+    detail: 'A mérés ' + sec.toFixed(1).replace('.', ',') + ' másodperc alatt futott le, és '
+      + (gaps.length ? gaps.length + ' hiányt talált' : 'nem talált hiányt')
+      + (unknowns.length ? ', ' + unknowns.length + ' dolgot pedig gépileg nem lehetett eldönteni.' : '.'),
     title: f.title, elapsed: Number(sec.toFixed(2)),
-    gaps, oks, limits,
+    gaps, oks, unknowns, limits,
   });
 };
