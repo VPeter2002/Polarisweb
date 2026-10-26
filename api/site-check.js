@@ -279,7 +279,14 @@ module.exports = async (req, res) => {
   const formOk = f.contact_form || f.form_fields >= 3;
   const checks = { https, mobile: f.mobile, title: !!f.title, description: f.description, h1: f.h1,
     phone: f.phone,
-    contact_form: formOk ? true : (f.form_fields > 0 || f.consent_injector ? null : false),
+    /* CSAK akkor eldonthetetlen, ha TENYLEGESEN latunk kitoltheto mezot. A
+       futasideju betolto (GTM) jelenlete onmagaban NEM eleg: ha nulla mezo van,
+       az "eldonthetetlen" szoveg szo szerint azt allitana, hogy "vannak
+       kitoltheto mezok", vagyis olyan tenyt mondana ki, amit nem lattunk.
+       Merve 2026-10-26: a mayflyfitness.hu fooldalan 0 input/select/textarea
+       van es GTM igen, es az eszkoz pontosan ezt a hamis mondatot adta ki,
+       plusz 90 pontot 84 helyett. */
+    contact_form: formOk ? true : (f.form_fields > 0 ? null : false),
     booking: f.booking, measurement: f.measurement,
     consent: f.consent ? true : (f.consent_injector ? null : false),
     privacy: f.privacy, social: f.social };
