@@ -37,52 +37,15 @@
     <p class="lead">A lap ingyen van és az is marad. Nincs rajta hirdetés, nem gyűjt adatot, és nincs
     mögötte előfizetés. Ha hasznos volt, itt lehet beletenni egy kávé árát.</p>
 
-    <form id="tam" autocomplete="off">
-      <p class="subh">Mennyivel támogat</p>
-      <div class="tiers" id="tiers">
-        <label class="tier">
-          <input type="radio" name="osszeg" value="500" checked>
-          <span class="tier-nev">Eszpresszó</span>
-          <span class="tier-ar">500 Ft</span>
-          <span class="tier-mit">Egy rövid, a pult mellett.</span>
-        </label>
-        <label class="tier">
-          <input type="radio" name="osszeg" value="1000">
-          <span class="tier-nev">Kapucsínó</span>
-          <span class="tier-ar">1 000 Ft</span>
-          <span class="tier-mit">A szokásos, leülve.</span>
-        </label>
-        <label class="tier">
-          <input type="radio" name="osszeg" value="2000">
-          <span class="tier-nev">Dupla kapucsínó</span>
-          <span class="tier-ar">2 000 Ft</span>
-          <span class="tier-mit">Ha a kérelem is összejött.</span>
-        </label>
-        <label class="tier">
-          <input type="radio" name="osszeg" value="5000">
-          <span class="tier-nev">Egy kanna</span>
-          <span class="tier-ar">5 000 Ft</span>
-          <span class="tier-mit">Ennyiből egy hétig tart a lap.</span>
-        </label>
-        <label class="tier tier-sajat">
-          <input type="radio" name="osszeg" value="sajat">
-          <span class="tier-nev">Saját összeg</span>
-          <span class="tier-ar"><input type="text" id="sajat-ar" inputmode="numeric" placeholder="3 000"> Ft</span>
-          <span class="tier-mit">Amennyit jónak lát.</span>
-        </label>
+    <div class="tam-atadas">
+      <p class="subh">Hogyan megy</p>
+      <p>Az összeget a Buy Me a Coffee oldalán választja ki: ott lehet eldönteni, hány kávéval
+      támogat. A fizetés is ott történik, bankkártyával, vagy ahol elérhető, Apple Pay és
+      Google Pay használatával.</p>
+      <div class="gen-actions">
+        <a class="btn" id="bmc-gomb" href="https://buymeacoffee.com/polariswebhu" rel="noopener" target="_blank">Tovább a támogatáshoz</a>
       </div>
-
-      <div class="tam-osszeg">
-        <span class="ml">Amit fizetni fog</span>
-        <span class="tam-ertek" id="tam-ertek">500 Ft</span>
-      </div>
-
-      <div class="gen-actions" id="tam-akcio">
-        <a class="btn" id="fizetes-gomb" href="#" hidden>Tovább a fizetéshez</a>
-        <span class="tam-nincs" id="tam-nincs">A fizetési szolgáltató bekötése után innen lehet
-          tovább lépni a fizetési oldalra.</span>
-      </div>
-    </form>
+    </div>
 
     <div class="tam-info">
       <p class="subh">Amit tudni érdemes</p>

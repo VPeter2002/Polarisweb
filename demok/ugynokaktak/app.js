@@ -284,7 +284,7 @@ function uaMasol(szoveg, jelzo, utolag) {
   'use strict';
   /* A tamogatas-oldal akkor jelenik meg a lapon, ha mar van bekotott fizetesi szolgaltato.
      Addig a sor rejtve marad: dead-end linket nem teszunk ki. Egy helyen kapcsolhato. */
-  var TAMOGATAS_AKTIV = false;
+  var TAMOGATAS_AKTIV = true;
 
   var sor = document.getElementById('kave-sor');
   if (sor && TAMOGATAS_AKTIV) { sor.removeAttribute('hidden'); }
@@ -296,77 +296,4 @@ function uaMasol(szoveg, jelzo, utolag) {
       uaMasol(window.location.href.split('#')[0].split('?')[0], linkok);
     });
   }
-})();
-
-/* ---- Tamogatas-oldal: osszegvalasztas. ----
-   A FIZETES terkep adja a szolgaltato oldalara vivo linkeket (pl. Stripe Payment Link
-   osszegenkent). Amig ures, a gomb NEM jelenik meg: nem teszunk ki olyan fizetes-gombot,
-   ami sehova nem visz. Karyaadatot ez az oldal sosem ker. */
-(function () {
-  'use strict';
-  var FIZETES = {
-    '500': '',
-    '1000': '',
-    '2000': '',
-    '5000': '',
-    'sajat': ''
-  };
-
-  var form = document.getElementById('tam');
-  if (!form) { return; }
-
-  var ertek = document.getElementById('tam-ertek');
-  var gomb = document.getElementById('fizetes-gomb');
-  var nincs = document.getElementById('tam-nincs');
-  var sajatAr = document.getElementById('sajat-ar');
-
-  var valasztott = function () {
-    var r = form.querySelector('input[name="osszeg"]:checked');
-    return r ? r.value : '500';
-  };
-  var szamOsszeg = function () {
-    var v = valasztott();
-    if (v !== 'sajat') { return parseInt(v, 10); }
-    var n = parseInt((sajatAr.value || '').replace(/\s+/g, ''), 10);
-    return isNaN(n) ? 0 : n;
-  };
-  var formaz = function (n) {
-    return String(n).replace(/\B(?=(\d{3})+(?!\d))/g, ' ') + ' Ft';
-  };
-
-  var frissit = function () {
-    var v = valasztott();
-    var n = szamOsszeg();
-    ertek.textContent = n > 0 ? formaz(n) : 'Adjon meg egy összeget';
-    var link = FIZETES[v];
-    if (link && n > 0) {
-      gomb.setAttribute('href', link);
-      gomb.setAttribute('rel', 'noopener');
-      gomb.removeAttribute('hidden');
-      nincs.setAttribute('hidden', '');
-    } else {
-      gomb.setAttribute('hidden', '');
-      nincs.removeAttribute('hidden');
-    }
-    Array.prototype.forEach.call(form.querySelectorAll('.tier'), function (t) {
-      var be = t.querySelector('input').checked;
-      t.classList.toggle('tier-valasztott', be);
-    });
-  };
-
-  Array.prototype.forEach.call(form.querySelectorAll('input[name="osszeg"]'), function (r) {
-    r.addEventListener('change', frissit);
-  });
-  if (sajatAr) {
-    sajatAr.addEventListener('input', function () {
-      var r = form.querySelector('input[value="sajat"]');
-      if (r && !r.checked) { r.checked = true; }
-      frissit();
-    });
-    sajatAr.addEventListener('focus', function () {
-      var r = form.querySelector('input[value="sajat"]');
-      if (r) { r.checked = true; frissit(); }
-    });
-  }
-  frissit();
 })();
