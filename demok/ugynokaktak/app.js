@@ -239,3 +239,35 @@
   };
   document.getElementById('printbtn').addEventListener('click', function () { window.print(); });
 })();
+
+/* ---- Megosztas, visszajelzes, kave. ----
+   A KAVE_URL-t egyetlen helyen kell beallitani: ha ures, a kave-sor NEM jelenik meg,
+   tehat nincs a lapon halott vagy kitalalt fizetesi link. */
+(function () {
+  'use strict';
+  var KAVE_URL = '';
+
+  var sor = document.getElementById('kave-sor');
+  var kavebtn = document.getElementById('kavebtn');
+  if (sor && kavebtn && KAVE_URL) {
+    kavebtn.setAttribute('href', KAVE_URL);
+    kavebtn.setAttribute('rel', 'noopener');
+    kavebtn.setAttribute('target', '_blank');
+    sor.removeAttribute('hidden');
+  }
+
+  var linkbtn = document.getElementById('linkbtn');
+  var linkok = document.getElementById('linkok');
+  if (linkbtn && linkok) {
+    linkbtn.addEventListener('click', function () {
+      var cim = window.location.href.split('#')[0].split('?')[0];
+      var jelez = function () {
+        linkok.removeAttribute('hidden');
+        setTimeout(function () { linkok.setAttribute('hidden', ''); }, 2500);
+      };
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(cim).then(jelez, jelez);
+      } else { jelez(); }
+    });
+  }
+})();

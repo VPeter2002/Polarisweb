@@ -215,3 +215,11 @@ blockquote cite{display:block;margin-top:12px;font-family:var(--mono);font-style
   #levelszoveg{position:absolute;left:0;top:0;width:100%;border:0;background:#fff;color:#000;
     font-size:11pt;padding:0;}
 }
+
+/* 09. szekcio: tamogatas es kolofon */
+.inline-act{display:flex;margin-top:14px;gap:12px;align-items:center;flex-wrap:wrap;}
+.btn-s{padding:10px 16px;font-size:11px;text-decoration:none;display:inline-block;}
+a.btn-s{border-bottom:0;}
+a.btn-s:hover{border-bottom:0;}
+.kolofon{margin-top:44px;border-top:1px solid var(--rule);padding-top:22px;}
+.kolofon p:last-child{font-size:16.5px;color:var(--muted);max-width:62ch;margin:0;}
