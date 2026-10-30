@@ -255,3 +255,31 @@ section[id]{scroll-margin-top:96px;}
   .sec-toc{padding:40px 0;}
   section[id]{scroll-margin-top:84px;}
 }
+
+/* tamogatas-oldal */
+.tam-cim{font-size:clamp(30px,4.6vw,48px);font-weight:600;line-height:1.1;letter-spacing:-0.02em;
+  margin:0 0 22px;max-width:18ch;}
+.tiers{margin-top:16px;border-top:1px solid var(--rule);}
+.tier{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:4px 20px;align-items:baseline;
+  padding:18px 0 18px 32px;border-bottom:1px solid var(--rule);cursor:pointer;position:relative;}
+.tier input[type="radio"]{position:absolute;left:0;top:22px;accent-color:var(--accent);margin:0;}
+.tier-nev{font-size:19px;color:var(--ink);}
+.tier-ar{font-family:var(--mono);font-size:15px;color:var(--ink);text-align:right;white-space:nowrap;}
+.tier-mit{grid-column:1 / -1;font-size:15.5px;color:var(--muted);}
+.tier-valasztott .tier-nev,.tier-valasztott .tier-ar{color:var(--accent);}
+.tier-sajat input[type="text"]{width:86px;border:0;border-bottom:1px solid var(--rule);
+  background:transparent;font-family:var(--mono);font-size:15px;color:var(--ink);
+  padding:2px 0;text-align:right;}
+.tier-sajat input[type="text"]:focus{border-bottom-color:var(--accent);outline:none;}
+.tam-osszeg{margin-top:30px;border-top:2px solid var(--ink);padding-top:16px;
+  display:flex;justify-content:space-between;align-items:baseline;gap:20px;flex-wrap:wrap;}
+.tam-ertek{font-size:clamp(24px,3.2vw,32px);font-weight:600;letter-spacing:-0.01em;}
+.tam-nincs{font-family:var(--mono);font-size:12px;line-height:1.75;color:var(--muted);max-width:56ch;}
+.tam-info{margin-top:52px;}
+.tam-vissza{margin-top:40px;}
+.tam-vissza a{font-family:var(--mono);font-size:12px;letter-spacing:0.1em;text-transform:uppercase;}
+
+@media (max-width:820px){
+  .tier{padding-left:28px;}
+  .tam-osszeg{gap:8px;}
+}

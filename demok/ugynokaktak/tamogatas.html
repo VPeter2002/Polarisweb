@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="hu" class="no-js">
+<head>
+  <meta name="robots" content="noindex, nofollow">
+<meta charset="UTF-8">
+<title>Támogatás: Ügynökakták</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Ha hasznos volt az ügynökakták-oldal, itt lehet egy kávéval támogatni. Válasszon összeget, a fizetés a szolgáltató oldalán történik.">
+<meta name="theme-color" content="#1B1A17">
+<link rel="icon" href="/demok/ugynokaktak/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script>document.documentElement.className=document.documentElement.className.replace("no-js","js")</script>
+<link rel="stylesheet" href="/demok/ugynokaktak/style.css">
+</head>
+<body>
+
+<header class="site-head">
+  <div class="wrap head-in">
+    <a class="brand" href="/demok/ugynokaktak/">
+      <span class="brand-name">Ügynökakták</span>
+      <span class="brand-sub">független tájékoztató oldal</span>
+    </a>
+    <nav class="nav-desk" aria-label="Fő navigáció">
+      <a href="/demok/ugynokaktak/">Vissza a laphoz</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+
+<section class="sec" id="tamogatas">
+  <div class="wrap">
+    <p class="ml accent-ml">Támogatás</p>
+    <h1 class="tam-cim">Hívjon meg egy kávéra</h1>
+    <p class="lead">A lap ingyen van és az is marad. Nincs rajta hirdetés, nem gyűjt adatot, és nincs
+    mögötte előfizetés. Ha hasznos volt, itt lehet beletenni egy kávé árát.</p>
+
+    <form id="tam" autocomplete="off">
+      <p class="subh">Mennyivel támogat</p>
+      <div class="tiers" id="tiers">
+        <label class="tier">
+          <input type="radio" name="osszeg" value="500" checked>
+          <span class="tier-nev">Eszpresszó</span>
+          <span class="tier-ar">500 Ft</span>
+          <span class="tier-mit">Egy rövid, a pult mellett.</span>
+        </label>
+        <label class="tier">
+          <input type="radio" name="osszeg" value="1000">
+          <span class="tier-nev">Kapucsínó</span>
+          <span class="tier-ar">1 000 Ft</span>
+          <span class="tier-mit">A szokásos, leülve.</span>
+        </label>
+        <label class="tier">
+          <input type="radio" name="osszeg" value="2000">
+          <span class="tier-nev">Dupla kapucsínó</span>
+          <span class="tier-ar">2 000 Ft</span>
+          <span class="tier-mit">Ha a kérelem is összejött.</span>
+        </label>
+        <label class="tier">
+          <input type="radio" name="osszeg" value="5000">
+          <span class="tier-nev">Egy kanna</span>
+          <span class="tier-ar">5 000 Ft</span>
+          <span class="tier-mit">Ennyiből egy hétig tart a lap.</span>
+        </label>
+        <label class="tier tier-sajat">
+          <input type="radio" name="osszeg" value="sajat">
+          <span class="tier-nev">Saját összeg</span>
+          <span class="tier-ar"><input type="text" id="sajat-ar" inputmode="numeric" placeholder="3 000"> Ft</span>
+          <span class="tier-mit">Amennyit jónak lát.</span>
+        </label>
+      </div>
+
+      <div class="tam-osszeg">
+        <span class="ml">Amit fizetni fog</span>
+        <span class="tam-ertek" id="tam-ertek">500 Ft</span>
+      </div>
+
+      <div class="gen-actions" id="tam-akcio">
+        <a class="btn" id="fizetes-gomb" href="#" hidden>Tovább a fizetéshez</a>
+        <span class="tam-nincs" id="tam-nincs">A fizetési szolgáltató bekötése után innen lehet
+          tovább lépni a fizetési oldalra.</span>
+      </div>
+    </form>
+
+    <div class="tam-info">
+      <p class="subh">Amit tudni érdemes</p>
+      <ul class="steps">
+        <li><span class="ml">Kártyaadatot itt nem kérünk</span>Ezen az oldalon nincs kártyamező, és
+          nem is lesz. A fizetés a szolgáltató saját, zárt oldalán történik, oda visz tovább a gomb.</li>
+        <li><span class="ml">Nem jár érte semmi</span>A lap tartalma ettől nem változik: nincs zárt
+          rész, nincs előfizetés, és a támogatók nem kapnak mást, mint a többi olvasó.</li>
+        <li><span class="ml">Ez nem adomány egy szervezetnek</span>Magánszemélynek adott támogatás,
+          nem adólevonható, és nem jár róla igazolás.</li>
+      </ul>
+    </div>
+
+    <p class="tam-vissza"><a href="/demok/ugynokaktak/">Vissza a laphoz</a></p>
+  </div>
+</section>
+
+</main>
+
+<footer class="site-foot">
+  <div class="wrap foot-in">
+    <p class="foot-brand">Ügynökakták</p>
+    <p>Független tájékoztató oldal. Nem az Állambiztonsági Szolgálatok Történeti Levéltára üzemelteti,
+    és nem kapcsolódik hozzá. A levéltár hivatalos felületei: nyitottaktak.hu és abtl.hu.</p>
+    <p>A lapot Veszprémi Péter szerkeszti, <a href="https://www.polarisweb.hu" rel="noopener">polarisweb.hu</a>.</p>
+    <p class="foot-date">A lap tartalma a 2026. október 30-i állapot.</p>
+  </div>
+</footer>
+
+<script src="/demok/ugynokaktak/app.js"></script>
+</body>
+</html>
