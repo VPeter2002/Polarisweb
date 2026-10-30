@@ -1,3 +1,46 @@
+/* Kozos vagolap-masolas. A clipboard API szinkron hibat is dobhat (nem fokuszalt dokumentum,
+   nem biztonsagos kontextus), ezert try/catch KELL: enelkul a kezelo megall, es a felhasznalo
+   semmilyen visszajelzest nem kap. Bukasnal nem allitjuk, hogy sikerult. */
+function uaMasolTartalek(szoveg) {
+  try {
+    var ta = document.createElement('textarea');
+    ta.value = szoveg;
+    ta.setAttribute('readonly', '');
+    ta.style.cssText = 'position:fixed;top:0;left:0;opacity:0;pointer-events:none';
+    document.body.appendChild(ta);
+    ta.select();
+    if (ta.setSelectionRange) { ta.setSelectionRange(0, szoveg.length); }
+    var siker = document.execCommand && document.execCommand('copy');
+    document.body.removeChild(ta);
+    return !!siker;
+  } catch (e) { return false; }
+}
+
+function uaMasol(szoveg, jelzo, utolag) {
+  var kesz = false;
+  var mutat = function (uzenet) {
+    jelzo.textContent = uzenet;
+    jelzo.removeAttribute('hidden');
+    setTimeout(function () { jelzo.setAttribute('hidden', ''); }, 3500);
+  };
+  var siker = function () { if (kesz) { return; } kesz = true; mutat('Vágólapra másolva.'); };
+  var bukas = function () {
+    if (kesz) { return; } kesz = true;
+    if (uaMasolTartalek(szoveg)) { mutat('Vágólapra másolva.'); return; }
+    mutat('A másolás nem ment, jelölje ki és másolja kézzel.');
+    if (typeof utolag === 'function') { utolag(); }
+  };
+  try {
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      var p = navigator.clipboard.writeText(szoveg);
+      if (p && typeof p.then === 'function') {
+        p.then(siker, bukas);
+        setTimeout(bukas, 1200);
+      } else { siker(); }
+    } else { bukas(); }
+  } catch (e) { bukas(); }
+}
+
 (function () {
   'use strict';
 
@@ -221,15 +264,6 @@
   });
 
   var copyok = document.getElementById('copyok');
-  document.getElementById('copybtn').addEventListener('click', function () {
-    var jelez = function () {
-      copyok.removeAttribute('hidden');
-      setTimeout(function () { copyok.setAttribute('hidden', ''); }, 2500);
-    };
-    if (navigator.clipboard && navigator.clipboard.writeText) {
-      navigator.clipboard.writeText(pre.textContent).then(jelez, function () { kijelol(); });
-    } else { kijelol(); }
-  });
   var kijelol = function () {
     var r = document.createRange();
     r.selectNodeContents(pre);
@@ -237,6 +271,9 @@
     sel.removeAllRanges();
     sel.addRange(r);
   };
+  document.getElementById('copybtn').addEventListener('click', function () {
+    uaMasol(pre.textContent, copyok, kijelol);
+  });
   document.getElementById('printbtn').addEventListener('click', function () { window.print(); });
 })();
 
@@ -245,7 +282,8 @@
    tehat nincs a lapon halott vagy kitalalt fizetesi link. */
 (function () {
   'use strict';
-  var KAVE_URL = '';
+  var KAVE_URL = 'https://revolut.me/pter8adbf';
+  var KAVE_IBAN = 'HU40 3020 0014 1991 3410 3985 8379';
 
   var sor = document.getElementById('kave-sor');
   var kavebtn = document.getElementById('kavebtn');
@@ -256,18 +294,24 @@
     sor.removeAttribute('hidden');
   }
 
+  var ibansor = document.getElementById('iban-sor');
+  var ibanbtn = document.getElementById('ibanbtn');
+  var ibanok = document.getElementById('ibanok');
+  if (sor && ibansor && ibanbtn && KAVE_IBAN) {
+    ibansor.textContent = 'Bankszámlaszám: ' + KAVE_IBAN;
+    ibansor.removeAttribute('hidden');
+    ibanbtn.removeAttribute('hidden');
+    sor.removeAttribute('hidden');
+    ibanbtn.addEventListener('click', function () {
+      uaMasol(KAVE_IBAN.replace(/\s+/g, ''), ibanok);
+    });
+  }
+
   var linkbtn = document.getElementById('linkbtn');
   var linkok = document.getElementById('linkok');
   if (linkbtn && linkok) {
     linkbtn.addEventListener('click', function () {
-      var cim = window.location.href.split('#')[0].split('?')[0];
-      var jelez = function () {
-        linkok.removeAttribute('hidden');
-        setTimeout(function () { linkok.setAttribute('hidden', ''); }, 2500);
-      };
-      if (navigator.clipboard && navigator.clipboard.writeText) {
-        navigator.clipboard.writeText(cim).then(jelez, jelez);
-      } else { jelez(); }
+      uaMasol(window.location.href.split('#')[0].split('?')[0], linkok);
     });
   }
 })();

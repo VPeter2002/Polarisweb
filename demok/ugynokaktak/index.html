@@ -75,9 +75,40 @@
   </div>
 </div>
 
+<section class="sec sec-toc" id="tartalom">
+  <div class="wrap">
+    <p class="ml">Mi van ezen a lapon</p>
+    <div class="toc">
+      <div class="toc-group">
+        <p class="toc-part">A nyitás</p>
+        <a href="#nyitas"><span class="toc-n">01</span>Mi a teendő szerdán</a>
+        <a href="#megnyilik"><span class="toc-n">02</span>Mi nyílik meg pontosan</a>
+        <a href="#kereses"><span class="toc-n">03</span>Hogyan lehet majd keresni</a>
+      </div>
+      <div class="toc-group">
+        <p class="toc-part">A dokumentumok</p>
+        <a href="#fogalmak"><span class="toc-n">04</span>Négy szó hivatalos meghatározása</a>
+        <a href="#bizonyitas"><span class="toc-n">05</span>Amit egy bejegyzés nem bizonyít</a>
+        <a href="#nevek"><span class="toc-n">06</span>Nevek nincsenek ezen az oldalon</a>
+      </div>
+      <div class="toc-group">
+        <p class="toc-part">Amit tehet</p>
+        <a href="#kerelem"><span class="toc-n">07</span>Ha a saját vagy a családja iratát keresi</a>
+        <a href="#generator"><span class="toc-n">08</span>Kérelem-generátor</a>
+        <a href="#kapcsolat"><span class="toc-n">09</span>Amiben segíteni tudok</a>
+      </div>
+      <div class="toc-group">
+        <p class="toc-part">A lapról</p>
+        <a href="#hasznos"><span class="toc-n">10</span>Ha hasznos volt</a>
+        <a href="#forrasok"><span class="toc-n">11</span>Források</a>
+      </div>
+    </div>
+  </div>
+</section>
+
 <section class="sec" id="nyitas">
   <div class="wrap">
-    <p class="ml">A nyitás napja</p>
+    <p class="ml">01 / A nyitás napja</p>
     <h2>Mi a teendő szerdán</h2>
 
     <div class="status" id="status">
@@ -104,7 +135,7 @@
 
 <section class="sec" id="megnyilik">
   <div class="wrap">
-    <p class="ml">01 / A nyitás tartalma</p>
+    <p class="ml">02 / A nyitás tartalma</p>
     <h2>Mi nyílik meg pontosan</h2>
     <p class="sec-lead">Nem minden egyszerre, és nem a beszervezések története. Novemberben a
     <em>nyilvántartás</em> nyílik meg.</p>
@@ -159,7 +190,7 @@
 
 <section class="sec sec-alt" id="kereses">
   <div class="wrap">
-    <p class="ml">02 / A felület</p>
+    <p class="ml">03 / A felület</p>
     <h2>Hogyan lehet majd keresni</h2>
     <p class="sec-lead">A bejelentés szerint négyféle adatra lehet rákeresni. Ha csak egy nevet és egy
     születési évet tud, az már elég egy próbához.</p>
@@ -178,7 +209,7 @@
 
 <section class="sec" id="fogalmak">
   <div class="wrap">
-    <p class="ml">03 / Fogalmak</p>
+    <p class="ml">04 / Fogalmak</p>
     <h2>Négy szó, aminek hivatalos meghatározása van</h2>
     <p class="sec-lead">Ezek a Levéltár saját betekintési szabályzatából valók, szó szerint. Csak az
     szerepel itt, aminek megtaláltuk a hivatalos meghatározását.</p>
@@ -234,7 +265,7 @@
 
 <section class="sec sec-alt" id="bizonyitas">
   <div class="wrap">
-    <p class="ml">04 / A legfontosabb rész</p>
+    <p class="ml">05 / A legfontosabb rész</p>
     <h2>Amit egy nyilvántartási bejegyzés nem bizonyít</h2>
 
     <div class="nums">
@@ -271,7 +302,7 @@
 
 <section class="sec sec-dark" id="nevek">
   <div class="wrap">
-    <p class="ml">05 / Amit itt nem talál</p>
+    <p class="ml">06 / Amit itt nem talál</p>
     <h2>Nevek nincsenek ezen az oldalon</h2>
     <p>Ez a lap nem közöl névsort, és nem állítja senkiről, hogy ügynök volt. Egy élő emberről ilyet
     nyilvánosan kimondani személyiségi jogi és adatvédelmi kérdés, a nyilvántartási bejegyzés pedig,
@@ -288,7 +319,7 @@
 
 <section class="sec" id="kerelem">
   <div class="wrap">
-    <p class="ml">06 / A másik út</p>
+    <p class="ml">07 / A másik út</p>
     <h2>Ha a saját vagy a családja iratát keresi</h2>
     <p>A november 4-i felület nyilvános kereső. Emellett van egy másik, régebbi út is: az érintett
     megismerheti a róla keletkezett iratokban szereplő adatokat, és másolatot kérhet. Ezt a 2003. évi
@@ -332,7 +363,7 @@
 
 <section class="sec" id="generator">
   <div class="wrap">
-    <p class="ml">07 / Eszköz</p>
+    <p class="ml">08 / Eszköz</p>
     <h2>Kérelem-generátor</h2>
     <p class="sec-lead">Kitölti, és összeáll a levél, amit be lehet adni a Levéltárhoz. A kért mezők a
     Levéltár betekintési szabályzatából valók, nem találgatásból: a szabályzat tételesen felsorolja,
@@ -413,7 +444,7 @@
       <div class="gen-actions">
         <button type="button" id="copybtn" class="btn">Szöveg másolása</button>
         <button type="button" id="printbtn" class="btn btn-ghost">Nyomtatás</button>
-        <span id="copyok" class="copyok" hidden>Vágólapra másolva.</span>
+        <span id="copyok" class="copyok" hidden></span>
       </div>
 
       <p class="subh">Amit mellé kell tenni</p>
@@ -434,7 +465,7 @@
 
 <section class="sec sec-alt" id="kapcsolat">
   <div class="wrap">
-    <p class="ml">08 / Ha elakad</p>
+    <p class="ml">09 / Ha elakad</p>
     <h2>Amiben segíteni tudok</h2>
     <p>A fentiekhez nem kell senki: a kérelem beadható egyedül is, és a november 4-i kereső is
     mindenki számára nyitva lesz. Ha mégis elakad, három ponton tudok segíteni.</p>
@@ -460,7 +491,7 @@
 
 <section class="sec" id="hasznos">
   <div class="wrap">
-    <p class="ml">09 / Ha hasznos volt</p>
+    <p class="ml">10 / Ha hasznos volt</p>
     <h2>Három mód, és kettő nem kerül semmibe</h2>
     <p>Ez a lap ingyen van, és az is marad. Nincs rajta hirdetés, nem gyűjt adatot, és nem kér
     regisztrációt. Ha segített valamiben, így lehet viszonozni.</p>
@@ -468,27 +499,32 @@
     <ul class="steps">
       <li><span class="ml">Küldje tovább</span>Annak, akinek szüksége lehet rá. Ez segít a legtöbbet,
         és ez az egyetlen, amit én nem tudok megcsinálni.
-        <span class="inline-act"><button type="button" id="linkbtn" class="btn btn-ghost btn-s">Link másolása</button><span id="linkok" class="copyok" hidden>Másolva.</span></span></li>
+        <span class="inline-act"><button type="button" id="linkbtn" class="btn btn-ghost btn-s">Link másolása</button><span id="linkok" class="copyok" hidden></span></span></li>
       <li><span class="ml">Szóljon, ha hibát lát</span>Ha valami pontatlan vagy hiányzik, írja meg.
         Ezen a témán egy rossz mondat is sokat árt, úgyhogy a javítás tényleg érdekel.
         <span class="inline-act"><a class="btn btn-ghost btn-s" href="mailto:peter.veszpremi@polarisweb.hu?subject=Ügynökakták%20oldal">Írok egy e-mailt</a></span></li>
       <li id="kave-sor" hidden><span class="ml">Hívjon meg egy kávéra</span>Ha úgy érzi, megér ennyit.
         Semmi nem változik tőle a lapon, nincs mögötte előfizetés és nincs zárt tartalom.
-        <span class="inline-act"><a class="btn btn-s" id="kavebtn" href="#">Egy kávé</a></span></li>
+        <span class="inline-act">
+          <a class="btn btn-s" id="kavebtn" href="#">Revolut</a>
+          <button type="button" id="ibanbtn" class="btn btn-ghost btn-s" hidden>Bankszámlaszám másolása</button>
+          <span id="ibanok" class="copyok" hidden></span>
+        </span>
+        <span class="iban-sor" id="iban-sor" hidden></span></li>
     </ul>
 
     <div class="kolofon">
       <p class="ml">Ki csinálja</p>
       <p>Ezt a lapot <a href="https://www.polarisweb.hu" rel="noopener">Veszprémi Péter (Polarisweb)</a>
-      szerkeszti. Kisvállalkozásoknak készítek weboldalakat, és ez a lap ugyanabból a munkából nőtt ki:
-      megnézni, mi az adat, és csak azt leírni. Ha weboldal kell, a polarisweb.hu-n megtalál.</p>
+      szerkeszti. Kisvállalkozásoknak készítek weboldalakat. Ha weboldal kell, a polarisweb.hu-n
+      megtalál.</p>
     </div>
   </div>
 </section>
 
 <section class="sec sec-alt" id="forrasok">
   <div class="wrap">
-    <p class="ml">10 / Honnan van, ami itt áll</p>
+    <p class="ml">11 / Honnan van, ami itt áll</p>
     <h2>Források</h2>
     <ul class="src">
       <li><span class="ml">Nyitás, iratfajták</span>A levéltár nyitás előtti tájékoztató lapja,
@@ -515,6 +551,7 @@
     és nem kapcsolódik hozzá. A levéltár hivatalos felületei: nyitottaktak.hu és abtl.hu.</p>
     <p>A lapot Veszprémi Péter szerkeszti, <a href="https://www.polarisweb.hu" rel="noopener">polarisweb.hu</a>.</p>
     <p class="foot-date">A lap tartalma a 2026. október 30-i állapot.</p>
+    <p class="foot-top"><a href="#top">Vissza a lap tetejére</a></p>
   </div>
 </footer>
 
