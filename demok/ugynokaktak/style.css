@@ -277,21 +277,34 @@ section[id]{scroll-margin-top:96px;}
 .tam-gombok .btn{display:inline-flex;flex-direction:column;align-items:flex-start;gap:5px;line-height:1.2;}
 .btn-ar{font-size:14px;letter-spacing:0.04em;opacity:0.85;}
 
-/* Suti-sav. A lap sajat hangjan es tonusaban: papir-hatter, hajszalvonal,
-   ugyanazok a gombok, mint mashol. Alul ul, nem takarja a tartalmat. (2026-10-31.) */
-.cookie-bar{position:fixed;left:0;right:0;bottom:0;z-index:60;background:var(--paper-2);
-  border-top:1px solid var(--rule);box-shadow:0 -8px 24px rgba(27,26,23,0.07);}
-.cookie-in{max-width:1100px;margin:0 auto;padding:18px 24px;display:flex;gap:22px;
+/* Suti-sav. SOTET, a lap sajat tintajan: a papir-hatteru valtozat beleolvadt a lapba
+   es konnyen atneztek rajta (2026-10-31, Peti: "legyen szembetunobb"). A lap dizajn-nyelve
+   nem hasznal lekerekitett kartyat, ezert ez nem lebego doboz, hanem egy teljes szelessegu
+   sotet sav, akcent-vonallal a tetejen es becsusszanassal. */
+.cookie-bar{position:fixed;left:0;right:0;bottom:0;z-index:9000;background:var(--ink);
+  color:#DDD7C9;border-top:3px solid var(--accent);
+  box-shadow:0 -18px 44px rgba(27,26,23,0.34);
+  opacity:0;transform:translateY(16px);transition:opacity .26s ease,transform .26s ease;}
+.cookie-bar.is-visible{opacity:1;transform:translateY(0);}
+.cookie-in{max-width:1100px;margin:0 auto;padding:20px 24px;display:flex;gap:24px;
   align-items:center;justify-content:space-between;flex-wrap:wrap;}
-.cookie-txt{margin:0;max-width:62ch;font-size:16px;line-height:1.5;color:var(--ink-soft);}
-.cookie-btns{display:flex;gap:10px;align-items:center;flex-wrap:wrap;}
+.cookie-txt{margin:0;max-width:64ch;font-size:16px;line-height:1.5;color:#DDD7C9;}
+.cookie-txt a{color:#F4F1E9;border-bottom-color:rgba(244,241,233,0.5);}
+.cookie-txt a:hover{color:#fff;}
+.cookie-btns{display:flex;gap:10px;align-items:center;flex-wrap:wrap;flex-shrink:0;}
+/* A gombok a sotet savon fordulnak: az elfogadas vilagos tomb, a masik vilagos keret. */
+.cookie-btns .btn{background:var(--paper);color:var(--ink);}
+.cookie-btns .btn:hover{background:#fff;}
+.cookie-btns .btn-ghost{background:transparent;color:#DDD7C9;border:1px solid rgba(221,215,201,0.45);}
+.cookie-btns .btn-ghost:hover{background:rgba(244,241,233,0.12);color:#F4F1E9;}
 .foot-legal{margin-top:10px;font-family:var(--mono);font-size:11px;letter-spacing:0.08em;
   text-transform:uppercase;}
 .foot-legal a{color:#6E675C;}
 .foot-sep{margin:0 10px;color:var(--rule);}
 
 @media (max-width:620px){
-  .cookie-in{flex-direction:column;align-items:flex-start;gap:14px;padding:16px 20px;}
-  .cookie-btns{width:100%;}
+  .cookie-in{flex-direction:column;align-items:stretch;gap:14px;padding:16px 20px;}
+  .cookie-btns{width:100%;flex-direction:column-reverse;}
+  .cookie-btns .btn{width:100%;text-align:center;}
 }
 

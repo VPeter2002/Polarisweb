@@ -27,7 +27,10 @@
   var sav = null;
 
   function elrejt() {
-    if (sav) { sav.setAttribute('hidden', ''); }
+    if (sav) {
+      sav.classList.remove('is-visible');
+      sav.setAttribute('hidden', '');
+    }
   }
 
   function dont(engedve) {
@@ -37,7 +40,11 @@
   }
 
   function epit() {
-    if (sav) { sav.removeAttribute('hidden'); return; }
+    if (sav) {
+      sav.removeAttribute('hidden');
+      requestAnimationFrame(function () { sav.classList.add('is-visible'); });
+      return;
+    }
     sav = document.createElement('div');
     sav.className = 'cookie-bar';
     sav.setAttribute('role', 'dialog');
@@ -52,6 +59,9 @@
       '<button type="button" class="btn btn-s" data-ua-consent="yes">Elfogadom</button>' +
       '</div></div>';
     document.body.appendChild(sav);
+    // A becsusszanas kulon lepesben kapcsol be, kulonben a bongeszo egy festesben
+    // szamolja az elem beszurasat es az osztalyt, es nem latszik az atmenet.
+    requestAnimationFrame(function () { if (sav) { sav.classList.add('is-visible'); } });
     sav.addEventListener('click', function (e) {
       var b = e.target.closest ? e.target.closest('[data-ua-consent]') : null;
       if (!b) { return; }
