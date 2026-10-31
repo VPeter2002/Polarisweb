@@ -44,12 +44,12 @@
     sav.setAttribute('aria-label', 'Sütik');
     sav.innerHTML =
       '<div class="cookie-in">' +
-      '<p class="cookie-txt">Ez a lap egyetlen dologra használ sütit: hogy lássam, hányan olvassák. ' +
-      'Nincs rajta hirdetés, és nincs profilalkotás. Amíg nem fogadja el, a mérés el sem indul.</p>' +
+      '<p class="cookie-txt">Az Ügynökakták oldal sütiket és más technológiákat használ ' +
+      'látogatói statisztikához. Csak az elfogadás után indulnak el. ' +
+      '<a href="adatkezeles.html">Süti-tájékoztató</a></p>' +
       '<div class="cookie-btns">' +
-      '<button type="button" class="btn btn-s" data-ua-consent="yes">Rendben</button>' +
-      '<button type="button" class="btn btn-s btn-ghost" data-ua-consent="no">Nem kérem</button>' +
-      '<a class="cookie-link" href="adatkezeles.html">Részletek</a>' +
+      '<button type="button" class="btn btn-s btn-ghost" data-ua-consent="no">Csak a szükségesek</button>' +
+      '<button type="button" class="btn btn-s" data-ua-consent="yes">Elfogadom</button>' +
       '</div></div>';
     document.body.appendChild(sav);
     sav.addEventListener('click', function (e) {
