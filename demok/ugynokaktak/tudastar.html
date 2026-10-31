@@ -13,6 +13,23 @@
 <meta property="og:title" content="Tudástár: az ügynökakták és az állambiztonság működése">
 <meta property="og:description" content="Hogyan működött a magyar állambiztonság, mi maradt meg az irataiból, és miért tartott 36 évig a nyilvánosságra hozatal.">
 <meta property="og:url" content="https://polarisweb.hu/demok/ugynokaktak/tudastar">
+<!-- Meres: GA4 + Google Consent Mode v2. A SORREND KOTOTT: eloszor a default
+     (minden denied), utana a config, es CSAK LEGVEGUL a loader. Felcserelve a
+     default nem ervenyesul, es a meres hozzajarulas elott indulna el. -->
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('consent', 'default', {
+    ad_storage: 'denied',
+    ad_user_data: 'denied',
+    ad_personalization: 'denied',
+    analytics_storage: 'denied',
+    wait_for_update: 500
+  });
+  gtag('js', new Date());
+  gtag('config', 'G-QKDWPNH3EN');
+</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-QKDWPNH3EN"></script>
 <link rel="icon" href="/demok/ugynokaktak/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -295,9 +312,11 @@
     és nem kapcsolódik hozzá. A levéltár hivatalos felületei: nyitottaktak.hu és abtl.hu.</p>
     <p>A lapot Veszprémi Péter szerkeszti, <a href="https://www.polarisweb.hu" rel="noopener">polarisweb.hu</a>.</p>
     <p class="foot-date">A lap tartalma a 2026. október 31-i állapot.</p>
+    <p class="foot-legal"><a href="/demok/ugynokaktak/adatkezeles">Adatkezelés és sütik</a><span class="foot-sep">/</span><a href="#" data-ua-consent-open>Süti-beállítás</a></p>
   </div>
 </footer>
 
 <script src="/demok/ugynokaktak/app.js"></script>
+<script src="/demok/ugynokaktak/consent.js"></script>
 </body>
 </html>

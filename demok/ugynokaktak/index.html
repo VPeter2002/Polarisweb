@@ -14,6 +14,23 @@
 <meta property="og:description" content="Mi nyílik meg pontosan, mit jelentenek a dokumentumok, és mit nem lehet belőlük kiolvasni. Kérelem-generátor a levéltárhoz, a levéltár saját szabályzata szerint.">
 <meta property="og:url" content="https://polarisweb.hu/demok/ugynokaktak">
 <meta name="twitter:card" content="summary">
+<!-- Meres: GA4 + Google Consent Mode v2. A SORREND KOTOTT: eloszor a default
+     (minden denied), utana a config, es CSAK LEGVEGUL a loader. Felcserelve a
+     default nem ervenyesul, es a meres hozzajarulas elott indulna el. -->
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('consent', 'default', {
+    ad_storage: 'denied',
+    ad_user_data: 'denied',
+    ad_personalization: 'denied',
+    analytics_storage: 'denied',
+    wait_for_update: 500
+  });
+  gtag('js', new Date());
+  gtag('config', 'G-QKDWPNH3EN');
+</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-QKDWPNH3EN"></script>
 <link rel="icon" href="/demok/ugynokaktak/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -497,8 +514,8 @@
   <div class="wrap">
     <p class="ml">10 / Ha hasznos volt</p>
     <h2>Három mód, és kettő nem kerül semmibe</h2>
-    <p>Ez a lap ingyen van, és az is marad. Nincs rajta hirdetés, nem gyűjt adatot, és nem kér
-    regisztrációt. Ha segített valamiben, így lehet viszonozni.</p>
+    <p>Ez a lap ingyen van, és az is marad. Nincs rajta hirdetés, nem kér regisztrációt, és csak
+    annyit mér, hogy hányan olvassák, azt is csak akkor, ha ezt engedélyezte. Ha segített valamiben, így lehet viszonozni.</p>
 
     <ul class="steps">
       <li><span class="ml">Küldje tovább</span>Annak, akinek szüksége lehet rá. Ez segít a legtöbbet,
@@ -550,10 +567,12 @@
     és nem kapcsolódik hozzá. A levéltár hivatalos felületei: nyitottaktak.hu és abtl.hu.</p>
     <p>A lapot Veszprémi Péter szerkeszti, <a href="https://www.polarisweb.hu" rel="noopener">polarisweb.hu</a>.</p>
     <p class="foot-date">A lap tartalma a 2026. október 30-i állapot.</p>
+    <p class="foot-legal"><a href="/demok/ugynokaktak/adatkezeles">Adatkezelés és sütik</a><span class="foot-sep">/</span><a href="#" data-ua-consent-open>Süti-beállítás</a></p>
     <p class="foot-top"><a href="#top">Vissza a lap tetejére</a></p>
   </div>
 </footer>
 
 <script src="/demok/ugynokaktak/app.js"></script>
+<script src="/demok/ugynokaktak/consent.js"></script>
 </body>
 </html>

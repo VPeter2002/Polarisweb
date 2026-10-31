@@ -276,3 +276,24 @@ section[id]{scroll-margin-top:96px;}
    hogy a latogato a kattintas ELOTT lassa, mibe kerul. (2026-10-31.) */
 .tam-gombok .btn{display:inline-flex;flex-direction:column;align-items:flex-start;gap:5px;line-height:1.2;}
 .btn-ar{font-size:14px;letter-spacing:0.04em;opacity:0.85;}
+
+/* Suti-sav. A lap sajat hangjan es tonusaban: papir-hatter, hajszalvonal,
+   ugyanazok a gombok, mint mashol. Alul ul, nem takarja a tartalmat. (2026-10-31.) */
+.cookie-bar{position:fixed;left:0;right:0;bottom:0;z-index:60;background:var(--paper-2);
+  border-top:1px solid var(--rule);box-shadow:0 -8px 24px rgba(27,26,23,0.07);}
+.cookie-in{max-width:1100px;margin:0 auto;padding:18px 24px;display:flex;gap:22px;
+  align-items:center;justify-content:space-between;flex-wrap:wrap;}
+.cookie-txt{margin:0;max-width:62ch;font-size:16px;line-height:1.5;color:var(--ink-soft);}
+.cookie-btns{display:flex;gap:10px;align-items:center;flex-wrap:wrap;}
+.cookie-link{font-family:var(--mono);font-size:11px;letter-spacing:0.07em;text-transform:uppercase;
+  color:var(--muted);}
+.foot-legal{margin-top:10px;font-family:var(--mono);font-size:11px;letter-spacing:0.08em;
+  text-transform:uppercase;}
+.foot-legal a{color:#6E675C;}
+.foot-sep{margin:0 10px;color:var(--rule);}
+
+@media (max-width:620px){
+  .cookie-in{flex-direction:column;align-items:flex-start;gap:14px;padding:16px 20px;}
+  .cookie-btns{width:100%;}
+}
+
