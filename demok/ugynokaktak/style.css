@@ -308,3 +308,14 @@ section[id]{scroll-margin-top:96px;}
   .cookie-btns .btn{width:100%;text-align:center;}
 }
 
+/* gyik */
+.qa{list-style:none;margin:16px 0 0;padding:0;}
+.qa li{border-top:1px solid var(--rule);padding:22px 0;max-width:68ch;}
+.qa li:last-child{border-bottom:1px solid var(--rule);}
+.qa-q{margin:0;font-size:19px;font-weight:600;color:var(--ink);}
+.qa-a{margin:9px 0 0;font-size:17px;color:var(--ink-soft);}
+@media (max-width:620px){
+  .qa li{padding:19px 0;}
+  .qa-q{font-size:17.5px;}
+  .qa-a{font-size:16.5px;}
+}
