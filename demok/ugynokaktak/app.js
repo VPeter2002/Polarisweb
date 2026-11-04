@@ -101,6 +101,11 @@ function uaMasol(szoveg, jelzo, utolag) {
     var r = form.querySelector('input[name="min"]:checked');
     return r ? r.value : 'sajat';
   };
+  // A rokonsagi fok valaszto: amig ures, a tobbi mezo helyorzojehez igazodjon.
+  var rokonSel = document.getElementById('e-rokon');
+  var rokonJelol = function () { rokonSel.classList.toggle('ures', rokonSel.value === ''); };
+  if (rokonSel) { rokonSel.addEventListener('change', rokonJelol); rokonJelol(); }
+
   var erintettBlokk = document.getElementById('erintett-blokk');
   var frissitBlokk = function () {
     var kell = minoseg() !== 'sajat';
@@ -112,6 +117,17 @@ function uaMasol(szoveg, jelzo, utolag) {
   });
   frissitBlokk();
 
+  /* A csatolmany-lista a Betekintesi szabalyzat 1.8.2 pontjanak SAJAT felsorolasa szerint.
+     Ami ott nev szerint nem szerepel (tavolabbi egyenesagbeli rokon), azt nem talaljuk ki. */
+  var ROKON_CSAT = {
+    'házastársa': ['Házastársként', 'Házassági és halotti anyakönyvi kivonat, vagy a halál tényét igazoló okirat, illetve holttá nyilvánítás.'],
+    'élettársa': ['Élettársként', 'Halotti anyakönyvi kivonat, ügyféli nyilatkozat, két tanú egybehangzó nyilatkozata az élettársi közösségről, és két egymástól független tanú igazolása arról, hogy mettől meddig voltak élettársak.'],
+    'gyermeke': ['Gyermekként', 'Születési és halotti anyakönyvi kivonat, vagy a halál tényét igazoló okirat.'],
+    'szülője': ['Szülőként', 'Születési és halotti anyakönyvi kivonat, vagy a halál tényét igazoló okirat.'],
+    'testvére': ['Testvérként', 'Születési és halotti anyakönyvi kivonat, vagy a halál tényét igazoló okirat.'],
+    'egyéb egyeneságbeli rokona': ['Más egyeneságbeli rokonként', 'A szabályzat név szerint a házastársat, az élettársat, a gyermeket, a szülőt és a testvért sorolja fel, a távolabbi egyeneságbeli rokont nem. Hozzátartozóként Ön is jogosult lehet, de a leszármazást igazoló anyakönyvi kivonatokra és a halotti anyakönyvi kivonatra számítson, és a beadás előtt kérdezze meg az ügyfélszolgálatot.']
+  };
+
   var H = '[kitöltendő]';
   var sor = function (cimke, ertek) { return '  ' + cimke + ': ' + (ertek || H); };
   var haVan = function (cimke, ertek) { return ertek ? '  ' + cimke + ': ' + ertek : null; };
@@ -122,8 +138,10 @@ function uaMasol(szoveg, jelzo, utolag) {
     var hianyzo = [];
     var kell = function (cimke, ertek) { if (!ertek) hianyzo.push(cimke); return ertek; };
 
+    var HONAP = ['január', 'február', 'március', 'április', 'május', 'június',
+                 'július', 'augusztus', 'szeptember', 'október', 'november', 'december'];
     var ma = new Date();
-    var datum = ma.getFullYear() + '. ' + (ma.getMonth() + 1) + '. ' + ma.getDate() + '.';
+    var datum = ma.getFullYear() + '. ' + HONAP[ma.getMonth()] + ' ' + ma.getDate() + '.';
 
     var L = [];
     L.push('Állambiztonsági Szolgálatok Történeti Levéltára');
@@ -144,7 +162,7 @@ function uaMasol(szoveg, jelzo, utolag) {
     L.push(sor('Születési idő', kell('születési idő', v('k-szulido'))));
     L.push(sor('Anyja neve', kell('anyja neve', v('k-anyja'))));
     L.push(sor('Állandó lakcím', kell('állandó lakcím', v('k-lakcim'))));
-    [haVan('Levelezési cím', v('k-levcim'))].forEach(function (x) { if (x) L.push(x); });
+    L.push('  Levelezési cím: ' + (v('k-levcim') || 'azonos az állandó lakcímmel'));
     L.push(sor('Telefonszám', kell('telefonszám', v('k-tel'))));
     [haVan('E-mail cím', v('k-email'))].forEach(function (x) { if (x) L.push(x); });
     L.push(sor('Személyazonosító okmány száma', kell('személyazonosító okmány száma', v('k-okmany'))));
@@ -160,7 +178,15 @@ function uaMasol(szoveg, jelzo, utolag) {
       if (m === 'elhunyt') {
         L.push(sor('Elhalálozás éve', kell('az elhalálozás éve', v('e-elhalt'))));
         L.push(sor('Rokonsági fok', kell('a rokonsági fok', v('e-rokon'))));
-        [haVan('A házasság vagy életközösség időtartama', v('e-egyutt'))].forEach(function (x) { if (x) L.push(x); });
+        // 1.5.3: a hazassag vagy eletkozosseg idotartama a kerelem kotelezo tartalma,
+        // de csak hazastarsnal es elettarsnal ertelmezheto.
+        var parkapcsolat = v('e-rokon') === 'házastársa' || v('e-rokon') === 'élettársa';
+        if (parkapcsolat) {
+          L.push(sor('A házasság vagy életközösség időtartama',
+                     kell('a házasság vagy életközösség időtartama', v('e-egyutt'))));
+        } else {
+          [haVan('A házasság vagy életközösség időtartama', v('e-egyutt'))].forEach(function (x) { if (x) L.push(x); });
+        }
       } else {
         [haVan('Rokonsági fok vagy jogviszony', v('e-rokon'))].forEach(function (x) { if (x) L.push(x); });
       }
@@ -188,6 +214,7 @@ function uaMasol(szoveg, jelzo, utolag) {
 
     var bet = document.getElementById('c-betekintes').checked;
     var mas = document.getElementById('c-masolat').checked;
+    if (!bet && !mas) { hianyzo.push('mit kér: betekintést vagy másolatot'); }
     var mit = bet && mas ? 'betekintést és másolatot' : (mas ? 'másolatot' : 'betekintést');
     var kire = sajat ? 'a személyemmel' : 'a fent megnevezett érintett személlyel';
     L.push('');
@@ -215,18 +242,13 @@ function uaMasol(szoveg, jelzo, utolag) {
     var cs = [];
     cs.push(['Minden kérelmezőtől', 'Személyazonosító okmány. A Levéltár az adatok valódiságának ellenőrzésére kéri.']);
     if (m === 'elhunyt') {
-      var rok = (v('e-rokon') || '').toLowerCase();
-      if (rok.indexOf('házas') === 0 || rok.indexOf('férj') >= 0 || rok.indexOf('feleség') >= 0) {
-        cs.push(['Házastársként', 'Házassági és halotti anyakönyvi kivonat, vagy a halál tényét igazoló okirat.']);
-      } else if (rok.indexOf('élettárs') >= 0) {
-        cs.push(['Élettársként', 'Halotti anyakönyvi kivonat, ügyféli nyilatkozat, két tanú egybehangzó nyilatkozata az élettársi közösségről, és két tanú igazolása arról, hogy mettől meddig voltak élettársak.']);
-      } else {
-        cs.push(['Gyermekként, szülőként vagy testvérként', 'Születési és halotti anyakönyvi kivonat, vagy a halál tényét igazoló okirat.']);
-      }
+      var ag = ROKON_CSAT[v('e-rokon')];
+      if (ag) { cs.push(ag); }
       cs.push(['Mikor kérik', 'A szabályzat szerint ezeket akkor kérik, ha az iratkeresés eredményes volt. A kérelmet tehát be lehet adni előbb is.']);
     }
     if (m === 'megh') {
-      cs.push(['Meghatalmazottként', 'Két tanúval igazolt vagy közjegyző által hitelesített meghatalmazás. Ügyvéd esetén megbízás.']);
+      cs.push(['Meghatalmazottként', 'Két tanúval igazolt vagy közjegyző által hitelesített meghatalmazás. Ügyvéd esetén megbízás. A Levéltár saját meghatalmazás-nyomtatványa letölthető az ügyfélszolgálati oldalról.',
+               { url: 'https://www.abtl.hu/ugyfelszolgalat', szoveg: 'abtl.hu/ugyfelszolgalat' }]);
     }
     return { szoveg: L.join('\n'), hianyzo: hianyzo, csatolmany: cs };
   };
@@ -256,6 +278,12 @@ function uaMasol(szoveg, jelzo, utolag) {
       s.textContent = p[0];
       li.appendChild(s);
       li.appendChild(document.createTextNode(p[1]));
+      if (p[2] && p[2].url) {
+        li.appendChild(document.createTextNode(' '));
+        var a = document.createElement('a');
+        a.href = p[2].url; a.rel = 'noopener'; a.textContent = p[2].szoveg;
+        li.appendChild(a);
+      }
       csatLista.appendChild(li);
     });
 
@@ -274,7 +302,6 @@ function uaMasol(szoveg, jelzo, utolag) {
   document.getElementById('copybtn').addEventListener('click', function () {
     uaMasol(pre.textContent, copyok, kijelol);
   });
-  document.getElementById('printbtn').addEventListener('click', function () { window.print(); });
 })();
 
 /* ---- Megosztas, visszajelzes, kave. ----

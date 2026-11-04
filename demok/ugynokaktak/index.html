@@ -31,7 +31,9 @@
   gtag('config', 'G-QKDWPNH3EN');
 </script>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-QKDWPNH3EN"></script>
+<link rel="icon" href="/demok/ugynokaktak/favicon.ico" sizes="16x16 32x32 48x48">
 <link rel="icon" href="/demok/ugynokaktak/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/demok/ugynokaktak/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -224,15 +226,18 @@
     <div class="status" id="status">
       <span class="status-dot"></span>
       <span class="status-txt"><strong>2026. november 4., a nyitás napja.</strong> Ellenőrizve
-      9:44-kor: a hivatalos felület még nem indult el. Az aktuális állapotot a
-      <a href="https://nyitottaktak.hu" rel="noopener">nyitottaktak.hu</a> mutatja, ez a sor pedig a nap
-      folyamán frissül.</span>
+      11:31-kor: a <a href="https://nyitottaktak.hu" rel="noopener">nyitottaktak.hu</a> keresőfelülete
+      elérhető, a kereshető mezők kint vannak. Az adatbázis-frissítés dátuma és a találatszám a lapon
+      még üresen áll, ezért azt, hogy mennyi anyag kereshető már benne, a levéltár oldala mondja meg
+      hitelesen. Ez a sor a nap folyamán frissül.</span>
     </div>
 
     <p class="subh">Mit érdemes előkészíteni</p>
     <ul class="steps">
-      <li><span class="ml">Az adatok, amikre keresni lehet</span>Teljes név, születési név, születési hely
-        és idő, anyja neve. Ha tudja, a fedőnevet is: a bejelentés szerint arra is lehet keresni.</li>
+      <li><span class="ml">Az adatok, amikre keresni lehet</span>A felületen ma ezek a mezők állnak:
+        név, születési év, születési hely, anyja neve, fedőnév, irattípus, nyitószám és B-dosszié szám.
+        A névhez, a születési helyhez, az anyja nevéhez és a fedőnévhez elég egy részlet is, a születési
+        adatból pedig csak az évet kéri.</li>
       <li><span class="ml">Mentsen le mindent, amit talál</span>A dokumentumok letölthetők. A találaton
         szereplő iratszám vagy dossziészám az, amivel utána a tényleges iratokat ki lehet kérni, ezért
         ne csak elolvassa, hanem mentse is el.</li>
@@ -522,7 +527,16 @@
         <div class="fld"><label class="ml" for="e-szulido">Születési idő</label><input type="text" id="e-szulido" placeholder=""></div>
         <div class="fld"><label class="ml" for="e-anyja">Anyja neve</label><input type="text" id="e-anyja" placeholder=""></div>
         <div class="fld"><label class="ml" for="e-elhalt">Elhalálozás éve</label><input type="text" id="e-elhalt" placeholder=""></div>
-        <div class="fld"><label class="ml" for="e-rokon">Rokonsági fok</label><input type="text" id="e-rokon" placeholder="gyermeke, testvére, unokája"></div>
+        <div class="fld"><label class="ml" for="e-rokon">Rokonsági fok</label>
+          <select id="e-rokon">
+            <option value="">Válasszon</option>
+            <option value="gyermeke">Gyermeke</option>
+            <option value="szülője">Szülője</option>
+            <option value="testvére">Testvére</option>
+            <option value="házastársa">Házastársa</option>
+            <option value="élettársa">Élettársa</option>
+            <option value="egyéb egyeneságbeli rokona">Más egyeneságbeli rokona, például unokája</option>
+          </select></div>
         <div class="fld"><label class="ml" for="e-egyutt">Házasság vagy életközösség időtartama</label><input type="text" id="e-egyutt" placeholder="csak házastárs vagy élettárs esetén"></div>
         </div>
       </div>
@@ -563,7 +577,6 @@
       <pre id="levelszoveg" class="level"></pre>
       <div class="gen-actions">
         <button type="button" id="copybtn" class="btn">Szöveg másolása</button>
-        <button type="button" id="printbtn" class="btn btn-ghost">Nyomtatás</button>
         <span id="copyok" class="copyok" hidden></span>
       </div>
 
