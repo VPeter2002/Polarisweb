@@ -106,7 +106,8 @@ h2{font-size:clamp(26px,3.6vw,40px);font-weight:600;line-height:1.14;letter-spac
 .doc-when{display:block;font-size:11px;letter-spacing:0.12em;color:var(--accent);margin-top:7px;}
 .doc-body p{margin:0;max-width:58ch;}
 .doc-what{color:var(--ink-soft);}
-.doc-not{margin-top:12px !important;font-size:16.5px;color:var(--muted);}
+.doc-not{margin-top:12px !important;font-size:16.5px;color:var(--muted);
+  padding-left:14px;border-left:2px solid var(--rule);}
 .nl{font-family:var(--mono);font-size:11px;font-weight:500;letter-spacing:0.12em;text-transform:uppercase;color:var(--ochre);margin-right:7px;}
 .doc-later .doc-tag{color:var(--muted);}
 
