@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+  <meta name="robots" content="noindex, nofollow">
+<meta charset="UTF-8">
+<title>Árajánlat összeállító | víz, gáz, villany</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Árajánlat-összeállító víz-, gáz- és villanyszerelőknek. Projekt-sablonból indulsz, a tételeket átírod, új tételt is felveszel, a végén nyomtatható ajánlat lesz belőle.">
+<link rel="stylesheet" href="/demok/szerelo-arajanlat/style.css">
+</head>
+<body>
+
+<header class="fejlec">
+  <div class="sav">
+    <div class="marka">
+      <b>Árajánlat összeállító</b>
+      <span>víz, gáz, villany</span>
+    </div>
+    <span class="demo-cimke">bemutató változat</span>
+  </div>
+</header>
+
+<main class="torzs">
+
+  <!-- ---------- bal oszlop ---------- -->
+  <div class="nyomtatasban-nem">
+
+    <section class="doboz">
+      <h2>1. Projekt</h2>
+      <div class="belso">
+        <p class="jegyzet" style="margin:0 0 10px">Válassz egy tipikus munkát. A hozzá tartozó tételek bekerülnek az ajánlatba, onnan szabadon átírod őket.</p>
+        <div class="sablonok" id="sablonok"></div>
+      </div>
+    </section>
+
+    <section class="doboz">
+      <h2>2. Tétel hozzáadása</h2>
+      <div class="belso">
+        <div class="szuro">
+          <input id="kereso" type="text" placeholder="Keresés a tételek közt" autocomplete="off">
+          <select id="kat-szuro" aria-label="Szakág szerinti szűrés">
+            <option value="">Mind</option>
+            <option value="viz">Víz</option>
+            <option value="gaz">Gáz</option>
+            <option value="villany">Villany</option>
+            <option value="egyeb">Egyéb</option>
+          </select>
+        </div>
+        <div class="katalogus" id="katalogus"></div>
+        <div class="gombsor" style="margin-top:12px">
+          <button class="gomb jel" id="uj-tetel-gomb" type="button">Új tétel felvétele</button>
+        </div>
+        <p class="jegyzet">A saját tételeid ebben a böngészőben maradnak meg. Az árak minta-árak, mindegyik átírható.</p>
+      </div>
+    </section>
+
+    <section class="doboz">
+      <h2>3. Fejléc adatok</h2>
+      <div class="belso">
+        <label class="mezo"><span>A te vállalkozásod</span><input id="f-ceg" type="text" placeholder="Minta Szerelő Bt."></label>
+        <label class="mezo"><span>Elérhetőséged</span><input id="f-ceg-elerhetoseg" type="text" placeholder="06 30 000 0000 · minta@pelda.hu"></label>
+        <label class="mezo"><span>Megrendelő</span><input id="f-ugyfel" type="text" placeholder="Kovács János"></label>
+        <label class="mezo"><span>Munkavégzés helye</span><input id="f-helyszin" type="text" placeholder="Mintaváros, Fő utca 1."></label>
+        <div class="parban">
+          <label class="mezo"><span>Ajánlat száma</span><input id="f-szam" type="text" placeholder="2026/001"></label>
+          <label class="mezo"><span>Érvényes (nap)</span><input id="f-ervenyes" class="szam" type="number" min="1" step="1" value="30"></label>
+        </div>
+        <label class="mezo"><span>Megjegyzés az ajánlathoz</span><textarea id="f-megjegyzes" placeholder="Az anyagárak a megrendelés napján érvényesek. A munkakezdés egyeztetés szerint."></textarea></label>
+      </div>
+    </section>
+
+    <section class="doboz">
+      <h2>Mentett ajánlatok</h2>
+      <div class="belso">
+        <div class="gombsor" style="margin-bottom:10px">
+          <button class="gomb masodlagos" id="ment-gomb" type="button">Mentés</button>
+          <button class="gomb masodlagos" id="uj-gomb" type="button">Új, üres ajánlat</button>
+        </div>
+        <div id="mentettek"></div>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- ---------- jobb oszlop ---------- -->
+  <div>
+
+    <section class="doboz nyomtatasban-nem">
+      <h2>Az ajánlat tételei</h2>
+      <div class="belso">
+        <table class="tetel-tabla">
+          <thead>
+            <tr>
+              <th style="width:44%">Megnevezés</th>
+              <th class="j" style="width:14%">Mennyiség</th>
+              <th style="width:10%">Egység</th>
+              <th class="j" style="width:16%">Egységár</th>
+              <th class="j" style="width:16%">Összeg</th>
+              <th style="width:34px"><span class="rejtve">Törlés</span></th>
+            </tr>
+          </thead>
+          <tbody id="tetelek"></tbody>
+        </table>
+        <p class="ures rejtve" id="tetelek-ures">Még nincs tétel. Válassz egy projektet, vagy adj hozzá tételt a bal oldali listából.</p>
+
+        <div class="osszegzes">
+          <div>Munkadíj</div><div class="szam" id="o-munka">0 Ft</div>
+          <div>Anyag</div><div class="szam" id="o-anyag">0 Ft</div>
+          <div>Egyéb</div><div class="szam" id="o-egyeb">0 Ft</div>
+          <div><label for="f-kedvezmeny">Kedvezmény</label>
+            <input id="f-kedvezmeny" class="szam" type="number" min="0" max="100" step="1" value="0" style="width:62px;padding:3px 6px;border:1px solid var(--vonal-eros);border-radius:5px;text-align:right"> %
+          </div><div class="szam" id="o-kedvezmeny">0 Ft</div>
+          <div>Nettó összesen</div><div class="szam" id="o-netto">0 Ft</div>
+          <div><label for="f-afa">ÁFA</label>
+            <select id="f-afa" style="padding:3px 6px;border:1px solid var(--vonal-eros);border-radius:5px">
+              <option value="27" selected>27%</option>
+              <option value="5">5%</option>
+              <option value="0">alanyi adómentes</option>
+            </select>
+          </div><div class="szam" id="o-afa">0 Ft</div>
+          <div class="vegosszeg">Fizetendő</div><div class="vegosszeg szam" id="o-brutto">0 Ft</div>
+        </div>
+
+        <div class="gombsor" style="margin-top:16px">
+          <button class="gomb" id="nyomtat-gomb" type="button">Nyomtatás, PDF</button>
+          <button class="gomb masodlagos" id="masol-gomb" type="button">Másolás szövegként</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="elonezet" id="elonezet" aria-label="Az ajánlat előnézete"></section>
+
+  </div>
+
+</main>
+
+<footer class="lablec nyomtatasban-nem">
+  <div class="sav">
+    <p style="margin:0">Bemutató oldal. Minden adat ebben a böngészőben marad, szerver nincs mögötte.</p>
+    <p style="margin:0">Készítette a <a href="https://www.polarisweb.hu" rel="noopener">Polarisweb</a>.</p>
+  </div>
+</footer>
+
+<dialog id="uj-tetel">
+  <form method="dialog" class="belso" id="uj-tetel-urlap">
+    <h3>Új tétel felvétele</h3>
+    <label class="mezo"><span>Megnevezés</span><input id="u-nev" type="text" required></label>
+    <div class="parban">
+      <label class="mezo"><span>Egység</span><input id="u-egyseg" type="text" value="db" required></label>
+      <label class="mezo"><span>Egységár (Ft)</span><input id="u-ar" class="szam" type="number" min="0" step="100" required></label>
+    </div>
+    <div class="parban">
+      <label class="mezo"><span>Szakág</span>
+        <select id="u-szakag">
+          <option value="viz">Víz</option>
+          <option value="gaz">Gáz</option>
+          <option value="villany">Villany</option>
+          <option value="egyeb">Egyéb</option>
+        </select>
+      </label>
+      <label class="mezo"><span>Jellege</span>
+        <select id="u-tipus">
+          <option value="munka">Munkadíj</option>
+          <option value="anyag">Anyag</option>
+          <option value="egyeb">Egyéb</option>
+        </select>
+      </label>
+    </div>
+    <p class="jegyzet" id="uj-tetel-hiba" style="color:#8d3511"></p>
+    <div class="gombsor" style="justify-content:flex-end">
+      <button class="gomb masodlagos" value="megse" type="submit">Mégse</button>
+      <button class="gomb jel" value="ok" type="submit" id="u-mentes">Felveszem</button>
+    </div>
+  </form>
+</dialog>
+
+<script src="/demok/szerelo-arajanlat/app.js"></script>
+</body>
+</html>
